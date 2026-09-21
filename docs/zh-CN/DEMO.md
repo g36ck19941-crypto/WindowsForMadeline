@@ -19,3 +19,9 @@
 中文验收入口：`docs/zh-CN/reviews/CDR-001-ACCEPTANCE.md`。
 
 中文基础报告：`docs/zh-CN/updates/2026-09-21-project-foundation.md`。
+
+## Demo 010 — 合成安装验证器
+
+状态：等待开发者验收。
+
+运行 `.\tools\Verify-CDR010.ps1`。该演示会进行 Release 构建并运行 15 项内存合成文件系统用例，不发现也不读取真实安装。预期最后一行：`RESULT total=15 passed=15 failed=0`。

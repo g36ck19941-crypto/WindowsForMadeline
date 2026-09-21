@@ -19,3 +19,9 @@ Evidence: `docs/updates/2026-09-21-project-foundation.md`.
 Guided acceptance: `docs/reviews/CDR-001-ACCEPTANCE.md` provides a requirement-to-evidence crosswalk and a five-minute manual review. It does not launch any program or claim a runtime demo.
 
 中文验收资料：`docs/zh-CN/README.md`；英文规范仍是代理执行依据。
+
+## Demo 010 — Synthetic install verifier
+
+Status: ready for developer acceptance
+
+Run `.\tools\Verify-CDR010.ps1`. The demo builds Release and runs 15 in-memory filesystem cases. It neither discovers nor reads a real installation. Expected final line: `RESULT total=15 passed=15 failed=0`.

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-010",
+  "title": "Explicit synthetic install verifier",
+  "owner": "Primary agent",
+  "state": "ready_for_review",
+  "scope": [
+    "src/CelesteDesktop.Contracts/Install/**",
+    "src/CelesteDesktop.Install/**",
+    "tests/CelesteDesktop.Install.Tests/**",
+    "tools/Verify-CDR010.ps1",
+    "task records and English/Chinese review documentation"
+  ],
+  "features": [
+    "caller-supplied absolute root only",
+    "injectable metadata-only filesystem",
+    "canonical containment enforcement",
+    "root, parent and leaf reparse rejection",
+    "stable bounded INSTALL issue contracts",
+    "no enumeration or content-read surface"
+  ],
+  "forbidden": [
+    "automatic machine scan",
+    "real Celeste installation access",
+    "file content reads",
+    "Celeste or Everest launch",
+    "GUI or desktop observation",
+    "commercial asset persistence"
+  ],
+  "verificationCommand": ".\\tools\\Verify-CDR010.ps1",
+  "verificationResult": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0,
+    "testsTotal": 15,
+    "testsPassed": 15,
+    "testsFailed": 0,
+    "fixtureType": "synthetic in-memory filesystem only"
+  },
+  "reviewArtifact": "docs/INSTALL_VALIDATION.md",
+  "reviewArtifactZhCn": "docs/zh-CN/INSTALL_VALIDATION.md",
+  "nextTask": "CDR-011",
+  "nextAction": "Obtain developer acceptance before starting AssetWorker protocol and supervision."
+}

@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.Contracts", "src\CelesteDesktop.Contracts\CelesteDesktop.Contracts.csproj", "{FA520482-4514-4D18-8EED-D0E6BFC97C3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.Install", "src\CelesteDesktop.Install\CelesteDesktop.Install.csproj", "{9716214C-6534-4D2F-A943-E974A15000F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.Install.Tests", "tests\CelesteDesktop.Install.Tests\CelesteDesktop.Install.Tests.csproj", "{BB72B4EC-D4CE-4FA3-B324-177430582922}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA520482-4514-4D18-8EED-D0E6BFC97C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA520482-4514-4D18-8EED-D0E6BFC97C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA520482-4514-4D18-8EED-D0E6BFC97C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA520482-4514-4D18-8EED-D0E6BFC97C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9716214C-6534-4D2F-A943-E974A15000F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9716214C-6534-4D2F-A943-E974A15000F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9716214C-6534-4D2F-A943-E974A15000F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9716214C-6534-4D2F-A943-E974A15000F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

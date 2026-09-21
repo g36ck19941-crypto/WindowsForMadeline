@@ -35,9 +35,13 @@
 
 ### CDR-010 — Explicit install verifier
 
+- Owner: Primary
 - Scope: `src/CelesteDesktop.Install/**`, its tests, contracts and records
+- State: implemented and synthetic-verified; pending developer acceptance
 - Deliverable: validate only a caller-supplied directory through an injectable filesystem; no automatic machine scan in this stage
-- Gate: synthetic complete/missing/reparse/path-escape fixtures; no real install access
+- Evidence: Release build 0 warnings/errors; 15/15 complete, missing, root/type, reparse, containment, inaccessible and API-surface tests passed
+- Manual acceptance: `docs/zh-CN/INSTALL_VALIDATION.md`, then run `.\tools\Verify-CDR010.ps1`
+- Gate: developer acceptance before CDR-011; no real install access
 
 ### CDR-011 — AssetWorker protocol and supervision
 

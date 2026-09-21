@@ -15,9 +15,11 @@
 | `DIAGNOSTICS.md` | `../DIAGNOSTICS.md` |
 | `ASSET_SAFETY.md` | `../ASSET_SAFETY.md` |
 | `EXTENSIONS.md` | `../EXTENSIONS.md` |
+| `INSTALL_VALIDATION.md` | `../INSTALL_VALIDATION.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
 | `DEMO.md` | `../DEMO.md` |
 | `reviews/CDR-001-ACCEPTANCE.md` | `../reviews/CDR-001-ACCEPTANCE.md` |
 | `updates/2026-09-21-project-foundation.md` | `../updates/2026-09-21-project-foundation.md` |
+| `updates/2026-09-21-cdr-010-install-verifier.md` | `../updates/2026-09-21-cdr-010-install-verifier.md` |
