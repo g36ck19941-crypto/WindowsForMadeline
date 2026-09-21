@@ -42,4 +42,4 @@ Run `.\tools\Verify-CDR012.ps1`. It runs the prior 15 and 27 regression cases pl
 
 Status: ready for developer acceptance
 
-Run `.\tools\Verify-CDR013.ps1`. It runs the prior 15, 27 and 35 regression cases plus 29 generated `.data`, immutability and API-surface cases. Expected result lines are `15/15`, `27/27`, `35/35` and `29/29`. No game file is opened and no decoded frame is persisted.
+Run `.\tools\Verify-CDR013.ps1`. It runs the prior 15, 27 and 35 regression cases plus 31 generated `.data`, fragmented-stream, immutability and API-surface cases. Expected result lines are `15/15`, `27/27`, `35/35` and `31/31`. No game file is opened and no decoded frame is persisted.

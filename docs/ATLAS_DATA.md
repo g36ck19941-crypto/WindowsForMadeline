@@ -43,7 +43,7 @@ Expected Release results:
 - CDR-010 regression: 15/15;
 - CDR-011 regression: 27/27;
 - CDR-012 regression: 35/35;
-- CDR-013 generated-data and API-surface tests: 29/29.
+- CDR-013 generated-data, fragmented-stream and API-surface tests: 31/31.
 
 ## Acceptance boundary
 

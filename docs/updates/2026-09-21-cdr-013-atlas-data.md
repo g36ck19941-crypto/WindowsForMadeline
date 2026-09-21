@@ -7,7 +7,7 @@ Date: 2026-09-21
 - Added immutable BGRA32 frame ownership and SHA-256 fingerprints.
 - Added a stream-only bounded `.data` run decoder.
 - Added strict alpha-flag, run-length, exact-fill and trailing-data validation.
-- Added 29 generated-data, immutability and API-surface tests.
+- Added 31 generated-data, fragmented-stream, immutability and API-surface tests.
 
 ## Role in the project
 
@@ -20,7 +20,7 @@ This supplies the in-memory pixels needed before later code can extract individu
 - CDR-010 regression: 15 passed, 0 failed.
 - CDR-011 regression: 27 passed, 0 failed.
 - CDR-012 regression: 35 passed, 0 failed.
-- CDR-013: 29 passed, 0 failed.
+- CDR-013: 31 passed, 0 failed.
 - Real installation access: 0.
 - Game/Everest/GUI launch: 0.
 - Commercial asset files: 0.

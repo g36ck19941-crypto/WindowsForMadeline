@@ -66,7 +66,7 @@
 - Owner: Primary
 - Scope: bounded `.data` RLE decoder to immutable BGRA32 buffers
 - State: ready for developer acceptance
-- Evidence: Release build 0 warnings/errors; CDR-010 15/15; CDR-011 27/27; CDR-012 35/35; CDR-013 29/29 generated-byte cases
+- Evidence: Release build 0 warnings/errors; CDR-010 15/15; CDR-011 27/27; CDR-012 35/35; CDR-013 31/31 generated-byte and fragmented-stream cases
 - Manual acceptance: `docs/zh-CN/ATLAS_DATA.md`, then run `.\tools\Verify-CDR013.ps1`
 - Gate: CDR-014 remains blocked until developer acceptance; no real install access
 

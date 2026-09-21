@@ -8,6 +8,8 @@ var tests = new (string Name, Action Body)[]
     ("multiple runs preserve order", MultipleRunsPreserveOrder),
     ("run may cross a row boundary", RunMayCrossRowBoundary),
     ("non-seekable input is supported", NonSeekableInputIsSupported),
+    ("short stream reads are supported", ShortStreamReadsAreSupported),
+    ("maximum byte run is supported", MaximumByteRunIsSupported),
     ("frame copies source pixels", FrameCopiesSourcePixels),
     ("frame copies returned pixels", FrameCopiesReturnedPixels),
     ("frame dimensions and stride are exact", FrameDimensionsAndStrideAreExact),
@@ -93,6 +95,25 @@ static void NonSeekableInputIsSupported()
     using var stream = new NonSeekableReadStream(WriteData(1, 1, false, Run(1, 0, 1, 2, 3)));
     var frame = new AtlasDataDecoder().Decode(stream);
     Assert(frame.Width == 1, "Non-seekable input did not decode.");
+}
+
+static void ShortStreamReadsAreSupported()
+{
+    using var stream = new ChunkedReadStream(
+        WriteData(1, 1, false, Run(1, 0, 1, 2, 3)),
+        maximumChunk: 1);
+
+    var frame = new AtlasDataDecoder().Decode(stream);
+
+    AssertPixels(frame.CopyPixels(), 1, 2, 3, 255);
+}
+
+static void MaximumByteRunIsSupported()
+{
+    var frame = Decode(WriteData(255, 1, false, Run(255, 0, 7, 8, 9)));
+
+    Assert(frame.PixelByteCount == 255 * 4, "Maximum byte run produced the wrong size.");
+    AssertPixels(frame.CopyPixels()[^4..], 7, 8, 9, 255);
 }
 
 static void FrameCopiesSourcePixels()
@@ -322,4 +343,31 @@ internal sealed class WriteOnlyStream : Stream
     public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
     public override void SetLength(long value) => throw new NotSupportedException();
     public override void Write(byte[] buffer, int offset, int count) { }
+}
+
+internal sealed class ChunkedReadStream : Stream
+{
+    private readonly MemoryStream _inner;
+    private readonly int _maximumChunk;
+
+    public ChunkedReadStream(byte[] bytes, int maximumChunk)
+    {
+        _inner = new MemoryStream(bytes, writable: false);
+        _maximumChunk = maximumChunk;
+    }
+
+    public override bool CanRead => true;
+    public override bool CanSeek => false;
+    public override bool CanWrite => false;
+    public override long Length => throw new NotSupportedException();
+    public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+    public override void Flush() => throw new NotSupportedException();
+    public override int Read(byte[] buffer, int offset, int count) =>
+        _inner.Read(buffer, offset, Math.Min(count, _maximumChunk));
+    public override int Read(Span<byte> buffer) => _inner.Read(buffer[..Math.Min(buffer.Length, _maximumChunk)]);
+    public override int ReadByte() => _inner.ReadByte();
+    public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+    public override void SetLength(long value) => throw new NotSupportedException();
+    public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+    protected override void Dispose(bool disposing) { if (disposing) _inner.Dispose(); base.Dispose(disposing); }
 }

@@ -4,7 +4,7 @@ Updated: 2026-09-21
 
 ## Current state
 
-CDR-001, CDR-010, CDR-011 and CDR-012 were accepted by the developer on 2026-09-21. Accepted CDR-012 was published to `codex/cdr-012-atlas-metadata` at `1417b42`; remote `main` remains `d237277`. CDR-013 now decodes bounded synthetic `.data` runs to immutable BGRA32 frames and passes CDR-010 15/15, CDR-011 27/27, CDR-012 35/35 and CDR-013 29/29. It is ready for developer acceptance. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
+CDR-001, CDR-010, CDR-011 and CDR-012 were accepted by the developer on 2026-09-21. Accepted CDR-012 was published to `codex/cdr-012-atlas-metadata` at `1417b42`; remote `main` remains `d237277`. CDR-013 now decodes bounded synthetic `.data` runs to immutable BGRA32 frames and passes CDR-010 15/15, CDR-011 27/27, CDR-012 35/35 and CDR-013 31/31, including single-byte fragmented stream reads and the 255-pixel maximum byte run. It is ready for developer acceptance. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
