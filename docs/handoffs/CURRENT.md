@@ -6,7 +6,7 @@ Updated: 2026-09-21
 
 CDR-001 foundation records are implemented and pending developer acceptance. The repository contains no product code and has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
-The review is consolidated in `docs/reviews/CDR-001-ACCEPTANCE.zh-CN.md` (Chinese) and `docs/reviews/CDR-001-ACCEPTANCE.md` (English); both map every CDR-001 requirement to authoritative evidence and define the exact acceptance boundary.
+The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
 GitHub connectivity was separately verified and confirmed effective by the developer. Remote `main` remains `d237277`; documentation-only branch `codex/connection-test-20260921` is at `df00e2c`. After a clean outgoing audit, the foundation history was published to independent branch `codex/cdr-001-foundation` at `5a1dd1f`. Future updates require explicit developer confirmation before push and a post-push explanation.
 

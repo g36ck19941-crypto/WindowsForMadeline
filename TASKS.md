@@ -15,8 +15,8 @@
   - asset safety and reference policy documented;
   - parity states and task order documented;
   - no product code, game read, GUI or Legacy mutation.
-- 中文验收：`docs/reviews/CDR-001-ACCEPTANCE.zh-CN.md`
-- English review: `docs/reviews/CDR-001-ACCEPTANCE.md`
+- Canonical review: `docs/reviews/CDR-001-ACCEPTANCE.md`
+- Developer-facing Chinese mirror: `docs/zh-CN/reviews/CDR-001-ACCEPTANCE.md`
 
 ### CDR-002 — Remote version-management contract
 

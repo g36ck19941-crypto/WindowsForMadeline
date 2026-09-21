@@ -7,7 +7,7 @@
 - Added the rule that product updates remain local until the developer confirms them effective; every approved push requires a change explanation and commercial-asset audit.
 - After developer confirmation, published the audited foundation history to independent branch `codex/cdr-001-foundation` at `5a1dd1f`; remote `main` remained unchanged.
 - Added a CDR-001 acceptance crosswalk and bounded manual-review procedure without introducing runtime code or assets.
-- Added a complete Simplified Chinese CDR-001 acceptance guide while retaining the English review.
+- Added an isolated `docs/zh-CN/` mirror of every CDR-001 review document while keeping English as the canonical implementation source.
 
 ## 2026-09-21 — Independent project foundation
 
