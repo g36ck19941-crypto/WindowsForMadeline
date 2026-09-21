@@ -60,6 +60,8 @@ Missing downstream events must be reported as the exact remaining boundary. `PRE
 
 Every error code has one owning subsystem. App may surface it but must not reinterpret it.
 
+AssetWorker supervision returns a stable operation code, bounded protocol detail code, state, observed exit code and recovery action. The process fallback event is `ASSET_WORKER_PROCESS_FAILED`; it is written as one bounded JSON record to stderr and never mixed with binary stdout IPC.
+
 ## 4. Storage and support bundle
 
 - Default log is bounded by size and generation count under the user-local app data directory.

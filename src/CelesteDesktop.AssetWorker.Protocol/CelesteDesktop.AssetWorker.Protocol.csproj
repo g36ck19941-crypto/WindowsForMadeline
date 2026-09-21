@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\CelesteDesktop.Contracts\CelesteDesktop.Contracts.csproj" />
+  </ItemGroup>
+</Project>

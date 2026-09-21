@@ -13,7 +13,7 @@
 
 ## 当前状态
 
-项目处于 `CDR-010 review`：基础合同已验收，显式安装结构验证器已用纯合成文件系统实现并通过测试；尚未读取真实安装或解析任何商业素材。
+项目处于 `CDR-011 review`：显式安装验证已验收，独立 AssetWorker 的有界生命周期 IPC 已实现并通过合成及真实 Worker 控制测试；尚未读取真实安装或解析任何商业素材。
 
 开始任何工作前阅读：
 
@@ -23,3 +23,4 @@
 4. `docs/ARCHITECTURE.md`
 5. `docs/DIAGNOSTICS.md`
 6. `docs/INSTALL_VALIDATION.md`
+7. `docs/ASSET_WORKER.md`

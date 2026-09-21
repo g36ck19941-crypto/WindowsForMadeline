@@ -17,6 +17,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Capability | Asset | Behavior | Integration | Human | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Explicit install structure validation | n/a | exact_offline | unstarted | n/a | Synthetic filesystem only; real conformance is CDR-016 |
+| AssetWorker protocol/lifecycle | n/a | exact_offline | partial | n/a | Real Worker lifecycle verified; no App or parser integration |
 | Madeline body animation | unstarted | unstarted | unstarted | unstarted | Original install only |
 | Player hair | unstarted | unstarted | unstarted | unstarted | Procedural nodes and masks |
 | Normal/Jump | n/a | unstarted | unstarted | unstarted | Fixed 60 Hz |

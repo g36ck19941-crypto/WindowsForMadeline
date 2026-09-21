@@ -25,3 +25,9 @@
 状态：开发者已于 2026-09-21 验收。
 
 运行 `.\tools\Verify-CDR010.ps1`。该演示会进行 Release 构建并运行 15 项内存合成文件系统用例，不发现也不读取真实安装。预期最后一行：`RESULT total=15 passed=15 failed=0`。
+
+## Demo 011 — 有界 Worker 生命周期
+
+状态：等待开发者验收。
+
+运行 `.\tools\Verify-CDR011.ps1`。它会运行 CDR-010 回归和 27 项 Worker 用例，其中包含一次真实隐藏项目 Worker 的 Start→Ping→Stop 生命周期。预期两组结果分别为 `15/15` 和 `27/27`。当前没有素材请求。

@@ -25,3 +25,9 @@ Guided acceptance: `docs/reviews/CDR-001-ACCEPTANCE.md` provides a requirement-t
 Status: accepted by the developer on 2026-09-21
 
 Run `.\tools\Verify-CDR010.ps1`. The demo builds Release and runs 15 in-memory filesystem cases. It neither discovers nor reads a real installation. Expected final line: `RESULT total=15 passed=15 failed=0`.
+
+## Demo 011 — Bounded Worker lifecycle
+
+Status: ready for developer acceptance
+
+Run `.\tools\Verify-CDR011.ps1`. It runs the CDR-010 regression and 27 Worker cases, including one real hidden project Worker Start→Ping→Stop lifecycle. Expected result lines are `15/15` and `27/27`. No asset request exists.

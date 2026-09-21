@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-011",
+  "title": "Bounded AssetWorker protocol and supervision",
+  "owner": "Primary agent",
+  "state": "ready_for_review",
+  "scope": [
+    "src/CelesteDesktop.Contracts/AssetWorker/**",
+    "src/CelesteDesktop.AssetWorker.Protocol/**",
+    "src/CelesteDesktop.AssetWorker.Client/**",
+    "src/CelesteDesktop.AssetWorker.Process/**",
+    "tests/CelesteDesktop.AssetWorker.Tests/**",
+    "tools/Verify-CDR011.ps1",
+    "task records and English/Chinese review documentation"
+  ],
+  "features": [
+    "versioned 4 KiB length-prefixed protocol",
+    "fixed lifecycle-only message allowlist",
+    "restricted hidden Worker launch",
+    "separate startup, request and shutdown timeouts",
+    "caller cancellation classification",
+    "crash and malformed-response containment",
+    "bounded termination and disposal",
+    "fresh-session recovery",
+    "structured operation and fallback failure evidence"
+  ],
+  "forbidden": [
+    "asset parsing",
+    "filesystem request messages",
+    "real Celeste installation access",
+    "Celeste or Everest launch",
+    "GUI or desktop observation",
+    "commercial asset persistence"
+  ],
+  "verificationCommand": ".\\tools\\Verify-CDR011.ps1",
+  "verificationResult": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0,
+    "cdr010RegressionTotal": 15,
+    "cdr010RegressionPassed": 15,
+    "cdr011TestsTotal": 27,
+    "cdr011TestsPassed": 27,
+    "cdr011TestsFailed": 0,
+    "realWorkerLifecycle": "Start-Ping-Stop passed"
+  },
+  "reviewArtifact": "docs/ASSET_WORKER.md",
+  "reviewArtifactZhCn": "docs/zh-CN/ASSET_WORKER.md",
+  "nextTask": "CDR-012",
+  "nextAction": "Obtain developer acceptance before implementing the bounded synthetic .meta parser."
+}

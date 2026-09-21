@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CelesteDesktop.Contracts\CelesteDesktop.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Protocol\CelesteDesktop.AssetWorker.Protocol.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Client\CelesteDesktop.AssetWorker.Client.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Process\CelesteDesktop.AssetWorker.Process.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+</Project>

@@ -8,6 +8,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.Install", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.Install.Tests", "tests\CelesteDesktop.Install.Tests\CelesteDesktop.Install.Tests.csproj", "{BB72B4EC-D4CE-4FA3-B324-177430582922}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.AssetWorker.Protocol", "src\CelesteDesktop.AssetWorker.Protocol\CelesteDesktop.AssetWorker.Protocol.csproj", "{A123AFB1-57E4-43F4-8B3A-66FA2D1BA740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.AssetWorker.Client", "src\CelesteDesktop.AssetWorker.Client\CelesteDesktop.AssetWorker.Client.csproj", "{B2A89132-4C98-4B27-867A-0FF7D0289669}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.AssetWorker.Process", "src\CelesteDesktop.AssetWorker.Process\CelesteDesktop.AssetWorker.Process.csproj", "{C35D46E8-FE9C-4A7C-8D4E-ABFD6A021992}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.AssetWorker.Tests", "tests\CelesteDesktop.AssetWorker.Tests\CelesteDesktop.AssetWorker.Tests.csproj", "{D4AECA5F-A104-42C9-BF92-2D22BD180E86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +34,21 @@ Global
 		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB72B4EC-D4CE-4FA3-B324-177430582922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A123AFB1-57E4-43F4-8B3A-66FA2D1BA740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A123AFB1-57E4-43F4-8B3A-66FA2D1BA740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A123AFB1-57E4-43F4-8B3A-66FA2D1BA740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A123AFB1-57E4-43F4-8B3A-66FA2D1BA740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A89132-4C98-4B27-867A-0FF7D0289669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A89132-4C98-4B27-867A-0FF7D0289669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A89132-4C98-4B27-867A-0FF7D0289669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A89132-4C98-4B27-867A-0FF7D0289669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C35D46E8-FE9C-4A7C-8D4E-ABFD6A021992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C35D46E8-FE9C-4A7C-8D4E-ABFD6A021992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C35D46E8-FE9C-4A7C-8D4E-ABFD6A021992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C35D46E8-FE9C-4A7C-8D4E-ABFD6A021992}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4AECA5F-A104-42C9-BF92-2D22BD180E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4AECA5F-A104-42C9-BF92-2D22BD180E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4AECA5F-A104-42C9-BF92-2D22BD180E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4AECA5F-A104-42C9-BF92-2D22BD180E86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

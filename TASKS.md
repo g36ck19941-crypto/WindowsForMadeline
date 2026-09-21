@@ -29,7 +29,7 @@
   - test branch `codex/connection-test-20260921` was created at `df00e2c`;
   - the test commit contains one documentation file and no commercial asset or product claim.
   - after confirmation and a clean outgoing audit, foundation branch `codex/cdr-001-foundation` was published at `5a1dd1f`.
-- Gate: satisfied for CDR-002 only; CDR-001 remains independently pending review.
+- Gate: CDR-002 was satisfied independently; CDR-001 was subsequently accepted under its own review.
 
 ## P1 — Safe asset foundation
 
@@ -45,8 +45,12 @@
 
 ### CDR-011 — AssetWorker protocol and supervision
 
+- Owner: Primary
 - Scope: bounded IPC contracts, worker lifecycle, timeout, cancellation and crash recovery
-- Gate: worker crash/timeout/malformed envelope cannot crash or hang App; no parser yet
+- State: implemented and verified; pending developer acceptance
+- Evidence: Release build 0 warnings/errors; CDR-010 regression 15/15; CDR-011 27/27 including real hidden Worker Start/Ping/Stop
+- Manual acceptance: `docs/zh-CN/ASSET_WORKER.md`, then run `.\tools\Verify-CDR011.ps1`
+- Gate: developer acceptance before CDR-012; no parser or real install access
 
 ### CDR-012 — Atlas metadata reader
 
