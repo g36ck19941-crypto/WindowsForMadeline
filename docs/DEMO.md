@@ -28,6 +28,12 @@ Run `.\tools\Verify-CDR010.ps1`. The demo builds Release and runs 15 in-memory f
 
 ## Demo 011 — Bounded Worker lifecycle
 
-Status: ready for developer acceptance
+Status: accepted by the developer on 2026-09-21
 
 Run `.\tools\Verify-CDR011.ps1`. It runs the CDR-010 regression and 27 Worker cases, including one real hidden project Worker Start→Ping→Stop lifecycle. Expected result lines are `15/15` and `27/27`. No asset request exists.
+
+## Demo 012 — Synthetic Atlas metadata reader
+
+Status: ready for developer acceptance
+
+Run `.\tools\Verify-CDR012.ps1`. It runs the prior 15 and 27 regression cases plus 32 metadata/API-surface cases. Expected result lines are `15/15`, `27/27` and `32/32`. No game file is opened.

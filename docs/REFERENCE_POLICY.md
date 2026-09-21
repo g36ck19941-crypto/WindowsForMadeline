@@ -17,3 +17,5 @@
 - If sources disagree, mark the capability `unknown` until resolved.
 
 `solstice23/desk-madeline` establishes that direct Atlas reading and DirectComposition presentation are feasible. It is not the code base, architecture owner or fidelity oracle for this project.
+
+For CDR-012, the public Crunch binary-format description supplied the packer's field vocabulary, while desk-madeline was used only as secondary confirmation of the `.meta` header and stored trim-offset interpretation. The local reader, contracts, budgets, validation flow and tests were independently designed. Real-install conformance remains unknown until CDR-016.

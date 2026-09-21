@@ -14,6 +14,8 @@
 - Recorded developer acceptance of CDR-010 and authorization to begin bounded CDR-011 AssetWorker protocol and supervision.
 - Added CDR-011 independent Worker process, bounded lifecycle protocol, restricted launch, timeout/cancellation/crash supervision, recovery and 27 verification cases.
 - Recorded developer acceptance of CDR-011 and authorization to publish it and begin the synthetic-only CDR-012 `.meta` parser.
+- Published accepted CDR-011 to `codex/cdr-011-asset-worker` at `b918996`; remote `main` remained unchanged.
+- Added CDR-012 immutable atlas descriptors, bounded stream-only `.meta` parsing, stable validation failures and 32 verification cases.
 
 ## 2026-09-21 — Independent project foundation
 

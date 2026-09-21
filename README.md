@@ -13,7 +13,7 @@
 
 ## 当前状态
 
-项目处于 `CDR-012 implementation`：显式安装验证与独立 AssetWorker 有界生命周期 IPC 均已验收；当前开始使用纯合成字节实现 `.meta` 解析器，尚未读取真实安装或解析任何商业素材。
+项目处于 `CDR-012 review`：显式安装验证与独立 AssetWorker 有界生命周期 IPC 均已验收；纯合成 `.meta` 解析器已实现并通过测试，尚未读取真实安装或解析任何商业素材。
 
 开始任何工作前阅读：
 
@@ -24,3 +24,4 @@
 5. `docs/DIAGNOSTICS.md`
 6. `docs/INSTALL_VALIDATION.md`
 7. `docs/ASSET_WORKER.md`
+8. `docs/ATLAS_METADATA.md`
