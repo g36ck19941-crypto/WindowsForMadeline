@@ -1,0 +1,12 @@
+# Project Memory
+
+Last verified: 2026-09-21
+
+- 用户要求从全新项目角度实现原版 Madeline 与 Theo、Glider、Spring 等交互实体；不还原关卡。
+- 产品运行时不得启动 Celeste/Everest，而是只读解析用户正版安装中的 Atlas、Sprites 元数据和后续明确批准的音频数据。
+- 项目必须拆成小模块，细化结构化日志，并使解析、模拟、桌面几何、渲染和 App 生命周期故障可独立定位。
+- 外部 `solstice23/desk-madeline` 只作为格式可行性与桌面架构参考；不得复制其 `CelesteAtlas`、`Player`、`PetWindow` 或其他实现。
+- Celeste 官方公开源码仅覆盖仓库中公开代码，商业游戏和素材不在其 MIT 范围内；商业字节只允许保留在用户本机。
+- Legacy 仓库 `C:\supermadeline\DesktopSummit` 在迁移决策时为分支 `feature/ds015h-hidden-runtime-poc`、HEAD `12d21321acc37ca366d2c449155fd4bfb78a7d92`、工作树干净。Legacy 未被删除或修改。
+- 新仓库初始阶段只建立合同和计划；尚未读取游戏安装、启动 GUI、生成缓存或实现产品代码。
+

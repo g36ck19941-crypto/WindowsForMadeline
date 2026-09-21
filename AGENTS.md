@@ -1,0 +1,47 @@
+# Celeste Desktop Runtime — Agent Contract
+
+本文件是仓库级强制合同。冲突、范围不明或证据不足时停止并报告，不得自行扩大任务。
+
+## 1. 产品与法律边界
+
+- 产品运行时不得启动、注入、控制或修改 Celeste/Everest。
+- 只允许读取用户明确选择或经过验证的正版 Celeste 安装目录。
+- 不得向游戏安装目录写入文件，不得修改配置、白名单、Mod 或可执行文件。
+- 不得提交、缓存到仓库、打包或分发 Celeste 商业美术、音频、地图或其他商业数据。
+- Celeste 官方公开代码、用户本机程序集和外部项目只作为事实与行为证据；实现必须重新设计，不得逐行复制。
+- 未通过证据门禁的功能必须标为 `partial`、`unknown` 或 `unsupported`，不得描述为完美还原。
+
+## 2. 模块隔离
+
+- `Contracts` 只定义稳定数据与错误合同，不依赖系统、图形或游戏文件。
+- `AssetWorker` 是独立、低权限、只读进程；解析异常不得拖垮 App。
+- `Simulation.Core` 必须纯确定性、固定 60 Hz，不依赖素材、GUI、Win32、音频或文件系统。
+- 每种实体拥有独立模块和测试；一个实体失败不得禁用其他实体或玩家。
+- `Desktop` 只提供匿名几何、可见表面与速度，不读取窗口标题、内容或输入文本。
+- `Rendering` 只呈现不可变帧与快照，不修改模拟状态。
+- `App` 只负责组装、生命周期、可见暂停和可靠退出，不承载玩法规则。
+
+## 3. 诊断真实性
+
+- 使用 `docs/DIAGNOSTICS.md` 中的稳定事件 ID 与结构化字段。
+- `asset_resolved`、`entity_spawned`、`render_submitted`、`frame_presented`、`human_visible` 是不同事实，不得互相替代。
+- 捕获异常类型、消息、HResult、完整 stack、inner exception、阶段、资源/实体 ID 和恢复状态。
+- 日志不得记录原始商业像素、键盘文本、窗口标题、凭据或无关个人数据。
+- 禁止静默 fallback。诊断占位图必须标为 `diagnostic_placeholder=true`，不得伪装成真实素材。
+
+## 4. 证据与完成标准
+
+- 素材精确性、行为精确性、桌面集成和人工可见性分别验收。
+- 所有模拟机制必须有确定性逐 tick 测试；真实素材检查不得替代合成负例测试。
+- 普通 CI 不依赖 Celeste 安装。真实安装测试必须显式 opt-in、只读并生成不含商业字节的摘要证据。
+- 每项任务必须在 `TASKS.md` 中有 owner、文件范围、验收标准和下一门禁。
+- 重大架构或边界变更更新 `PROJECT_MEMORY.md`、`STATUS.md`、`CHANGELOG.md`、`docs/updates/` 与当前交接。
+- 未经明确授权，不启动 GUI、不进行真实桌面观察、不读取本机游戏安装目录。
+
+## 5. 工作与上下文纪律
+
+- 默认单窗口、Primary owner；未获明确授权不得创建并行执行窗口或子代理。
+- 保留短小可回滚提交。修改后先跑最窄测试，再跑当前阶段规定的完整验证。
+- 若上下文开始影响推理质量，停止修改，更新 `docs/handoffs/CURRENT.md` 并要求新窗口接手。
+- 旧仓库 `C:\supermadeline\DesktopSummit` 是只读 Legacy 参考，不得从中复制实现或继续开发，除非用户另行授权。
+

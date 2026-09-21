@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-001",
+  "title": "Independent architecture and diagnostics foundation",
+  "owner": "Primary agent",
+  "state": "ready_for_review",
+  "branch": "main",
+  "scope": [
+    "repository foundation records",
+    "architecture contract",
+    "diagnostics contract",
+    "asset safety contract",
+    "parity matrix",
+    "task sequencing"
+  ],
+  "forbidden": [
+    "product implementation",
+    "Celeste or Everest process launch",
+    "GUI or real desktop observation",
+    "real game installation access",
+    "game installation writes",
+    "commercial asset persistence or distribution",
+    "DesktopSummit Legacy mutation",
+    "external source copying"
+  ],
+  "acceptanceCriteria": [
+    "module and process boundaries are explicit",
+    "health-chain events cannot conflate parsing, spawn, render and human visibility",
+    "asset parsing is read-only, bounded and fail-closed",
+    "parity states separate asset, behavior, integration and human evidence",
+    "next implementation task is limited to synthetic install validation"
+  ],
+  "nextTask": "CDR-010",
+  "nextAction": "Obtain developer review before implementing an injectable install verifier with synthetic fixtures only."
+}

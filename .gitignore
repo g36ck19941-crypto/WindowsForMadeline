@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+.idea/
+artifacts/
+TestResults/
+*.user
+*.suo
+*.log
+settings.local.json
+celeste-path.txt
+local-assets/
+local-cache/
+support-bundles/
+
