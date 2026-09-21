@@ -3,7 +3,7 @@
   "taskId": "CDR-012",
   "title": "Bounded synthetic atlas metadata reader",
   "owner": "Primary agent",
-  "state": "ready_for_review",
+  "state": "accepted",
   "scope": [
     "src/CelesteDesktop.Contracts/Assets/**",
     "src/CelesteDesktop.AssetWorker.Meta/**",
@@ -43,6 +43,8 @@
   },
   "reviewArtifact": "docs/ATLAS_METADATA.md",
   "reviewArtifactZhCn": "docs/zh-CN/ATLAS_METADATA.md",
+  "acceptedDate": "2026-09-21",
+  "acceptanceScope": "CDR-013 bounded synthetic .data RLE decoder only",
   "nextTask": "CDR-013",
-  "nextAction": "Obtain developer acceptance before implementing the bounded synthetic .data RLE decoder."
+  "nextAction": "Implement bounded .data RLE decoding using generated pixel runs only."
 }

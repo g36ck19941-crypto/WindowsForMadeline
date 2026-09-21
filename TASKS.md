@@ -56,10 +56,10 @@
 
 - Owner: Primary
 - Scope: independent `.meta` reader into immutable descriptors
-- State: implemented and verified; pending developer acceptance
+- State: accepted by developer on 2026-09-21
 - Evidence: Release build 0 warnings/errors; CDR-010 15/15; CDR-011 27/27; CDR-012 35/35 generated-byte cases
 - Manual acceptance: `docs/zh-CN/ATLAS_METADATA.md`, then run `.\tools\Verify-CDR012.ps1`
-- Gate: developer acceptance before CDR-013; no `.data` decode or real install access
+- Gate: satisfied for CDR-012; CDR-013 synthetic decoder authorized, with no real install access
 
 ### CDR-013 — Atlas page decoder
 

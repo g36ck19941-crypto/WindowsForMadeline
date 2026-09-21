@@ -16,6 +16,7 @@
 - Recorded developer acceptance of CDR-011 and authorization to publish it and begin the synthetic-only CDR-012 `.meta` parser.
 - Published accepted CDR-011 to `codex/cdr-011-asset-worker` at `b918996`; remote `main` remained unchanged.
 - Added CDR-012 immutable atlas descriptors, bounded stream-only `.meta` parsing, stable validation failures and 35 verification cases, including Windows-ambiguous logical paths.
+- Recorded developer acceptance of CDR-012 and authorization to publish it and begin the synthetic-only CDR-013 `.data` RLE decoder.
 
 ## 2026-09-21 — Independent project foundation
 
