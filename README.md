@@ -13,7 +13,7 @@
 
 ## 当前状态
 
-项目处于 `CDR-013 implementation`：安装验证、AssetWorker 生命周期和纯合成 `.meta` 解析器均已验收；当前开始使用程序生成的游程实现 `.data` 像素解码，尚未读取真实安装或商业素材。
+项目处于 `CDR-013 ready for acceptance`：纯合成 `.data` 解码器已把生成的游程转换为不可变 BGRA32 像素，并通过完整回归；尚未读取真实安装或商业素材，也未开始 `Sprites.xml` 解析。
 
 开始任何工作前阅读：
 
@@ -25,3 +25,4 @@
 6. `docs/INSTALL_VALIDATION.md`
 7. `docs/ASSET_WORKER.md`
 8. `docs/ATLAS_METADATA.md`
+9. `docs/ATLAS_DATA.md`

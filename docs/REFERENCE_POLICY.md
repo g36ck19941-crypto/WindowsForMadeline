@@ -19,3 +19,5 @@
 `solstice23/desk-madeline` establishes that direct Atlas reading and DirectComposition presentation are feasible. It is not the code base, architecture owner or fidelity oracle for this project.
 
 For CDR-012, the public Crunch binary-format description supplied the packer's field vocabulary, while desk-madeline was used only as secondary confirmation of the `.meta` header and stored trim-offset interpretation. The local reader, contracts, budgets, validation flow and tests were independently designed. Real-install conformance remains unknown until CDR-016.
+
+For CDR-013, the public Monocle mirror confirms that Packer metadata resolves page names to `.data` streams, but its mirrored version does not expose the Celeste-branch run decoder. The run layout was recorded as a local synthetic contract from secondary format observations. The decoder types, budgets, validation order, immutable output and tests were independently designed; no external source was copied. Real-install conformance remains unknown until CDR-016.

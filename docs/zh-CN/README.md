@@ -18,6 +18,7 @@
 | `INSTALL_VALIDATION.md` | `../INSTALL_VALIDATION.md` |
 | `ASSET_WORKER.md` | `../ASSET_WORKER.md` |
 | `ATLAS_METADATA.md` | `../ATLAS_METADATA.md` |
+| `ATLAS_DATA.md` | `../ATLAS_DATA.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -27,3 +28,4 @@
 | `updates/2026-09-21-cdr-010-install-verifier.md` | `../updates/2026-09-21-cdr-010-install-verifier.md` |
 | `updates/2026-09-21-cdr-011-asset-worker.md` | `../updates/2026-09-21-cdr-011-asset-worker.md` |
 | `updates/2026-09-21-cdr-012-atlas-metadata.md` | `../updates/2026-09-21-cdr-012-atlas-metadata.md` |
+| `updates/2026-09-21-cdr-013-atlas-data.md` | `../updates/2026-09-21-cdr-013-atlas-data.md` |

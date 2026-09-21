@@ -1,6 +1,6 @@
 # 项目进度面板
 
-> 最后更新：2026-09-21 ｜ 当前阶段：CDR-013 synthetic `.data` decoder ｜ 状态：authorized
+> 最后更新：2026-09-21 ｜ 当前阶段：CDR-013 synthetic `.data` decoder ｜ 状态：ready for developer acceptance
 
 ## 已完成
 
@@ -22,17 +22,19 @@
 - ✅ 开发者已授权上传 CDR-011，并开始 CDR-012 的纯合成 `.meta` 解析器。
 - ✅ CDR-012 已实现有界 `.meta` 字节流解析、不可变描述和稳定错误；35/35 合成测试通过，并已由开发者验收。
 - ✅ 开发者已授权上传 CDR-012，并开始 CDR-013 的纯合成 `.data` RLE 解码器。
+- ✅ CDR-012 已上传到独立分支 `codex/cdr-012-atlas-metadata`，指向 `1417b42`；远程 `main` 未修改。
+- ✅ CDR-013 已实现有界 `.data` 游程解码、不可变 BGRA32 帧和稳定指纹；29/29 合成测试及全部回归通过。
 
 ## 当前不具备
 
-- ⬜ 尚无 App、模拟、渲染或 GUI 项目；AssetWorker 仅具备生命周期通信，尚无素材请求或解析器。
+- ⬜ 尚无 App、模拟、渲染或 GUI 项目；Worker 尚未接入素材请求，现有 `.meta`/`.data` 解析器仍为独立纯函数模块。
 - ⬜ 未定位或读取 Celeste 安装。
-- ⬜ 未实现 Atlas/Sprites.xml 解析。
+- ⬜ 未实现 `Sprites.xml` 解析，也未把 Atlas 元数据与图页解码连接成素材目录。
 - ⬜ 未实现模拟、实体、渲染或桌面集成。
 - ⬜ 未进行 GUI 或真实桌面测试。
 
 ## 下一门禁
 
-完成 CDR-013 的纯合成 `.data` RLE 解码器、负例测试和中英文验收文档；不得读取真实游戏安装。CDR-013 验收前不得开始 `Sprites.xml` 解析。
+请开发者按 `docs/zh-CN/ATLAS_DATA.md` 验收 CDR-013。验收前不得开始 `Sprites.xml` 解析；验收只授权 CDR-014 的合成 XML 夹具，不授权真实游戏安装。
 
-CDR-011 已上传到 `codex/cdr-011-asset-worker` 的 `b918996`。CDR-012 已获上传授权；远程 `main` 仍不得修改。
+CDR-012 已上传到 `codex/cdr-012-atlas-metadata` 的 `1417b42`。CDR-013 仍仅为本地待验收提交；远程 `main` 仍不得修改。

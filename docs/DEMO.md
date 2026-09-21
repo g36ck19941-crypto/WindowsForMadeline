@@ -34,6 +34,12 @@ Run `.\tools\Verify-CDR011.ps1`. It runs the CDR-010 regression and 27 Worker ca
 
 ## Demo 012 — Synthetic Atlas metadata reader
 
-Status: ready for developer acceptance
+Status: accepted by the developer on 2026-09-21
 
 Run `.\tools\Verify-CDR012.ps1`. It runs the prior 15 and 27 regression cases plus 35 metadata/API-surface cases. Expected result lines are `15/15`, `27/27` and `35/35`. No game file is opened.
+
+## Demo 013 — Synthetic Atlas page decoder
+
+Status: ready for developer acceptance
+
+Run `.\tools\Verify-CDR013.ps1`. It runs the prior 15, 27 and 35 regression cases plus 29 generated `.data`, immutability and API-surface cases. Expected result lines are `15/15`, `27/27`, `35/35` and `29/29`. No game file is opened and no decoded frame is persisted.
