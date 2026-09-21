@@ -6,7 +6,7 @@ Updated: 2026-09-21
 
 CDR-001 foundation records are implemented and pending developer acceptance. The repository contains no product code and has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
-GitHub connectivity was separately verified. Remote `main` remains `d237277`; documentation-only branch `codex/connection-test-20260921` was pushed at `df00e2c`. The local foundation history has not been pushed as a formal update. Future updates require explicit developer confirmation before push and a post-push explanation.
+GitHub connectivity was separately verified and confirmed effective by the developer. Remote `main` remains `d237277`; documentation-only branch `codex/connection-test-20260921` is at `df00e2c`. After a clean outgoing audit, the foundation history was published to independent branch `codex/cdr-001-foundation` at `5a1dd1f`. Future updates require explicit developer confirmation before push and a post-push explanation.
 
 Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds015h-hidden-runtime-poc`, HEAD `12d21321acc37ca366d2c449155fd4bfb78a7d92`, and was not modified.
 
@@ -14,7 +14,7 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 Review `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DIAGNOSTICS.md`, `docs/ASSET_SAFETY.md`, `docs/PARITY.md` and `TASKS.md`. After explicit developer acceptance, implement only CDR-010's injectable install verifier with synthetic fixtures. Do not scan the machine or read the real game installation without separate authorization.
 
-Also obtain developer confirmation that the GitHub write test is effective before pushing any formal project branch.
+Do not interpret the completed GitHub write test as CDR-001 acceptance. Obtain explicit CDR-001 architecture-boundary acceptance before implementing CDR-010.
 
 ## Current ownership
 

@@ -20,12 +20,13 @@
 
 - Owner: Primary
 - Scope: remote configuration, documentation-only write test and repository records
-- State: connection/write verified, pending developer confirmation
+- State: complete after developer confirmation
 - Evidence:
   - remote `main` remained at `d237277`;
   - test branch `codex/connection-test-20260921` was created at `df00e2c`;
   - the test commit contains one documentation file and no commercial asset or product claim.
-- Gate: developer confirms the write test is effective before any formal project branch is pushed.
+  - after confirmation and a clean outgoing audit, foundation branch `codex/cdr-001-foundation` was published at `5a1dd1f`.
+- Gate: satisfied for CDR-002 only; CDR-001 remains independently pending review.
 
 ## P1 — Safe asset foundation
 

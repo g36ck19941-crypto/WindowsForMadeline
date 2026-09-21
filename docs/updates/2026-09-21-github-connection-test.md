@@ -20,4 +20,6 @@ No Celeste artwork, audio, atlas, decoded frame, binary, cache, installation pat
 
 ## Remaining gate
 
-The developer must confirm the write test is effective. Only afterward may an already verified project update be pushed, and every such push requires its own explicit confirmation and explanation.
+The developer confirmed the write test effective on 2026-09-21. After an outgoing tree audit found zero commercial assets, decoded frames, audio, binaries, caches or game-install paths, the foundation history was published to independent branch `codex/cdr-001-foundation` at `5a1dd1f11bf1e9c104ddbddadbe7eb0cea657a06`. Remote `main` remained `d237277e10af090cf60ec015c22174565e6cdc0a`.
+
+CDR-001 architecture acceptance remains a separate gate. Every later project update still requires its own effectiveness confirmation before push.
