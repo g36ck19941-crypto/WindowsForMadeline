@@ -47,10 +47,10 @@
 
 - Owner: Primary
 - Scope: bounded IPC contracts, worker lifecycle, timeout, cancellation and crash recovery
-- State: implemented and verified; pending developer acceptance
+- State: accepted by developer on 2026-09-21
 - Evidence: Release build 0 warnings/errors; CDR-010 regression 15/15; CDR-011 27/27 including real hidden Worker Start/Ping/Stop
 - Manual acceptance: `docs/zh-CN/ASSET_WORKER.md`, then run `.\tools\Verify-CDR011.ps1`
-- Gate: developer acceptance before CDR-012; no parser or real install access
+- Gate: satisfied for CDR-011; CDR-012 synthetic parser authorized, with no real install access
 
 ### CDR-012 — Atlas metadata reader
 

@@ -13,6 +13,7 @@
 - Added CDR-010 explicit install structure validation, metadata-only filesystem abstraction, bounded issue contracts, 15 synthetic tests and an isolated offline verification command.
 - Recorded developer acceptance of CDR-010 and authorization to begin bounded CDR-011 AssetWorker protocol and supervision.
 - Added CDR-011 independent Worker process, bounded lifecycle protocol, restricted launch, timeout/cancellation/crash supervision, recovery and 27 verification cases.
+- Recorded developer acceptance of CDR-011 and authorization to publish it and begin the synthetic-only CDR-012 `.meta` parser.
 
 ## 2026-09-21 — Independent project foundation
 

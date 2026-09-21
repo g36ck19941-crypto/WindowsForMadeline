@@ -3,7 +3,7 @@
   "taskId": "CDR-011",
   "title": "Bounded AssetWorker protocol and supervision",
   "owner": "Primary agent",
-  "state": "ready_for_review",
+  "state": "accepted",
   "scope": [
     "src/CelesteDesktop.Contracts/AssetWorker/**",
     "src/CelesteDesktop.AssetWorker.Protocol/**",
@@ -46,6 +46,8 @@
   },
   "reviewArtifact": "docs/ASSET_WORKER.md",
   "reviewArtifactZhCn": "docs/zh-CN/ASSET_WORKER.md",
+  "acceptedDate": "2026-09-21",
+  "acceptanceScope": "CDR-012 bounded synthetic .meta parser only",
   "nextTask": "CDR-012",
-  "nextAction": "Obtain developer acceptance before implementing the bounded synthetic .meta parser."
+  "nextAction": "Implement the bounded .meta parser using synthetic byte fixtures only."
 }

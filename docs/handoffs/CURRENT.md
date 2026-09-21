@@ -4,7 +4,7 @@ Updated: 2026-09-21
 
 ## Current state
 
-CDR-001 and CDR-010 were accepted by the developer on 2026-09-21. CDR-011 is implemented locally and ready for review: CDR-010 regression 15/15 and CDR-011 27/27 pass, including a real hidden Worker Start/Ping/Stop lifecycle. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
+CDR-001, CDR-010 and CDR-011 were accepted by the developer on 2026-09-21. CDR-011 passed CDR-010 regression 15/15 and CDR-011 27/27, including a real hidden Worker Start/Ping/Stop lifecycle. The developer authorized publishing CDR-011 and starting CDR-012 with synthetic bytes only. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Run `.\tools\Verify-CDR011.ps1` and review `docs/ASSET_WORKER.md` plus `docs/zh-CN/ASSET_WORKER.md`. Obtain explicit developer acceptance before starting CDR-012. Do not add a parser during review fixes or read a real game installation.
+Audit and publish the accepted CDR-011 commit to `codex/cdr-011-asset-worker`, then implement CDR-012 as a bounded `.meta` parser with synthetic byte fixtures only. Do not read a real game installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-011 review fixes, tests and records only until accepted
-- Forbidden: CDR-012 implementation, asset parsing, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence
+- Scope: CDR-012 parser, synthetic fixtures, tests and records
+- Forbidden: `.data` decoding, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence
