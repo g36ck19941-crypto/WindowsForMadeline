@@ -3,7 +3,7 @@
   "taskId": "CDR-013",
   "title": "Bounded synthetic atlas page decoder",
   "owner": "Primary agent",
-  "state": "ready_for_developer_acceptance",
+  "state": "accepted",
   "scope": [
     "src/CelesteDesktop.Contracts/Assets/Bgra32Frame.cs",
     "src/CelesteDesktop.AssetWorker.Data/**",
@@ -56,7 +56,8 @@
   },
   "reviewArtifact": "docs/ATLAS_DATA.md",
   "reviewArtifactZhCn": "docs/zh-CN/ATLAS_DATA.md",
+  "acceptedDate": "2026-09-21",
   "acceptanceScope": "CDR-014 bounded synthetic Sprites.xml reader only",
   "nextTask": "CDR-014",
-  "nextAction": "Wait for developer acceptance before starting Sprites.xml parsing."
+  "nextAction": "Implement bounded Sprites.xml parsing using generated XML fixtures only."
 }

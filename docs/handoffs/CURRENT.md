@@ -4,7 +4,7 @@ Updated: 2026-09-21
 
 ## Current state
 
-CDR-001, CDR-010, CDR-011 and CDR-012 were accepted by the developer on 2026-09-21. Accepted CDR-012 was published to `codex/cdr-012-atlas-metadata` at `1417b42`; remote `main` remains `d237277`. CDR-013 now decodes bounded synthetic `.data` runs to immutable BGRA32 frames and passes CDR-010 15/15, CDR-011 27/27, CDR-012 35/35 and CDR-013 31/31. Its acceptance repair adds a cumulative generated Atlas demo: CDR-012 parses one page/two entries, CDR-013 decodes 48 pixels, and an offline HTML report plus safe manifest are produced. Root `.cmd` files provide double-click demo and verification entry points. It is ready for developer acceptance. The agent has not launched Celeste/Everest, a browser, GUI, real desktop geometry or game installation files.
+CDR-001 and CDR-010 through CDR-013 were accepted by the developer on 2026-09-21. Accepted CDR-012 was published to `codex/cdr-012-atlas-metadata` at `1417b42`; remote `main` remains `d237277`. CDR-013 decodes bounded synthetic `.data` runs to immutable BGRA32 frames and passes CDR-010 15/15, CDR-011 27/27, CDR-012 35/35 and CDR-013 31/31. Its cumulative generated Atlas demo parses one page/two entries, decodes 48 pixels, and produces an offline HTML report plus safe manifest. The developer accepted it and authorized publishing it plus starting CDR-014 with generated XML fixtures only. The agent has not launched Celeste/Everest, a browser, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Present the two verified double-click launchers for developer acceptance. Report generation and command execution have been checked without opening a browser; visual browser acceptance remains with the developer. Do not start CDR-014 until acceptance. If accepted, audit and publish CDR-013 to `codex/cdr-013-atlas-data`, then implement CDR-014 with generated XML fixtures only.
+Audit and publish accepted CDR-013 to `codex/cdr-013-atlas-data`, then implement CDR-014 as a bounded `Sprites.xml` reader using generated XML fixtures only. Do not read a real game installation or start CDR-015.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-013 cumulative generated-data demo, developer launchers, acceptance evidence and in-scope defect correction
-- Forbidden: `Sprites.xml` parsing before acceptance, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence
+- Scope: CDR-014 bounded sprite metadata contracts, reader, generated XML tests, verification and task records
+- Forbidden: CDR-015 catalog implementation, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence

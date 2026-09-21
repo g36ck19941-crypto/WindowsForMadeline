@@ -65,14 +65,16 @@
 
 - Owner: Primary
 - Scope: bounded `.data` RLE decoder to immutable BGRA32 buffers, cumulative generated-data progress demo and developer launchers
-- State: ready for developer acceptance
+- State: accepted by developer on 2026-09-21
 - Evidence: Release build 0 warnings/errors; CDR-010 15/15; CDR-011 27/27; CDR-012 35/35; CDR-013 31/31 generated-byte and fragmented-stream cases
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the generated report, then double-click `验证当前版本.cmd`; details are in `docs/zh-CN/ATLAS_DATA.md`
-- Gate: CDR-014 remains blocked until developer acceptance; no real install access
+- Gate: satisfied for CDR-013; CDR-014 synthetic XML parsing authorized, with no real install access
 
 ### CDR-014 — Sprite metadata reader
 
+- Owner: Primary
 - Scope: hardened `Sprites.xml` reader for explicit allowlisted player/entity definitions
+- State: authorized; implementation starting with generated XML fixtures only
 - Gate: bounded XML fixtures, animation/frame/origin/hair metadata, duplicate/missing/unknown-node negatives
 
 ### CDR-015 — Normalized asset catalog

@@ -22,6 +22,7 @@
 - Hardened CDR-013 to 31 cases with fragmented-stream and maximum-run coverage.
 - Added a cumulative generated Atlas progress demo that runs CDR-012 metadata parsing and CDR-013 pixel decoding, writes an offline HTML report and safe manifest, and persists zero commercial bytes.
 - Added developer-facing double-click launchers `演示当前进度.cmd` and `验证当前版本.cmd`; PowerShell remains an internal implementation detail.
+- Recorded developer acceptance of CDR-013 and authorization to publish it and begin the synthetic-only CDR-014 `Sprites.xml` reader.
 
 ## 2026-09-21 — Independent project foundation
 

@@ -1,6 +1,6 @@
 # 项目进度面板
 
-> 最后更新：2026-09-21 ｜ 当前阶段：CDR-013 synthetic `.data` decoder ｜ 状态：ready for developer acceptance
+> 最后更新：2026-09-21 ｜ 当前阶段：CDR-014 synthetic `Sprites.xml` reader ｜ 状态：authorized
 
 ## 已完成
 
@@ -26,6 +26,7 @@
 - ✅ CDR-013 已实现有界 `.data` 游程解码、不可变 BGRA32 帧和稳定指纹；31/31 合成与分段流测试及全部回归通过。
 - ✅ CDR-013 已增加累计项目演示：程序生成的 `.meta` 与 `.data` 实际经过两个解析器，输出包含像素图页、目录框、指纹和限制说明的本地 HTML；商业素材字节为 0。
 - ✅ 根目录已提供 `演示当前进度.cmd` 与 `验证当前版本.cmd` 双击入口；PowerShell 仅作为内部验证实现。
+- ✅ 开发者已验收 CDR-013，并授权上传该版本及开始 CDR-014 的纯合成 `Sprites.xml` 读取器。
 
 ## 当前不具备
 
@@ -37,6 +38,6 @@
 
 ## 下一门禁
 
-请开发者先双击 `演示当前进度.cmd` 查看累计输出，再双击 `验证当前版本.cmd` 核对工程门禁，并按 `docs/zh-CN/ATLAS_DATA.md` 验收 CDR-013。验收前不得开始 `Sprites.xml` 解析；验收只授权 CDR-014 的合成 XML 夹具，不授权真实游戏安装。
+完成 CDR-014 的有界 `Sprites.xml` 读取器、程序生成 XML 正负例、英文规范与中文验收说明。不得读取真实游戏安装，不得启动游戏或 GUI，也不得提前实现 CDR-015 素材目录。
 
-CDR-012 已上传到 `codex/cdr-012-atlas-metadata` 的 `1417b42`。CDR-013 仍仅为本地待验收提交；远程 `main` 仍不得修改。
+CDR-012 已上传到 `codex/cdr-012-atlas-metadata` 的 `1417b42`。CDR-013 已获上传授权；远程 `main` 仍不得修改。
