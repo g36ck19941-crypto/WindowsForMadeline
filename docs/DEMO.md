@@ -14,3 +14,5 @@ This is a non-runnable foundation demo. Reviewers can verify:
 6. Repository contains no product binary, game path, game asset, cache or copied external source.
 
 Evidence: `docs/updates/2026-09-21-project-foundation.md`.
+
+Guided acceptance: `docs/reviews/CDR-001-ACCEPTANCE.md` provides a requirement-to-evidence crosswalk and a five-minute manual review. It does not launch any program or claim a runtime demo.

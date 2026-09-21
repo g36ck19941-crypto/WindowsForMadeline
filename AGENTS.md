@@ -43,7 +43,7 @@
 
 - 默认单窗口、Primary owner；未获明确授权不得创建并行执行窗口或子代理。
 - 保留短小可回滚提交。修改后先跑最窄测试，再跑当前阶段规定的完整验证。
-- 若上下文开始影响推理质量，停止修改，更新 `docs/handoffs/CURRENT.md` 并要求新窗口接手。
+- 若上下文压缩开始影响推理质量，立即停止修改，不得凭残缺记忆继续；更新 `docs/handoffs/CURRENT.md`，并生成 `docs/handoffs/NEXT_WINDOW_PROMPT.md`，完整写明项目目标、当前任务、已验证状态、未完成门禁、文件范围、禁止事项、精确命令和下一步，再要求新窗口接手。
 - 旧仓库 `C:\supermadeline\DesktopSummit` 是只读 Legacy 参考，不得从中复制实现或继续开发，除非用户另行授权。
 
 ## 6. 远程版本管理

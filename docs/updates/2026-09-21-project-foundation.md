@@ -1,5 +1,7 @@
 # CDR-001 — Independent project foundation
 
+Manual acceptance guide: `docs/reviews/CDR-001-ACCEPTANCE.md`.
+
 Date: 2026-09-21
 
 ## Outcome

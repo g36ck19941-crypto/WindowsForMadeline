@@ -6,6 +6,7 @@
 - Preserved remote `main` at `d237277` and pushed a documentation-only test branch `codex/connection-test-20260921` at `df00e2c`.
 - Added the rule that product updates remain local until the developer confirms them effective; every approved push requires a change explanation and commercial-asset audit.
 - After developer confirmation, published the audited foundation history to independent branch `codex/cdr-001-foundation` at `5a1dd1f`; remote `main` remained unchanged.
+- Added a CDR-001 acceptance crosswalk and bounded manual-review procedure without introducing runtime code or assets.
 
 ## 2026-09-21 — Independent project foundation
 

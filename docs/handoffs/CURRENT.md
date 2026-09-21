@@ -6,6 +6,8 @@ Updated: 2026-09-21
 
 CDR-001 foundation records are implemented and pending developer acceptance. The repository contains no product code and has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
+The review is consolidated in `docs/reviews/CDR-001-ACCEPTANCE.md`; it maps every CDR-001 requirement to authoritative evidence and defines the exact acceptance boundary.
+
 GitHub connectivity was separately verified and confirmed effective by the developer. Remote `main` remains `d237277`; documentation-only branch `codex/connection-test-20260921` is at `df00e2c`. After a clean outgoing audit, the foundation history was published to independent branch `codex/cdr-001-foundation` at `5a1dd1f`. Future updates require explicit developer confirmation before push and a post-push explanation.
 
 Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds015h-hidden-runtime-poc`, HEAD `12d21321acc37ca366d2c449155fd4bfb78a7d92`, and was not modified.
@@ -19,5 +21,6 @@ Do not interpret the completed GitHub write test as CDR-001 acceptance. Obtain e
 ## Current ownership
 
 - Owner: Primary agent
+- Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
 - Scope: repository foundation records only
 - Forbidden: product code outside an accepted task, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence

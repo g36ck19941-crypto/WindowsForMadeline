@@ -31,5 +31,6 @@
     "next implementation task is limited to synthetic install validation"
   ],
   "nextTask": "CDR-010",
+  "reviewArtifact": "docs/reviews/CDR-001-ACCEPTANCE.md",
   "nextAction": "Obtain developer review before implementing an injectable install verifier with synthetic fixtures only."
 }
