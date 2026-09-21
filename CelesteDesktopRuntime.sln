@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.AssetWorker.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.AssetWorker.Data.Tests", "tests\CelesteDesktop.AssetWorker.Data.Tests\CelesteDesktop.AssetWorker.Data.Tests.csproj", "{C96C5DF8-3F2D-4CEB-828C-E580A9402C2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelesteDesktop.ProgressDemo", "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj", "{4D740BF1-F8D9-48D9-A9AF-B97DDAF87B93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,5 +76,9 @@ Global
 		{C96C5DF8-3F2D-4CEB-828C-E580A9402C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C96C5DF8-3F2D-4CEB-828C-E580A9402C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C96C5DF8-3F2D-4CEB-828C-E580A9402C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D740BF1-F8D9-48D9-A9AF-B97DDAF87B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D740BF1-F8D9-48D9-A9AF-B97DDAF87B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D740BF1-F8D9-48D9-A9AF-B97DDAF87B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D740BF1-F8D9-48D9-A9AF-B97DDAF87B93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

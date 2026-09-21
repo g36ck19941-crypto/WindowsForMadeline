@@ -42,4 +42,6 @@ Run `.\tools\Verify-CDR012.ps1`. It runs the prior 15 and 27 regression cases pl
 
 Status: ready for developer acceptance
 
-Run `.\tools\Verify-CDR013.ps1`. It runs the prior 15, 27 and 35 regression cases plus 31 generated `.data`, fragmented-stream, immutability and API-surface cases. Expected result lines are `15/15`, `27/27`, `35/35` and `31/31`. No game file is opened and no decoded frame is persisted.
+Double-click `演示当前进度.cmd`. It generates an 8×6 diagnostic Atlas, runs CDR-012 over its generated metadata and CDR-013 over its generated pixel runs, verifies 48 decoded pixels, then opens `artifacts/cdr-013-demo/index.html`. The report shows two named regions, pipeline stages, fingerprint and limitations. It uses zero commercial bytes.
+
+Then double-click `验证当前版本.cmd`. It runs the prior 15, 27 and 35 regression cases plus 31 generated `.data`, fragmented-stream, immutability and API-surface cases, and independently validates the demo manifest/report. Expected result lines are `15/15`, `27/27`, `35/35` and `31/31`. The underlying PowerShell command is retained for agents and CI only.

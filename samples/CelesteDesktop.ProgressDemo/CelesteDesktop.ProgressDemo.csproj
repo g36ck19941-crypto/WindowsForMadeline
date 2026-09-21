@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Meta\CelesteDesktop.AssetWorker.Meta.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Data\CelesteDesktop.AssetWorker.Data.csproj" />
+  </ItemGroup>
+</Project>

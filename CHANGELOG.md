@@ -19,6 +19,9 @@
 - Recorded developer acceptance of CDR-012 and authorization to publish it and begin the synthetic-only CDR-013 `.data` RLE decoder.
 - Published accepted CDR-012 to `codex/cdr-012-atlas-metadata` at `1417b42`; remote `main` remained unchanged.
 - Added CDR-013 immutable BGRA32 frames, bounded stream-only `.data` run decoding, stable validation failures and 29 generated-data verification cases.
+- Hardened CDR-013 to 31 cases with fragmented-stream and maximum-run coverage.
+- Added a cumulative generated Atlas progress demo that runs CDR-012 metadata parsing and CDR-013 pixel decoding, writes an offline HTML report and safe manifest, and persists zero commercial bytes.
+- Added developer-facing double-click launchers `演示当前进度.cmd` and `验证当前版本.cmd`; PowerShell remains an internal implementation detail.
 
 ## 2026-09-21 — Independent project foundation
 
