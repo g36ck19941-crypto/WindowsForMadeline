@@ -3,7 +3,7 @@
   "taskId": "CDR-010",
   "title": "Explicit synthetic install verifier",
   "owner": "Primary agent",
-  "state": "ready_for_review",
+  "state": "accepted",
   "scope": [
     "src/CelesteDesktop.Contracts/Install/**",
     "src/CelesteDesktop.Install/**",
@@ -39,6 +39,8 @@
   },
   "reviewArtifact": "docs/INSTALL_VALIDATION.md",
   "reviewArtifactZhCn": "docs/zh-CN/INSTALL_VALIDATION.md",
+  "acceptedDate": "2026-09-21",
+  "acceptanceScope": "CDR-011 bounded IPC and AssetWorker supervision only",
   "nextTask": "CDR-011",
-  "nextAction": "Obtain developer acceptance before starting AssetWorker protocol and supervision."
+  "nextAction": "Implement bounded IPC and AssetWorker lifecycle supervision without asset parsing or real installation access."
 }

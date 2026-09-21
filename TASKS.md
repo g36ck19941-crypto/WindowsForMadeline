@@ -37,11 +37,11 @@
 
 - Owner: Primary
 - Scope: `src/CelesteDesktop.Install/**`, its tests, contracts and records
-- State: implemented and synthetic-verified; pending developer acceptance
+- State: accepted by developer on 2026-09-21
 - Deliverable: validate only a caller-supplied directory through an injectable filesystem; no automatic machine scan in this stage
 - Evidence: Release build 0 warnings/errors; 15/15 complete, missing, root/type, reparse, containment, inaccessible and API-surface tests passed
 - Manual acceptance: `docs/zh-CN/INSTALL_VALIDATION.md`, then run `.\tools\Verify-CDR010.ps1`
-- Gate: developer acceptance before CDR-011; no real install access
+- Gate: satisfied for CDR-010 only; CDR-011 is authorized, with no real install access
 
 ### CDR-011 — AssetWorker protocol and supervision
 

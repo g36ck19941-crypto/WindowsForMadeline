@@ -4,7 +4,7 @@ Updated: 2026-09-21
 
 ## Current state
 
-CDR-001 foundation records were accepted by the developer on 2026-09-21. CDR-010 is implemented and ready for developer review at local HEAD. Release build has 0 warnings/errors and all 15 synthetic tests pass. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
+CDR-001 and CDR-010 were accepted by the developer on 2026-09-21. CDR-011 is authorized for bounded IPC and AssetWorker lifecycle supervision only. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Run `.\tools\Verify-CDR010.ps1` and review `docs/INSTALL_VALIDATION.md` plus `docs/zh-CN/INSTALL_VALIDATION.md`. Obtain explicit developer acceptance before starting CDR-011. Do not scan the machine or read the real game installation.
+Implement CDR-011 protocol framing, independent Worker lifecycle, timeout, cancellation, crash recovery and malformed-envelope rejection. Do not add an asset parser or read a real game installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-010 review fixes, tests and records only until accepted
-- Forbidden: CDR-011 implementation, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence
+- Scope: CDR-011 protocol, Worker process/client supervision, synthetic tests and records
+- Forbidden: asset parsing, CDR-012 implementation, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence

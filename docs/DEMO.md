@@ -22,6 +22,6 @@ Guided acceptance: `docs/reviews/CDR-001-ACCEPTANCE.md` provides a requirement-t
 
 ## Demo 010 — Synthetic install verifier
 
-Status: ready for developer acceptance
+Status: accepted by the developer on 2026-09-21
 
 Run `.\tools\Verify-CDR010.ps1`. The demo builds Release and runs 15 in-memory filesystem cases. It neither discovers nor reads a real installation. Expected final line: `RESULT total=15 passed=15 failed=0`.

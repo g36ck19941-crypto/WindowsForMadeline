@@ -1,5 +1,7 @@
 # Explicit Install Validation
 
+Status: accepted by the developer on 2026-09-21. The acceptance authorizes CDR-011 bounded IPC and AssetWorker supervision only.
+
 ## Implemented function
 
 CDR-010 validates only a directory explicitly supplied by its caller. The verifier has no discovery or enumeration API and does not open file content.

@@ -11,6 +11,7 @@
 - Reclassified level/map restoration and data-only Mod assets from permanently unsupported to deferred, with non-executable provider seams and later gated tasks.
 - Recorded developer acceptance of CDR-001 and the bounded authorization to begin synthetic-only CDR-010 work.
 - Added CDR-010 explicit install structure validation, metadata-only filesystem abstraction, bounded issue contracts, 15 synthetic tests and an isolated offline verification command.
+- Recorded developer acceptance of CDR-010 and authorization to begin bounded CDR-011 AssetWorker protocol and supervision.
 
 ## 2026-09-21 — Independent project foundation
 
