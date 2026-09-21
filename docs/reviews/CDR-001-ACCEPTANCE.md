@@ -11,7 +11,7 @@ Accepting CDR-001 means agreeing that:
 1. the product never launches, injects into or modifies Celeste/Everest;
 2. commercial resources stay on the user's machine and later parsing is isolated in a bounded, read-only AssetWorker;
 3. deterministic simulation, asset fidelity, renderer integration and human visibility are separate evidence layers;
-4. levels, maps and story are outside this product, while the named character and entity interactions remain in scope;
+4. level/map restoration and data-only Mod assets are deferred behind documented provider seams rather than permanently rejected; story/cutscenes and executable Mod behavior remain outside the current product;
 5. CDR-010 may begin with synthetic filesystem fixtures only; real installation access remains separately authorized at CDR-016.
 
 ## Requirement-to-evidence checklist
@@ -24,6 +24,7 @@ Accepting CDR-001 means agreeing that:
 | External references cannot become copied implementation | `docs/REFERENCE_POLICY.md` | ready |
 | Asset, behavior, integration and human evidence remain independent | `docs/PARITY.md` | ready |
 | Task order and the synthetic-only next step are explicit | `TASKS.md`, CDR-010 | ready |
+| Future level/map and data-only Mod support has isolated extension seams without current implementation | `docs/EXTENSIONS.md`; `TASKS.md`, CDR-060–062 | ready |
 | Legacy state is recorded and frozen | `PROJECT_MEMORY.md`; `docs/handoffs/CURRENT.md` | ready |
 | No product code, game read, GUI or commercial bytes were introduced | repository tree and `docs/updates/2026-09-21-project-foundation.md` | ready |
 

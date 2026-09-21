@@ -73,10 +73,16 @@ Rendering delay cannot feed back into simulation time. UI dispatcher timing cann
 
 Each entity module exposes state, deterministic update, collision response and semantic effects. Cross-entity behavior is expressed through narrow interaction contracts rather than type inspection in App. A disabled or failed optional entity cannot alter Player rules or prevent other entities from loading.
 
-## 6. Deliberate non-goals
+## 6. Reserved extension seams
 
-- levels, rooms, story or map loading;
-- arbitrary Everest runtime hooks or code-driven skins;
+`docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.
+
+These are architecture contracts only. No provider interface, plugin loader, map parser or Mod reader is implemented in the current phase.
+
+## 7. Current non-goals
+
+- current-phase levels, rooms, story or map loading;
+- arbitrary Everest runtime hooks, executable Mod code or code-driven skins;
 - automatic bundling or redistribution of Celeste assets;
 - live game-process capture;
 - claims of complete parity without recorded evidence.

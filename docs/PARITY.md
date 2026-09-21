@@ -9,6 +9,7 @@
 - `asset_exact`: required source frames and metadata validate exactly for a supported installation profile.
 - `integrated_verified`: asset, simulation and synthetic presentation are connected and verified.
 - `human_accepted`: separately authorized human-visible acceptance exists.
+- `deferred`: an architectural extension seam is reserved, but implementation and support commitments are intentionally postponed.
 - `unsupported`: deliberately outside the current product.
 
 No row may jump from `unstarted` to `human_accepted`; each applicable evidence layer is independent.
@@ -28,5 +29,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Bumper | unstarted | unstarted | unstarted | unstarted | Radial launch/cooldown |
 | Puffer | unstarted | unstarted | unstarted | unstarted | Swim/explosion/launch |
 | Seeker | unstarted | unstarted | unstarted | unstarted | Deferred complexity |
-| Levels/maps/story | unsupported | unsupported | unsupported | unsupported | Explicit non-goal |
-| Arbitrary code-driven Everest Mods | unsupported | unsupported | unsupported | unsupported | Requires runtime hooks |
+| Levels/maps | deferred | deferred | deferred | deferred | Future `IWorldContentProvider`; no current parser |
+| Data-only Mod assets | deferred | n/a | deferred | deferred | Future `IAssetSourceProvider`; no current directory access |
+| Story/cutscenes | unsupported | unsupported | unsupported | unsupported | Outside current product goal |
+| Executable Everest Mod behavior | unsupported | unsupported | unsupported | unsupported | No DLL/script/runtime-hook execution |

@@ -8,6 +8,7 @@
 - After developer confirmation, published the audited foundation history to independent branch `codex/cdr-001-foundation` at `5a1dd1f`; remote `main` remained unchanged.
 - Added a CDR-001 acceptance crosswalk and bounded manual-review procedure without introducing runtime code or assets.
 - Added an isolated `docs/zh-CN/` mirror of every CDR-001 review document while keeping English as the canonical implementation source.
+- Reclassified level/map restoration and data-only Mod assets from permanently unsupported to deferred, with non-executable provider seams and later gated tasks.
 
 ## 2026-09-21 — Independent project foundation
 

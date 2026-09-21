@@ -12,6 +12,7 @@ This is a non-runnable foundation demo. Reviewers can verify:
 4. Diagnostics distinguish every step from install selection through human visibility.
 5. Parser safety, parity vocabulary and task order exist.
 6. Repository contains no product binary, game path, game asset, cache or copied external source.
+7. Level/map and data-only Mod capabilities are deferred through isolated provider seams rather than implemented or permanently rejected.
 
 Evidence: `docs/updates/2026-09-21-project-foundation.md`.
 

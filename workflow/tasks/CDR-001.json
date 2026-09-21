@@ -11,6 +11,7 @@
     "diagnostics contract",
     "asset safety contract",
     "parity matrix",
+    "deferred content extension seams",
     "task sequencing"
   ],
   "forbidden": [
@@ -28,6 +29,7 @@
     "health-chain events cannot conflate parsing, spawn, render and human visibility",
     "asset parsing is read-only, bounded and fail-closed",
     "parity states separate asset, behavior, integration and human evidence",
+    "level/map and data-only Mod capabilities are deferred behind non-executable provider contracts",
     "next implementation task is limited to synthetic install validation"
   ],
   "nextTask": "CDR-010",

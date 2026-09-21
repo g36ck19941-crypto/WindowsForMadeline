@@ -11,6 +11,7 @@
 - `asset_exact`：受支持安装配置所需源帧和元数据验证完全一致。
 - `integrated_verified`：素材、模拟和合成呈现已连接并通过验证。
 - `human_accepted`：已有单独授权的人眼可见验收。
+- `deferred`：已经预留架构扩展接口，但有意推迟实现和支持承诺。
 - `unsupported`：明确不属于当前产品范围。
 
 任何项目都不能从 `unstarted` 直接跳到 `human_accepted`；每一层证据都必须独立成立。
@@ -30,5 +31,7 @@
 | Bumper | unstarted | unstarted | unstarted | unstarted | 径向弹射/冷却 |
 | Puffer | unstarted | unstarted | unstarted | unstarted | 游动/爆炸/弹射 |
 | Seeker | unstarted | unstarted | unstarted | unstarted | 后置复杂实体 |
-| 关卡/地图/剧情 | unsupported | unsupported | unsupported | unsupported | 明确不做 |
-| 任意代码驱动 Everest Mod | unsupported | unsupported | unsupported | unsupported | 需要运行时钩子 |
+| 关卡/地图 | deferred | deferred | deferred | deferred | 未来 `IWorldContentProvider`；当前无解析器 |
+| 纯数据 Mod 素材 | deferred | n/a | deferred | deferred | 未来 `IAssetSourceProvider`；当前不访问目录 |
+| 剧情/过场 | unsupported | unsupported | unsupported | unsupported | 不属于当前产品目标 |
+| 可执行 Everest Mod 行为 | unsupported | unsupported | unsupported | unsupported | 不执行 DLL/脚本/运行时钩子 |

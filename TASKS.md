@@ -111,3 +111,22 @@ Each entity owns a separate module, tests and parity row:
 8. CDR-047 Seeker or later explicitly approved entities
 
 No entity is accepted until its Player, Solid and supported entity-to-entity interaction matrix passes.
+
+## P5 — Deferred content extensions
+
+These tasks reserve future capability and do not expand current authorization.
+
+### CDR-060 — Compiled provider contracts
+
+- Scope: introduce data-only `IAssetSourceProvider` and immutable `IWorldContentProvider` contracts after core asset and simulation contracts stabilize.
+- Gate: synthetic providers only; no plugin loader, Mod directory or real map read.
+
+### CDR-061 — Level/map content provider
+
+- Scope: normalize selected room geometry, spawn points and supported entity placements behind `IWorldContentProvider`.
+- Gate: synthetic map fixtures first; real formats and installations require a new task and explicit authorization.
+
+### CDR-062 — Read-only Mod asset provider
+
+- Scope: resolve explicitly enabled, data-only Mod assets behind `IAssetSourceProvider`.
+- Gate: separate security review, deterministic precedence, bounded reads and fresh authorization; never execute DLLs or scripts.

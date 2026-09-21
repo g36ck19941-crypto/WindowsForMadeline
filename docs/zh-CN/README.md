@@ -14,6 +14,7 @@
 | `ARCHITECTURE.md` | `../ARCHITECTURE.md` |
 | `DIAGNOSTICS.md` | `../DIAGNOSTICS.md` |
 | `ASSET_SAFETY.md` | `../ASSET_SAFETY.md` |
+| `EXTENSIONS.md` | `../EXTENSIONS.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |

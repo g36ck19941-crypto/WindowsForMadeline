@@ -15,6 +15,7 @@ Created a new Git repository for an independent desktop runtime that reads a use
 - Read-only, allowlisted, bounded parsing with no commercial bytes in Git, CI, logs or releases.
 - Independent asset, behavior, integration and human acceptance states.
 - Ordered work from synthetic install validation to opt-in real-install conformance, simulation, rendering and entities.
+- Deferred, non-executable provider seams for future level/map restoration and data-only Mod assets; no current provider implementation or directory access.
 
 ## Verification
 

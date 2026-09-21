@@ -14,7 +14,7 @@
 - 由索引引用的 `Content/Graphics/Atlases/Gameplay*.data` 页面
 - `Content/Graphics/Sprites.xml`
 
-音频 bank、Mod 目录、压缩包和自动扫描 Steam 库属于后续独立任务，不能视为已授权。
+音频 bank、Mod 目录、压缩包和自动扫描 Steam 库属于后续独立任务，不能视为已授权。`docs/EXTENSIONS.md` 只预留未来纯数据提供器边界，不赋予当前访问权限，也绝不授权执行 Mod 代码。
 
 ## 解析器限制
 

@@ -12,7 +12,7 @@ Initial support is limited to explicitly required files under canonical location
 - referenced `Content/Graphics/Atlases/Gameplay*.data` pages
 - `Content/Graphics/Sprites.xml`
 
-Audio banks, Mod directories, archives and automatic Steam-library scanning are separate future tasks and are not implicitly authorized.
+Audio banks, Mod directories, archives and automatic Steam-library scanning are separate future tasks and are not implicitly authorized. `docs/EXTENSIONS.md` reserves a future data-only provider boundary; it grants no current access and never authorizes executable Mod code.
 
 ## Parser controls
 
