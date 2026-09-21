@@ -44,4 +44,3 @@
 - 保留短小可回滚提交。修改后先跑最窄测试，再跑当前阶段规定的完整验证。
 - 若上下文开始影响推理质量，停止修改，更新 `docs/handoffs/CURRENT.md` 并要求新窗口接手。
 - 旧仓库 `C:\supermadeline\DesktopSummit` 是只读 Legacy 参考，不得从中复制实现或继续开发，除非用户另行授权。
-

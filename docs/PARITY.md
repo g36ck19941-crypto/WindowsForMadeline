@@ -30,4 +30,3 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Seeker | unstarted | unstarted | unstarted | unstarted | Deferred complexity |
 | Levels/maps/story | unsupported | unsupported | unsupported | unsupported | Explicit non-goal |
 | Arbitrary code-driven Everest Mods | unsupported | unsupported | unsupported | unsupported | Requires runtime hooks |
-

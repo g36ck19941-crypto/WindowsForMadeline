@@ -7,4 +7,3 @@
 - Split install discovery, isolated parsing, catalogs, simulation, entities, desktop geometry, rendering, diagnostics and App composition.
 - Added stable health-chain semantics so parsing, spawn, simulation, submission, presentation and human visibility cannot be conflated.
 - Added safety, reference provenance, parity and phased task contracts. No product code or commercial asset was added.
-

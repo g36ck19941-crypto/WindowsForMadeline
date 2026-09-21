@@ -14,4 +14,3 @@ This is a non-runnable foundation demo. Reviewers can verify:
 6. Repository contains no product binary, game path, game asset, cache or copied external source.
 
 Evidence: `docs/updates/2026-09-21-project-foundation.md`.
-

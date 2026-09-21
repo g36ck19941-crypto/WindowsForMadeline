@@ -17,4 +17,3 @@
 - If sources disagree, mark the capability `unknown` until resolved.
 
 `solstice23/desk-madeline` establishes that direct Atlas reading and DirectComposition presentation are feasible. It is not the code base, architecture owner or fidelity oracle for this project.
-

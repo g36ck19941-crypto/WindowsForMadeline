@@ -66,4 +66,3 @@ Every error code has one owning subsystem. App may surface it but must not reint
 - A support bundle is explicit user action and contains logs, version manifests and hashes only.
 - Commercial pixels, source atlas files, raw window lists and user input are excluded.
 - All logs include application build, contract version and OS/render-backend summaries required to reproduce a defect.
-

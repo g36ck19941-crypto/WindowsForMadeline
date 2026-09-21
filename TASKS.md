@@ -97,4 +97,3 @@ Each entity owns a separate module, tests and parity row:
 8. CDR-047 Seeker or later explicitly approved entities
 
 No entity is accepted until its Player, Solid and supported entity-to-entity interaction matrix passes.
-

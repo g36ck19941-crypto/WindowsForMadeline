@@ -22,4 +22,3 @@
 3. `TASKS.md`
 4. `docs/ARCHITECTURE.md`
 5. `docs/DIAGNOSTICS.md`
-

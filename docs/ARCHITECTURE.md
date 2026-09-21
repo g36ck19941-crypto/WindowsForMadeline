@@ -80,4 +80,3 @@ Each entity module exposes state, deterministic update, collision response and s
 - automatic bundling or redistribution of Celeste assets;
 - live game-process capture;
 - claims of complete parity without recorded evidence.
-

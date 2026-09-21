@@ -17,4 +17,3 @@ Review `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DIAGNOSTICS.md`, `docs/ASSET_S
 - Owner: Primary agent
 - Scope: repository foundation records only
 - Forbidden: product code outside an accepted task, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence
-

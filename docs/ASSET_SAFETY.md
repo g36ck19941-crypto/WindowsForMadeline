@@ -29,4 +29,3 @@ Audio banks, Mod directories, archives and automatic Steam-library scanning are 
 - Any later local cache requires explicit approval, transactional publication, source fingerprints, restrictive permissions and complete invalidation on source/version change.
 - No cache or decoded frame may enter Git, CI artifacts, support bundles or release packages.
 - A build that cannot validate a local installation remains functional for diagnostics and synthetic tests but cannot claim original assets are available.
-

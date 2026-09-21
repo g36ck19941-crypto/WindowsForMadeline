@@ -9,4 +9,3 @@ Last verified: 2026-09-21
 - Celeste 官方公开源码仅覆盖仓库中公开代码，商业游戏和素材不在其 MIT 范围内；商业字节只允许保留在用户本机。
 - Legacy 仓库 `C:\supermadeline\DesktopSummit` 在迁移决策时为分支 `feature/ds015h-hidden-runtime-poc`、HEAD `12d21321acc37ca366d2c449155fd4bfb78a7d92`、工作树干净。Legacy 未被删除或修改。
 - 新仓库初始阶段只建立合同和计划；尚未读取游戏安装、启动 GUI、生成缓存或实现产品代码。
-

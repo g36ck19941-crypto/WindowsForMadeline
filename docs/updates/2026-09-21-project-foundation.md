@@ -25,4 +25,3 @@ Created a new Git repository for an independent desktop runtime that reads a use
 ## Remaining gate
 
 CDR-001 requires developer review. CDR-010 must not inspect the real machine automatically; it begins with an injectable filesystem and synthetic fixtures only.
-
