@@ -16,3 +16,5 @@ This is a non-runnable foundation demo. Reviewers can verify:
 Evidence: `docs/updates/2026-09-21-project-foundation.md`.
 
 Guided acceptance: `docs/reviews/CDR-001-ACCEPTANCE.md` provides a requirement-to-evidence crosswalk and a five-minute manual review. It does not launch any program or claim a runtime demo.
+
+中文验收入口：`docs/reviews/CDR-001-ACCEPTANCE.zh-CN.md`。
