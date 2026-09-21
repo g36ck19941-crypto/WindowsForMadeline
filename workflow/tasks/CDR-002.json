@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-002",
+  "title": "Remote version-management contract",
+  "owner": "Primary agent",
+  "state": "ready_for_review",
+  "remote": "https://github.com/g36ck19941-crypto/WindowsForMadeline",
+  "mainBefore": "d237277e10af090cf60ec015c22174565e6cdc0a",
+  "mainAfter": "d237277e10af090cf60ec015c22174565e6cdc0a",
+  "testBranch": "codex/connection-test-20260921",
+  "testCommit": "df00e2c04c3a654da1f4cb7ce12900502d3888d8",
+  "commercialAssetCount": 0,
+  "productCodeCount": 0,
+  "nextAction": "Obtain developer confirmation that the write test is effective before any formal project update is pushed."
+}

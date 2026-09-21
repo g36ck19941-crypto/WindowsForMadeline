@@ -9,3 +9,4 @@ Last verified: 2026-09-21
 - Celeste 官方公开源码仅覆盖仓库中公开代码，商业游戏和素材不在其 MIT 范围内；商业字节只允许保留在用户本机。
 - Legacy 仓库 `C:\supermadeline\DesktopSummit` 在迁移决策时为分支 `feature/ds015h-hidden-runtime-poc`、HEAD `12d21321acc37ca366d2c449155fd4bfb78a7d92`、工作树干净。Legacy 未被删除或修改。
 - 新仓库初始阶段只建立合同和计划；尚未读取游戏安装、启动 GUI、生成缓存或实现产品代码。
+- 用户指定 `https://github.com/g36ck19941-crypto/WindowsForMadeline` 作为远程版本仓库。更新默认先本地提交，只有用户确认有效后才推送并附变更解释；不得上传侵权素材。2026-09-21 的最小写入测试在独立分支 `codex/connection-test-20260921` 成功，远程提交 `df00e2c`，远程 `main` 保持 `d237277` 未变。

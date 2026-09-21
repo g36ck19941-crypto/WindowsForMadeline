@@ -16,6 +16,17 @@
   - parity states and task order documented;
   - no product code, game read, GUI or Legacy mutation.
 
+### CDR-002 — Remote version-management contract
+
+- Owner: Primary
+- Scope: remote configuration, documentation-only write test and repository records
+- State: connection/write verified, pending developer confirmation
+- Evidence:
+  - remote `main` remained at `d237277`;
+  - test branch `codex/connection-test-20260921` was created at `df00e2c`;
+  - the test commit contains one documentation file and no commercial asset or product claim.
+- Gate: developer confirms the write test is effective before any formal project branch is pushed.
+
 ## P1 — Safe asset foundation
 
 ### CDR-010 — Explicit install verifier
