@@ -20,6 +20,12 @@ CDR-011 adds a real independent console Worker process plus a client supervisor.
 
 The protocol contains no arbitrary payload, path, image, asset or executable behavior.
 
+## Role in the project
+
+CDR-011 gives future asset parsers a separate, supervised process to run in. If a parser later encounters corrupt input, the main desktop application can stop that Worker and start a fresh one instead of being taken down with it. This is the safety shell required before adding the first `.meta` parser.
+
+It does not yet read or understand any game asset, and it does not prove that Madeline can be rendered or moved.
+
 ## Launch boundary
 
 The framework-dependent launcher accepts only:
