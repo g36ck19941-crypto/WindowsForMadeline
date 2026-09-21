@@ -4,7 +4,7 @@ Updated: 2026-09-21
 
 ## Current state
 
-CDR-001 foundation records are implemented and pending developer acceptance. The repository contains no product code and has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
+CDR-001 foundation records were accepted by the developer on 2026-09-21. The accepted boundary authorizes CDR-010 synthetic install verification only. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,13 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Review `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DIAGNOSTICS.md`, `docs/ASSET_SAFETY.md`, `docs/PARITY.md` and `TASKS.md`. After explicit developer acceptance, implement only CDR-010's injectable install verifier with synthetic fixtures. Do not scan the machine or read the real game installation without separate authorization.
-
-Do not interpret the completed GitHub write test as CDR-001 acceptance. Obtain explicit CDR-001 architecture-boundary acceptance before implementing CDR-010.
+Implement only CDR-010's injectable install verifier with synthetic fixtures. Do not scan the machine or read the real game installation without separate authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: repository foundation records only
+- Scope: CDR-010 install verifier, synthetic filesystem tests, contracts and records
 - Forbidden: product code outside an accepted task, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence

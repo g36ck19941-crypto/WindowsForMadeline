@@ -8,7 +8,7 @@
 
 - Owner: Primary
 - Scope: repository records and contracts only
-- State: implemented, pending developer acceptance
+- State: accepted by developer on 2026-09-21
 - Acceptance:
   - module and process boundaries documented;
   - structured diagnostics and health chain documented;
@@ -17,6 +17,7 @@
   - no product code, game read, GUI or Legacy mutation.
 - Canonical review: `docs/reviews/CDR-001-ACCEPTANCE.md`
 - Developer-facing Chinese mirror: `docs/zh-CN/reviews/CDR-001-ACCEPTANCE.md`
+- Acceptance boundary: authorizes CDR-010 synthetic install verification only.
 
 ### CDR-002 — Remote version-management contract
 

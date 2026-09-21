@@ -2,7 +2,7 @@
 
 ## Demo 001 — Foundation audit
 
-Status: ready for document review
+Status: accepted by the developer on 2026-09-21
 
 This is a non-runnable foundation demo. Reviewers can verify:
 

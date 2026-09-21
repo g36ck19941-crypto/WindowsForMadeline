@@ -9,6 +9,7 @@
 - Added a CDR-001 acceptance crosswalk and bounded manual-review procedure without introducing runtime code or assets.
 - Added an isolated `docs/zh-CN/` mirror of every CDR-001 review document while keeping English as the canonical implementation source.
 - Reclassified level/map restoration and data-only Mod assets from permanently unsupported to deferred, with non-executable provider seams and later gated tasks.
+- Recorded developer acceptance of CDR-001 and the bounded authorization to begin synthetic-only CDR-010 work.
 
 ## 2026-09-21 — Independent project foundation
 

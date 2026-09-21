@@ -3,7 +3,7 @@
   "taskId": "CDR-001",
   "title": "Independent architecture and diagnostics foundation",
   "owner": "Primary agent",
-  "state": "ready_for_review",
+  "state": "accepted",
   "branch": "main",
   "scope": [
     "repository foundation records",
@@ -35,5 +35,7 @@
   "nextTask": "CDR-010",
   "reviewArtifact": "docs/reviews/CDR-001-ACCEPTANCE.md",
   "reviewArtifactZhCn": "docs/zh-CN/reviews/CDR-001-ACCEPTANCE.md",
-  "nextAction": "Obtain developer review before implementing an injectable install verifier with synthetic fixtures only."
+  "acceptedDate": "2026-09-21",
+  "acceptanceScope": "CDR-010 synthetic install verification only",
+  "nextAction": "Implement CDR-010 with an injectable filesystem and synthetic fixtures only."
 }

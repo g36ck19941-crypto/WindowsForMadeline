@@ -1,5 +1,7 @@
 # CDR-001 Acceptance Review
 
+Status: accepted by the developer on 2026-09-21. The acceptance authorizes CDR-010 synthetic install verification only.
+
 ## What this update adds
 
 CDR-001 adds architecture, diagnostics, asset-safety, provenance, parity and task-order contracts. It adds no runnable product feature, parser, GUI or commercial asset.
