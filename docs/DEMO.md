@@ -36,4 +36,4 @@ Run `.\tools\Verify-CDR011.ps1`. It runs the CDR-010 regression and 27 Worker ca
 
 Status: ready for developer acceptance
 
-Run `.\tools\Verify-CDR012.ps1`. It runs the prior 15 and 27 regression cases plus 32 metadata/API-surface cases. Expected result lines are `15/15`, `27/27` and `32/32`. No game file is opened.
+Run `.\tools\Verify-CDR012.ps1`. It runs the prior 15 and 27 regression cases plus 35 metadata/API-surface cases. Expected result lines are `15/15`, `27/27` and `35/35`. No game file is opened.

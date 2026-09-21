@@ -57,7 +57,7 @@
 - Owner: Primary
 - Scope: independent `.meta` reader into immutable descriptors
 - State: implemented and verified; pending developer acceptance
-- Evidence: Release build 0 warnings/errors; CDR-010 15/15; CDR-011 27/27; CDR-012 32/32 generated-byte cases
+- Evidence: Release build 0 warnings/errors; CDR-010 15/15; CDR-011 27/27; CDR-012 35/35 generated-byte cases
 - Manual acceptance: `docs/zh-CN/ATLAS_METADATA.md`, then run `.\tools\Verify-CDR012.ps1`
 - Gate: developer acceptance before CDR-013; no `.data` decode or real install access
 

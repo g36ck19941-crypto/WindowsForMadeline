@@ -6,6 +6,19 @@ namespace CelesteDesktop.AssetWorker.Meta;
 
 public sealed class AtlasMetadataReader
 {
+    private static readonly char[] DisallowedPathCharacters =
+        ['<', '>', '"', '|', '?', '*'];
+
+    private static readonly HashSet<string> ReservedWindowsNames = new(
+        [
+            "CON", "PRN", "AUX", "NUL",
+            "COM1", "COM2", "COM3", "COM4", "COM5",
+            "COM6", "COM7", "COM8", "COM9",
+            "LPT1", "LPT2", "LPT3", "LPT4", "LPT5",
+            "LPT6", "LPT7", "LPT8", "LPT9"
+        ],
+        StringComparer.OrdinalIgnoreCase);
+
     private static readonly UTF8Encoding StrictUtf8 = new(
         encoderShouldEmitUTF8Identifier: false,
         throwOnInvalidBytes: true);
@@ -178,19 +191,36 @@ public sealed class AtlasMetadataReader
             .Replace('\\', '/');
         if (normalized.StartsWith('/') ||
             normalized.EndsWith('/') ||
-            normalized.Contains(':'))
+            normalized.Contains(':') ||
+            normalized.IndexOfAny(DisallowedPathCharacters) >= 0)
         {
             throw new AtlasMetadataException(AtlasMetadataCodes.PathInvalid);
         }
 
         var segments = normalized.Split('/');
-        if (segments.Any(static segment =>
-            string.IsNullOrEmpty(segment) || segment is "." or ".."))
+        if (segments.Any(IsInvalidPathSegment))
         {
             throw new AtlasMetadataException(AtlasMetadataCodes.PathInvalid);
         }
 
         return normalized;
+    }
+
+    private static bool IsInvalidPathSegment(string segment)
+    {
+        if (string.IsNullOrEmpty(segment) ||
+            segment is "." or ".." ||
+            segment.EndsWith('.') ||
+            segment.EndsWith(' '))
+        {
+            return true;
+        }
+
+        var extensionIndex = segment.IndexOf('.');
+        var stem = extensionIndex < 0
+            ? segment
+            : segment[..extensionIndex];
+        return ReservedWindowsNames.Contains(stem);
     }
 
     private sealed class BoundedInput

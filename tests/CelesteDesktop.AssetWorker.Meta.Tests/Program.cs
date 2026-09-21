@@ -20,6 +20,9 @@ var tests = new (string Name, Action Body)[]
     ("page count budget is enforced", PageCountBudgetIsEnforced),
     ("absolute page path is rejected", AbsolutePagePathIsRejected),
     ("page traversal is rejected", PageTraversalIsRejected),
+    ("page wildcard is rejected", PageWildcardIsRejected),
+    ("page segment trailing dot is rejected", PageTrailingDotIsRejected),
+    ("reserved Windows page name is rejected", ReservedPageNameIsRejected),
     ("duplicate pages are rejected case-insensitively", DuplicatePagesAreRejected),
     ("negative entry count is rejected", NegativeEntryCountIsRejected),
     ("total entry budget is enforced", TotalEntryBudgetIsEnforced),
@@ -177,6 +180,18 @@ static void AbsolutePagePathIsRejected() => AssertFailure(
 
 static void PageTraversalIsRejected() => AssertFailure(
     WriteMeta(Page("../Gameplay0")),
+    AtlasMetadataCodes.PathInvalid);
+
+static void PageWildcardIsRejected() => AssertFailure(
+    WriteMeta(Page("pages/Gameplay*")),
+    AtlasMetadataCodes.PathInvalid);
+
+static void PageTrailingDotIsRejected() => AssertFailure(
+    WriteMeta(Page("pages/Gameplay0.")),
+    AtlasMetadataCodes.PathInvalid);
+
+static void ReservedPageNameIsRejected() => AssertFailure(
+    WriteMeta(Page("pages/CON.data")),
     AtlasMetadataCodes.PathInvalid);
 
 static void DuplicatePagesAreRejected() => AssertFailure(

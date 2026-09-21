@@ -25,6 +25,7 @@ CDR-012 让项目能够读懂 Atlas 的“目录”：某个精灵名称在哪�
 - 严格检查 UTF-8 和字符串长度编码；
 - 统一斜杠和 Unicode 写法；
 - 拒绝绝对路径、盘符、空路径段和 `..` 穿越；
+- 拒绝 Windows 通配符、尾随点/空格和保留设备名歧义；
 - 页面路径和条目 ID 不允许出现大小写或规范化后的重复；
 - 拒绝负坐标、空尺寸、范围溢出和不可能的裁剪；
 - 拒绝截断和任何尾随字节；
@@ -45,7 +46,7 @@ CDR-012 让项目能够读懂 Atlas 的“目录”：某个精灵名称在哪�
 - Release 构建：0 警告、0 错误；
 - CDR-010 回归：`RESULT total=15 passed=15 failed=0`；
 - CDR-011 回归：`RESULT total=27 passed=27 failed=0`；
-- CDR-012：`RESULT total=32 passed=32 failed=0`。
+- CDR-012：`RESULT total=35 passed=35 failed=0`。
 
 CDR-012 的测试只使用程序生成的字节，不读取 `.meta` 文件、商业素材或游戏安装，也不启动游戏或 GUI。
 

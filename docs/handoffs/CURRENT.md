@@ -4,7 +4,7 @@ Updated: 2026-09-21
 
 ## Current state
 
-CDR-001, CDR-010 and CDR-011 were accepted by the developer on 2026-09-21. Accepted CDR-011 was published to `codex/cdr-011-asset-worker` at `b918996`. CDR-012 is implemented locally and ready for review: CDR-010 15/15, CDR-011 27/27 and CDR-012 32/32 tests pass. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
+CDR-001, CDR-010 and CDR-011 were accepted by the developer on 2026-09-21. Accepted CDR-011 was published to `codex/cdr-011-asset-worker` at `b918996`. CDR-012 is implemented locally and ready for review: CDR-010 15/15, CDR-011 27/27 and CDR-012 35/35 tests pass. The repository has not accessed Celeste/Everest, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
