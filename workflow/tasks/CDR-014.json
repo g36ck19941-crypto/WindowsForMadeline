@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-014",
+  "title": "Bounded synthetic sprite metadata reader",
+  "owner": "Primary agent",
+  "state": "ready_for_developer_acceptance",
+  "scope": [
+    "src/CelesteDesktop.Contracts/Assets/Sprite*.cs",
+    "src/CelesteDesktop.AssetWorker.SpriteXml/**",
+    "tests/CelesteDesktop.AssetWorker.SpriteXml.Tests/**",
+    "samples/CelesteDesktop.ProgressDemo/**",
+    "developer-facing .cmd launchers",
+    "tools/Verify-CDR014.ps1",
+    "task records and English/Chinese review documentation"
+  ],
+  "features": [
+    "allowlisted stream-only XML reader",
+    "immutable sprite and animation descriptors",
+    "bounded frame expressions and metadata",
+    "DTD and external entity rejection",
+    "stable SPRITE_XML failure codes",
+    "cumulative generated Atlas and sprite-definition demo"
+  ],
+  "forbidden": [
+    "filesystem access from parser module",
+    "real Celeste installation access",
+    "CDR-015 asset catalog implementation",
+    "Celeste or Everest launch",
+    "agent-launched GUI or desktop observation",
+    "commercial asset persistence"
+  ],
+  "verificationCommand": ".\\tools\\Verify-CDR014.ps1",
+  "developerVerificationCommand": "验证当前版本.cmd",
+  "developerDemoCommand": "演示当前进度.cmd",
+  "verificationResult": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0,
+    "cdr010RegressionPassed": 15,
+    "cdr011RegressionPassed": 27,
+    "cdr012RegressionPassed": 35,
+    "cdr013RegressionPassed": 31,
+    "cdr014TestsTotal": 40,
+    "cdr014TestsPassed": 40,
+    "cdr014TestsFailed": 0,
+    "progressDemoPassed": true,
+    "progressDemoSpriteDefinitions": 2,
+    "progressDemoAnimations": 2,
+    "progressDemoCommercialBytes": 0,
+    "fixtureType": "generated XML and byte streams only"
+  },
+  "reviewArtifact": "docs/SPRITE_XML.md",
+  "reviewArtifactZhCn": "docs/zh-CN/SPRITE_XML.md",
+  "acceptanceScope": "CDR-015 synthetic normalized asset catalog only",
+  "nextTask": "CDR-015",
+  "nextAction": "Wait for developer acceptance before starting catalog implementation."
+}

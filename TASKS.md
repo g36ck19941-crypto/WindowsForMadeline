@@ -73,9 +73,11 @@
 ### CDR-014 — Sprite metadata reader
 
 - Owner: Primary
-- Scope: hardened `Sprites.xml` reader for explicit allowlisted player/entity definitions
-- State: authorized; implementation starting with generated XML fixtures only
-- Gate: bounded XML fixtures, animation/frame/origin/hair metadata, duplicate/missing/unknown-node negatives
+- Scope: hardened `Sprites.xml` reader for explicit allowlisted player/entity definitions, generated fixtures, cumulative demo and developer records
+- State: implemented and verified; pending developer acceptance
+- Evidence: Release 0 warnings/errors; prior 15/27/35/31 regression cases and CDR-014 40/40 generated XML/API-surface cases; cumulative demo parses two generated sprite definitions
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect generated report, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/SPRITE_XML.md`
+- Gate: CDR-015 remains blocked until developer acceptance; no real install access
 
 ### CDR-015 — Normalized asset catalog
 

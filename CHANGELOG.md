@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-22 — CDR-014 synthetic sprite definitions
+
+- Published the developer-accepted CDR-013 version to independent branch `codex/cdr-013-atlas-data` at `a29ec1d`; remote `main` remains `d237277`.
+- Added an allowlisted, stream-only `Sprites.xml` reader with immutable animation, origin and frame-metadata contracts and stable `SPRITE_XML_*` failures.
+- Added 39 generated XML/API-surface tests and extended the cumulative generated Atlas demo to two parsed sprite definitions and two animations.
+- Kept developer-facing double-click launchers current with CDR-014 verification; no real installation, game or agent GUI access.
+
 ## 2026-09-21 — GitHub connection and write test
 
 - Configured the user-owned `WindowsForMadeline` repository as `origin`.

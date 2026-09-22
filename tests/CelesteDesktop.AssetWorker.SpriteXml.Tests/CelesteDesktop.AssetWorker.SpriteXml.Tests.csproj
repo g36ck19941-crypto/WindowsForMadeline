@@ -3,8 +3,6 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Meta\CelesteDesktop.AssetWorker.Meta.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Data\CelesteDesktop.AssetWorker.Data.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.SpriteXml\CelesteDesktop.AssetWorker.SpriteXml.csproj" />
   </ItemGroup>
 </Project>

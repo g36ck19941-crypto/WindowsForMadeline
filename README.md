@@ -13,12 +13,12 @@
 
 ## 当前状态
 
-CDR-013 已由开发者验收；项目进入 `CDR-014 in progress`，将只使用程序生成的 XML 实现有界 `Sprites.xml` 读取。当前累计演示已能让纯合成 `.meta` 与 `.data` 生成可视 HTML 报告。尚未读取真实安装或商业素材，也尚未完成精灵动画定义解析。
+CDR-013 已由开发者验收并上传；CDR-014 已实现、等待验收。当前累计演示用纯合成 `.meta`、`.data` 和 XML 生成可视 HTML 报告，解析 2 个精灵/2 个动画。尚未读取真实安装或商业素材，也没有正式素材目录或角色渲染。
 
 ## 开发者双击入口
 
-- `演示当前进度.cmd`：生成程序化 Atlas，实际经过 CDR-012/013，再打开本地 HTML 报告。
-- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-013 全部回归。
+- `演示当前进度.cmd`：生成程序化 Atlas 和 XML，实际经过 CDR-012/013/014，再打开本地 HTML 报告。
+- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-014 全部回归。
 - `tools/*.ps1` 保留给代理和 CI，不再要求开发者手动输入。
 
 开始任何工作前阅读：
@@ -32,3 +32,4 @@ CDR-013 已由开发者验收；项目进入 `CDR-014 in progress`，将只使�
 7. `docs/ASSET_WORKER.md`
 8. `docs/ATLAS_METADATA.md`
 9. `docs/ATLAS_DATA.md`
+10. `docs/SPRITE_XML.md`

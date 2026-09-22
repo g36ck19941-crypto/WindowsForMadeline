@@ -81,7 +81,7 @@ try {
     }
 
     $demoManifest = Get-Content -LiteralPath $demoManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-    if ($demoManifest.demoId -ne 'CDR-013' -or
+    if ($demoManifest.demoId -notin @('CDR-013', 'CDR-014') -or
         $demoManifest.diagnosticPlaceholder -ne $true -or
         $demoManifest.source -ne 'program-generated' -or
         $demoManifest.persistedCommercialBytes -ne 0 -or
@@ -102,7 +102,7 @@ try {
         (Get-Content -LiteralPath $_.FullName -Raw) -match 'CelesteDesktop.ProgressDemo'
     }
     $verificationLauncher = $developerLaunchers | Where-Object {
-        (Get-Content -LiteralPath $_.FullName -Raw) -match 'Verify-CDR013.ps1'
+        (Get-Content -LiteralPath $_.FullName -Raw) -match 'Verify-CDR01[34].ps1'
     }
     if (@($demoLauncher).Count -ne 1 -or
         @($verificationLauncher).Count -ne 1) {

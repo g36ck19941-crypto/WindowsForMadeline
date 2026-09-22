@@ -1,6 +1,6 @@
 # 项目进度面板
 
-> 最后更新：2026-09-21 ｜ 当前阶段：CDR-014 synthetic `Sprites.xml` reader ｜ 状态：authorized
+> 最后更新：2026-09-22 ｜ 当前阶段：CDR-014 synthetic `Sprites.xml` reader ｜ 状态：ready for developer acceptance
 
 ## 已完成
 
@@ -27,17 +27,20 @@
 - ✅ CDR-013 已增加累计项目演示：程序生成的 `.meta` 与 `.data` 实际经过两个解析器，输出包含像素图页、目录框、指纹和限制说明的本地 HTML；商业素材字节为 0。
 - ✅ 根目录已提供 `演示当前进度.cmd` 与 `验证当前版本.cmd` 双击入口；PowerShell 仅作为内部验证实现。
 - ✅ 开发者已验收 CDR-013，并授权上传该版本及开始 CDR-014 的纯合成 `Sprites.xml` 读取器。
+- ✅ CDR-013 已上传至独立分支 `codex/cdr-013-atlas-data` 的 `a29ec1d`；远程 `main` 仍为 `d237277`。
+- ✅ CDR-014 已实现有界、允许列表内的精灵 XML 读取，包含动画/帧/原点/头发元数据；40/40 合成测试与此前 108 项回归通过。
+- ✅ 累计演示现实际解析 2 个合成精灵/2 个动画，并与 2 个合成 Atlas 条目核对；双击入口仍可使用。
 
 ## 当前不具备
 
 - ⬜ 尚无 App、模拟、渲染或 GUI 项目；Worker 尚未接入素材请求，现有 `.meta`/`.data` 解析器仍为独立纯函数模块。
 - ⬜ 未定位或读取 Celeste 安装。
-- ⬜ 未实现 `Sprites.xml` 解析，也未把 Atlas 元数据与图页解码连接成素材目录。
+- ⬜ 尚未将精灵动画定义与 Atlas 元数据和像素连接为正式素材目录；未验证真实 `Sprites.xml` 兼容。
 - ⬜ 未实现模拟、实体、渲染或桌面集成。
 - ⬜ 未进行 GUI 或真实桌面测试。
 
 ## 下一门禁
 
-完成 CDR-014 的有界 `Sprites.xml` 读取器、程序生成 XML 正负例、英文规范与中文验收说明。不得读取真实游戏安装，不得启动游戏或 GUI，也不得提前实现 CDR-015 素材目录。
+请开发者双击 `演示当前进度.cmd` 查看累计合成演示，再双击 `验证当前版本.cmd`；按 `docs/zh-CN/SPRITE_XML.md` 验收 CDR-014。验收前不得开始 CDR-015；验收不授权真实游戏安装、游戏或 GUI。
 
-CDR-012 已上传到 `codex/cdr-012-atlas-metadata` 的 `1417b42`。CDR-013 已获上传授权；远程 `main` 仍不得修改。
+CDR-013 已上传到 `codex/cdr-013-atlas-data` 的 `a29ec1d`。CDR-014 仍仅为本地待验收更新；远程 `main` 未修改。
