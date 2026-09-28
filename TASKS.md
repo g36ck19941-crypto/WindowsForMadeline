@@ -74,14 +74,16 @@
 
 - Owner: Primary
 - Scope: hardened `Sprites.xml` reader for explicit allowlisted player/entity definitions, generated fixtures, cumulative demo and developer records
-- State: implemented and verified; pending developer acceptance
+- State: accepted by developer on 2026-09-28
 - Evidence: Release 0 warnings/errors; prior 15/27/35/31 regression cases and CDR-014 40/40 generated XML/API-surface cases; cumulative demo parses two generated sprite definitions
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect generated report, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/SPRITE_XML.md`
-- Gate: CDR-015 remains blocked until developer acceptance; no real install access
+- Gate: satisfied for CDR-014; CDR-015 synthetic normalized catalog authorized, with no real install access
 
 ### CDR-015 — Normalized asset catalog
 
+- Owner: Primary
 - Scope: allowlist, page-on-demand decode, source fingerprints, immutable asset catalog
+- State: authorized; implementation starting with generated descriptors and frames only
 - Gate: no flattened ambiguous names, no global bitmap dictionary, no disk cache, deterministic catalog fingerprint
 
 ### CDR-016 — Opt-in real-install conformance

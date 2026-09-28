@@ -6,6 +6,7 @@
 - Added an allowlisted, stream-only `Sprites.xml` reader with immutable animation, origin and frame-metadata contracts and stable `SPRITE_XML_*` failures.
 - Added 39 generated XML/API-surface tests and extended the cumulative generated Atlas demo to two parsed sprite definitions and two animations.
 - Kept developer-facing double-click launchers current with CDR-014 verification; no real installation, game or agent GUI access.
+- Recorded developer acceptance of CDR-014 on 2026-09-28 and authorization to publish it and begin CDR-015 using generated descriptors and frames only.
 
 ## 2026-09-21 — GitHub connection and write test
 

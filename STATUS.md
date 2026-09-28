@@ -1,6 +1,6 @@
 # 项目进度面板
 
-> 最后更新：2026-09-22 ｜ 当前阶段：CDR-014 synthetic `Sprites.xml` reader ｜ 状态：ready for developer acceptance
+> 最后更新：2026-09-28 ｜ 当前阶段：CDR-015 synthetic normalized asset catalog ｜ 状态：authorized
 
 ## 已完成
 
@@ -30,6 +30,7 @@
 - ✅ CDR-013 已上传至独立分支 `codex/cdr-013-atlas-data` 的 `a29ec1d`；远程 `main` 仍为 `d237277`。
 - ✅ CDR-014 已实现有界、允许列表内的精灵 XML 读取，包含动画/帧/原点/头发元数据；40/40 合成测试与此前 108 项回归通过。
 - ✅ 累计演示现实际解析 2 个合成精灵/2 个动画，并与 2 个合成 Atlas 条目核对；双击入口仍可使用。
+- ✅ 开发者已验收 CDR-014，并授权上传该版本及开始 CDR-015 的纯合成规范化素材目录。
 
 ## 当前不具备
 
@@ -41,6 +42,6 @@
 
 ## 下一门禁
 
-请开发者双击 `演示当前进度.cmd` 查看累计合成演示，再双击 `验证当前版本.cmd`；按 `docs/zh-CN/SPRITE_XML.md` 验收 CDR-014。验收前不得开始 CDR-015；验收不授权真实游戏安装、游戏或 GUI。
+完成 CDR-015 的允许列表、按需页面解码、源指纹、不可变目录和确定性目录指纹；只使用合成输入，不得读取真实安装，不得启动游戏或 GUI，也不得提前开始 CDR-016。
 
-CDR-013 已上传到 `codex/cdr-013-atlas-data` 的 `a29ec1d`。CDR-014 仍仅为本地待验收更新；远程 `main` 未修改。
+CDR-013 已上传到 `codex/cdr-013-atlas-data` 的 `a29ec1d`。CDR-014 已获上传授权；远程 `main` 仍不得修改。

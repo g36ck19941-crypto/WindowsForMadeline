@@ -3,7 +3,7 @@
   "taskId": "CDR-014",
   "title": "Bounded synthetic sprite metadata reader",
   "owner": "Primary agent",
-  "state": "ready_for_developer_acceptance",
+  "state": "accepted",
   "scope": [
     "src/CelesteDesktop.Contracts/Assets/Sprite*.cs",
     "src/CelesteDesktop.AssetWorker.SpriteXml/**",
@@ -51,7 +51,8 @@
   },
   "reviewArtifact": "docs/SPRITE_XML.md",
   "reviewArtifactZhCn": "docs/zh-CN/SPRITE_XML.md",
+  "acceptedDate": "2026-09-28",
   "acceptanceScope": "CDR-015 synthetic normalized asset catalog only",
   "nextTask": "CDR-015",
-  "nextAction": "Wait for developer acceptance before starting catalog implementation."
+  "nextAction": "Implement the normalized asset catalog using generated descriptors and frames only."
 }
