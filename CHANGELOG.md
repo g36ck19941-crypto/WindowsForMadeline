@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-28 — CDR-020 deterministic Actor/Solid kernel
+
+- Added a platform-independent fixed-60-Hz simulation assembly with whole-pixel bounds and decimal subpixel remainders.
+- Added ordered per-pixel Actor/Solid collision, moving-Solid rider carry, overlap push, per-second LiftSpeed, explicit blocked/squish events and immutable snapshots.
+- Added 28 generated-geometry and dependency-surface tests; all eight offline suites pass 219 cases with 0 build warnings/errors.
+- Extended the cumulative generated-data demo with a 13-tick simulation trace containing carry and blocked events and an identical replay check.
+- Kept CDR-016 and CDR-020 local pending acceptance; began CDR-021 under the developer's prior offline authorization.
+
 ## 2026-09-28 — CDR-016 selected-install conformance
 
 - Published the developer-accepted CDR-015 history exactly to `codex/cdr-015-asset-catalog` at `673f798`; remote `main` was not targeted.

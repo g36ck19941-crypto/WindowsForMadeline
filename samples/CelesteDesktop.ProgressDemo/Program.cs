@@ -7,6 +7,7 @@ using CelesteDesktop.AssetWorker.Data;
 using CelesteDesktop.AssetWorker.Meta;
 using CelesteDesktop.AssetWorker.SpriteXml;
 using CelesteDesktop.Contracts.Assets;
+using CelesteDesktop.Simulation.Core;
 
 const int width = 8;
 const int height = 6;
@@ -48,6 +49,7 @@ var catalog = new AssetCatalogBuilder().Build(
     sourceFingerprint,
     ["player", "spring"],
     pageSource);
+var simulation = RunSyntheticSimulation();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -69,7 +71,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-015",
+    demoId = "CDR-020",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -78,7 +80,8 @@ var manifest = new
         "CDR-012 parsed generated atlas metadata",
         "CDR-013 decoded generated RLE pixels to immutable BGRA32",
         "CDR-014 parsed generated sprite animation definitions",
-        "CDR-015 built isolated entity catalogs and decoded only the required page"
+        "CDR-015 built isolated entity catalogs and decoded only the required page",
+        "CDR-020 advanced generated Actor and Solid geometry at fixed 60 Hz"
     },
     frame = new
     {
@@ -119,6 +122,17 @@ var manifest = new
             })
         })
     },
+    simulation = new
+    {
+        tickRate = SimulationConstants.TicksPerSecond,
+        tickCount = simulation.Rows.Count,
+        simulation.FinalActorX,
+        simulation.FinalPlatformX,
+        simulation.CarryEventCount,
+        simulation.BlockedEventCount,
+        deterministicReplay = simulation.DeterministicReplay,
+        rows = simulation.Rows
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -138,11 +152,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog),
+    BuildHtml(frame, page, sprites, catalog, simulation),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-015 cumulative synthetic asset pipeline");
-Console.WriteLine("RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=2 decoded_pages=1 commercial_bytes=0");
+Console.WriteLine("DEMO CDR-020 cumulative synthetic asset and simulation pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=2 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} deterministic_replay={simulation.DeterministicReplay.ToString().ToLowerInvariant()} commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -154,7 +168,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-015-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-020-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -317,7 +331,8 @@ static string BuildHtml(
     Bgra32Frame frame,
     AtlasPageDescriptor page,
     SpriteMetadataDescriptor sprites,
-    NormalizedAssetCatalog catalog)
+    NormalizedAssetCatalog catalog,
+    DemoSimulation simulation)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -350,30 +365,42 @@ static string BuildHtml(
             .Append("</span></div>");
     }
 
+    var simulationRows = new StringBuilder();
+    foreach (var row in simulation.Rows)
+    {
+        simulationRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(row.ActorX).Append(',').Append(row.ActorY)
+            .Append("</td><td>").Append(row.PlatformX).Append(',').Append(row.PlatformY)
+            .Append("</td><td>").Append(row.ActorXSubpixel)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-015 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-020 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
             h1{margin:0 0 8px;font-size:30px}.sub{color:#9ca3af;margin-bottom:24px}
             .warning{background:#422006;border:1px solid #f59e0b;padding:12px 16px;border-radius:10px;color:#fde68a}
-            .pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:24px 0}
+            .pipeline{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:24px 0}
             .stage{background:#1f2937;border:1px solid #374151;padding:14px;border-radius:10px}.stage b{display:block;color:#67e8f9;margin-bottom:5px}
             .layout{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}.canvas{position:relative;width:{{frame.Width * scale}}px;height:{{frame.Height * scale}}px;display:grid;grid-template-columns:repeat({{frame.Width}},{{scale}}px);background:repeating-conic-gradient(#273244 0 25%,#182131 0 50%) 0/24px 24px;box-shadow:0 0 0 1px #64748b}
             .pixel{width:{{scale}}px;height:{{scale}}px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
             .entry{position:absolute;box-sizing:border-box;border:3px solid #f8fafc;pointer-events:none}.entry span{position:absolute;left:2px;top:2px;background:#020617d9;color:white;font:11px Consolas;padding:2px 4px;white-space:nowrap}
             .facts{min-width:280px;background:#1f2937;border-radius:12px;padding:18px}.facts dt{color:#94a3b8}.facts dd{margin:3px 0 14px;font-family:Consolas,monospace;overflow-wrap:anywhere}
             .ok{color:#86efac}.limits{margin-top:26px;color:#cbd5e1}code{color:#67e8f9}
+            table{width:100%;border-collapse:collapse;margin-top:16px;background:#1f2937}th,td{padding:9px 12px;border-bottom:1px solid #374151;text-align:left;font-family:Consolas,monospace}th{color:#67e8f9}
           </style>
         </head>
         <body>
-          <h1>CDR-015 累计项目进度演示</h1>
-          <div class="sub">程序生成的 Atlas 目录、RLE 像素、精灵定义与按实体隔离的帧目录</div>
+          <h1>CDR-020 累计项目进度演示</h1>
+          <div class="sub">程序生成的素材管线，以及固定 60 Hz 的 Actor / Solid 逐 tick 模拟</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：下图完全由程序生成，不是 Celeste 素材，也不证明真实安装兼容。</div>
           <div class="pipeline">
             <div class="stage"><b>CDR-010</b>安装结构验证合同</div>
@@ -382,6 +409,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-013</b>解码 48 个 BGRA32 像素</div>
             <div class="stage"><b>CDR-014</b>解析 2 个精灵 / 2 个动画定义</div>
             <div class="stage"><b>CDR-015</b>构建 2 个实体目录 / 2 个帧</div>
+            <div class="stage"><b>CDR-020</b>Actor / Solid 固定步进、携带与碰撞</div>
           </div>
           <div class="layout">
             <div class="canvas">{{cells}}{{overlays}}</div>
@@ -396,15 +424,63 @@ static string BuildHtml(
               <dt>商业素材字节</dt><dd class="ok">0</dd>
             </dl>
           </div>
+          <h2>CDR-020 逐 tick 模拟轨迹</h2>
+          <p>程序生成一个 Actor、一个移动平台和一面静态墙，连续运行 {{simulation.Rows.Count}} 个固定 tick。平台累计移动到 x={{simulation.FinalPlatformX}}，Actor 在平台携带与自身亚像素移动后到 x={{simulation.FinalActorX}}；重复运行结果 <span class="ok">{{(simulation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>Tick</th><th>Actor x,y</th><th>Solid x,y</th><th>Actor X 余量</th><th>事件</th></tr></thead><tbody>{{simulationRows}}</tbody></table>
           <div class="limits">
             <h2>这证明了什么</h2>
-            <p>当前项目已经能把生成的 <code>.meta</code>、<code>.data</code> 与 <code>Sprites.xml</code> 组合成按实体隔离、可核验且不可变的动画帧目录，并且只解码白名单真正用到的图页。</p>
+            <p>当前项目既能把生成的 <code>.meta</code>、<code>.data</code> 与 <code>Sprites.xml</code> 组合成动画帧目录，也能让生成的 Actor 与 Solid 在固定 60 Hz 下按整像素碰撞和亚像素余量推进，并记录携带、阻挡等事件。</p>
             <h2>仍未证明什么</h2>
-            <p>尚未读取真实游戏安装、显示角色或还原操作手感；真实素材兼容必须等 CDR-016 获得新授权后单独验证。</p>
+            <p>CDR-016 已证明指定安装的素材格式兼容，但本演示仍不读取商业素材。尚未实现 Madeline 的跑跳参数、冲刺/攀爬、渲染或桌面交互，因此不证明角色可见或手感还原。</p>
           </div>
         </body>
         </html>
         """;
+}
+
+static DemoSimulation RunSyntheticSimulation()
+{
+    var first = RunSimulationOnce();
+    var second = RunSimulationOnce();
+    var deterministic = JsonSerializer.Serialize(first) == JsonSerializer.Serialize(second);
+    return first with { DeterministicReplay = deterministic };
+}
+
+static DemoSimulation RunSimulationOnce()
+{
+    var world = new SimulationWorld();
+    var platform = new Solid("demo-platform", 0, 10, 8, 2);
+    var actor = new Actor("demo-actor", 1, 8, 2, 2);
+    var wall = new Solid("demo-wall", 10, 0, 2, 12);
+    world.Add(platform);
+    world.Add(actor);
+    world.Add(wall);
+
+    var rows = new List<DemoSimulationRow>();
+    for (var index = 0; index < 13; index++)
+    {
+        world.Step(_ =>
+        {
+            platform.Move(0.25m, 0m, world);
+            actor.MoveX(0.35m, world);
+        });
+        rows.Add(new DemoSimulationRow(
+            world.Tick,
+            actor.X,
+            actor.Y,
+            platform.X,
+            platform.Y,
+            actor.XSubpixel,
+            string.Join(", ", world.Events.Select(item => item.Kind.ToString()))));
+    }
+
+    return new DemoSimulation(
+        rows.AsReadOnly(),
+        actor.X,
+        platform.X,
+        rows.Count(row => row.Events.Contains(nameof(SimulationEventKind.ActorCarried), StringComparison.Ordinal)),
+        rows.Count(row => row.Events.Contains(nameof(SimulationEventKind.ActorBlocked), StringComparison.Ordinal)),
+        false);
 }
 
 internal readonly record struct Bgra(byte Blue, byte Green, byte Red, byte Alpha);
@@ -433,3 +509,20 @@ internal sealed class DemoPageSource : IAtlasPageStreamSource
         return new MemoryStream(_bytes, writable: false);
     }
 }
+
+internal sealed record DemoSimulation(
+    IReadOnlyList<DemoSimulationRow> Rows,
+    int FinalActorX,
+    int FinalPlatformX,
+    int CarryEventCount,
+    int BlockedEventCount,
+    bool DeterministicReplay);
+
+internal sealed record DemoSimulationRow(
+    long Tick,
+    int ActorX,
+    int ActorY,
+    int PlatformX,
+    int PlatformY,
+    decimal ActorXSubpixel,
+    string Events);

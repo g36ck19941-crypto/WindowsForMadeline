@@ -23,6 +23,7 @@
 | `SPRITE_XML.md` | `../SPRITE_XML.md` |
 | `ASSET_CATALOG.md` | `../ASSET_CATALOG.md` |
 | `REAL_INSTALL_CONFORMANCE.md` | `../REAL_INSTALL_CONFORMANCE.md` |
+| `SIMULATION_CORE.md` | `../SIMULATION_CORE.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -36,3 +37,4 @@
 | `updates/2026-09-22-cdr-014-sprite-xml.md` | `../updates/2026-09-22-cdr-014-sprite-xml.md` |
 | `updates/2026-09-28-cdr-015-asset-catalog.md` | `../updates/2026-09-28-cdr-015-asset-catalog.md` |
 | `updates/2026-09-28-cdr-016-real-conformance.md` | `../updates/2026-09-28-cdr-016-real-conformance.md` |
+| `updates/2026-09-28-cdr-020-simulation-core.md` | `../updates/2026-09-28-cdr-020-simulation-core.md` |

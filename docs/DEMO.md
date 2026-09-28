@@ -67,3 +67,9 @@ Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, 
 The current `验证当前版本.cmd` remains fully offline and now runs seven suites: `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29` and `10/10` (191 cases). It does not locate or read Celeste.
 
 `验证真实安装兼容性.cmd` is a separate opt-in entry. Drag the explicitly selected installation folder onto it, or paste the path when prompted. It repeats the full offline gate, then reads only the three required source files and writes a hash/count report under project `artifacts`. Expected outcome: 5 definitions, 93 animations, 706 frames, stable fingerprints, zero installation writes and zero commercial bytes persisted. This is not a visible-character demo.
+
+## CDR-020 — Actor/Solid simulation
+
+Double-click `演示当前进度.cmd`. The report retains the generated asset pipeline and adds a 13-tick table for one generated Actor, moving platform and wall. It must show three `ActorCarried` rows, one `ActorBlocked` row and an identical replay result.
+
+Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29`, `10/10` and `28/28`, followed by the CDR-020 manifest check. This proves the offline kernel behavior only; it does not prove Madeline movement parity.

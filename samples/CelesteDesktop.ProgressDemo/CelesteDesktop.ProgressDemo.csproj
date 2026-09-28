@@ -7,5 +7,6 @@
     <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Data\CelesteDesktop.AssetWorker.Data.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.SpriteXml\CelesteDesktop.AssetWorker.SpriteXml.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Catalog\CelesteDesktop.AssetWorker.Catalog.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.Simulation.Core\CelesteDesktop.Simulation.Core.csproj" />
   </ItemGroup>
 </Project>

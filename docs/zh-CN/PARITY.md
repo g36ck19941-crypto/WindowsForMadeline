@@ -18,15 +18,15 @@
 
 | 能力 | 素材 | 行为 | 集成 | 人工 | 说明 |
 | --- | --- | --- | --- | --- | --- |
-| 显式安装结构验证 | n/a | exact_offline | unstarted | n/a | 仅合成文件系统；真实一致性属于 CDR-016 |
+| 显式安装结构验证 | asset_exact | exact_offline | partial | n/a | 指定安装 CDR-016 只读通过；尚未接入 App |
 | AssetWorker 协议/生命周期 | n/a | exact_offline | partial | n/a | 真实 Worker 生命周期通过；尚未接入 App 或解析器 |
-| Atlas `.meta` 元数据读取器 | partial | exact_offline | unstarted | n/a | 仅程序生成字节；真实安装一致性属于 CDR-016 |
-| Atlas `.data` 图页解码器 | partial | exact_offline | unstarted | n/a | 仅对生成的 BGRA32 数据精确；真实安装一致性属于 CDR-016 |
+| Atlas `.meta` 元数据读取器 | asset_exact | exact_offline | partial | n/a | 指定安装 CDR-016 通过；其他版本未验证 |
+| Atlas `.data` 图页解码器 | asset_exact | exact_offline | partial | n/a | 指定安装重复指纹通过；尚未连接渲染器 |
 | Madeline 身体动画 | unstarted | unstarted | unstarted | unstarted | 只使用正版安装 |
 | Player 头发 | unstarted | unstarted | unstarted | unstarted | 程序化节点和遮罩 |
 | Normal/Jump | n/a | unstarted | unstarted | unstarted | 固定 60 Hz |
 | Dash/Wall/Climb | n/a | unstarted | unstarted | unstarted | 需要精确 tick/顺序证据 |
-| 移动 Solid 携带/LiftBoost | n/a | unstarted | unstarted | unstarted | 桌面窗口适配为 Solid 运动 |
+| 移动 Solid 携带/LiftBoost | n/a | partial | unstarted | unstarted | CDR-020 核心合同/测试通过；原版参数与顺序一致性尚未建立 |
 | Theo Crystal | unstarted | unstarted | unstarted | unstarted | 拿取/投掷/碰撞交互 |
 | Glider | unstarted | unstarted | unstarted | unstarted | 拿取/下落/发射交互 |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player 和受支持实体 |

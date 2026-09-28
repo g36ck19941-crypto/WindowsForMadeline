@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-020",
+  "title": "Deterministic Actor and Solid kernel",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-09-28",
+  "scope": [
+    "src/CelesteDesktop.Simulation.Core/**",
+    "tests/CelesteDesktop.Simulation.Core.Tests/**",
+    "generated-data cumulative progress demo",
+    "offline verification and project records"
+  ],
+  "features": [
+    "fixed 60 Hz explicit steps",
+    "whole-pixel Actor and Solid positions",
+    "decimal subpixel remainder accumulation",
+    "ordered per-pixel Actor-to-Solid collision",
+    "moving Solid rider carry and overlap push",
+    "per-second LiftSpeed",
+    "explicit blocked push and squish events",
+    "immutable snapshots"
+  ],
+  "forbidden": [
+    "game or GUI launch",
+    "real desktop or live input",
+    "filesystem or asset dependency in Simulation.Core",
+    "installation access or writes",
+    "claiming Celeste behavior parity before reference evidence"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "simulationTests": 28,
+    "totalOfflineTests": 219,
+    "demoTicks": 13,
+    "demoCarryEvents": 3,
+    "demoBlockedEvents": 1,
+    "deterministicReplay": true,
+    "commercialBytes": 0
+  },
+  "nextTask": "CDR-021",
+  "nextAction": "Await CDR-020 acceptance while continuing authorized CDR-021 offline implementation."
+}

@@ -102,12 +102,17 @@
 ### CDR-020 — Actor/Solid kernel
 
 - Owner: Primary
-- State: implementation starting under prior developer authorization
+- State: implementation complete on 2026-09-28; developer acceptance pending
 - Scope: `Simulation.Core`, generated geometry tests, cumulative offline demonstration and project records
 - Fixed 60 Hz, whole-pixel actor position, subpixel remainder, collision ordering, moving-solid carry and LiftSpeed contracts.
+- Evidence: Release 0 warnings/errors; 28/28 generated simulation cases and 219 total offline cases; 13-tick cumulative demo replays identically with carry and blocked events
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect the tick table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/SIMULATION_CORE.md`
+- Gate: do not upload until developer acceptance; CDR-021 is authorized to continue offline
 
 ### CDR-021 — Madeline Normal/Jump
 
+- Owner: Primary
+- State: implementation starting under prior developer authorization
 - Run, friction, gravity, fast fall, coyote, buffer and variable jump with exact tick evidence.
 
 ### CDR-022 — Dash/Wall/Climb
