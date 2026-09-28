@@ -4,7 +4,7 @@ Updated: 2026-09-28
 
 ## Current state
 
-CDR-001 and CDR-010 through CDR-014 were accepted by the developer. CDR-013 was published to `codex/cdr-013-atlas-data` at `a29ec1d`; remote `main` remains `d237277`. CDR-014 reads allowlisted generated sprite XML into immutable descriptors, and its cumulative demo parses one Atlas page/two entries, 48 exact pixels, two sprite definitions and two animations. Release build has 0 warnings/errors; CDR-010/011/012/013/014 tests pass 15/27/35/31/40. The developer accepted CDR-014 on 2026-09-28 and authorized publishing it plus starting CDR-015 with generated inputs only. The agent has not launched Celeste/Everest, a browser, GUI, real desktop geometry or game installation files.
+CDR-001 and CDR-010 through CDR-014 were accepted by the developer. CDR-014 was published exactly to `codex/cdr-014-sprite-xml` at `aa8543c` after two temporary connectivity failures; remote `main` was verified unchanged at `d237277`. CDR-015 is implemented and ready for developer acceptance: it builds immutable per-entity catalogs, resolves frames without flattening equal names, decodes only required pages and emits a deterministic catalog fingerprint. Release build has 0 warnings/errors; CDR-010/011/012/013/014/015 tests pass 15/27/35/31/40/26. The cumulative generated demo produces two entity catalogs, two frames and one decoded page. The agent has not launched Celeste/Everest, a browser, GUI, real desktop geometry or game installation files.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Audit and publish accepted CDR-014 to `codex/cdr-014-sprite-xml`, then implement CDR-015 as a normalized immutable catalog using generated descriptors and frames only. Do not read a real installation or start CDR-016.
+Finish final diff review and commit CDR-015 locally, then wait for developer acceptance. Do not push CDR-015 or start CDR-016; real-install conformance requires fresh explicit authorization in addition to acceptance.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-015 catalog contracts, generated source/page providers, normalization, tests, demo and task records
+- Scope: CDR-015 final audit, local commit and acceptance handoff
 - Forbidden: CDR-016 real-install conformance, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence

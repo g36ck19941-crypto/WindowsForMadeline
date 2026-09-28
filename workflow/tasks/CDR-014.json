@@ -52,6 +52,8 @@
   "reviewArtifact": "docs/SPRITE_XML.md",
   "reviewArtifactZhCn": "docs/zh-CN/SPRITE_XML.md",
   "acceptedDate": "2026-09-28",
+  "publishedBranch": "codex/cdr-014-sprite-xml",
+  "publishedCommit": "aa8543cc5ab410a4e32cd17cee4f5a0c57a66e4c",
   "acceptanceScope": "CDR-015 synthetic normalized asset catalog only",
   "nextTask": "CDR-015",
   "nextAction": "Implement the normalized asset catalog using generated descriptors and frames only."

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-015",
+  "title": "Normalized synthetic asset catalog",
+  "owner": "Primary agent",
+  "state": "ready_for_developer_acceptance",
+  "scope": [
+    "src/CelesteDesktop.Contracts/Assets/*Catalog*.cs and Asset*Fingerprint.cs",
+    "src/CelesteDesktop.AssetWorker.Catalog/**",
+    "tests/CelesteDesktop.AssetWorker.Catalog.Tests/**",
+    "samples/CelesteDesktop.ProgressDemo/**",
+    "developer-facing .cmd launchers",
+    "tools/Verify-CDR015.ps1",
+    "task records and English/Chinese review documentation"
+  ],
+  "features": [
+    "explicit entity allowlist",
+    "page-on-demand stream decode",
+    "per-entity immutable animation catalogs",
+    "trimmed-frame reconstruction",
+    "source and deterministic catalog fingerprints",
+    "bounded CATALOG_* failures",
+    "cumulative generated catalog demo"
+  ],
+  "forbidden": [
+    "filesystem access from catalog module",
+    "global bitmap or flattened animation dictionary",
+    "disk cache",
+    "real Celeste installation access",
+    "CDR-016 implementation",
+    "Celeste or Everest launch",
+    "agent-launched GUI or desktop observation",
+    "commercial asset persistence"
+  ],
+  "verificationCommand": ".\\tools\\Verify-CDR015.ps1",
+  "developerVerificationCommand": "验证当前版本.cmd",
+  "developerDemoCommand": "演示当前进度.cmd",
+  "verificationResult": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0,
+    "cdr010RegressionPassed": 15,
+    "cdr011RegressionPassed": 27,
+    "cdr012RegressionPassed": 35,
+    "cdr013RegressionPassed": 31,
+    "cdr014RegressionPassed": 40,
+    "cdr015TestsTotal": 26,
+    "cdr015TestsPassed": 26,
+    "cdr015TestsFailed": 0,
+    "progressDemoPassed": true,
+    "progressDemoEntityCatalogs": 2,
+    "progressDemoFrames": 2,
+    "progressDemoDecodedPages": 1,
+    "progressDemoCommercialBytes": 0,
+    "fixtureType": "generated descriptors and byte streams only"
+  },
+  "reviewArtifact": "docs/ASSET_CATALOG.md",
+  "reviewArtifactZhCn": "docs/zh-CN/ASSET_CATALOG.md",
+  "nextTask": "CDR-016",
+  "nextAction": "Await developer acceptance; CDR-016 additionally requires fresh explicit authorization."
+}

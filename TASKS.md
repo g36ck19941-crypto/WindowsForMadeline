@@ -83,8 +83,10 @@
 
 - Owner: Primary
 - Scope: allowlist, page-on-demand decode, source fingerprints, immutable asset catalog
-- State: authorized; implementation starting with generated descriptors and frames only
-- Gate: no flattened ambiguous names, no global bitmap dictionary, no disk cache, deterministic catalog fingerprint
+- State: ready for developer acceptance
+- Evidence: Release 0 warnings/errors; prior 15/27/35/31/40 regression cases and CDR-015 26/26 generated catalog cases; cumulative demo builds two isolated entity catalogs and decodes one required page
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect the generated report, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/ASSET_CATALOG.md`
+- Gate: no flattened ambiguous names, no global bitmap dictionary, no disk cache, deterministic catalog fingerprint; CDR-016 remains unauthorized
 
 ### CDR-016 — Opt-in real-install conformance
 

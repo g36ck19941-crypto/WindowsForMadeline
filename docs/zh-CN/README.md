@@ -20,6 +20,8 @@
 | `ASSET_WORKER.md` | `../ASSET_WORKER.md` |
 | `ATLAS_METADATA.md` | `../ATLAS_METADATA.md` |
 | `ATLAS_DATA.md` | `../ATLAS_DATA.md` |
+| `SPRITE_XML.md` | `../SPRITE_XML.md` |
+| `ASSET_CATALOG.md` | `../ASSET_CATALOG.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -30,3 +32,5 @@
 | `updates/2026-09-21-cdr-011-asset-worker.md` | `../updates/2026-09-21-cdr-011-asset-worker.md` |
 | `updates/2026-09-21-cdr-012-atlas-metadata.md` | `../updates/2026-09-21-cdr-012-atlas-metadata.md` |
 | `updates/2026-09-21-cdr-013-atlas-data.md` | `../updates/2026-09-21-cdr-013-atlas-data.md` |
+| `updates/2026-09-22-cdr-014-sprite-xml.md` | `../updates/2026-09-22-cdr-014-sprite-xml.md` |
+| `updates/2026-09-28-cdr-015-asset-catalog.md` | `../updates/2026-09-28-cdr-015-asset-catalog.md` |

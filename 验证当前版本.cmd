@@ -6,10 +6,10 @@ echo.
 echo ========================================
 echo  CelesteDesktopRuntime Verification
 echo ========================================
-echo  Release build and CDR-010 through CDR-014 regression checks.
+echo  Release build and CDR-010 through CDR-015 regression checks.
 echo.
 
-powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\Verify-CDR014.ps1"
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\Verify-CDR015.ps1"
 set "verify_exit=%ERRORLEVEL%"
 
 echo.

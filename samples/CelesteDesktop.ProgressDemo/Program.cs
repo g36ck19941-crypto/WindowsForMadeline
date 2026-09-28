@@ -1,6 +1,8 @@
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using CelesteDesktop.AssetWorker.Catalog;
 using CelesteDesktop.AssetWorker.Data;
 using CelesteDesktop.AssetWorker.Meta;
 using CelesteDesktop.AssetWorker.SpriteXml;
@@ -35,21 +37,31 @@ using (var spriteStream = new MemoryStream(spriteXmlBytes, writable: false))
     sprites = new SpriteXmlReader(["player", "spring"]).Read(spriteStream);
 }
 
+var sourceFingerprint = new AssetSourceFingerprint("cdr-015-generated-demo", [
+    Fingerprint("atlas.meta", metadataBytes),
+    Fingerprint("atlas.data", dataBytes),
+    Fingerprint("sprites.xml", spriteXmlBytes)]);
+var pageSource = new DemoPageSource("demo/page0", dataBytes);
+var catalog = new AssetCatalogBuilder().Build(
+    metadata,
+    sprites,
+    sourceFingerprint,
+    ["player", "spring"],
+    pageSource);
+
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
     throw new InvalidOperationException("The decoded demo pixels differ from the generated source.");
 }
 
 var page = metadata.Pages.Single();
-if (sprites.Definitions.Count != 2 ||
-    sprites.Definitions.Any(definition => definition.Animations.Count != 1) ||
-    sprites.Definitions.Any(definition => !page.Entries.Any(entry =>
-        string.Equals(
-            entry.Id,
-            definition.Animations[0].AtlasPath + "00",
-            StringComparison.Ordinal))))
+if (catalog.Entities.Count != 2 ||
+    catalog.Entities.Any(entity => entity.Animations.Count != 1) ||
+    catalog.Entities.Sum(entity => entity.Animations.Sum(animation => animation.Frames.Count)) != 2 ||
+    catalog.DecodedPageCount != 1 ||
+    pageSource.OpenCount != 1)
 {
-    throw new InvalidOperationException("The generated sprite definitions did not match the generated atlas index.");
+    throw new InvalidOperationException("The generated catalog did not match the allowlisted sprite definitions.");
 }
 var manifestPath = Path.Combine(outputDirectory, "manifest.json");
 var reportPath = Path.Combine(outputDirectory, "index.html");
@@ -57,7 +69,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-014",
+    demoId = "CDR-015",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -65,7 +77,8 @@ var manifest = new
     {
         "CDR-012 parsed generated atlas metadata",
         "CDR-013 decoded generated RLE pixels to immutable BGRA32",
-        "CDR-014 parsed generated sprite animation definitions"
+        "CDR-014 parsed generated sprite animation definitions",
+        "CDR-015 built isolated entity catalogs and decoded only the required page"
     },
     frame = new
     {
@@ -82,6 +95,30 @@ var manifest = new
         animationCount = definition.Animations.Count,
         firstAnimationPath = definition.Animations[0].AtlasPath
     }),
+    catalog = new
+    {
+        entityCount = catalog.Entities.Count,
+        animationCount = catalog.Entities.Sum(entity => entity.Animations.Count),
+        frameCount = catalog.Entities.Sum(entity => entity.Animations.Sum(animation => animation.Frames.Count)),
+        catalog.DecodedPageCount,
+        openedPageCount = pageSource.OpenCount,
+        catalog.CatalogSha256,
+        entities = catalog.Entities.Select(entity => new
+        {
+            entity.EntityId,
+            animations = entity.Animations.Select(animation => new
+            {
+                animation.Id,
+                frames = animation.Frames.Select(catalogFrame => new
+                {
+                    catalogFrame.AtlasEntryId,
+                    catalogFrame.Frame.Width,
+                    catalogFrame.Frame.Height,
+                    catalogFrame.Frame.ContentSha256
+                })
+            })
+        })
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -101,13 +138,14 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites),
+    BuildHtml(frame, page, sprites, catalog),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-014 cumulative synthetic asset pipeline");
-Console.WriteLine("RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 commercial_bytes=0");
+Console.WriteLine("DEMO CDR-015 cumulative synthetic asset pipeline");
+Console.WriteLine("RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=2 decoded_pages=1 commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
+Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
 Console.WriteLine($"REPORT {reportPath}");
 Console.WriteLine($"MANIFEST {manifestPath}");
 return 0;
@@ -116,7 +154,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-013-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-015-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -127,6 +165,12 @@ static string ResolveOutputDirectory(string[] arguments)
 
     throw new ArgumentException("Usage: [--output <directory>]");
 }
+
+static AssetFileFingerprint Fingerprint(string logicalPath, byte[] bytes) =>
+    new(
+        logicalPath,
+        bytes.LongLength,
+        Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant());
 
 static byte[] BuildSyntheticPixels(int width, int height)
 {
@@ -272,7 +316,8 @@ static string BuildSyntheticSpriteXml() =>
 static string BuildHtml(
     Bgra32Frame frame,
     AtlasPageDescriptor page,
-    SpriteMetadataDescriptor sprites)
+    SpriteMetadataDescriptor sprites,
+    NormalizedAssetCatalog catalog)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -311,13 +356,13 @@ static string BuildHtml(
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-014 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-015 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
             h1{margin:0 0 8px;font-size:30px}.sub{color:#9ca3af;margin-bottom:24px}
             .warning{background:#422006;border:1px solid #f59e0b;padding:12px 16px;border-radius:10px;color:#fde68a}
-            .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0}
+            .pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:24px 0}
             .stage{background:#1f2937;border:1px solid #374151;padding:14px;border-radius:10px}.stage b{display:block;color:#67e8f9;margin-bottom:5px}
             .layout{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}.canvas{position:relative;width:{{frame.Width * scale}}px;height:{{frame.Height * scale}}px;display:grid;grid-template-columns:repeat({{frame.Width}},{{scale}}px);background:repeating-conic-gradient(#273244 0 25%,#182131 0 50%) 0/24px 24px;box-shadow:0 0 0 1px #64748b}
             .pixel{width:{{scale}}px;height:{{scale}}px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
@@ -327,8 +372,8 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-014 累计项目进度演示</h1>
-          <div class="sub">程序生成的 Atlas 目录、RLE 像素与精灵动画定义</div>
+          <h1>CDR-015 累计项目进度演示</h1>
+          <div class="sub">程序生成的 Atlas 目录、RLE 像素、精灵定义与按实体隔离的帧目录</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：下图完全由程序生成，不是 Celeste 素材，也不证明真实安装兼容。</div>
           <div class="pipeline">
             <div class="stage"><b>CDR-010</b>安装结构验证合同</div>
@@ -336,6 +381,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-012</b>解析 1 页 / 2 个条目</div>
             <div class="stage"><b>CDR-013</b>解码 48 个 BGRA32 像素</div>
             <div class="stage"><b>CDR-014</b>解析 2 个精灵 / 2 个动画定义</div>
+            <div class="stage"><b>CDR-015</b>构建 2 个实体目录 / 2 个帧</div>
           </div>
           <div class="layout">
             <div class="canvas">{{cells}}{{overlays}}</div>
@@ -344,15 +390,17 @@ static string BuildHtml(
               <dt>图页</dt><dd>{{frame.Width}} × {{frame.Height}}，stride={{frame.Stride}}</dd>
               <dt>目录条目</dt><dd>{{page.Entries.Count}}</dd>
               <dt>精灵动画</dt><dd class="ok">{{sprites.Definitions.Count}} 个定义，{{sprites.Definitions.Sum(definition => definition.Animations.Count)}} 个动画；引用与目录相符</dd>
+              <dt>规范目录</dt><dd class="ok">{{catalog.Entities.Count}} 个实体，{{catalog.Entities.Sum(entity => entity.Animations.Sum(animation => animation.Frames.Count))}} 个帧；只解码 {{catalog.DecodedPageCount}} 页</dd>
+              <dt>目录 SHA-256</dt><dd>{{catalog.CatalogSha256}}</dd>
               <dt>SHA-256</dt><dd>{{frame.ContentSha256}}</dd>
               <dt>商业素材字节</dt><dd class="ok">0</dd>
             </dl>
           </div>
           <div class="limits">
             <h2>这证明了什么</h2>
-            <p>当前项目已经能把生成的 <code>.meta</code> 目录和 <code>.data</code> 压缩图页转换成可定位、可核验的内存像素，并读取生成的 <code>Sprites.xml</code> 动画定义。</p>
+            <p>当前项目已经能把生成的 <code>.meta</code>、<code>.data</code> 与 <code>Sprites.xml</code> 组合成按实体隔离、可核验且不可变的动画帧目录，并且只解码白名单真正用到的图页。</p>
             <h2>仍未证明什么</h2>
-            <p>尚未裁出动画帧、显示角色或验证真实游戏安装；这些仍受后续任务门禁限制。</p>
+            <p>尚未读取真实游戏安装、显示角色或还原操作手感；真实素材兼容必须等 CDR-016 获得新授权后单独验证。</p>
           </div>
         </body>
         </html>
@@ -360,3 +408,28 @@ static string BuildHtml(
 }
 
 internal readonly record struct Bgra(byte Blue, byte Green, byte Red, byte Alpha);
+
+internal sealed class DemoPageSource : IAtlasPageStreamSource
+{
+    private readonly string _logicalPath;
+    private readonly byte[] _bytes;
+
+    public DemoPageSource(string logicalPath, byte[] bytes)
+    {
+        _logicalPath = logicalPath;
+        _bytes = (byte[])bytes.Clone();
+    }
+
+    public int OpenCount { get; private set; }
+
+    public Stream? OpenPage(string logicalPath)
+    {
+        if (!string.Equals(logicalPath, _logicalPath, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        OpenCount++;
+        return new MemoryStream(_bytes, writable: false);
+    }
+}

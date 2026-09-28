@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-28 — CDR-015 normalized synthetic asset catalog
+
+- Added per-entity immutable catalogs that resolve generated sprite animations to generated Atlas frames without flattening equal animation names.
+- Added page-on-demand stream decoding, one-build page reuse, transparent untrimmed-frame reconstruction and bounded `CATALOG_*` failures.
+- Added caller-supplied source summaries and a deterministic catalog SHA-256 over normalized structure and frame hashes; no disk cache or filesystem reader was introduced.
+- Added 26 generated catalog tests and extended the cumulative demo to two entity catalogs, two frames and one required decoded page with zero commercial bytes.
+- Published the accepted CDR-014 commit to `codex/cdr-014-sprite-xml` at `aa8543c` after connectivity recovered; remote `main` remained `d237277`.
+- Kept CDR-016 real-install conformance unauthorized.
+
 ## 2026-09-22 — CDR-014 synthetic sprite definitions
 
 - Published the developer-accepted CDR-013 version to independent branch `codex/cdr-013-atlas-data` at `a29ec1d`; remote `main` remains `d237277`.

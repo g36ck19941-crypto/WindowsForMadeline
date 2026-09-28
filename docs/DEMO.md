@@ -48,8 +48,16 @@ Then double-click `验证当前版本.cmd`. It runs the prior 15, 27 and 35 regr
 
 ## Demo 014 — Synthetic sprite definitions
 
-Status: ready for developer acceptance
+Status: accepted by the developer on 2026-09-28
 
 The current `演示当前进度.cmd` extends the cumulative generated-data report with two allowlisted sprite definitions and two animations parsed from generated XML. It cross-checks their logical animation paths against the two generated Atlas entries, alongside the prior 48 exact pixels. The report is now `artifacts/cdr-014-demo/index.html`, still with zero commercial bytes and `diagnostic_placeholder=true`.
 
 The current `验证当前版本.cmd` adds 40 CDR-014 XML cases to the previous 108 tests. Expected results: `15/15`, `27/27`, `35/35`, `31/31`, `40/40`. CDR-013's prior demo is preserved in its accepted branch; the root launchers always target the latest local milestone.
+
+## Demo 015 — Normalized synthetic asset catalog
+
+Status: ready for developer acceptance
+
+Double-click `演示当前进度.cmd`. The cumulative generated pipeline now joins the Atlas index, decoded page and sprite definitions into two isolated entity catalogs with two frames. It records that one required page was opened and decoded once, emits a deterministic catalog fingerprint, and writes `artifacts/cdr-015-demo/index.html`. The report remains a diagnostic placeholder with zero commercial bytes.
+
+Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `40/40` and `26/26`, followed by a successful demo-manifest check. It does not read a real installation or authorize CDR-016.
