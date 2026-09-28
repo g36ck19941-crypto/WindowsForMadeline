@@ -7,7 +7,7 @@
 - Added caller-supplied source summaries and a deterministic catalog SHA-256 over normalized structure and frame hashes; no disk cache or filesystem reader was introduced.
 - Added 26 generated catalog tests and extended the cumulative demo to two entity catalogs, two frames and one required decoded page with zero commercial bytes.
 - Published the accepted CDR-014 commit to `codex/cdr-014-sprite-xml` at `aa8543c` after connectivity recovered; remote `main` remained `d237277`.
-- Kept CDR-016 real-install conformance unauthorized.
+- Recorded developer acceptance of CDR-015 and explicit authorization for read-only CDR-016 conformance against the selected正版 installation, without game/GUI launch, installation writes or commercial-byte persistence.
 
 ## 2026-09-22 — CDR-014 synthetic sprite definitions
 

@@ -4,7 +4,7 @@ Updated: 2026-09-28
 
 ## Current state
 
-CDR-001 and CDR-010 through CDR-014 were accepted by the developer. CDR-014 was published exactly to `codex/cdr-014-sprite-xml` at `aa8543c` after two temporary connectivity failures; remote `main` was verified unchanged at `d237277`. CDR-015 is implemented and ready for developer acceptance: it builds immutable per-entity catalogs, resolves frames without flattening equal names, decodes only required pages and emits a deterministic catalog fingerprint. Release build has 0 warnings/errors; CDR-010/011/012/013/014/015 tests pass 15/27/35/31/40/26. The cumulative generated demo produces two entity catalogs, two frames and one decoded page. The agent has not launched Celeste/Everest, a browser, GUI, real desktop geometry or game installation files.
+CDR-001 and CDR-010 through CDR-015 were accepted by the developer. CDR-014 was published exactly to `codex/cdr-014-sprite-xml` at `aa8543c`; remote `main` was verified unchanged at `d237277`. CDR-015 builds immutable per-entity catalogs, resolves frames without flattening equal names, decodes only required pages and emits a deterministic catalog fingerprint. Release build has 0 warnings/errors; CDR-010/011/012/013/014/015 tests pass 15/27/35/31/40/26. On 2026-09-28 the developer authorized CDR-016 read-only conformance against the selected正版 installation, with no game/GUI launch, installation writes or commercial-byte persistence. After CDR-016, CDR-020 through CDR-022 may continue automatically as synthetic offline work; unaccepted versions must not be pushed.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Finish final diff review and commit CDR-015 locally, then wait for developer acceptance. Do not push CDR-015 or start CDR-016; real-install conformance requires fresh explicit authorization in addition to acceptance.
+Record and publish the accepted CDR-015 commit, then implement CDR-016 read-only conformance and retain only non-commercial summary evidence. Do not launch the game or GUI and do not write the installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-015 final audit, local commit and acceptance handoff
-- Forbidden: CDR-016 real-install conformance, Legacy changes, game/GUI launch, real desktop test, real install read/write, commercial asset persistence
+- Scope: CDR-015 acceptance/publish, then CDR-016 read-only conformance code, tests, safe summary evidence and records
+- Forbidden: Legacy changes, game/GUI launch, real desktop test, any real-install write, raw commercial data in repository/logs/evidence

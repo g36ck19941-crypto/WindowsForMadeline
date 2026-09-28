@@ -3,7 +3,7 @@
   "taskId": "CDR-015",
   "title": "Normalized synthetic asset catalog",
   "owner": "Primary agent",
-  "state": "ready_for_developer_acceptance",
+  "state": "accepted",
   "scope": [
     "src/CelesteDesktop.Contracts/Assets/*Catalog*.cs and Asset*Fingerprint.cs",
     "src/CelesteDesktop.AssetWorker.Catalog/**",
@@ -56,6 +56,8 @@
   },
   "reviewArtifact": "docs/ASSET_CATALOG.md",
   "reviewArtifactZhCn": "docs/zh-CN/ASSET_CATALOG.md",
+  "acceptedDate": "2026-09-28",
+  "acceptanceScope": "CDR-016 read-only conformance against the developer-selected installation",
   "nextTask": "CDR-016",
-  "nextAction": "Await developer acceptance; CDR-016 additionally requires fresh explicit authorization."
+  "nextAction": "Run CDR-016 read-only conformance without launching the game or persisting commercial bytes."
 }
