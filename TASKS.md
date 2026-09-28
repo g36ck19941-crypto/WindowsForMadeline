@@ -112,11 +112,18 @@
 ### CDR-021 — Madeline Normal/Jump
 
 - Owner: Primary
-- State: implementation starting under prior developer authorization
-- Run, friction, gravity, fast fall, coyote, buffer and variable jump with exact tick evidence.
+- State: implementation complete on 2026-09-28; developer acceptance pending
+- Scope: `CelesteDesktop.Player`, minimal simulation orchestration surface, generated input tests, cumulative offline demonstration and records
+- Run, friction, air control, overspeed reduction, gravity, fast fall, coyote, buffer, variable jump, collision/transition events and immutable snapshots.
+- Evidence: Release 0 warnings/errors; 30/30 player cases and 249 total offline cases; 24-tick cumulative demo reaches max run, emits one jump and replays identically
+- Fidelity: `partial`; public reference values/order are covered, but exact input buffer configuration and full shipped-build surroundings are not established
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect the player tick table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/PLAYER_NORMAL_JUMP.md`
+- Gate: do not upload until developer acceptance; CDR-022 is authorized to continue offline
 
 ### CDR-022 — Dash/Wall/Climb
 
+- Owner: Primary
+- State: implementation starting under prior developer authorization
 - Direction quantization, dash lifecycle, assists, wall slide/jump, climb, stamina and ledge transitions.
 
 ## P3 — Rendering and desktop adapter

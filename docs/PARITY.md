@@ -22,7 +22,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Atlas `.data` page decoder | asset_exact | exact_offline | partial | n/a | Selected-install repeat fingerprint passed; no renderer connection |
 | Madeline body animation | unstarted | unstarted | unstarted | unstarted | Original install only |
 | Player hair | unstarted | unstarted | unstarted | unstarted | Procedural nodes and masks |
-| Normal/Jump | n/a | unstarted | unstarted | unstarted | Fixed 60 Hz |
+| Normal/Jump | n/a | partial | partial | unstarted | CDR-021 generated-input ticks pass; public constants/order covered, full shipped-build behavior and presentation unverified |
 | Dash/Wall/Climb | n/a | unstarted | unstarted | unstarted | Exact tick/order evidence required |
 | Moving-solid carry/LiftBoost | n/a | partial | unstarted | unstarted | CDR-020 contract/tests pass; original-game parameter/order parity is not yet established |
 | Theo Crystal | unstarted | unstarted | unstarted | unstarted | Hold/throw/collision interactions |

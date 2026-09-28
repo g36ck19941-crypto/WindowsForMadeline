@@ -8,6 +8,7 @@ using CelesteDesktop.AssetWorker.Meta;
 using CelesteDesktop.AssetWorker.SpriteXml;
 using CelesteDesktop.Contracts.Assets;
 using CelesteDesktop.Simulation.Core;
+using CelesteDesktop.Player;
 
 const int width = 8;
 const int height = 6;
@@ -50,6 +51,7 @@ var catalog = new AssetCatalogBuilder().Build(
     ["player", "spring"],
     pageSource);
 var simulation = RunSyntheticSimulation();
+var player = RunSyntheticPlayer();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -71,7 +73,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-020",
+    demoId = "CDR-021",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -81,7 +83,8 @@ var manifest = new
         "CDR-013 decoded generated RLE pixels to immutable BGRA32",
         "CDR-014 parsed generated sprite animation definitions",
         "CDR-015 built isolated entity catalogs and decoded only the required page",
-        "CDR-020 advanced generated Actor and Solid geometry at fixed 60 Hz"
+        "CDR-020 advanced generated Actor and Solid geometry at fixed 60 Hz",
+        "CDR-021 applied generated Normal and Jump input snapshots"
     },
     frame = new
     {
@@ -133,6 +136,15 @@ var manifest = new
         deterministicReplay = simulation.DeterministicReplay,
         rows = simulation.Rows
     },
+    player = new
+    {
+        tickCount = player.Rows.Count,
+        player.MaxRunReached,
+        player.JumpEventCount,
+        player.MinimumY,
+        deterministicReplay = player.DeterministicReplay,
+        rows = player.Rows
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -152,11 +164,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation),
+    BuildHtml(frame, page, sprites, catalog, simulation, player),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-020 cumulative synthetic asset and simulation pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=2 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} deterministic_replay={simulation.DeterministicReplay.ToString().ToLowerInvariant()} commercial_bytes=0");
+Console.WriteLine("DEMO CDR-021 cumulative synthetic asset and player pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=2 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} player_replay={player.DeterministicReplay.ToString().ToLowerInvariant()} commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -168,7 +180,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-020-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-021-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -332,7 +344,8 @@ static string BuildHtml(
     AtlasPageDescriptor page,
     SpriteMetadataDescriptor sprites,
     NormalizedAssetCatalog catalog,
-    DemoSimulation simulation)
+    DemoSimulation simulation,
+    DemoPlayer player)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -376,19 +389,31 @@ static string BuildHtml(
             .Append("</td></tr>");
     }
 
+    var playerRows = new StringBuilder();
+    foreach (var row in player.Rows)
+    {
+        playerRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(row.X).Append(',').Append(row.Y)
+            .Append("</td><td>").Append(decimal.Round(row.SpeedX, 3)).Append(',').Append(decimal.Round(row.SpeedY, 3))
+            .Append("</td><td>").Append(row.Grounded)
+            .Append("</td><td>").Append(row.CoyoteTicks).Append('/').Append(row.BufferTicks).Append('/').Append(row.VariableTicks)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-020 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-021 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
             h1{margin:0 0 8px;font-size:30px}.sub{color:#9ca3af;margin-bottom:24px}
             .warning{background:#422006;border:1px solid #f59e0b;padding:12px 16px;border-radius:10px;color:#fde68a}
-            .pipeline{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:24px 0}
+            .pipeline{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;margin:24px 0}
             .stage{background:#1f2937;border:1px solid #374151;padding:14px;border-radius:10px}.stage b{display:block;color:#67e8f9;margin-bottom:5px}
             .layout{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}.canvas{position:relative;width:{{frame.Width * scale}}px;height:{{frame.Height * scale}}px;display:grid;grid-template-columns:repeat({{frame.Width}},{{scale}}px);background:repeating-conic-gradient(#273244 0 25%,#182131 0 50%) 0/24px 24px;box-shadow:0 0 0 1px #64748b}
             .pixel{width:{{scale}}px;height:{{scale}}px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
@@ -399,8 +424,8 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-020 累计项目进度演示</h1>
-          <div class="sub">程序生成的素材管线，以及固定 60 Hz 的 Actor / Solid 逐 tick 模拟</div>
+          <h1>CDR-021 累计项目进度演示</h1>
+          <div class="sub">程序生成的素材管线、Actor / Solid 核心，以及 Normal / Jump 逐 tick 状态</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：下图完全由程序生成，不是 Celeste 素材，也不证明真实安装兼容。</div>
           <div class="pipeline">
             <div class="stage"><b>CDR-010</b>安装结构验证合同</div>
@@ -410,6 +435,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-014</b>解析 2 个精灵 / 2 个动画定义</div>
             <div class="stage"><b>CDR-015</b>构建 2 个实体目录 / 2 个帧</div>
             <div class="stage"><b>CDR-020</b>Actor / Solid 固定步进、携带与碰撞</div>
+            <div class="stage"><b>CDR-021</b>跑动、重力、跳跃与计时窗口</div>
           </div>
           <div class="layout">
             <div class="canvas">{{cells}}{{overlays}}</div>
@@ -427,11 +453,14 @@ static string BuildHtml(
           <h2>CDR-020 逐 tick 模拟轨迹</h2>
           <p>程序生成一个 Actor、一个移动平台和一面静态墙，连续运行 {{simulation.Rows.Count}} 个固定 tick。平台累计移动到 x={{simulation.FinalPlatformX}}，Actor 在平台携带与自身亚像素移动后到 x={{simulation.FinalActorX}}；重复运行结果 <span class="ok">{{(simulation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Actor x,y</th><th>Solid x,y</th><th>Actor X 余量</th><th>事件</th></tr></thead><tbody>{{simulationRows}}</tbody></table>
+          <h2>CDR-021 Normal / Jump 轨迹</h2>
+          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>Tick</th><th>Player x,y</th><th>Speed x,y</th><th>Grounded</th><th>Coyote/Buffer/Variable</th><th>事件</th></tr></thead><tbody>{{playerRows}}</tbody></table>
           <div class="limits">
             <h2>这证明了什么</h2>
-            <p>当前项目既能把生成的 <code>.meta</code>、<code>.data</code> 与 <code>Sprites.xml</code> 组合成动画帧目录，也能让生成的 Actor 与 Solid 在固定 60 Hz 下按整像素碰撞和亚像素余量推进，并记录携带、阻挡等事件。</p>
+            <p>当前项目既能组合生成的动画帧目录，也能在固定 60 Hz 下推进 Actor/Solid，并用不可变输入快照演示跑动、摩擦、重力、快落目标、土狼时间、跳跃缓冲和可变跳跃。</p>
             <h2>仍未证明什么</h2>
-            <p>CDR-016 已证明指定安装的素材格式兼容，但本演示仍不读取商业素材。尚未实现 Madeline 的跑跳参数、冲刺/攀爬、渲染或桌面交互，因此不证明角色可见或手感还原。</p>
+            <p>CDR-016 已证明指定安装的素材格式兼容，但本演示仍不读取商业素材。Normal/Jump 的公开参数已录入，输入缓冲与部分 tick 顺序仍标为 partial；尚未实现冲刺/攀爬、渲染或桌面交互，因此不证明完整原版手感或角色可见。</p>
           </div>
         </body>
         </html>
@@ -483,6 +512,49 @@ static DemoSimulation RunSimulationOnce()
         false);
 }
 
+static DemoPlayer RunSyntheticPlayer()
+{
+    var first = RunPlayerOnce();
+    var second = RunPlayerOnce();
+    return first with { DeterministicReplay = JsonSerializer.Serialize(first) == JsonSerializer.Serialize(second) };
+}
+
+static DemoPlayer RunPlayerOnce()
+{
+    var world = new SimulationWorld();
+    var floor = new Solid("player-floor", -32, 11, 160, 4);
+    var actor = new Actor("player", 0, 0, 8, 11);
+    world.Add(floor);
+    world.Add(actor);
+    var controller = new PlayerNormalController(actor);
+    var rows = new List<DemoPlayerRow>();
+    for (var index = 0; index < 24; index++)
+    {
+        var jumpPressed = index == 6;
+        var jumpHeld = index is >= 6 and <= 11;
+        var input = new PlayerInput(1, 0, jumpPressed, jumpHeld);
+        var snapshot = controller.Step(input, world);
+        rows.Add(new DemoPlayerRow(
+            snapshot.Tick,
+            snapshot.Position.X,
+            snapshot.Position.Y,
+            snapshot.Speed.X,
+            snapshot.Speed.Y,
+            snapshot.Grounded,
+            snapshot.CoyoteTicks,
+            snapshot.JumpBufferTicks,
+            snapshot.VariableJumpTicks,
+            string.Join(", ", snapshot.Events.Select(item => item.Kind.ToString()))));
+    }
+
+    return new DemoPlayer(
+        rows.AsReadOnly(),
+        rows.Any(row => row.SpeedX == NormalJumpTuning.ReferencePartial.MaxRun),
+        rows.Count(row => row.Events.Contains(nameof(PlayerNormalEventKind.Jumped), StringComparison.Ordinal)),
+        rows.Min(row => row.Y),
+        false);
+}
+
 internal readonly record struct Bgra(byte Blue, byte Green, byte Red, byte Alpha);
 
 internal sealed class DemoPageSource : IAtlasPageStreamSource
@@ -525,4 +597,23 @@ internal sealed record DemoSimulationRow(
     int PlatformX,
     int PlatformY,
     decimal ActorXSubpixel,
+    string Events);
+
+internal sealed record DemoPlayer(
+    IReadOnlyList<DemoPlayerRow> Rows,
+    bool MaxRunReached,
+    int JumpEventCount,
+    int MinimumY,
+    bool DeterministicReplay);
+
+internal sealed record DemoPlayerRow(
+    long Tick,
+    int X,
+    int Y,
+    decimal SpeedX,
+    decimal SpeedY,
+    bool Grounded,
+    int CoyoteTicks,
+    int BufferTicks,
+    int VariableTicks,
     string Events);

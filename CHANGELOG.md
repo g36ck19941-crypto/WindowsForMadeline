@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-28 — CDR-021 generated Normal/Jump behavior
+
+- Added a platform-independent player controller driven only by immutable per-tick input snapshots.
+- Added run/friction, reduced air control, overspeed reduction, gravity/half gravity, normal/fast-fall caps, coyote time, jump buffer, jump boost and variable jump.
+- Added explicit ground/collision events and immutable player snapshots, plus a once-per-world-tick orchestration guard.
+- Added 30 focused cases; all nine offline suites pass 249 cases with 0 build warnings/errors.
+- Extended the cumulative demo with a 24-tick run/jump trace and identical replay check.
+- Classified fidelity as `partial`, kept the task local pending acceptance, and began authorized CDR-022 offline work.
+
 ## 2026-09-28 — CDR-020 deterministic Actor/Solid kernel
 
 - Added a platform-independent fixed-60-Hz simulation assembly with whole-pixel bounds and decimal subpixel remainders.

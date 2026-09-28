@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-021",
+  "title": "Madeline Normal and Jump",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-09-28",
+  "scope": [
+    "src/CelesteDesktop.Player/**",
+    "tests/CelesteDesktop.Player.Tests/**",
+    "minimal Simulation.Core orchestration surface",
+    "generated-input cumulative progress demo",
+    "offline verification and project records"
+  ],
+  "features": [
+    "run, friction, air control and overspeed reduction",
+    "gravity, half gravity and fast-fall target",
+    "coyote time and jump buffer",
+    "jump boost and variable jump",
+    "collision and ground-transition events",
+    "immutable per-tick player snapshots"
+  ],
+  "parity": "partial",
+  "forbidden": [
+    "game or GUI launch",
+    "real desktop or live input",
+    "real installation access",
+    "commercial asset persistence",
+    "claiming complete shipped-game parity"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "playerTests": 30,
+    "totalOfflineTests": 249,
+    "demoTicks": 24,
+    "demoJumpEvents": 1,
+    "demoMinimumY": -16,
+    "deterministicReplay": true,
+    "commercialBytes": 0
+  },
+  "nextTask": "CDR-022",
+  "nextAction": "Keep CDR-021 local pending acceptance and continue authorized CDR-022 offline implementation."
+}

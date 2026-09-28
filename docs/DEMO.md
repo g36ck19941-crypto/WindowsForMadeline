@@ -56,7 +56,7 @@ The current `验证当前版本.cmd` adds 40 CDR-014 XML cases to the previous 1
 
 ## Demo 015 — Normalized synthetic asset catalog
 
-Status: ready for developer acceptance
+Status: accepted by the developer on 2026-09-28
 
 Double-click `演示当前进度.cmd`. The cumulative generated pipeline now joins the Atlas index, decoded page and sprite definitions into two isolated entity catalogs with two frames. It records that one required page was opened and decoded once, emits a deterministic catalog fingerprint, and writes `artifacts/cdr-015-demo/index.html`. The report remains a diagnostic placeholder with zero commercial bytes.
 
@@ -73,3 +73,9 @@ The current `验证当前版本.cmd` remains fully offline and now runs seven su
 Double-click `演示当前进度.cmd`. The report retains the generated asset pipeline and adds a 13-tick table for one generated Actor, moving platform and wall. It must show three `ActorCarried` rows, one `ActorBlocked` row and an identical replay result.
 
 Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29`, `10/10` and `28/28`, followed by the CDR-020 manifest check. This proves the offline kernel behavior only; it does not prove Madeline movement parity.
+
+## CDR-021 — Madeline Normal/Jump
+
+Double-click `演示当前进度.cmd`. The cumulative report retains the generated asset and Actor/Solid stages and adds a 24-tick player table. It must reach speed 90, show one `Jumped` event at tick 7, reach `Y=-16`, and mark the replay identical.
+
+Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29`, `10/10`, `28/28` and `30/30`, followed by the CDR-021 manifest check. This proves generated-input behavior only. Fidelity is `partial`; no live input, rendering, real installation or complete shipped-build parity is claimed.

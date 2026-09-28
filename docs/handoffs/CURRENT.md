@@ -4,7 +4,7 @@ Updated: 2026-09-28
 
 ## Current state
 
-CDR-001 and CDR-010 through CDR-015 were accepted by the developer. CDR-015 was published exactly to `codex/cdr-015-asset-catalog` at `673f798`; remote `main` was not targeted. CDR-016 is locally complete at `22d7586` and awaiting acceptance: 191 offline cases and explicit selected-install read-only conformance passed with zero installation writes or persisted commercial bytes. CDR-020 is locally complete and awaiting acceptance: the fixed-60-Hz Actor/Solid kernel has whole-pixel/subpixel movement, ordered collision, carry/push, LiftSpeed, squish events and immutable snapshots; 28/28 simulation cases, 219 total offline cases and the 13-tick identical-replay demo pass.
+CDR-001 and CDR-010 through CDR-015 were accepted by the developer. CDR-015 was published exactly to `codex/cdr-015-asset-catalog` at `673f798`; remote `main` was not targeted. CDR-016 is locally complete at `22d7586` and awaiting acceptance: 191 offline cases and explicit selected-install read-only conformance passed with zero installation writes or persisted commercial bytes. CDR-020 is locally complete at `3dd4b37` and awaiting acceptance: 28/28 simulation cases, 219 total offline cases and the 13-tick identical-replay demo pass. CDR-021 is locally complete pending its final commit: run/jump behavior has 30/30 focused cases, 249 total offline cases and a 24-tick identical-replay demo; fidelity is intentionally `partial`.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Commit the completed CDR-020 locally, then implement CDR-021 Normal/Jump with generated inputs and exact tick evidence. Do not upload CDR-016 or later work until the developer accepts the corresponding task.
+Run the complete CDR-021 verification, audit and commit it locally, then implement CDR-022 Dash/Wall/Climb with generated inputs and exact tick evidence. Do not upload CDR-016 or later work until the developer accepts the corresponding task.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: finish CDR-020 local delivery, then CDR-021 player state/rules, generated tests, offline demo and records
+- Scope: finish CDR-021 local delivery, then CDR-022 dash/wall/climb state/rules, generated tests, offline demo and records
 - Forbidden: Legacy changes, game/GUI launch, real desktop test, any real-install write, raw commercial data in repository/logs/evidence

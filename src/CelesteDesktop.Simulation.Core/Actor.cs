@@ -27,7 +27,7 @@ public sealed class Actor
     public bool IsSquished { get; internal set; }
     public SimRect Bounds => new(X, Y, Width, Height);
 
-    public void MoveX(decimal displacement, SimulationWorld world)
+    public ActorMoveResult MoveX(decimal displacement, SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         world.RequireActiveStep();
@@ -38,9 +38,14 @@ public sealed class Actor
             _xRemainder.Reset();
             world.RecordBlocked(this, result, MovementAxis.Horizontal, pixels);
         }
+        return new ActorMoveResult(
+            MovementAxis.Horizontal,
+            pixels,
+            result.MovedPixels,
+            result.Blocker?.Id);
     }
 
-    public void MoveY(decimal displacement, SimulationWorld world)
+    public ActorMoveResult MoveY(decimal displacement, SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         world.RequireActiveStep();
@@ -51,6 +56,11 @@ public sealed class Actor
             _yRemainder.Reset();
             world.RecordBlocked(this, result, MovementAxis.Vertical, pixels);
         }
+        return new ActorMoveResult(
+            MovementAxis.Vertical,
+            pixels,
+            result.MovedPixels,
+            result.Blocker?.Id);
     }
 
     public bool IsRiding(Solid solid)
@@ -105,4 +115,13 @@ public sealed class Actor
     }
 
     internal sealed record ExactMoveResult(int MovedPixels, Solid? Blocker);
+}
+
+public sealed record ActorMoveResult(
+    MovementAxis Axis,
+    int RequestedPixels,
+    int MovedPixels,
+    string? BlockingSolidId)
+{
+    public bool Blocked => RequestedPixels != MovedPixels;
 }

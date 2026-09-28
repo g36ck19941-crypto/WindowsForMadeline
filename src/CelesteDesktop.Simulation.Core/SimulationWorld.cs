@@ -11,6 +11,7 @@ public sealed class SimulationWorld
     private bool _activeStep;
 
     public long Tick { get; private set; }
+    public bool IsAdvancing => _activeStep;
     public IReadOnlyList<Actor> Actors => _actors.AsReadOnly();
     public IReadOnlyList<Solid> Solids => _solids.AsReadOnly();
     public IReadOnlyList<SimulationEvent> Events => _events.AsReadOnly();
@@ -84,6 +85,16 @@ public sealed class SimulationWorld
             solid.Height,
             solid.XSubpixel,
             solid.YSubpixel)));
+
+    public bool IsGrounded(Actor actor)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+        if (!_actors.Contains(actor))
+        {
+            throw new ArgumentException("Actor is not registered in this world.", nameof(actor));
+        }
+        return FirstCollision(actor.Bounds.Offset(0, 1), ignoredSolid: null) is not null;
+    }
 
     internal void RequireActiveStep()
     {
