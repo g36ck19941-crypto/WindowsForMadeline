@@ -61,3 +61,9 @@ Status: ready for developer acceptance
 Double-click `演示当前进度.cmd`. The cumulative generated pipeline now joins the Atlas index, decoded page and sprite definitions into two isolated entity catalogs with two frames. It records that one required page was opened and decoded once, emits a deterministic catalog fingerprint, and writes `artifacts/cdr-015-demo/index.html`. The report remains a diagnostic placeholder with zero commercial bytes.
 
 Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `40/40` and `26/26`, followed by a successful demo-manifest check. It does not read a real installation or authorize CDR-016.
+
+## CDR-016 — selected-install compatibility
+
+The current `验证当前版本.cmd` remains fully offline and now runs seven suites: `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29` and `10/10` (191 cases). It does not locate or read Celeste.
+
+`验证真实安装兼容性.cmd` is a separate opt-in entry. Drag the explicitly selected installation folder onto it, or paste the path when prompted. It repeats the full offline gate, then reads only the three required source files and writes a hash/count report under project `artifacts`. Expected outcome: 5 definitions, 93 animations, 706 frames, stable fingerprints, zero installation writes and zero commercial bytes persisted. This is not a visible-character demo.

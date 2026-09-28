@@ -91,14 +91,19 @@
 ### CDR-016 — Opt-in real-install conformance
 
 - Owner: Primary
-- State: authorized on 2026-09-28; implementation starting
+- State: implementation complete on 2026-09-28; developer acceptance pending
 - Scope: read-only selected installation; summary hashes and counts only
-- Gate: zero writes, zero commercial bytes in evidence, exact required-frame resolution, decoder output fingerprint stability
+- Evidence: Release 0 warnings/errors; 191 offline cases; selected installation produced 3 source summaries, 6,824 Atlas entries, 5 definitions, 93 animations and 706 frames; repeated decoder/catalog fingerprints stable; zero install writes and zero commercial bytes persisted
+- Manual acceptance: double-click `验证当前版本.cmd`, then optionally drag the selected installation onto `验证真实安装兼容性.cmd`; details in `docs/zh-CN/REAL_INSTALL_CONFORMANCE.md`
+- Gate: implementation evidence satisfied locally; do not upload until developer acceptance; CDR-020 is authorized to continue offline
 
 ## P2 — Deterministic simulation
 
 ### CDR-020 — Actor/Solid kernel
 
+- Owner: Primary
+- State: implementation starting under prior developer authorization
+- Scope: `Simulation.Core`, generated geometry tests, cumulative offline demonstration and project records
 - Fixed 60 Hz, whole-pixel actor position, subpixel remainder, collision ordering, moving-solid carry and LiftSpeed contracts.
 
 ### CDR-021 — Madeline Normal/Jump

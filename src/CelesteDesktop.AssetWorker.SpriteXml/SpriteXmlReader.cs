@@ -232,7 +232,7 @@ public sealed partial class SpriteXmlReader
 
         var frameMetadata = metadataElements.Count == 0
             ? []
-            : ParseMetadata(metadataElements[0], animations);
+            : ParseMetadata(metadataElements[0], atlasPathPrefix, animations);
 
         return new SpriteDefinitionDescriptor(
             id,
@@ -261,11 +261,11 @@ public sealed partial class SpriteXmlReader
         var relativePath = NormalizeAtlasPath(
             OptionalAttribute(element, "path") ?? string.Empty,
             allowEmpty: true,
-            allowTrailingSlash: false);
+            allowTrailingSlash: true);
         var atlasPath = NormalizeAtlasPath(
             prefix + relativePath,
             allowEmpty: false,
-            allowTrailingSlash: false);
+            allowTrailingSlash: true);
         var delay = OptionalDelay(element, "delay", masterDelay);
         var gotoExpression = isLooping
             ? null
@@ -288,6 +288,7 @@ public sealed partial class SpriteXmlReader
 
     private IReadOnlyList<SpriteFrameMetadataDescriptor> ParseMetadata(
         XElement element,
+        string atlasPathPrefix,
         IReadOnlyList<SpriteAnimationDescriptor> animations)
     {
         ValidateAttributes(element);
@@ -296,9 +297,6 @@ public sealed partial class SpriteXmlReader
             throw new SpriteXmlException(SpriteXmlCodes.NodeUnknown);
         }
 
-        var animationById = animations.ToDictionary(
-            animation => animation.Id,
-            StringComparer.OrdinalIgnoreCase);
         var found = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var metadata = new List<SpriteFrameMetadataDescriptor>();
         foreach (var child in element.Elements())
@@ -310,13 +308,31 @@ public sealed partial class SpriteXmlReader
 
             ValidateAttributes(child, "path", "hair", "carry");
             EnsureNoChildContent(child);
-            var animationId = NormalizeIdentifier(RequiredAttribute(child, "path"));
-            if (!animationById.TryGetValue(animationId, out var animation))
+            var metadataKey = NormalizeAtlasPath(
+                RequiredAttribute(child, "path"),
+                allowEmpty: false,
+                allowTrailingSlash: true);
+            var pathCandidate = NormalizeAtlasPath(
+                atlasPathPrefix + metadataKey,
+                allowEmpty: false,
+                allowTrailingSlash: true);
+            var targetPaths = animations
+                .Where(animation =>
+                    string.Equals(animation.Id, metadataKey, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(animation.AtlasPath, pathCandidate, StringComparison.OrdinalIgnoreCase))
+                .Select(animation => animation.AtlasPath)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (targetPaths.Length == 0)
             {
                 throw new SpriteXmlException(SpriteXmlCodes.MetadataAnimationMissing);
             }
+            if (targetPaths.Length > 1)
+            {
+                throw new SpriteXmlException(SpriteXmlCodes.MetadataTargetAmbiguous);
+            }
 
-            if (!found.Add(animationId))
+            if (!found.Add(metadataKey))
             {
                 throw new SpriteXmlException(SpriteXmlCodes.MetadataDuplicate);
             }
@@ -326,9 +342,14 @@ public sealed partial class SpriteXmlReader
                 throw new SpriteXmlException(SpriteXmlCodes.FrameBudgetExceeded);
             }
 
-            var hair = OptionalAttribute(child, "hair") is { } hairValue
-                ? ParseHairFrames(hairValue)
-                : null;
+            var hairValue = OptionalAttribute(child, "hair");
+            var hidesHairForAllFrames = hairValue is not null && hairValue.Length == 0;
+            var hair = hairValue switch
+            {
+                null => null,
+                "" => [],
+                _ => ParseHairFrames(hairValue)
+            };
             var carry = OptionalAttribute(child, "carry") is { } carryValue
                 ? ParseCarryOffsets(carryValue)
                 : null;
@@ -337,28 +358,27 @@ public sealed partial class SpriteXmlReader
                 throw new SpriteXmlException(SpriteXmlCodes.AttributeMissing);
             }
 
-            ValidateMetadataFrameCounts(animation, hair, carry);
-            metadata.Add(new SpriteFrameMetadataDescriptor(animationId, hair, carry));
+            ValidateMetadataFrameCounts(
+                hair,
+                carry,
+                hidesHairForAllFrames);
+            metadata.Add(new SpriteFrameMetadataDescriptor(
+                metadataKey,
+                targetPaths[0],
+                hair,
+                carry,
+                hidesHairForAllFrames));
         }
 
         return metadata;
     }
 
     private void ValidateMetadataFrameCounts(
-        SpriteAnimationDescriptor animation,
         IReadOnlyList<SpriteHairFrameDescriptor>? hair,
-        IReadOnlyList<int>? carry)
+        IReadOnlyList<int>? carry,
+        bool hidesHairForAllFrames)
     {
-        if (!animation.UsesAllFrames)
-        {
-            if ((hair is not null && hair.Count != animation.Frames.Count) ||
-                (carry is not null && carry.Count != animation.Frames.Count))
-            {
-                throw new SpriteXmlException(SpriteXmlCodes.MetadataFrameMismatch);
-            }
-        }
-
-        if (hair is not null && carry is not null && hair.Count != carry.Count)
+        if (!hidesHairForAllFrames && hair is not null && carry is not null && hair.Count != carry.Count)
         {
             throw new SpriteXmlException(SpriteXmlCodes.MetadataFrameMismatch);
         }
@@ -747,6 +767,6 @@ public sealed partial class SpriteXmlReader
     [GeneratedRegex("^(\\d+)\\*(\\d+)$", RegexOptions.CultureInvariant)]
     private static partial Regex FrameRepeatRegex();
 
-    [GeneratedRegex("^(-?\\d+),(-?\\d+)(?::([0-2]))?$", RegexOptions.CultureInvariant)]
+    [GeneratedRegex("^(-?\\d+)\\s*,\\s*(-?\\d+)(?:\\s*:\\s*([0-2]))?$", RegexOptions.CultureInvariant)]
     private static partial Regex HairFrameRegex();
 }

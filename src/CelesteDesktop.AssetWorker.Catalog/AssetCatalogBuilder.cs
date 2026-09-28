@@ -137,7 +137,7 @@ public sealed class AssetCatalogBuilder
 
     private static Dictionary<string, AtlasEntryDescriptor> IndexEntries(AtlasMetadataDescriptor atlas)
     {
-        var result = new Dictionary<string, AtlasEntryDescriptor>(StringComparer.Ordinal);
+        var result = new Dictionary<string, AtlasEntryDescriptor>(StringComparer.OrdinalIgnoreCase);
         var insensitive = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var entry in atlas.Pages.SelectMany(page => page.Entries))
         {
@@ -168,15 +168,26 @@ public sealed class AssetCatalogBuilder
         SpriteAnimationDescriptor animation,
         IReadOnlyDictionary<string, AtlasEntryDescriptor> entries)
     {
+        entries.TryGetValue(animation.AtlasPath, out var exactEntry);
+        var numericEntries = ResolveNumericEntries(animation.AtlasPath, entries);
+
         if (!animation.UsesAllFrames)
         {
             var result = new List<AtlasEntryDescriptor>(animation.Frames.Count);
             foreach (var index in animation.Frames)
             {
-                var id = animation.AtlasPath + index.ToString("D2", CultureInfo.InvariantCulture);
-                if (!entries.TryGetValue(id, out var entry))
+                if (!numericEntries.TryGetValue(index, out var entry))
                 {
-                    throw new AssetCatalogException(AssetCatalogCodes.AtlasEntryMissing);
+                    if (exactEntry is not null && numericEntries.Count == 0 && index == 0)
+                    {
+                        result.Add(exactEntry);
+                        continue;
+                    }
+
+                    throw new AssetCatalogException(
+                        AssetCatalogCodes.AtlasEntryMissing,
+                        animation.AtlasPath + "#" + index.ToString(CultureInfo.InvariantCulture),
+                        DescribeNumericSuffixes(animation.AtlasPath, entries.Keys));
                 }
 
                 result.Add(entry);
@@ -185,33 +196,64 @@ public sealed class AssetCatalogBuilder
             return result;
         }
 
-        var matches = new SortedDictionary<int, AtlasEntryDescriptor>();
+        if (exactEntry is not null && numericEntries.Count > 0)
+        {
+            throw new AssetCatalogException(AssetCatalogCodes.AtlasEntryAmbiguous, animation.AtlasPath);
+        }
+
+        if (exactEntry is not null)
+        {
+            return [exactEntry];
+        }
+
+        if (numericEntries.Count == 0)
+        {
+            throw new AssetCatalogException(
+                AssetCatalogCodes.AtlasEntryMissing,
+                animation.AtlasPath,
+                DescribeNumericSuffixes(animation.AtlasPath, entries.Keys));
+        }
+
+        return numericEntries.Values.ToArray();
+    }
+
+    private static SortedDictionary<int, AtlasEntryDescriptor> ResolveNumericEntries(
+        string prefix,
+        IReadOnlyDictionary<string, AtlasEntryDescriptor> entries)
+    {
+        var result = new SortedDictionary<int, AtlasEntryDescriptor>();
         foreach (var pair in entries)
         {
-            if (!pair.Key.StartsWith(animation.AtlasPath, StringComparison.Ordinal))
+            if (!pair.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
-            var suffix = pair.Key[animation.AtlasPath.Length..];
-            if (suffix.Length < 2 || !suffix.All(char.IsAsciiDigit) ||
+            var suffix = pair.Key[prefix.Length..];
+            if (suffix.Length == 0 || !suffix.All(char.IsAsciiDigit) ||
                 !int.TryParse(suffix, NumberStyles.None, CultureInfo.InvariantCulture, out var index))
             {
                 continue;
             }
 
-            if (!matches.TryAdd(index, pair.Value))
+            if (!result.TryAdd(index, pair.Value))
             {
-                throw new AssetCatalogException(AssetCatalogCodes.AtlasEntryAmbiguous);
+                throw new AssetCatalogException(AssetCatalogCodes.AtlasEntryAmbiguous, prefix);
             }
         }
 
-        if (matches.Count == 0)
-        {
-            throw new AssetCatalogException(AssetCatalogCodes.AtlasEntryMissing);
-        }
+        return result;
+    }
 
-        return matches.Values.ToArray();
+    private static string DescribeNumericSuffixes(string prefix, IEnumerable<string> ids)
+    {
+        var suffixes = ids
+            .Where(id => id.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(id => id[prefix.Length..])
+            .Where(suffix => suffix.Length > 0 && suffix.All(char.IsAsciiDigit))
+            .OrderBy(suffix => suffix, StringComparer.Ordinal)
+            .Take(64);
+        return $"numeric_suffixes={string.Join(',', suffixes)}";
     }
 
     private Bgra32Frame DecodePage(

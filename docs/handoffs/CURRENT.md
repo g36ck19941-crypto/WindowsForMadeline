@@ -4,7 +4,7 @@ Updated: 2026-09-28
 
 ## Current state
 
-CDR-001 and CDR-010 through CDR-015 were accepted by the developer. CDR-014 was published exactly to `codex/cdr-014-sprite-xml` at `aa8543c`; remote `main` was verified unchanged at `d237277`. CDR-015 builds immutable per-entity catalogs, resolves frames without flattening equal names, decodes only required pages and emits a deterministic catalog fingerprint. Release build has 0 warnings/errors; CDR-010/011/012/013/014/015 tests pass 15/27/35/31/40/26. On 2026-09-28 the developer authorized CDR-016 read-only conformance against the selected正版 installation, with no game/GUI launch, installation writes or commercial-byte persistence. After CDR-016, CDR-020 through CDR-022 may continue automatically as synthetic offline work; unaccepted versions must not be pushed.
+CDR-001 and CDR-010 through CDR-015 were accepted by the developer. CDR-015 was published exactly to `codex/cdr-015-asset-catalog` at `673f798`; remote `main` was not targeted. CDR-016 is locally complete and awaiting acceptance: Release build has 0 warnings/errors; suites pass 15/27/35/31/44/29/10 (191 total). Explicit read-only verification of the selected正版 installation produced summaries for 3 source files, 1 page, 6,824 entries, 5 definitions, 93 animations and 706 frames; repeated decoder/catalog fingerprints were stable, with zero installation writes and zero persisted commercial bytes. No absolute installation root or commercial payload is in tracked evidence.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -16,11 +16,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Record and publish the accepted CDR-015 commit, then implement CDR-016 read-only conformance and retain only non-commercial summary evidence. Do not launch the game or GUI and do not write the installation.
+Commit the completed CDR-016 locally, then implement CDR-020 deterministic Actor/Solid simulation with generated geometry only. Do not upload CDR-016 or later work until the developer accepts the corresponding task.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-015 acceptance/publish, then CDR-016 read-only conformance code, tests, safe summary evidence and records
+- Scope: finish CDR-016 local delivery, then CDR-020 `Simulation.Core`, generated tests, offline demo and records
 - Forbidden: Legacy changes, game/GUI launch, real desktop test, any real-install write, raw commercial data in repository/logs/evidence

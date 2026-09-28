@@ -5,7 +5,10 @@ using CelesteDesktop.Contracts.Assets;
 var tests = new (string Name, Action Body)[]
 {
     ("explicit frames resolve in declared order", ExplicitFramesResolve),
+    ("explicit frames accept single-digit suffixes", ExplicitFramesAcceptSingleDigitSuffixes),
+    ("logical atlas paths resolve case-insensitively", AtlasPathsResolveCaseInsensitively),
     ("all frames resolve in numeric order", AllFramesResolveNumerically),
+    ("all frames accept one exact unnumbered entry", AllFramesAcceptExactEntry),
     ("entity namespaces remain isolated", EntityNamespacesRemainIsolated),
     ("only required pages are opened", OnlyRequiredPagesAreOpened),
     ("shared page is decoded once", SharedPageIsDecodedOnce),
@@ -59,6 +62,30 @@ static void ExplicitFramesResolve()
     Assert(ids.SequenceEqual(["demo/player/idle01", "demo/player/idle00"]), "Explicit order changed.");
 }
 
+static void ExplicitFramesAcceptSingleDigitSuffixes()
+{
+    var fixture = Fixture(animation: Animation("fall", "demo/player/fall", false, [2, 0])) with
+    {
+        Atlas = Atlas([
+            Entry("demo/player/fall0", 0, 0, 0),
+            Entry("demo/player/fall2", 0, 1, 0)])
+    };
+    var ids = Build(fixture).Entities[0].Animations[0].Frames.Select(frame => frame.AtlasEntryId);
+    Assert(ids.SequenceEqual(["demo/player/fall2", "demo/player/fall0"]), "Single-digit suffixes did not resolve numerically.");
+}
+
+static void AtlasPathsResolveCaseInsensitively()
+{
+    var fixture = Fixture() with
+    {
+        Atlas = Atlas([Entry("demo/Player/idle00", 0, 0, 0)])
+    };
+    var catalog = Build(fixture);
+    Assert(
+        catalog.Entities[0].Animations[0].Frames[0].AtlasEntryId == "demo/Player/idle00",
+        "The original Atlas ID was not preserved after case-insensitive lookup.");
+}
+
 static void AllFramesResolveNumerically()
 {
     var fixture = Fixture(animation: Animation("idle", "demo/player/idle", true, []));
@@ -73,6 +100,16 @@ static void AllFramesResolveNumerically()
         catalog.Entities[0].Animations[0].Frames.Select(frame => frame.AtlasEntryId)
             .SequenceEqual(["demo/player/idle00", "demo/player/idle02", "demo/player/idle10"]),
         "All-frame order was not numeric.");
+}
+
+static void AllFramesAcceptExactEntry()
+{
+    var fixture = Fixture(animation: Animation("fall", "demo/player/fall", true, [])) with
+    {
+        Atlas = Atlas([Entry("demo/player/fall", 0, 0, 0)])
+    };
+    var frames = Build(fixture).Entities[0].Animations[0].Frames;
+    Assert(frames.Count == 1 && frames[0].AtlasEntryId == "demo/player/fall", "Exact unnumbered frame was not selected.");
 }
 
 static void EntityNamespacesRemainIsolated()

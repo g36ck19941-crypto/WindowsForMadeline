@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-28 — CDR-016 selected-install conformance
+
+- Published the developer-accepted CDR-015 history exactly to `codex/cdr-015-asset-catalog` at `673f798`; remote `main` was not targeted.
+- Added an explicit-path, read-only real-install verifier with before/after source snapshots, repeat decoder/catalog fingerprints and a hash/count-only report.
+- Corrected real-format compatibility for page suffixes, trailing animation separators, shared metadata paths, empty hair metadata, case differences and variable-width numeric frame suffixes; each correction has synthetic regression coverage.
+- Verified the selected installation as 3 source files, 1 page, 6,824 entries, 5 definitions, 93 animations and 706 resolved frames, with zero installation writes and zero persisted commercial bytes.
+- Added a separate developer-facing `验证真实安装兼容性.cmd`; the default `验证当前版本.cmd` remains offline and now runs 191 cases.
+- CDR-016 remains local pending developer acceptance; CDR-020 offline implementation begins under prior authorization.
+
 ## 2026-09-28 — CDR-015 normalized synthetic asset catalog
 
 - Added per-entity immutable catalogs that resolve generated sprite animations to generated Atlas frames without flattening equal animation names.

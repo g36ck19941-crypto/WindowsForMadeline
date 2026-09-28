@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-016",
+  "title": "Opt-in read-only real-install conformance",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-09-28",
+  "scope": [
+    "tools/CelesteDesktop.RealInstallConformance/**",
+    "src/CelesteDesktop.AssetWorker.SpriteXml compatibility repair and tests",
+    "tests/CelesteDesktop.RealInstallConformance.Tests/**",
+    "tools/Verify-CDR016.ps1",
+    "developer-facing real-install .cmd launcher",
+    "safe hash/count-only evidence and project records"
+  ],
+  "authorizedInstallation": "developer-selected正版 Celeste installation; absolute path must not be persisted",
+  "features": [
+    "explicit selected-root validation",
+    "read-only source streams",
+    "real meta data and sprite XML parsing",
+    "exact allowlisted frame resolution",
+    "repeat decoder and catalog fingerprint comparison",
+    "before-after source snapshot comparison",
+    "hash/count-only evidence"
+  ],
+  "forbidden": [
+    "Celeste or Everest launch",
+    "GUI or real desktop observation",
+    "any installation write",
+    "commercial byte persistence",
+    "absolute installation path in evidence",
+    "automatic installation discovery"
+  ],
+  "nextTask": "CDR-020",
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "offlineTests": 191,
+    "realSourceFiles": 3,
+    "atlasEntries": 6824,
+    "selectedDefinitions": 5,
+    "animations": 93,
+    "resolvedFrames": 706,
+    "installationWrites": 0,
+    "persistedCommercialBytes": 0
+  },
+  "nextAction": "Await CDR-016 acceptance while continuing authorized CDR-020 offline implementation."
+}

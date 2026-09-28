@@ -26,6 +26,7 @@ var tests = new (string Name, Action Body)[]
     ("unknown definition attribute is rejected", UnknownDefinitionAttributeIsRejected),
     ("missing sprite path is rejected", MissingPathIsRejected),
     ("path traversal is rejected", PathTraversalIsRejected),
+    ("single animation trailing separator is preserved", AnimationTrailingSeparatorIsPreserved),
     ("repeated trailing path separators are rejected", RepeatedTrailingSeparatorsAreRejected),
     ("unknown selected child is rejected", UnknownChildIsRejected),
     ("animation budget is enforced", AnimationBudgetIsEnforced),
@@ -38,8 +39,11 @@ var tests = new (string Name, Action Body)[]
     ("conflicting origin nodes are rejected", OriginConflictIsRejected),
     ("duplicate metadata block is rejected", DuplicateMetadataIsRejected),
     ("metadata for missing animation is rejected", MissingMetadataAnimationIsRejected),
+    ("metadata binds to atlas path shared by animations", MetadataBindsToAtlasPath),
     ("metadata frame count mismatch is rejected", MetadataFrameMismatchIsRejected),
     ("invalid hair metadata is rejected", InvalidHairIsRejected),
+    ("empty hair metadata hides hair for all frames", EmptyHairHidesAllFrames),
+    ("hair coordinates allow bounded separator whitespace", HairWhitespaceIsAccepted),
     ("invalid carry metadata is rejected", InvalidCarryIsRejected),
     ("justify outside unit range is rejected", InvalidJustifyIsRejected),
     ("unknown metadata child is rejected", UnknownMetadataChildIsRejected),
@@ -201,6 +205,14 @@ static void PathTraversalIsRejected() => AssertFailure(
     Sprite("<Loop id=\"idle\" path=\"idle\" frames=\"0\" />", " path=\"../escape/\"", includeDefaultPath: false),
     SpriteXmlCodes.PathInvalid);
 
+static void AnimationTrailingSeparatorIsPreserved()
+{
+    var metadata = Read(Sprite("<Loop id=\"idle\" path=\"wakeUp/\" />"));
+    Assert(
+        metadata.Definitions[0].Animations[0].AtlasPath == "characters/player/wakeUp/",
+        "A valid animation subdirectory was not preserved.");
+}
+
 static void RepeatedTrailingSeparatorsAreRejected() => AssertFailure(
     Sprite("<Loop id=\"idle\" path=\"idle\" frames=\"0\" />", " path=\"characters/player//\"", includeDefaultPath: false),
     SpriteXmlCodes.PathInvalid);
@@ -248,13 +260,47 @@ static void MissingMetadataAnimationIsRejected() => AssertFailure(
     Sprite("<Loop id=\"idle\" path=\"idle\"/><Metadata><Frames path=\"run\" hair=\"0,0\"/></Metadata>"),
     SpriteXmlCodes.MetadataAnimationMissing);
 
+static void MetadataBindsToAtlasPath()
+{
+    var metadata = Read(Sprite(
+        "<Anim id=\"first\" path=\"shared\" frames=\"0-1\"/>" +
+        "<Loop id=\"second\" path=\"shared\" frames=\"2\"/>" +
+        "<Metadata><Frames path=\"shared\" hair=\"0,0|1,0|2,0\"/></Metadata>",
+        " start=\"first\""));
+    Assert(
+        metadata.Definitions[0].FrameMetadata[0].AtlasPath == "characters/player/shared",
+        "Metadata did not bind to the normalized Atlas path.");
+    Assert(metadata.Definitions[0].FrameMetadata[0].Key == "shared", "Metadata key was not preserved.");
+}
+
 static void MetadataFrameMismatchIsRejected() => AssertFailure(
-    Sprite("<Loop id=\"idle\" path=\"idle\" frames=\"0-1\"/><Metadata><Frames path=\"idle\" hair=\"0,0\"/></Metadata>"),
+    Sprite("<Loop id=\"idle\" path=\"idle\" frames=\"0-1\"/><Metadata><Frames path=\"idle\" hair=\"0,0|1,0\" carry=\"0\"/></Metadata>"),
     SpriteXmlCodes.MetadataFrameMismatch);
 
 static void InvalidHairIsRejected() => AssertFailure(
     Sprite("<Loop id=\"idle\" path=\"idle\"/><Metadata><Frames path=\"idle\" hair=\"0,0:9\"/></Metadata>"),
     SpriteXmlCodes.HairInvalid);
+
+static void EmptyHairHidesAllFrames()
+{
+    var metadata = Read(Sprite(
+        "<Loop id=\"idle\" path=\"idle\" frames=\"0-2\"/>" +
+        "<Metadata><Frames path=\"idle\" hair=\"\"/></Metadata>"));
+    var frameMetadata = metadata.Definitions[0].FrameMetadata[0];
+    Assert(frameMetadata.HidesHairForAllFrames, "Empty hair metadata did not preserve hide-all semantics.");
+    Assert(frameMetadata.HairFrames?.Count == 0, "Hide-all metadata invented hair frames.");
+}
+
+static void HairWhitespaceIsAccepted()
+{
+    var metadata = Read(Sprite(
+        "<Loop id=\"idle\" path=\"idle\" frames=\"0\"/>" +
+        "<Metadata><Frames path=\"idle\" hair=\"1, 2\"/></Metadata>"));
+    Assert(
+        metadata.Definitions[0].FrameMetadata[0].HairFrames?[0] ==
+            new SpriteHairFrameDescriptor(true, 1, 2, 0),
+        "Whitespace around a coordinate separator changed the value.");
+}
 
 static void InvalidCarryIsRejected() => AssertFailure(
     Sprite("<Loop id=\"idle\" path=\"idle\"/><Metadata><Frames path=\"idle\" carry=\"oops\"/></Metadata>"),

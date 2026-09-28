@@ -22,6 +22,7 @@ public static class SpriteXmlCodes
     public const string OriginConflict = "SPRITE_XML_ORIGIN_CONFLICT";
     public const string MetadataDuplicate = "SPRITE_XML_METADATA_DUPLICATE";
     public const string MetadataAnimationMissing = "SPRITE_XML_METADATA_ANIMATION_MISSING";
+    public const string MetadataTargetAmbiguous = "SPRITE_XML_METADATA_TARGET_AMBIGUOUS";
     public const string MetadataFrameMismatch = "SPRITE_XML_METADATA_FRAME_MISMATCH";
     public const string HairInvalid = "SPRITE_XML_HAIR_INVALID";
     public const string CarryInvalid = "SPRITE_XML_CARRY_INVALID";

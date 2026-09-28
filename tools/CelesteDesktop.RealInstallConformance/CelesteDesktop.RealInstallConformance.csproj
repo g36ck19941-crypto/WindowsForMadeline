@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CelesteDesktop.Install\CelesteDesktop.Install.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Meta\CelesteDesktop.AssetWorker.Meta.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Data\CelesteDesktop.AssetWorker.Data.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.SpriteXml\CelesteDesktop.AssetWorker.SpriteXml.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Catalog\CelesteDesktop.AssetWorker.Catalog.csproj" />
+  </ItemGroup>
+</Project>

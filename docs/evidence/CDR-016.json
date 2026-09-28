@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-016",
+  "verifiedDate": "2026-09-28",
+  "passed": true,
+  "readOnly": true,
+  "gameLaunched": false,
+  "guiLaunched": false,
+  "installationWritesObserved": false,
+  "persistedCommercialBytes": 0,
+  "selectedRootPersisted": false,
+  "sourceFileCount": 3,
+  "sourceFingerprintSha256": "afb13f6b6af2bb5bc428b5cb553c99297477df12604230542f15a0f6b9eb6617",
+  "atlasPageCount": 1,
+  "atlasEntryCount": 6824,
+  "spriteDefinitionCount": 5,
+  "animationCount": 93,
+  "resolvedFrameCount": 706,
+  "decodedPageCount": 1,
+  "decoderFingerprintStable": true,
+  "decoderFingerprintSha256": "e2218805ada1e511f02c51fb2065bdb0e626b1e1c8dffa29fb30ac7530bf0eab",
+  "catalogFingerprintStable": true,
+  "catalogFingerprintSha256": "1aa1169bea612b25e11456b836353d025ca425c770fdab0c665010be72002195",
+  "offlineSuites": [15, 27, 35, 31, 44, 29, 10],
+  "offlineTotal": 191,
+  "limitations": [
+    "one developer-selected installation only",
+    "no rendering or human-visible evidence",
+    "no simulation or behavior evidence"
+  ]
+}

@@ -7,8 +7,9 @@ CDR-015 combines caller-supplied Atlas metadata, sprite metadata and page stream
 ## Contract
 
 - The caller supplies an explicit entity allowlist and a stream-only `IAtlasPageStreamSource`.
-- Explicit frame expressions resolve to the animation path plus a zero-padded numeric suffix; all-frame expressions select only numeric suffixes and sort them numerically.
+- Explicit frame expressions resolve against the numeric value of an Atlas suffix, preserving either one-digit or zero-padded source spelling. All-frame expressions select one exact unnumbered entry or a numeric family sorted numerically; simultaneous exact and numbered matches, or two spellings for the same numeric index, fail as ambiguous.
 - Entity and animation namespaces remain nested. There is no global animation-name or bitmap dictionary.
+- Logical Atlas IDs resolve case-insensitively only after metadata parsing has rejected case-folded duplicates; the original Atlas spelling remains in the catalog and fingerprint.
 - Only pages referenced by selected frames are decoded. A build-local memory cache prevents decoding one required page more than once and is discarded after the build.
 - Atlas rectangles are copied into transparent, untrimmed BGRA32 frames using validated trim offsets.
 - Entity, animation, frame, decoded-page and pixel-byte budgets fail closed with stable `CATALOG_*` codes.
