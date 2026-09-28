@@ -2,7 +2,7 @@
 
 ## Contract
 
-`CelesteDesktop.Simulation.Core` advances only through explicit fixed steps at 60 Hz. It has no clock, filesystem, asset, GUI, operating-system or live-input dependency. Positions and collision bounds are whole pixels; decimal remainders accumulate requested subpixel displacement and emit deterministic whole-pixel moves.
+`CelesteDesktop.Simulation.Core` advances only through explicit fixed steps at 60 Hz. It has no clock, filesystem, asset, GUI, operating-system or live-input dependency. Positions and collision bounds are whole pixels; decimal remainders accumulate requested subpixel displacement and emit deterministic whole-pixel moves. Exact `+0.5` and `-0.5` midpoint remainders use stable ties-to-even rounding, so a later zero displacement cannot oscillate position.
 
 Actors collide only with ordered Solids. Each requested whole-pixel displacement is checked one pixel at a time, and the first registered intersecting Solid is the blocker. Actors do not collide with other Actors in this kernel.
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-28 — CDR-022 generated dash, wall and climb behavior
+
+- Added explicit Normal, Dash, WallSlide and Climb traversal states driven only by immutable generated inputs.
+- Added eight-way direction quantization, dash charges/cooldown/refill/attack windows, wall checks/slide/jump, climb motion/stamina/tired/depleted states, climb jump, ledge hop and isolated infinite-resource assists.
+- Fixed zero-displacement jitter at exact `+0.5`/`-0.5` subpixel remainders and added positive/negative midpoint regressions plus ordered offset-query coverage.
+- Added 44 traversal cases; Simulation.Core now has 33 cases and all ten offline suites pass 298 cases with 0 build warnings/errors.
+- Extended the cumulative demo with a 24-tick wall-slide, wall-jump, blocked-dash and climb trace with identical replay.
+- Kept fidelity `partial` and CDR-022 local pending acceptance; stopped before the fresh-authorization CDR-030 GUI boundary.
+
 ## 2026-09-28 — CDR-021 generated Normal/Jump behavior
 
 - Added a platform-independent player controller driven only by immutable per-tick input snapshots.

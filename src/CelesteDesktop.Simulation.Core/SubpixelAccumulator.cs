@@ -9,7 +9,7 @@ public sealed class SubpixelAccumulator
     public int Consume(decimal displacement)
     {
         var accumulated = checked(_remainder + displacement);
-        var rounded = decimal.Round(accumulated, 0, MidpointRounding.AwayFromZero);
+        var rounded = decimal.Round(accumulated, 0, MidpointRounding.ToEven);
         if (rounded > int.MaxValue || rounded < int.MinValue)
         {
             throw new OverflowException("Simulation displacement exceeds the whole-pixel range.");

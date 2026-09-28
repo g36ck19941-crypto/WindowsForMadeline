@@ -23,7 +23,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Madeline body animation | unstarted | unstarted | unstarted | unstarted | Original install only |
 | Player hair | unstarted | unstarted | unstarted | unstarted | Procedural nodes and masks |
 | Normal/Jump | n/a | partial | partial | unstarted | CDR-021 generated-input ticks pass; public constants/order covered, full shipped-build behavior and presentation unverified |
-| Dash/Wall/Climb | n/a | unstarted | unstarted | unstarted | Exact tick/order evidence required |
+| Dash/Wall/Climb | n/a | partial | partial | unstarted | CDR-022 generated traversal passes; corner correction, jump-throughs, moving-wall boosts, blockers and advanced techniques remain unverified |
 | Moving-solid carry/LiftBoost | n/a | partial | unstarted | unstarted | CDR-020 contract/tests pass; original-game parameter/order parity is not yet established |
 | Theo Crystal | unstarted | unstarted | unstarted | unstarted | Hold/throw/collision interactions |
 | Glider | unstarted | unstarted | unstarted | unstarted | Hold/fall/launch interactions |

@@ -96,6 +96,16 @@ public sealed class SimulationWorld
         return FirstCollision(actor.Bounds.Offset(0, 1), ignoredSolid: null) is not null;
     }
 
+    public Solid? FirstSolidAt(Actor actor, int offsetX, int offsetY)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+        if (!_actors.Contains(actor))
+        {
+            throw new ArgumentException("Actor is not registered in this world.", nameof(actor));
+        }
+        return FirstCollision(actor.Bounds.Offset(offsetX, offsetY), ignoredSolid: null);
+    }
+
     internal void RequireActiveStep()
     {
         if (!_activeStep)

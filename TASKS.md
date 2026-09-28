@@ -123,8 +123,13 @@
 ### CDR-022 — Dash/Wall/Climb
 
 - Owner: Primary
-- State: implementation starting under prior developer authorization
-- Direction quantization, dash lifecycle, assists, wall slide/jump, climb, stamina and ledge transitions.
+- State: implementation complete on 2026-09-28; developer acceptance pending
+- Scope: Player traversal state layer, minimal Simulation.Core spatial/midpoint correction, generated tests, cumulative offline demonstration and records
+- Direction quantization, dash lifecycle/assists, wall slide/jump, climb movement/stamina and ledge hop are implemented as explicit deterministic states/events.
+- Evidence: Release 0 warnings/errors; 44/44 traversal cases, 33/33 Simulation.Core cases and 298 total offline cases; 24-tick traversal demo contains wall slide, wall jump, blocked dash and climb entry with identical replay
+- Fidelity: `partial`; upward-dash corner correction, jump-throughs, moving-wall boosts, blockers, all assists and advanced techniques remain outside this task
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect the traversal table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/PLAYER_DASH_WALL_CLIMB.md`
+- Gate: do not upload until developer acceptance; CDR-030 crosses a Windows presentation/GUI boundary and requires fresh authorization
 
 ## P3 — Rendering and desktop adapter
 

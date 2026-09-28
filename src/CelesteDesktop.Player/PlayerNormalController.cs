@@ -33,6 +33,37 @@ public sealed class PlayerNormalController
     public int JumpBufferTicksRemaining { get; private set; }
     public int VariableJumpTicksRemaining { get; private set; }
 
+    internal void SetExternalKinematics(
+        SimVector speed,
+        int? facing = null,
+        bool preserveVariableJump = false)
+    {
+        SpeedX = speed.X;
+        SpeedY = speed.Y;
+        if (facing is not null)
+        {
+            if (facing is not (-1 or 1))
+            {
+                throw new ArgumentOutOfRangeException(nameof(facing));
+            }
+            Facing = facing.Value;
+        }
+        if (!preserveVariableJump)
+        {
+            VariableJumpTicksRemaining = 0;
+        }
+    }
+
+    internal void BeginExternalJump(decimal speedX, decimal speedY, int facing)
+    {
+        SetExternalKinematics(new SimVector(speedX, speedY), facing);
+        CoyoteTicksRemaining = 0;
+        JumpBufferTicksRemaining = 0;
+        VariableJumpTicksRemaining = Tuning.VariableJumpTicks;
+        _variableJumpSpeed = speedY;
+        _wasGrounded = false;
+    }
+
     public PlayerNormalSnapshot Step(
         PlayerInput input,
         SimulationWorld world,

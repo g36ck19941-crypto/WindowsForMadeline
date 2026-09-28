@@ -2,7 +2,13 @@ namespace CelesteDesktop.Player;
 
 public readonly record struct PlayerInput
 {
-    public PlayerInput(int moveX, int moveY, bool jumpPressed, bool jumpHeld)
+    public PlayerInput(
+        int moveX,
+        int moveY,
+        bool jumpPressed,
+        bool jumpHeld,
+        bool dashPressed = false,
+        bool grabHeld = false)
     {
         if (moveX is < -1 or > 1)
         {
@@ -17,10 +23,14 @@ public readonly record struct PlayerInput
         MoveY = moveY;
         JumpPressed = jumpPressed;
         JumpHeld = jumpHeld;
+        DashPressed = dashPressed;
+        GrabHeld = grabHeld;
     }
 
     public int MoveX { get; }
     public int MoveY { get; }
     public bool JumpPressed { get; }
     public bool JumpHeld { get; }
+    public bool DashPressed { get; }
+    public bool GrabHeld { get; }
 }

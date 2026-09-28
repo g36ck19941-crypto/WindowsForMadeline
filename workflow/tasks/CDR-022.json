@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-022",
+  "title": "Dash, Wall and Climb",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-09-28",
+  "scope": [
+    "src/CelesteDesktop.Player/**",
+    "minimal Simulation.Core spatial query and midpoint correction",
+    "tests/CelesteDesktop.Player.Traversal.Tests/**",
+    "generated-input cumulative progress demo",
+    "offline verification and project records"
+  ],
+  "features": [
+    "eight-way dash quantization and lifecycle",
+    "dash charge, cooldown, refill and attack timers",
+    "wall range, slide and jump",
+    "climb grab, movement, stamina, tired and depleted states",
+    "climb jump and generated ledge hop",
+    "isolated infinite dash and stamina assists",
+    "stable zero-displacement subpixel midpoints"
+  ],
+  "parity": "partial",
+  "forbidden": [
+    "game or GUI launch",
+    "real desktop or live input",
+    "real installation access",
+    "commercial asset persistence",
+    "claiming complete shipped-game parity"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "simulationCoreTests": 33,
+    "normalJumpTests": 30,
+    "traversalTests": 44,
+    "totalOfflineTests": 298,
+    "demoTraversalTicks": 24,
+    "demoDashStarted": 1,
+    "demoWallSlideStarted": 1,
+    "demoWallJumped": 1,
+    "demoClimbStarted": 1,
+    "deterministicReplay": true,
+    "commercialBytes": 0
+  },
+  "nextTask": "CDR-030",
+  "nextAction": "Await CDR-022 acceptance and fresh authorization before any synthetic Windows presentation or GUI work."
+}

@@ -13,12 +13,12 @@
 
 ## 当前状态
 
-CDR-016、CDR-020 与 CDR-021 已在本地完成并等待验收；项目按授权进入 CDR-022 Dash/Wall/Climb。累计演示仍只使用合成数据，现在除 13 tick 的 Actor/移动平台轨迹外，还能显示 24 tick 的 Madeline 跑跳轨迹，但尚没有角色渲染。
+CDR-016、CDR-020、CDR-021 与 CDR-022 已在本地完成并等待验收。累计演示仍只使用合成数据，现在包含 Actor/移动平台、普通跑跳，以及冲刺/墙面/攀爬轨迹，但尚没有角色渲染。当前自动离线授权已执行完毕；进入 CDR-030 的 Windows 呈现/GUI 边界前等待新授权。
 
 ## 开发者双击入口
 
-- `演示当前进度.cmd`：生成程序化 Atlas/XML、Actor/Solid 场景和玩家输入，实际经过 CDR-012/013/014/015/020/021，再打开本地 HTML 报告。
-- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-021 的 249 项纯离线回归，不读取真实安装。
+- `演示当前进度.cmd`：生成程序化 Atlas/XML、Actor/Solid 场景和玩家输入，实际经过 CDR-012/013/014/015/020/021/022，再打开本地 HTML 报告。
+- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-022 的 298 项纯离线回归，不读取真实安装。
 - `验证真实安装兼容性.cmd`：显式选择正版安装后执行 CDR-016 只读核验；不启动游戏或 GUI，证据写在项目目录。
 - `tools/*.ps1` 保留给代理和 CI，不再要求开发者手动输入。
 
@@ -37,3 +37,4 @@ CDR-016、CDR-020 与 CDR-021 已在本地完成并等待验收；项目按授�
 11. `docs/ASSET_CATALOG.md`
 12. `docs/SIMULATION_CORE.md`
 13. `docs/PLAYER_NORMAL_JUMP.md`
+14. `docs/PLAYER_DASH_WALL_CLIMB.md`

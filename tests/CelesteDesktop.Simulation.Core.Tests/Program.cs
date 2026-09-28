@@ -8,6 +8,8 @@ var tests = new (string Name, Action Body)[]
     ("rectangle edges are non-colliding", RectangleEdgesDoNotCollide),
     ("positive subpixels accumulate deterministically", PositiveSubpixelsAccumulate),
     ("negative subpixels accumulate deterministically", NegativeSubpixelsAccumulate),
+    ("positive midpoint stays stable at zero displacement", PositiveMidpointDoesNotDrift),
+    ("negative midpoint stays stable at zero displacement", NegativeMidpointDoesNotDrift),
     ("movement outside a step is rejected", MovementOutsideStepIsRejected),
     ("tick increments exactly once", TickIncrementsExactlyOnce),
     ("horizontal collision stops at the first pixel", HorizontalCollisionStops),
@@ -19,6 +21,9 @@ var tests = new (string Name, Action Body)[]
     ("initial actor-solid overlap is rejected", InitialOverlapIsRejected),
     ("membership mutation during a step is rejected", MembershipMutationIsRejected),
     ("nested steps are rejected", NestedStepsAreRejected),
+    ("offset query returns first registered solid", OffsetQueryReturnsFirstSolid),
+    ("offset query returns null without collision", OffsetQueryReturnsNull),
+    ("offset query rejects unregistered actor", OffsetQueryRejectsUnregisteredActor),
     ("snapshots are immutable value captures", SnapshotsAreImmutableCaptures),
     ("event collections are read-only", EventCollectionsAreReadOnly),
     ("horizontal rider carry is exact", HorizontalRiderCarryIsExact),
@@ -67,6 +72,30 @@ static void RectangleEdgesDoNotCollide()
     Assert(left.Intersects(new SimRect(1, 1, 2, 2)), "Overlapping rectangles did not collide.");
 }
 
+static void OffsetQueryReturnsFirstSolid()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 0, 2, 2);
+    var first = new Solid("first", 3, 0, 2, 2);
+    var second = new Solid("second", 3, 0, 2, 2);
+    world.Add(actor);
+    world.Add(first);
+    world.Add(second);
+    Equal(first, world.FirstSolidAt(actor, 2, 0));
+}
+
+static void OffsetQueryReturnsNull()
+{
+    var (world, actor) = ActorWorld();
+    Equal<Solid?>(null, world.FirstSolidAt(actor, 1, 0));
+}
+
+static void OffsetQueryRejectsUnregisteredActor()
+{
+    var world = new SimulationWorld();
+    Throws<ArgumentException>(() => world.FirstSolidAt(new Actor("other", 0, 0, 2, 2), 1, 0));
+}
+
 static void PositiveSubpixelsAccumulate()
 {
     var (world, actor) = ActorWorld();
@@ -76,6 +105,34 @@ static void PositiveSubpixelsAccumulate()
     }
     Equal(1, actor.X);
     Equal(0m, actor.XSubpixel);
+}
+
+static void PositiveMidpointDoesNotDrift()
+{
+    var (world, actor) = ActorWorld();
+    world.Step(_ => actor.MoveX(0.5m, world));
+    Equal(0, actor.X);
+    Equal(0.5m, actor.XSubpixel);
+    for (var tick = 0; tick < 4; tick++)
+    {
+        world.Step(_ => actor.MoveX(0m, world));
+    }
+    Equal(0, actor.X);
+    Equal(0.5m, actor.XSubpixel);
+}
+
+static void NegativeMidpointDoesNotDrift()
+{
+    var (world, actor) = ActorWorld();
+    world.Step(_ => actor.MoveY(-0.5m, world));
+    Equal(0, actor.Y);
+    Equal(-0.5m, actor.YSubpixel);
+    for (var tick = 0; tick < 4; tick++)
+    {
+        world.Step(_ => actor.MoveY(0m, world));
+    }
+    Equal(0, actor.Y);
+    Equal(-0.5m, actor.YSubpixel);
 }
 
 static void NegativeSubpixelsAccumulate()

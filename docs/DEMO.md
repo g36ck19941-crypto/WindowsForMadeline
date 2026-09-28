@@ -79,3 +79,9 @@ Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, 
 Double-click `演示当前进度.cmd`. The cumulative report retains the generated asset and Actor/Solid stages and adds a 24-tick player table. It must reach speed 90, show one `Jumped` event at tick 7, reach `Y=-16`, and mark the replay identical.
 
 Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29`, `10/10`, `28/28` and `30/30`, followed by the CDR-021 manifest check. This proves generated-input behavior only. Fidelity is `partial`; no live input, rendering, real installation or complete shipped-build parity is claimed.
+
+## CDR-022 — Dash, Wall and Climb
+
+Double-click `演示当前进度.cmd`. The cumulative report retains every earlier stage and adds a 24-tick traversal table. It must contain one `WallSlideStarted`, `WallJumped`, `DashStarted`, blocked dash and `ClimbStarted`; climb speed reaches `-45`, stamina decreases below 110, stationary special-state rows do not jitter, and replay is identical.
+
+Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29`, `10/10`, `33/33`, `30/30` and `44/44`, for 298 total cases, followed by the CDR-022 manifest check. This remains generated-input behavior with `partial` fidelity and no game, GUI, real desktop, installation or live input.
