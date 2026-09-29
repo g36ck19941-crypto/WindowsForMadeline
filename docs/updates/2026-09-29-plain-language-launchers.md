@@ -10,6 +10,7 @@ Type: launcher and documentation UX; no runtime feature change
 - Both entries tell the developer to preserve the first error and its stage when reporting a failure.
 - `AGENTS.md` now requires future developer-facing root launchers to retain this plain-language structure.
 - `.cmd` files are now explicitly checked out with Windows CRLF endings, and the verifier's source-level evidence markers remain ASCII-safe for Windows PowerShell 5.1.
+- After developer clarification, the generated HTML report's proof/limits area was also rewritten as concrete plain-language bullet points. Stable report IDs make the verifier protect both explanations from accidental removal.
 
 ## Project role
 

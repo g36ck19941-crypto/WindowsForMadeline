@@ -64,7 +64,7 @@ try {
     }
     # Keep source-level evidence markers ASCII-only so Windows PowerShell 5.1 can
     # execute this UTF-8 script without mis-decoding a non-ASCII string literal.
-    if ($report -notmatch 'CDR-032' -or $report -notmatch '<th>Tick</th>' -or $report -notmatch 'demo/player/idle01' -or $report -notmatch 'human_visible=false') {
+    if ($report -notmatch 'CDR-032' -or $report -notmatch '<th>Tick</th>' -or $report -notmatch 'demo/player/idle01' -or $report -notmatch 'human_visible=false' -or $report -notmatch 'id="plain-language-proof"' -or $report -notmatch 'id="plain-language-limits"') {
         throw 'CDR-032 demo report omitted required animation or limitation evidence.'
     }
 

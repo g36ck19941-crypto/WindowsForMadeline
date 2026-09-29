@@ -569,7 +569,7 @@ static string BuildHtml(
             .pixel{width:{{scale}}px;height:{{scale}}px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
             .entry{position:absolute;box-sizing:border-box;border:3px solid #f8fafc;pointer-events:none}.entry span{position:absolute;left:2px;top:2px;background:#020617d9;color:white;font:11px Consolas;padding:2px 4px;white-space:nowrap}
             .facts{min-width:280px;background:#1f2937;border-radius:12px;padding:18px}.facts dt{color:#94a3b8}.facts dd{margin:3px 0 14px;font-family:Consolas,monospace;overflow-wrap:anywhere}
-            .ok{color:#86efac}.limits{margin-top:26px;color:#cbd5e1}code{color:#67e8f9}
+            .ok{color:#86efac}.limits{margin-top:26px;color:#cbd5e1}.limits h2{color:#f8fafc;margin-top:28px}.limits .plain{font-size:18px;color:#e2e8f0}.limits li{margin:9px 0;line-height:1.65}.limits strong{color:#fde68a}code{color:#67e8f9}
             .present-canvas{width:288px;height:216px;display:grid;grid-template-columns:repeat({{presentation.SecondFrame.Width}},1fr);background:#0f172a;border:1px solid #64748b;image-rendering:pixelated}.present-pixel{min-width:0;min-height:0}
             .gap-note{background:#172033;border:1px dashed #64748b;padding:12px 16px;border-radius:10px;color:#cbd5e1;margin:-10px 0 24px}
             table{width:100%;border-collapse:collapse;margin-top:16px;background:#1f2937}th,td{padding:9px 12px;border-bottom:1px solid #374151;text-align:left;font-family:Consolas,monospace}th{color:#67e8f9}
@@ -637,11 +637,28 @@ static string BuildHtml(
           <h2>CDR-032 已验证目录 → 离线动画呈现</h2>
           <p>player/idle 的 2 个程序生成帧来自本页同一套 Atlas/XML 解析与规范化目录。以固定 60 Hz 连续输入 {{animationPresentation.Rows.Count}} 个 tick，实际 Present {{animationPresentation.PresentedCount}} 次，检测到 {{animationPresentation.FrameChangedCount}} 次合成帧变化；重复运行：<span class="ok">{{(animationPresentation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Animation</th><th>Frame</th><th>Atlas entry</th><th>合成帧 SHA-256</th><th>Pixels changed</th></tr></thead><tbody>{{animationRows}}</tbody></table>
-          <div class="limits">
+          <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
-            <p>当前项目能把解析和规范化后的动画目录按固定 tick 解析为不可变帧，在透明画布上应用原点后交给呈现层；动画/渲染只消费快照，不会修改 Actor、Player 或物理状态。</p>
+            <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
+            <ul>
+              <li><strong>会按节奏换图：</strong>上面的 8 行表格就是 8 个连续时间点。程序在第 0–2 个时间点使用第一帧，第 3–5 个时间点换成第二帧，第 6–7 个时间点再循环回第一帧。</li>
+              <li><strong>会把图片摆正：</strong>程序会读取图片的原点和位置，把它放进透明画布，也支持左右翻转，避免换帧时角色位置无故跳动。</li>
+              <li><strong>结果可以重复：</strong>同样的素材目录和时间点会得到同样的帧、同样的像素指纹，不会因为电脑快慢而随机改变。</li>
+              <li><strong>不会破坏角色手感：</strong>动画和渲染只接收角色状态的副本。即使显示变慢或失败，也不会反过来改变角色位置、速度、碰撞或体力。</li>
+            </ul>
+            <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
+          </div>
+          <div class="limits" id="plain-language-limits">
             <h2>仍未证明什么</h2>
-            <p>CDR-016 已证明指定安装的素材格式兼容，但本演示仍不读取商业素材。当前只证明程序生成帧、隐藏原生提交和健康链，不连接真实角色动画，不进行真实桌面观察，也不产生 <code>HUMAN_VISIBILITY_CONFIRMED</code>。因此尚不能证明角色在桌面上人眼可见。</p>
+            <p class="plain"><strong>简单说：</strong>动画流水线已经会工作，但这还不是“桌面上已经出现原版 Madeline”。</p>
+            <ul>
+              <li><strong>这次使用的是程序生成测试图：</strong>不是 Celeste 的原版角色图片，也没有把任何商业素材保存进项目。</li>
+              <li><strong>Present 不等于肉眼可见：</strong>它只说明渲染后端接收并提交了画面；当前走的是隐藏、离线验证路径，没有把角色窗口显示到真实桌面。</li>
+              <li><strong>还没有完整 App 组装：</strong>素材、角色模拟、动画、桌面位置和可见窗口尚未由正式应用统一启动和管理。</li>
+              <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>
+              <li><strong>CDR-016 只证明格式兼容：</strong>它说明指定正版安装中的素材能被只读解析，不等于这些原版素材已经在本次演示里被连接和显示。</li>
+            </ul>
+            <p class="plain"><strong>因此当前准确结论是：</strong>项目已经能离线生成并提交正确的动画帧，但尚未取得 <code>HUMAN_VISIBILITY_CONFIRMED</code>，还不能声称角色已经在人眼可见的真实桌面上运行。</p>
           </div>
         </body>
         </html>

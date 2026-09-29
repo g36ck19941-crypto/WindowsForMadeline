@@ -3,6 +3,7 @@
 ## 2026-09-29 — Plain-language developer launchers
 
 - Expanded both root `.cmd` launchers with plain Chinese explanations of what each entry does, what the developer should observe and how to interpret success.
+- Rewrote the generated report's “what this proves / does not prove” area in plain Chinese with concrete frame-timing, positioning, determinism, one-way-state and remaining-visibility explanations.
 - Made the distinction between cumulative demonstration and automated verification explicit, including that offline success does not prove real desktop visibility.
 - Added failure guidance that asks for the first error and its stage; this is launcher/documentation UX only and does not change CDR-032 runtime behavior or acceptance state.
 - Made `.cmd` files explicitly check out as CRLF and removed a non-ASCII source literal from the verifier so the double-click path also works under Windows PowerShell 5.1.

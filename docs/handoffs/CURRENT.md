@@ -16,6 +16,8 @@ CDR-032 is now locally implementation-complete and awaiting developer acceptance
 
 At the developer's request, both root `.cmd` launchers now begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. This is launcher/documentation UX only; CDR-032 remains acceptance-pending.
 
+The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
+
 CDR-031 was reverified and audited, then published and read back at `codex/cdr-031-desktop-geometry` = `311c426190489f329b48f983d405abc8c7345809` after one transient GitHub connectivity failure. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 CDR-030 acceptance is committed at `43cad14`; after two transient network failures it was published and read back at `codex/cdr-030-synthetic-presentation` = `43cad14a04dd1b397c50d77652f32e4b1dbdd34c`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
