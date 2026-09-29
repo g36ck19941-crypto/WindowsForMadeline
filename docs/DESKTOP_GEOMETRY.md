@@ -32,4 +32,4 @@ It does not place Madeline on a real window, connect commercial animation frames
 
 ## Next gate
 
-CDR-031 remains local until developer acceptance. CDR-032 would connect the validated asset catalog to animation presentation without coupling rendering to physics; it and any visible GUI require separate authorization.
+CDR-031 was accepted by the developer on 2026-09-29 and may be published to its independent branch after the outbound audit. CDR-032 is separately authorized for offline asset-to-animation presentation without physics feedback; visible GUI remains forbidden.

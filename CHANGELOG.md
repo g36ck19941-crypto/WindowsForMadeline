@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-29 — CDR-031 accepted
+
+- Recorded developer acceptance of CDR-031 and authorization for independent-branch publication after a fresh gate and outbound audit.
+- Opened CDR-032 only for offline presentation of validated immutable catalog animations, with no physics feedback, visible GUI, live input, installation writes or commercial-byte persistence.
+
 ## 2026-09-29 — CDR-031 anonymous desktop geometry
 
 - Added platform-neutral anonymous surface snapshots, visibility/cloaking filtering, bounded geometry/DPI, ephemeral IDs and monotonic velocity.

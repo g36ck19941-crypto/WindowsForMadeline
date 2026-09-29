@@ -43,3 +43,4 @@ Last verified: 2026-09-28
 - 已验收的 CDR-016/CDR-020/CDR-021/CDR-022 上传最初连续两次遭遇 GitHub `Recv failure: Connection was reset`；只读回查确认未产生部分分支。连接恢复后已分别上传到 `codex/cdr-016-real-conformance`=`22d7586`、`codex/cdr-020-simulation-core`=`3dd4b37`、`codex/cdr-021-player-normal-jump`=`eabe378`、`codex/cdr-022-player-traversal`=`aed2b3f`，回读一致，远程 `main` 仍为 `d237277`。未上传 CDR-030。
 - 开发者于 2026-09-29 验收 CDR-030 并授权上传独立分支；同时授权开始 CDR-031，但只允许读取匿名桌面几何、DPI、可见表面和速度，不得读取窗口标题、内容、截图或输入，不得打开可见 GUI。CDR-030 复验为 20/20 Rendering、318/318 总回归、Release 0 警告/错误。
 - CDR-030 验收记录提交为 `43cad14`，出站素材审计通过；两轮 GitHub 连接失败后再次精确上传成功，远端 `codex/cdr-030-synthetic-presentation` 回读为 `43cad14a04dd1b397c50d77652f32e4b1dbdd34c`，远程 `main` 仍为 `d237277e10af090cf60ec015c22174565e6cdc0a`。CDR-031 已按限权授权实现：匿名临时 ID、几何/DPI、可见/遮蔽过滤、速度与汇总诊断；19/19 专项、337/337 总回归及 1/1 沙箱外已授权真实汇总验证通过，未读取标题、内容、截图、输入或身份信息，未打开 GUI。
+- 开发者于 2026-09-29 验收 CDR-031 并授权上传独立分支；同时授权开始 CDR-032，只允许将已验证素材目录连接到离线动画呈现，不打开可见 GUI、不使用实时输入、不写安装目录、不保存商业素材，且渲染不得反向驱动物理。

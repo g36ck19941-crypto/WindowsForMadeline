@@ -146,16 +146,20 @@
 ### CDR-031 — Desktop geometry adapter
 
 - Owner: Primary
-- State: implementation complete on 2026-09-29; developer acceptance pending
+- State: accepted by developer on 2026-09-29
 - Scope: anonymous desktop geometry, DPI, visible-surface state and velocity through isolated platform-neutral and Windows modules
 - Forbidden: window titles, text/content, screenshots, input, identity-bearing process metadata, raw native handles in contracts/evidence, visible GUI and game/install access
 - Evidence: Release 0 warnings/errors; 19/19 generated desktop cases and 337 total regressions; one authorized hidden Windows proof passed with aggregate count/DPI evidence only; cumulative demo uses generated geometry and records no real desktop values.
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the generated anonymous geometry table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/DESKTOP_GEOMETRY.md`.
-- Gate: keep local until developer acceptance. CDR-032 and any visible GUI require separate authorization; no human-visibility claim.
+- Gate: accepted for independent-branch publication. CDR-032 is authorized for offline validated-catalog animation presentation only; visible GUI, live input, installation writes and commercial-byte persistence remain forbidden.
 
 ### CDR-032 — Asset-to-animation presentation
 
-- Connect validated catalog to animations; no physics-to-render coupling.
+- Owner: Primary
+- State: authorized on 2026-09-29; implementation pending
+- Scope: convert validated immutable catalog animation frames into offline immutable render snapshots with deterministic animation timing and explicit health events
+- Forbidden: visible GUI, live input, installation writes, commercial-byte persistence, filesystem/game access and render-to-physics feedback
+- Gate: generated catalog fixtures, deterministic tick-to-frame tests, hidden/generated presentation proof and cumulative demo; no human-visibility claim.
 
 ## P4 — Interaction entities
 

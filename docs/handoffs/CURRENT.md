@@ -8,7 +8,9 @@ CDR-001 and CDR-010 through CDR-022 are accepted by the developer. The developer
 
 CDR-030 was accepted by the developer on 2026-09-29. A fresh gate passed with 0 build warnings/errors, 20/20 rendering cases and 318/318 total regressions. The native hidden test submitted two generated frames through `Commit` and `WaitForCommitCompletion`. No visible GUI, real desktop observation, installation access, live input, commercial bytes or human-visibility claim occurred. Publication to an independent branch is authorized after audit.
 
-CDR-031 is locally implementation-complete and awaiting developer acceptance. Its platform-neutral tracker and Windows read-only provider expose only anonymous geometry, DPI, visibility and velocity. Release passed with 0 warnings/errors, 19/19 generated desktop cases, 337/337 total regressions and one authorized aggregate-only real Windows proof. The cumulative demo uses generated desktop values only. No titles, text/content, screenshots, input, identity-bearing process metadata or native handles escaped; no visible GUI or game/install access occurred.
+CDR-031 was accepted by the developer on 2026-09-29. Its platform-neutral tracker and Windows read-only provider expose only anonymous geometry, DPI, visibility and velocity. The prior gate passed with 0 warnings/errors, 19/19 generated desktop cases, 337/337 total regressions and one authorized aggregate-only real Windows proof. Publication to an independent branch is authorized after a fresh gate and outbound audit.
+
+CDR-032 is authorized only for offline connection of validated immutable catalog frames to deterministic animation presentation. It must not open visible GUI, use live input, write the installation, persist commercial bytes, access the game or allow rendering to modify simulation.
 
 CDR-030 acceptance is committed at `43cad14`; after two transient network failures it was published and read back at `codex/cdr-030-synthetic-presentation` = `43cad14a04dd1b397c50d77652f32e4b1dbdd34c`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
@@ -22,11 +24,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer acceptance of CDR-031; do not upload it or begin CDR-032 or any visible GUI without separate authorization.
+Re-run the CDR-031 gate, audit and publish its accepted commit, then implement CDR-032 within the offline-only boundary.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-031 implementation, generated cumulative demo, verification and acceptance package are complete; CDR-030 publication is complete
+- Scope: publish accepted CDR-031, then implement CDR-032 offline validated-catalog animation presentation
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data
