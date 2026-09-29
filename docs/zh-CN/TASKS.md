@@ -40,12 +40,12 @@
 2. `CDR-031` 桌面几何适配：开发者已验收，复验为 19/19 专项、337/337 总回归和 1/1 真实匿名汇总；已上传到独立分支 `codex/cdr-031-desktop-geometry` 的 `311c426`，远程 `main` 未更新。
 3. `CDR-032` 素材到动画呈现：开发者已于 2026-09-29 验收；已上传到独立分支 `codex/cdr-032-animation-presentation` 的 `1c39c0a`，远程 `main` 未更新。固定 tick 选帧、循环/末帧/goto、原点/位置/翻转合成与单向 Rendering 交接已实现；28/28 专项、365/365 总回归和 8 tick 累计演示通过。
 
-CDR-040 Theo Crystal 已验收并上传；CDR-041 Glider 已验收，复验/审计通过但上传遇 GitHub 连接阻塞；CDR-042 Spring 已完成本地实现并等待验收。可见 GUI、实时输入、游戏/安装访问、安装写入和商业素材持久化仍未授权。
+CDR-040 Theo Crystal 与 CDR-041 Glider 均已验收并上传独立分支；CDR-042 Spring 已完成本地实现并等待验收。可见 GUI、实时输入、游戏/安装访问、安装写入和商业素材持久化仍未授权。
 
 ## P4 — 交互实体
 
 1. `CDR-040` Theo Crystal：Primary owner，开发者已于 2026-09-29 验收；已上传到独立分支 `codex/cdr-040-theo-crystal` 的 `23531c3`，远程 `main` 未更新。拿起、携带、放下、投掷、重力/摩擦、Solid 碰撞、落地弹跳、LiftSpeed 交接、受压失败和故障隔离均已实现；37/37 专项、402/402 总回归与 36 tick 演示通过。数值还原仍标为 `partial`。
-2. `CDR-041` Glider：开发者已于 2026-09-29 验收并授权复验、审计后上传独立分支。拿起、携带、放下、投掷、缓降请求及 Player 通用效果应用、展开/收起、缓慢下落、碰撞反弹、落地、LiftSpeed、摧毁和受压隔离均已实现；Player 33/33、Glider 42/42、447/447 总回归和 48 tick 演示通过。正式 App 持续组装尚未完成，行为仍为 `partial`。
+2. `CDR-041` Glider：开发者已于 2026-09-29 验收；复验/审计通过并上传到 `codex/cdr-041-glider` 的 `ccc1a6b`，远程 `main` 未更新。拿起、携带、放下、投掷、缓降请求及 Player 通用效果应用、展开/收起、缓慢下落、碰撞反弹、落地、LiftSpeed、摧毁和受压隔离均已实现；Player 33/33、Glider 42/42、447/447 总回归和 48 tick 演示通过。正式 App 持续组装尚未完成，行为仍为 `partial`。
 3. `CDR-042` Spring：已于 2026-09-29 完成本地纯离线实现，等待验收。支持四方向发射、压缩/冷却/复位、停用/启用、离开后重触发和带目标身份的速度效果；Player、Theo、Glider 均实际应用。Spring 42/42、489/489 总回归和 30 tick 演示通过，行为仍为 `partial`。验收见 `SPRING.md`；未经验收不得上传，CDR-043 尚未授权。
 4. 后续依次为 Refill、Water、Bumper、Puffer，最后才考虑 Seeker；这些任务尚未获授权。
 

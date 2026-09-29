@@ -22,7 +22,7 @@ CDR-040 was freshly reverified and audited, then exact commit `23531c3b06251b940
 
 CDR-041 was accepted by the developer on 2026-09-29. The isolated Glider module implements generated-input pickup/carry/drop/throw, an immutable holder fall-speed-limit request applied through Player's generic external-effect entry, open/closed slow flight, gravity/friction, collision bounce/landing, moving-solid lift inheritance, destroy and per-entity squish isolation. Release builds with 0 warnings/errors; Player 33/33, Glider 42/42 and 447/447 total regressions pass. The cumulative 48-tick demo records 1 pickup, 1 fall-limit request, 1 Player application, 1 throw, 1 horizontal bounce, 1 landing and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App orchestration and original numeric behavior are not established. Exact independent-branch publication is authorized after fresh verification and audit; CDR-042 Spring is authorized next under the same offline-only boundary.
 
-CDR-041 was freshly reverified and audited at exact acceptance commit `ccc1a6bda21df2ad93ffb227bd5130bb54f07bae`, but GitHub port 443 was unreachable during publication. No partial remote branch was created; retry and read back `codex/cdr-041-glider` when connectivity returns. Remote `main` was not modified.
+CDR-041 was freshly reverified and audited at exact acceptance commit `ccc1a6bda21df2ad93ffb227bd5130bb54f07bae`. After transient GitHub port-443 failures, it was published and read back at `codex/cdr-041-glider`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 CDR-042 is locally implementation-complete and awaiting developer acceptance. The isolated Spring module implements four directional target-addressed launches, activation/retraction/cooldown/reset, disable/enable and release-to-rearm. Player, Theo and Glider apply the generic axis-selective external-velocity effect through their own entry points; Spring references none of those modules. Release builds with 0 warnings/errors; Spring 42/42 and 489/489 total regressions pass. The cumulative 30-tick demo records 3 activations, 3 launches, 3 ready transitions and one actual application each by Player, Theo and Glider with identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App routing and original contact/numeric parity are not established.
 
@@ -44,11 +44,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer review of CDR-042. Retry/read back the already accepted CDR-041 exact branch when GitHub connectivity permits, but do not upload CDR-042 or start CDR-043 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
+Stop for developer review of CDR-042. Do not upload CDR-042 or start CDR-043 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-042 acceptance handoff plus pending exact CDR-041 publication retry
+- Scope: CDR-042 acceptance handoff after exact CDR-041 publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

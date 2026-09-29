@@ -13,6 +13,7 @@
 - Recorded developer acceptance of CDR-041 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
 - Opened CDR-042 only for an isolated deterministic Spring module using generated geometry/input and verified contracts.
 - Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+- Reverification passed at 447/447 with 0 build warnings/errors; after transient connectivity failures, exact commit `ccc1a6b` was published and read back at `codex/cdr-041-glider` while remote `main` stayed unchanged.
 
 ## 2026-09-29 — CDR-041 deterministic Glider
 

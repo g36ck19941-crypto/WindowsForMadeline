@@ -62,6 +62,11 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "branch": "codex/cdr-041-glider",
+    "commit": "ccc1a6bda21df2ad93ffb227bd5130bb54f07bae",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "nextTask": "CDR-042",
-  "nextAction": "Reverify and publish exact accepted CDR-041 commit, then implement authorized CDR-042 Spring offline."
+  "nextAction": "CDR-041 is published exactly. CDR-042 Spring is locally implementation-complete and awaits developer acceptance."
 }
