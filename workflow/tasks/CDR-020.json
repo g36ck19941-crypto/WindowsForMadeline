@@ -3,7 +3,7 @@
   "taskId": "CDR-020",
   "title": "Deterministic Actor and Solid kernel",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-28",
   "scope": [
     "src/CelesteDesktop.Simulation.Core/**",
@@ -40,5 +40,7 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-021",
-  "nextAction": "Await CDR-020 acceptance while continuing authorized CDR-021 offline implementation."
+  "acceptedDate": "2026-09-29",
+  "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
+  "nextAction": "Publish the accepted CDR-020 commit to its independent remote branch."
 }

@@ -29,4 +29,4 @@ It does not yet implement dash, wall slide, wall jump, climb, stamina, holding, 
 
 ## Next gate
 
-CDR-022 may add Dash/Wall/Climb through generated snapshots and geometry. CDR-021 must remain local until developer acceptance.
+CDR-021 was accepted on 2026-09-29 and may be published to its independent branch. CDR-022 subsequently added Dash/Wall/Climb through generated snapshots and geometry.

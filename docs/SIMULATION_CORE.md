@@ -26,4 +26,4 @@ It does not implement Madeline's run, jump, dash, climb or stamina values. It al
 
 ## Next gate
 
-CDR-021 may add Normal/Jump state and exact tick tests on top of this kernel. CDR-020 must remain local until developer acceptance.
+CDR-020 was accepted on 2026-09-29 and may be published to its independent branch. CDR-021 subsequently added Normal/Jump state and exact tick tests on top of this kernel.

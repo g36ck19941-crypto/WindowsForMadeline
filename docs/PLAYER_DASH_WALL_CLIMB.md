@@ -30,4 +30,4 @@ It does not implement upward dash corner correction, jump-through platforms, mov
 
 ## Next gate
 
-CDR-022 is the last task in the developer's current automatic offline authorization. It must remain local until developer acceptance. Starting CDR-030 would introduce a synthetic Windows presentation/GUI boundary and therefore requires fresh authorization.
+CDR-022 was accepted on 2026-09-29 and may be published to its independent branch. The developer then asked to continue CDR-030; that authorization is bounded to generated graphics implementation and hidden automated tests. Visible GUI and real-desktop observation still require separate explicit authorization.

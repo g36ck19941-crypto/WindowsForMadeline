@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-29 — CDR-016 through CDR-022 accepted
+
+- Recorded developer acceptance of the cumulative CDR-016, CDR-020, CDR-021 and CDR-022 version after the developer completed verification.
+- Re-ran the CDR-022 Release gate: 0 warnings, 0 errors and 298/298 offline cases passed; the generated traversal replay remained identical.
+- Audited the outgoing range for commercial assets, decoded frames, audio, game binaries, caches and local installation paths; none were present.
+- Authorized independent-branch publication and bounded the next CDR-030 work to generated graphics plus hidden automated tests; visible GUI and real-desktop observation remain separately gated.
+
 ## 2026-09-28 — CDR-022 generated dash, wall and climb behavior
 
 - Added explicit Normal, Dash, WallSlide and Climb traversal states driven only by immutable generated inputs.

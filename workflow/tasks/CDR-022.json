@@ -3,7 +3,7 @@
   "taskId": "CDR-022",
   "title": "Dash, Wall and Climb",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-28",
   "scope": [
     "src/CelesteDesktop.Player/**",
@@ -45,5 +45,7 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-030",
-  "nextAction": "Await CDR-022 acceptance and fresh authorization before any synthetic Windows presentation or GUI work."
+  "acceptedDate": "2026-09-29",
+  "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
+  "nextAction": "Publish CDR-022 and begin CDR-030 with generated graphics and hidden automated tests only; visible GUI and real desktop observation remain separately gated."
 }

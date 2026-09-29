@@ -31,4 +31,4 @@ It does not prove that any character is visible, animated correctly or feels lik
 
 ## Next gate
 
-CDR-020 starts the pure deterministic Actor/Solid simulation kernel using generated geometry only. CDR-016 remains local and must not be uploaded until the developer accepts it.
+CDR-016 was accepted on 2026-09-29 and may be published to its independent branch. CDR-020 subsequently built the deterministic Actor/Solid kernel using generated geometry only.

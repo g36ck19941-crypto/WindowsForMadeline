@@ -3,7 +3,7 @@
   "taskId": "CDR-016",
   "title": "Opt-in read-only real-install conformance",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-28",
   "scope": [
     "tools/CelesteDesktop.RealInstallConformance/**",
@@ -44,5 +44,7 @@
     "installationWrites": 0,
     "persistedCommercialBytes": 0
   },
-  "nextAction": "Await CDR-016 acceptance while continuing authorized CDR-020 offline implementation."
+  "acceptedDate": "2026-09-29",
+  "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
+  "nextAction": "Publish the accepted CDR-016 commit to its independent remote branch."
 }

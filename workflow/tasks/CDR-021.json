@@ -3,7 +3,7 @@
   "taskId": "CDR-021",
   "title": "Madeline Normal and Jump",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-28",
   "scope": [
     "src/CelesteDesktop.Player/**",
@@ -40,5 +40,7 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-022",
-  "nextAction": "Keep CDR-021 local pending acceptance and continue authorized CDR-022 offline implementation."
+  "acceptedDate": "2026-09-29",
+  "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
+  "nextAction": "Publish the accepted CDR-021 commit to its independent remote branch."
 }

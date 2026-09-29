@@ -91,45 +91,45 @@
 ### CDR-016 — Opt-in real-install conformance
 
 - Owner: Primary
-- State: implementation complete on 2026-09-28; developer acceptance pending
+- State: accepted by developer on 2026-09-29
 - Scope: read-only selected installation; summary hashes and counts only
 - Evidence: Release 0 warnings/errors; 191 offline cases; selected installation produced 3 source summaries, 6,824 Atlas entries, 5 definitions, 93 animations and 706 frames; repeated decoder/catalog fingerprints stable; zero install writes and zero commercial bytes persisted
 - Manual acceptance: double-click `验证当前版本.cmd`, then optionally drag the selected installation onto `验证真实安装兼容性.cmd`; details in `docs/zh-CN/REAL_INSTALL_CONFORMANCE.md`
-- Gate: implementation evidence satisfied locally; do not upload until developer acceptance; CDR-020 is authorized to continue offline
+- Gate: accepted for publication to an independent branch; CDR-020 was completed under the prior offline authorization
 
 ## P2 — Deterministic simulation
 
 ### CDR-020 — Actor/Solid kernel
 
 - Owner: Primary
-- State: implementation complete on 2026-09-28; developer acceptance pending
+- State: accepted by developer on 2026-09-29
 - Scope: `Simulation.Core`, generated geometry tests, cumulative offline demonstration and project records
 - Fixed 60 Hz, whole-pixel actor position, subpixel remainder, collision ordering, moving-solid carry and LiftSpeed contracts.
 - Evidence: Release 0 warnings/errors; 28/28 generated simulation cases and 219 total offline cases; 13-tick cumulative demo replays identically with carry and blocked events
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the tick table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/SIMULATION_CORE.md`
-- Gate: do not upload until developer acceptance; CDR-021 is authorized to continue offline
+- Gate: accepted for publication to an independent branch; CDR-021 was completed under the prior offline authorization
 
 ### CDR-021 — Madeline Normal/Jump
 
 - Owner: Primary
-- State: implementation complete on 2026-09-28; developer acceptance pending
+- State: accepted by developer on 2026-09-29
 - Scope: `CelesteDesktop.Player`, minimal simulation orchestration surface, generated input tests, cumulative offline demonstration and records
 - Run, friction, air control, overspeed reduction, gravity, fast fall, coyote, buffer, variable jump, collision/transition events and immutable snapshots.
 - Evidence: Release 0 warnings/errors; 30/30 player cases and 249 total offline cases; 24-tick cumulative demo reaches max run, emits one jump and replays identically
 - Fidelity: `partial`; public reference values/order are covered, but exact input buffer configuration and full shipped-build surroundings are not established
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the player tick table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/PLAYER_NORMAL_JUMP.md`
-- Gate: do not upload until developer acceptance; CDR-022 is authorized to continue offline
+- Gate: accepted for publication to an independent branch; CDR-022 was completed under the prior offline authorization
 
 ### CDR-022 — Dash/Wall/Climb
 
 - Owner: Primary
-- State: implementation complete on 2026-09-28; developer acceptance pending
+- State: accepted by developer on 2026-09-29
 - Scope: Player traversal state layer, minimal Simulation.Core spatial/midpoint correction, generated tests, cumulative offline demonstration and records
 - Direction quantization, dash lifecycle/assists, wall slide/jump, climb movement/stamina and ledge hop are implemented as explicit deterministic states/events.
 - Evidence: Release 0 warnings/errors; 44/44 traversal cases, 33/33 Simulation.Core cases and 298 total offline cases; 24-tick traversal demo contains wall slide, wall jump, blocked dash and climb entry with identical replay
 - Fidelity: `partial`; upward-dash corner correction, jump-throughs, moving-wall boosts, blockers, all assists and advanced techniques remain outside this task
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the traversal table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/PLAYER_DASH_WALL_CLIMB.md`
-- Gate: do not upload until developer acceptance; CDR-030 crosses a Windows presentation/GUI boundary and requires fresh authorization
+- Gate: accepted for publication to an independent branch; developer authorized continuing to CDR-030, limited to generated graphics and hidden automated tests. Visible GUI and real desktop observation remain separately gated.
 
 ## P3 — Rendering and desktop adapter
 
