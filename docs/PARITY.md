@@ -26,6 +26,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Dash/Wall/Climb | n/a | partial | partial | unstarted | CDR-022 generated traversal passes; corner correction, jump-throughs, moving-wall boosts, blockers and advanced techniques remain unverified |
 | Moving-solid carry/LiftBoost | n/a | partial | unstarted | unstarted | CDR-020 contract/tests pass; original-game parameter/order parity is not yet established |
 | Synthetic Windows presentation | n/a | exact_offline | partial | unstarted | CDR-030 hidden D3D11/DirectComposition commit and recovery tests pass; no asset animation or visible observation |
+| Anonymous desktop geometry | n/a | exact_offline | partial | unstarted | CDR-031 generated tracking and authorized aggregate-only Windows snapshot pass; no overlay placement or visible observation |
 | Theo Crystal | unstarted | unstarted | unstarted | unstarted | Hold/throw/collision interactions |
 | Glider | unstarted | unstarted | unstarted | unstarted | Hold/fall/launch interactions |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player and supported entities |

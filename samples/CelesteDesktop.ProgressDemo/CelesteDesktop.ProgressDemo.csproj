@@ -10,5 +10,6 @@
     <ProjectReference Include="..\..\src\CelesteDesktop.Simulation.Core\CelesteDesktop.Simulation.Core.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Player\CelesteDesktop.Player.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Rendering\CelesteDesktop.Rendering.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.Desktop\CelesteDesktop.Desktop.csproj" />
   </ItemGroup>
 </Project>

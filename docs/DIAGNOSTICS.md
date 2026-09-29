@@ -46,6 +46,8 @@ Missing downstream events must be reported as the exact remaining boundary. `PRE
 
 Rendering lifecycle events outside the linear success chain are `RENDER_BACKEND_READY`, `RENDER_DEVICE_LOST` and `RENDER_DEVICE_RECOVERED`. A recoverable loss records the failed stage, HRESULT, full bounded exception chain and recovery action before one backend recreation and retry. None of these events implies visibility.
 
+Desktop capture emits `DESKTOP_SNAPSHOT_CAPTURED` with sequence, visible/filtered counts and bounded DPI range only. It never carries source tokens, native handles, titles, content, screenshots, input or process identity.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

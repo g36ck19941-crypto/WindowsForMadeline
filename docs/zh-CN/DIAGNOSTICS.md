@@ -48,6 +48,8 @@
 
 线性成功链以外的渲染生命周期事件为 `RENDER_BACKEND_READY`、`RENDER_DEVICE_LOST` 和 `RENDER_DEVICE_RECOVERED`。可恢复设备丢失必须先记录失败阶段、HRESULT、完整有界异常链和恢复动作，再最多重建并重试一次。这些事件都不代表人眼可见。
 
+桌面采集使用 `DESKTOP_SNAPSHOT_CAPTURED`，只包含序号、可见/过滤数量和受限 DPI 范围。不得包含源令牌、原生句柄、标题、内容、截图、输入或进程身份。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

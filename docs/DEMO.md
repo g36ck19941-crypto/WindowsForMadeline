@@ -91,3 +91,9 @@ Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, 
 Double-click `演示当前进度.cmd`. The cumulative report adds a generated premultiplied-alpha checkerboard and a presentation health-chain table. It also restores CDR-016 as a separately passed read-only milestone and explicitly states that CDR-017 through CDR-019 are unassigned reserved numbers. Expected values are 3 presents, 2 changed-pixel events, `human_visible=false` and 0 commercial bytes.
 
 Then double-click `验证当前版本.cmd`. The prior 298 cases remain, and the rendering suite must report `20/20`, for 318 total cases. The final line must be `CDR-030 HIDDEN VERIFICATION PASSED`. The native test creates a never-shown HWND and actually performs D3D11 uploads, DirectComposition `Commit` and `WaitForCommitCompletion`; it does not prove human visibility or inspect the real desktop.
+
+## CDR-031 — Anonymous desktop geometry
+
+Double-click `演示当前进度.cmd`. The cumulative report adds two program-generated desktop snapshots with anonymous IDs, negative-origin geometry, DPI and velocity. The final snapshot contains two visible surfaces and one moving surface. The report contains no real desktop values.
+
+Then double-click `验证当前版本.cmd`. The prior 318 cases remain, and the Desktop suite must report `19/19`, for 337 total regressions. A separate explicitly authorized read-only proof reports `1/1` and one aggregate line containing only counts and DPI range. The final line must be `CDR-031 READ-ONLY VERIFICATION PASSED`. No title, content, screenshot, input, native handle, visible GUI or game/install access is allowed.

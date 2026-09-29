@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-031",
+  "title": "Anonymous desktop geometry adapter",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-09-29",
+  "scope": ["src/CelesteDesktop.Desktop/**", "src/CelesteDesktop.Desktop.Windows/**", "tests/CelesteDesktop.Desktop.Tests/**", "generated cumulative demo", "tools/Verify-CDR031.ps1", "project records"],
+  "features": ["ephemeral anonymous surface IDs", "bounded negative-origin geometry and DPI", "visible and non-cloaked filtering", "monotonic per-second velocity", "aggregate-only diagnostics", "Windows read-only enumeration"],
+  "forbidden": ["window titles or text", "window content or screenshots", "keyboard mouse or other input", "process executable or class identity", "native handles in contracts logs or evidence", "visible GUI launch", "Celeste Everest or installation access"],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "desktopSyntheticTests": 19,
+    "totalRegressionTests": 337,
+    "authorizedReadOnlySnapshotTests": 1,
+    "realSnapshotEvidence": "aggregate-count-and-dpi-range-only",
+    "humanVisibilityConfirmed": false,
+    "commercialBytes": 0
+  },
+  "nextTask": "CDR-032",
+  "nextAction": "Await developer acceptance. CDR-032 and visible GUI require separate authorization."
+}

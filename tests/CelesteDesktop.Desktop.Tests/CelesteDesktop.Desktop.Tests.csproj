@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CelesteDesktop.Desktop\CelesteDesktop.Desktop.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.Desktop.Windows\CelesteDesktop.Desktop.Windows.csproj" />
+  </ItemGroup>
+</Project>

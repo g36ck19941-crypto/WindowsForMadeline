@@ -146,10 +146,12 @@
 ### CDR-031 — Desktop geometry adapter
 
 - Owner: Primary
-- State: authorized on 2026-09-29; implementation pending
+- State: implementation complete on 2026-09-29; developer acceptance pending
 - Scope: anonymous desktop geometry, DPI, visible-surface state and velocity through isolated platform-neutral and Windows modules
 - Forbidden: window titles, text/content, screenshots, input, identity-bearing process metadata, raw native handles in contracts/evidence, visible GUI and game/install access
-- Gate: generated fixtures plus one read-only hidden Windows snapshot with aggregate-only evidence; no human-visibility claim.
+- Evidence: Release 0 warnings/errors; 19/19 generated desktop cases and 337 total regressions; one authorized hidden Windows proof passed with aggregate count/DPI evidence only; cumulative demo uses generated geometry and records no real desktop values.
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect the generated anonymous geometry table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/DESKTOP_GEOMETRY.md`.
+- Gate: keep local until developer acceptance. CDR-032 and any visible GUI require separate authorization; no human-visibility claim.
 
 ### CDR-032 — Asset-to-animation presentation
 

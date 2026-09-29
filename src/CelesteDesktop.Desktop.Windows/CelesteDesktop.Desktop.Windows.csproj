@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\CelesteDesktop.Desktop\CelesteDesktop.Desktop.csproj" />
+  </ItemGroup>
+</Project>
