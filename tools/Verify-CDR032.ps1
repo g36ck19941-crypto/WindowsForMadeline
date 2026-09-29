@@ -62,7 +62,9 @@ try {
         ($manifest.animationPresentation.events | Where-Object EventId -eq 'ANIMATION_FRAME_COMPOSED').Count -ne 8) {
         throw 'CDR-032 demo manifest did not match the offline animation presentation contract.'
     }
-    if ($report -notmatch 'CDR-032' -or $report -notmatch '离线动画呈现' -or $report -notmatch 'demo/player/idle01' -or $report -notmatch 'human_visible=false') {
+    # Keep source-level evidence markers ASCII-only so Windows PowerShell 5.1 can
+    # execute this UTF-8 script without mis-decoding a non-ASCII string literal.
+    if ($report -notmatch 'CDR-032' -or $report -notmatch '<th>Tick</th>' -or $report -notmatch 'demo/player/idle01' -or $report -notmatch 'human_visible=false') {
         throw 'CDR-032 demo report omitted required animation or limitation evidence.'
     }
 

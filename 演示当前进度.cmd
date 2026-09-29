@@ -1,12 +1,31 @@
 @echo off
 setlocal
+chcp 65001 >nul
 cd /d "%~dp0"
 
 echo.
-echo ========================================
-echo  CelesteDesktopRuntime Progress Demo
-echo ========================================
-echo  Generated diagnostic data only. No game files are read.
+echo ================================================================
+echo  CelesteDesktopRuntime 当前项目进度演示
+echo ================================================================
+echo.
+echo  这个入口是用来回答：项目目前实际上已经能做什么？
+echo.
+echo  它会做这些事：
+echo  1. 生成安全的测试图片和精灵定义，不读取 Celeste 游戏文件。
+echo  2. 让项目自己的解析器读取这些测试数据并建立素材目录。
+echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演示。
+echo  4. 按固定时间切换两张测试动画帧，再交给离线渲染流程。
+echo  5. 生成一份本地 HTML 报告，方便直接查看结果。
+echo.
+echo  你应该看到：
+echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
+echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
+echo  - 重复运行结果一致，并标明商业素材字节为 0。
+echo.
+echo  请注意：
+echo  - 报告里的图片全部由程序生成，不是 Celeste 原版角色素材。
+echo  - 这能证明离线动画管线已连接，不能证明角色已显示在真实桌面。
+echo  - 这个入口不会启动 Celeste、Everest，也不会读取或写入游戏安装目录。
 echo.
 
 set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-032-demo-runtime\dotnet-home"
@@ -25,16 +44,18 @@ if errorlevel 1 (
 )
 
 echo.
-echo Demo report generated.
+echo 演示报告已经生成。
 if /i "%CDR_DEMO_NO_OPEN%"=="1" goto report_ready
 start "" "%CD%\artifacts\cdr-032-demo\index.html"
 if errorlevel 1 (
-    echo Automatic open failed. Open this file manually:
+    echo 无法自动打开报告，请手动打开下面的文件：
     echo %CD%\artifacts\cdr-032-demo\index.html
 )
 
 :report_ready
-echo Report: %CD%\artifacts\cdr-032-demo\index.html
+echo.
+echo 报告位置：%CD%\artifacts\cdr-032-demo\index.html
+echo 验收时请重点查看 CDR-032 动画时间表和页面顶部的限制说明。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause
@@ -42,7 +63,9 @@ exit /b 0
 
 :demo_failed
 echo.
-echo Demo generation failed. Please send the error above to the development agent.
+echo 演示生成失败。
+echo 请把窗口中从第一个 FAILED 或 error 开始的内容发给开发代理，
+echo 并保留它上方显示的阶段名称，方便判断问题出在解析、模拟还是呈现。
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 1
 pause
 exit /b 1
