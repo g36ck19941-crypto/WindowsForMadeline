@@ -59,6 +59,11 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "branch": "codex/cdr-042-spring",
+    "commit": "c2717fa90a74b7384638423d358abdddb6c58d70",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "nextTask": "CDR-043",
-  "nextAction": "Reverify and publish exact accepted CDR-042 commit, then implement authorized CDR-043 Refill offline."
+  "nextAction": "CDR-042 is published exactly. Implement and verify authorized CDR-043 Refill offline."
 }

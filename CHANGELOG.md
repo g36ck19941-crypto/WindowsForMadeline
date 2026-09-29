@@ -5,6 +5,7 @@
 - Recorded developer acceptance of CDR-042 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
 - Opened CDR-043 only for an isolated deterministic Refill module using generated geometry/input and verified contracts.
 - Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+- Reverification passed at 489/489 with 0 build warnings/errors; exact commit `c2717fa` was published and read back at `codex/cdr-042-spring` while remote `main` stayed unchanged.
 
 ## 2026-09-29 — CDR-042 deterministic Spring
 
