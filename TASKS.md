@@ -156,18 +156,30 @@
 ### CDR-032 — Asset-to-animation presentation
 
 - Owner: Primary
-- State: implementation complete on 2026-09-29; developer acceptance pending
+- State: accepted by developer on 2026-09-29; independent-branch publication authorized after fresh verification and outbound audit
 - Scope: convert validated immutable catalog animation frames into offline immutable render snapshots with deterministic animation timing and explicit health events
 - Forbidden: visible GUI, live input, installation writes, commercial-byte persistence, filesystem/game access and render-to-physics feedback
 - Evidence: Release 0 warnings/errors; 28/28 animation cases and 365 total regressions; cumulative parsed/catalogued two-frame demo runs 8 fixed ticks, 8 offline presents, 3 pixel changes and identical replay.
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the CDR-032 tick/frame table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/ANIMATION_PRESENTATION.md`.
-- Gate: keep local until developer acceptance. CDR-040 Theo Crystal and any visible GUI require separate authorization; no human-visibility claim.
+- Gate: publish the exact audited acceptance commit to an independent branch. CDR-040 Theo Crystal is authorized for generated offline geometry/input and verified contracts only; no visible GUI, installation access or commercial bytes.
 
 ## P4 — Interaction entities
 
 Each entity owns a separate module, tests and parity row:
 
-1. CDR-040 Theo Crystal
+### CDR-040 — Theo Crystal
+
+- Owner: Primary
+- State: authorized on 2026-09-29; implementation not yet accepted
+- Scope: isolated `CelesteDesktop.Entity.Theo` deterministic fixed-tick module, focused tests, generated cumulative demo, verifier and project records
+- Planned behavior: immutable input/state snapshots; explicit pickup/carry/drop/throw; holder-relative placement; gravity, terminal fall and friction; Solid collision, landing bounce and LiftSpeed handoff; bounded squish failure; structured events and deterministic replay
+- Required matrix: Theo with Player pickup/carry/throw requests, Theo with static/moving Solid, and failure isolation from Player and unrelated entities
+- Fidelity: `partial` until behavior facts and the full generated interaction matrix are evidenced; no original-game parity claim by implication
+- Forbidden: visible GUI, live input, game/install access or writes, commercial bytes, filesystem/platform/rendering/desktop dependencies
+- Gate: keep local until developer acceptance. CDR-041 Glider is not authorized by CDR-040 completion.
+
+Remaining order:
+
 2. CDR-041 Glider
 3. CDR-042 Spring
 4. CDR-043 Refill

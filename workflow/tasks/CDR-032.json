@@ -3,8 +3,9 @@
   "taskId": "CDR-032",
   "title": "Offline asset-to-animation presentation",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-29",
+  "acceptedDate": "2026-09-29",
   "scope": ["src/CelesteDesktop.Animation/**", "tests/CelesteDesktop.Animation.Tests/**", "generated cumulative demo", "tools/Verify-CDR032.ps1", "developer launchers and project records"],
   "features": ["fixed-60-Hz catalog frame resolution", "loop nonloop and bounded goto transitions", "immutable animation snapshots", "origin position and horizontal flip composition", "offline Rendering handoff", "structured animation diagnostics and full failures"],
   "forbidden": ["visible GUI", "live input", "Celeste or Everest launch", "installation writes", "commercial-byte persistence", "filesystem access", "render-to-physics feedback"],
@@ -21,5 +22,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-040",
-  "nextAction": "Await developer acceptance. CDR-040 Theo Crystal requires separate authorization; visible GUI remains forbidden."
+  "nextAction": "Publish the audited accepted commit to an independent branch, then implement authorized CDR-040 Theo Crystal offline. Visible GUI and installation access remain forbidden."
 }

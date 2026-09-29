@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-040",
+  "title": "Deterministic Theo Crystal entity",
+  "owner": "Primary agent",
+  "state": "authorized",
+  "authorizationDate": "2026-09-29",
+  "fidelity": "partial-until-source-facts-and-interaction-matrix-pass",
+  "scope": [
+    "src/CelesteDesktop.Entity.Theo/**",
+    "tests/CelesteDesktop.Entity.Theo.Tests/**",
+    "generated cumulative demo",
+    "tools/Verify-CDR040.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Theo input snapshot and state snapshot",
+    "explicit pickup carry drop and facing-aware throw transitions",
+    "holder-relative carry placement without live input",
+    "gravity terminal fall horizontal friction and deterministic solid collision",
+    "landing bounce and moving-solid lift-speed handoff",
+    "bounded squish failure isolated from Player and other entities",
+    "stable structured entity events and deterministic replay",
+    "Player Solid and entity-isolation interaction matrix"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-041",
+  "nextAction": "Implement and verify CDR-040 locally. Keep it unuploaded until developer acceptance."
+}

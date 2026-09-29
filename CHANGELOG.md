@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — CDR-032 accepted
+
+- Recorded developer acceptance of CDR-032 and authorization for independent-branch publication after a fresh full gate and outbound commercial-asset audit.
+- Opened CDR-040 only for an isolated deterministic Theo Crystal module using generated geometry/input and verified contracts.
+- Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+
 ## 2026-09-29 — Plain-language developer launchers
 
 - Expanded both root `.cmd` launchers with plain Chinese explanations of what each entry does, what the developer should observe and how to interpret success.

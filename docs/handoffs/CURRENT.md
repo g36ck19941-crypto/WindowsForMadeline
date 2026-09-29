@@ -10,9 +10,9 @@ CDR-030 was accepted by the developer on 2026-09-29. A fresh gate passed with 0 
 
 CDR-031 was accepted by the developer on 2026-09-29. Its platform-neutral tracker and Windows read-only provider expose only anonymous geometry, DPI, visibility and velocity. The prior gate passed with 0 warnings/errors, 19/19 generated desktop cases, 337/337 total regressions and one authorized aggregate-only real Windows proof. Publication to an independent branch is authorized after a fresh gate and outbound audit.
 
-CDR-032 is authorized only for offline connection of validated immutable catalog frames to deterministic animation presentation. It must not open visible GUI, use live input, write the installation, persist commercial bytes, access the game or allow rendering to modify simulation.
+CDR-032 was accepted by the developer on 2026-09-29. Independent-branch publication is authorized after a fresh full gate and outbound audit.
 
-CDR-032 is now locally implementation-complete and awaiting developer acceptance. The independent Animation module resolves catalog frames at fixed 60 Hz, handles loop/final-frame/direct-goto timing, composes origin/position/flip into immutable transparent canvases and hands them one-way to Rendering. Release passes with 0 warnings/errors, 28/28 animation cases and 365/365 total regressions; the generated demo runs 8 ticks, 8 presents, 3 pixel changes and identical replay. No visible GUI, live input, installation access/write or persisted commercial bytes occurred.
+The accepted CDR-032 implementation resolves catalog frames at fixed 60 Hz, handles loop/final-frame/direct-goto timing, composes origin/position/flip into immutable transparent canvases and hands them one-way to Rendering. Release passes with 0 warnings/errors, 28/28 animation cases and 365/365 total regressions; the generated demo runs 8 ticks, 8 presents, 3 pixel changes and identical replay. No visible GUI, live input, installation access/write or persisted commercial bytes occurred.
 
 At the developer's request, both root `.cmd` launchers now begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. This is launcher/documentation UX only; CDR-032 remains acceptance-pending.
 
@@ -32,11 +32,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer acceptance of CDR-032; do not upload it or begin CDR-040/visible GUI without separate authorization.
+Reverify and audit the exact accepted CDR-032 commit, publish it to an independent branch, then implement authorized CDR-040 locally. Do not open visible GUI or access the game installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-032 implementation, generated demo, verification and acceptance package are complete; CDR-031 publication is complete
+- Scope: CDR-032 acceptance/publication, followed by isolated CDR-040 Theo Crystal offline implementation
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

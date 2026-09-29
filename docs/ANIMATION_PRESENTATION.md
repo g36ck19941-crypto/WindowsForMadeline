@@ -37,4 +37,4 @@ It does not display the original Madeline on the desktop, persist commercial fra
 
 ## Next gate
 
-CDR-032 remains local until developer acceptance. The next planned task is CDR-040 Theo Crystal as an isolated entity module; it requires separate authorization and must not open visible GUI by implication.
+The developer accepted CDR-032 on 2026-09-29 and authorized independent-branch publication after a fresh gate and outbound audit. CDR-040 Theo Crystal is separately authorized for generated offline geometry/input and verified contracts only; visible GUI and installation access remain forbidden.
