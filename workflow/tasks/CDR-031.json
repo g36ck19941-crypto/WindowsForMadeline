@@ -19,6 +19,11 @@
     "humanVisibilityConfirmed": false,
     "commercialBytes": 0
   },
+  "publication": {
+    "branch": "codex/cdr-031-desktop-geometry",
+    "commit": "311c426190489f329b48f983d405abc8c7345809",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "nextTask": "CDR-032",
-  "nextAction": "Publish the audited accepted commit to an independent branch, then begin authorized CDR-032 offline asset-to-animation presentation. Visible GUI remains forbidden."
+  "nextAction": "CDR-031 is published. Await developer acceptance of the completed local CDR-032 package; visible GUI remains forbidden."
 }

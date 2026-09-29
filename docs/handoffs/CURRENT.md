@@ -14,7 +14,7 @@ CDR-032 is authorized only for offline connection of validated immutable catalog
 
 CDR-032 is now locally implementation-complete and awaiting developer acceptance. The independent Animation module resolves catalog frames at fixed 60 Hz, handles loop/final-frame/direct-goto timing, composes origin/position/flip into immutable transparent canvases and hands them one-way to Rendering. Release passes with 0 warnings/errors, 28/28 animation cases and 365/365 total regressions; the generated demo runs 8 ticks, 8 presents, 3 pixel changes and identical replay. No visible GUI, live input, installation access/write or persisted commercial bytes occurred.
 
-CDR-031 was reverified and audited for publication at `311c426`, but the first push/read-back attempt failed because GitHub port 443 was unreachable. Do not claim publication until a later push and read-back succeed.
+CDR-031 was reverified and audited, then published and read back at `codex/cdr-031-desktop-geometry` = `311c426190489f329b48f983d405abc8c7345809` after one transient GitHub connectivity failure. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 CDR-030 acceptance is committed at `43cad14`; after two transient network failures it was published and read back at `codex/cdr-030-synthetic-presentation` = `43cad14a04dd1b397c50d77652f32e4b1dbdd34c`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
@@ -28,11 +28,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Retry exact CDR-031 publication when GitHub connectivity returns. Stop for developer acceptance of CDR-032; do not upload it or begin CDR-040/visible GUI without separate authorization.
+Stop for developer acceptance of CDR-032; do not upload it or begin CDR-040/visible GUI without separate authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-032 implementation, generated demo, verification and acceptance package are complete; CDR-031 remote publication remains a network retry
+- Scope: CDR-032 implementation, generated demo, verification and acceptance package are complete; CDR-031 publication is complete
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

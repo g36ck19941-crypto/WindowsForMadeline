@@ -6,7 +6,7 @@
 - Added bounded transparent-canvas composition using origin, position and horizontal flip, then connected composed frames one-way to Rendering.
 - Added distinct resolution/composition events and full structured failure diagnostics without a Simulation dependency or feedback path.
 - Added 28 focused cases and an 8-tick generated cumulative demo; all 365 regressions pass with 0 build warnings/errors, 0 visible GUI and 0 persisted commercial bytes.
-- CDR-031 upload remains pending because GitHub port 443 was unreachable; remote publication is not claimed.
+- After one GitHub connectivity failure, accepted CDR-031 was published and read back at `codex/cdr-031-desktop-geometry` commit `311c426`; remote `main` stayed unchanged.
 
 ## 2026-09-29 — CDR-031 accepted
 
