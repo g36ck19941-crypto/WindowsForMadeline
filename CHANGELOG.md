@@ -5,7 +5,7 @@
 - Added platform-neutral anonymous surface snapshots, visibility/cloaking filtering, bounded geometry/DPI, ephemeral IDs and monotonic velocity.
 - Added a Windows provider limited to read-only visibility, cloaking, rectangle and DPI APIs; no title, content, screenshot, input, process identity or native handle leaves the adapter.
 - Added 19 generated tests, one authorized aggregate-only real Windows proof, and a generated cumulative demo section; all 337 regressions pass with 0 build warnings/errors.
-- CDR-031 remains local pending acceptance. CDR-030 publication was attempted after audit but GitHub connectivity reset; remote completion is not claimed.
+- CDR-031 remains local pending acceptance. After transient network failures, accepted CDR-030 was published and read back at `codex/cdr-030-synthetic-presentation` commit `43cad14`; remote `main` stayed unchanged.
 
 ## 2026-09-29 — CDR-030 accepted
 

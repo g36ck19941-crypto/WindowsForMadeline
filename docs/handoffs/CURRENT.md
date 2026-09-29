@@ -10,7 +10,7 @@ CDR-030 was accepted by the developer on 2026-09-29. A fresh gate passed with 0 
 
 CDR-031 is locally implementation-complete and awaiting developer acceptance. Its platform-neutral tracker and Windows read-only provider expose only anonymous geometry, DPI, visibility and velocity. Release passed with 0 warnings/errors, 19/19 generated desktop cases, 337/337 total regressions and one authorized aggregate-only real Windows proof. The cumulative demo uses generated desktop values only. No titles, text/content, screenshots, input, identity-bearing process metadata or native handles escaped; no visible GUI or game/install access occurred.
 
-CDR-030 acceptance is committed at `43cad14` and its outbound audit passed, but two publication/read-back attempts failed because GitHub port 443 was reset or unreachable. Do not claim remote publication until the branch is successfully pushed and read back.
+CDR-030 acceptance is committed at `43cad14`; after two transient network failures it was published and read back at `codex/cdr-030-synthetic-presentation` = `43cad14a04dd1b397c50d77652f32e4b1dbdd34c`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -22,11 +22,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Retry exact CDR-030 publication when GitHub connectivity is available. Stop for developer acceptance of CDR-031; do not begin CDR-032 or any visible GUI without separate authorization.
+Stop for developer acceptance of CDR-031; do not upload it or begin CDR-032 or any visible GUI without separate authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-031 implementation, generated cumulative demo, verification and acceptance package are complete; CDR-030 remote publication remains a network retry
+- Scope: CDR-031 implementation, generated cumulative demo, verification and acceptance package are complete; CDR-030 publication is complete
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

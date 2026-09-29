@@ -6,6 +6,11 @@
   "state": "accepted",
   "authorizationDate": "2026-09-29",
   "acceptedDate": "2026-09-29",
+  "publication": {
+    "branch": "codex/cdr-030-synthetic-presentation",
+    "commit": "43cad14a04dd1b397c50d77652f32e4b1dbdd34c",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "scope": [
     "src/CelesteDesktop.Rendering/**",
     "src/CelesteDesktop.Rendering.Windows/**",
@@ -44,5 +49,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-031",
-  "nextAction": "Publish the audited accepted commit to an independent branch, then begin the separately authorized CDR-031 anonymous desktop adapter. Visible GUI remains forbidden."
+  "nextAction": "CDR-030 is published and read back. CDR-031 is locally complete and awaits developer acceptance; visible GUI remains forbidden."
 }
