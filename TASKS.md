@@ -178,7 +178,7 @@ Each entity owns a separate module, tests and parity row:
 - Fidelity: `partial`; the generated interaction matrix passes, but the official public repository does not expose Theo entity behavior and original numeric parity is not established
 - Forbidden: visible GUI, live input, game/install access or writes, commercial bytes, filesystem/platform/rendering/desktop dependencies
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the Theo table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/THEO_CRYSTAL.md`.
-- Gate: accepted for exact independent-branch publication. CDR-041 Glider is authorized for generated offline geometry/input and verified contracts only.
+- Gate: published at `codex/cdr-040-theo-crystal` commit `23531c3`. CDR-041 Glider is authorized for generated offline geometry/input and verified contracts only.
 
 Remaining order:
 

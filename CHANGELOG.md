@@ -5,6 +5,7 @@
 - Recorded developer acceptance of CDR-040 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
 - Opened CDR-041 only for an isolated deterministic Glider module using generated geometry/input and verified contracts.
 - Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+- Reverification passed at 402/402 with 0 build warnings/errors; the outbound audit was clean, and exact commit `23531c3` was published and read back at `codex/cdr-040-theo-crystal` while remote `main` stayed unchanged.
 
 ## 2026-09-29 — CDR-040 deterministic Theo Crystal
 

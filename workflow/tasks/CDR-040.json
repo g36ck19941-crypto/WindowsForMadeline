@@ -59,6 +59,11 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "branch": "codex/cdr-040-theo-crystal",
+    "commit": "23531c3b06251b940cfbb145e1b1be5810997cfd",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "nextTask": "CDR-041",
-  "nextAction": "Reverify and publish exact accepted CDR-040 commit, then implement authorized CDR-041 Glider offline."
+  "nextAction": "CDR-040 is published. Implement authorized CDR-041 Glider offline; visible GUI and installation access remain forbidden."
 }
