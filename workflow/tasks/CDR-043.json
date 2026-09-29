@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-043",
+  "title": "Deterministic Refill entity",
+  "owner": "Primary agent",
+  "state": "authorized",
+  "authorizationDate": "2026-09-29",
+  "fidelity": "partial-original-numeric-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.Entity.Refill/**",
+    "tests/CelesteDesktop.Entity.Refill.Tests/**",
+    "minimal generic Player resource-effect integration and tests",
+    "generated cumulative demo",
+    "tools/Verify-CDR043.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Refill input state effect and event snapshots",
+    "eligible Player contact that requests dash and stamina restoration",
+    "consumed cooldown respawn disable and enable lifecycle",
+    "release-to-rearm protection against repeated touching activation",
+    "stable target identity deterministic replay and two-Refill isolation",
+    "Player Solid Spring and unrelated-entity interaction coverage"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-044",
+  "nextAction": "Implement and verify CDR-043 locally. Keep it unuploaded until explicit developer acceptance."
+}

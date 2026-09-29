@@ -3,8 +3,9 @@
   "taskId": "CDR-042",
   "title": "Deterministic Spring entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-29",
+  "acceptedDate": "2026-09-29",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Spring/**",
@@ -59,5 +60,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-043",
-  "nextAction": "Developer reviews the generated CDR-042 report and 489-case offline gate. Keep CDR-042 local until explicit acceptance; CDR-043 remains unauthorized."
+  "nextAction": "Reverify and publish exact accepted CDR-042 commit, then implement authorized CDR-043 Refill offline."
 }

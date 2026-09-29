@@ -24,7 +24,7 @@ CDR-041 was accepted by the developer on 2026-09-29. The isolated Glider module 
 
 CDR-041 was freshly reverified and audited at exact acceptance commit `ccc1a6bda21df2ad93ffb227bd5130bb54f07bae`. After transient GitHub port-443 failures, it was published and read back at `codex/cdr-041-glider`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
-CDR-042 is locally implementation-complete and awaiting developer acceptance. The isolated Spring module implements four directional target-addressed launches, activation/retraction/cooldown/reset, disable/enable and release-to-rearm. Player, Theo and Glider apply the generic axis-selective external-velocity effect through their own entry points; Spring references none of those modules. Release builds with 0 warnings/errors; Spring 42/42 and 489/489 total regressions pass. The cumulative 30-tick demo records 3 activations, 3 launches, 3 ready transitions and one actual application each by Player, Theo and Glider with identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App routing and original contact/numeric parity are not established.
+CDR-042 was accepted by the developer on 2026-09-29. The isolated Spring module implements four directional target-addressed launches, activation/retraction/cooldown/reset, disable/enable and release-to-rearm. Player, Theo and Glider apply the generic axis-selective external-velocity effect through their own entry points; Spring references none of those modules. Release builds with 0 warnings/errors; Spring 42/42 and 489/489 total regressions pass. The cumulative 30-tick demo records 3 activations, 3 launches, 3 ready transitions and one actual application each by Player, Theo and Glider with identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App routing and original contact/numeric parity are not established. Exact independent-branch publication is authorized after fresh verification and audit; CDR-043 Refill is authorized next under the same offline-only boundary.
 
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-042 milestone; launcher text does not change task acceptance state.
 
@@ -44,11 +44,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer review of CDR-042. Do not upload CDR-042 or start CDR-043 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
+Complete the CDR-042 acceptance record, publish the exact accepted commit to its independent branch after the clean gate/audit, then implement and verify CDR-043 locally. Do not upload CDR-043, open visible GUI or access the game installation without a later explicit gate.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-042 acceptance handoff after exact CDR-041 publication
+- Scope: CDR-042 exact publication followed by isolated CDR-043 Refill offline implementation
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

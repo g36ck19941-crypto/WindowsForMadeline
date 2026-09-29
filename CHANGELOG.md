@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — CDR-042 accepted
+
+- Recorded developer acceptance of CDR-042 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
+- Opened CDR-043 only for an isolated deterministic Refill module using generated geometry/input and verified contracts.
+- Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+
 ## 2026-09-29 — CDR-042 deterministic Spring
 
 - Added an isolated Spring module with immutable contact, state, target launch effect and stable event snapshots.
