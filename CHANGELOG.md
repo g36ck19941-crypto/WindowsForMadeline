@@ -5,6 +5,7 @@
 - Recorded developer acceptance of CDR-032 and authorization for independent-branch publication after a fresh full gate and outbound commercial-asset audit.
 - Opened CDR-040 only for an isolated deterministic Theo Crystal module using generated geometry/input and verified contracts.
 - Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+- Reverification passed at 365/365 with 0 build warnings/errors; the outbound audit was clean, and exact commit `1c39c0a` was published and read back at `codex/cdr-032-animation-presentation` while remote `main` stayed unchanged.
 
 ## 2026-09-29 — Plain-language developer launchers
 

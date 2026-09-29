@@ -14,6 +14,8 @@ CDR-032 was accepted by the developer on 2026-09-29. Independent-branch publicat
 
 The accepted CDR-032 implementation resolves catalog frames at fixed 60 Hz, handles loop/final-frame/direct-goto timing, composes origin/position/flip into immutable transparent canvases and hands them one-way to Rendering. Release passes with 0 warnings/errors, 28/28 animation cases and 365/365 total regressions; the generated demo runs 8 ticks, 8 presents, 3 pixel changes and identical replay. No visible GUI, live input, installation access/write or persisted commercial bytes occurred.
 
+CDR-032 was freshly reverified at 365/365 with 0 build warnings/errors and passed an outbound audit with no commercial assets, game binaries, caches or local install paths. Exact commit `1c39c0af2e96c1f53e9fd2b4212beb8d23e9c0b1` was published and read back at `codex/cdr-032-animation-presentation`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
+
 At the developer's request, both root `.cmd` launchers now begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. This is launcher/documentation UX only; CDR-032 remains acceptance-pending.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
@@ -32,11 +34,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Reverify and audit the exact accepted CDR-032 commit, publish it to an independent branch, then implement authorized CDR-040 locally. Do not open visible GUI or access the game installation.
+Implement and verify authorized CDR-040 locally. Do not upload it, open visible GUI or access the game installation without a later explicit gate.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-032 acceptance/publication, followed by isolated CDR-040 Theo Crystal offline implementation
+- Scope: isolated CDR-040 Theo Crystal offline implementation after completed CDR-032 publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

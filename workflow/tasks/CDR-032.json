@@ -21,6 +21,11 @@
     "humanVisibilityConfirmed": false,
     "commercialBytes": 0
   },
+  "publication": {
+    "branch": "codex/cdr-032-animation-presentation",
+    "commit": "1c39c0af2e96c1f53e9fd2b4212beb8d23e9c0b1",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "nextTask": "CDR-040",
-  "nextAction": "Publish the audited accepted commit to an independent branch, then implement authorized CDR-040 Theo Crystal offline. Visible GUI and installation access remain forbidden."
+  "nextAction": "CDR-032 is published. Implement authorized CDR-040 Theo Crystal offline; visible GUI and installation access remain forbidden."
 }

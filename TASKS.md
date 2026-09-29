@@ -161,7 +161,7 @@
 - Forbidden: visible GUI, live input, installation writes, commercial-byte persistence, filesystem/game access and render-to-physics feedback
 - Evidence: Release 0 warnings/errors; 28/28 animation cases and 365 total regressions; cumulative parsed/catalogued two-frame demo runs 8 fixed ticks, 8 offline presents, 3 pixel changes and identical replay.
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the CDR-032 tick/frame table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/ANIMATION_PRESENTATION.md`.
-- Gate: publish the exact audited acceptance commit to an independent branch. CDR-040 Theo Crystal is authorized for generated offline geometry/input and verified contracts only; no visible GUI, installation access or commercial bytes.
+- Gate: published at `codex/cdr-032-animation-presentation` commit `1c39c0a`. CDR-040 Theo Crystal is authorized for generated offline geometry/input and verified contracts only; no visible GUI, installation access or commercial bytes.
 
 ## P4 — Interaction entities
 
