@@ -97,3 +97,9 @@ Then double-click `验证当前版本.cmd`. The prior 298 cases remain, and the 
 Double-click `演示当前进度.cmd`. The cumulative report adds two program-generated desktop snapshots with anonymous IDs, negative-origin geometry, DPI and velocity. The final snapshot contains two visible surfaces and one moving surface. The report contains no real desktop values.
 
 Then double-click `验证当前版本.cmd`. The prior 318 cases remain, and the Desktop suite must report `19/19`, for 337 total regressions. A separate explicitly authorized read-only proof reports `1/1` and one aggregate line containing only counts and DPI range. The final line must be `CDR-031 READ-ONLY VERIFICATION PASSED`. No title, content, screenshot, input, native handle, visible GUI or game/install access is allowed.
+
+## CDR-032 — Offline asset-to-animation presentation
+
+Double-click `演示当前进度.cmd`. The cumulative generated pipeline now parses and catalogs two `player/idle` frames, then resolves them for 8 fixed ticks and sends eight immutable transparent-canvas frames through the offline presentation contract. Ticks 0–2 use `idle00`, ticks 3–5 use `idle01`, and ticks 6–7 loop to `idle00`; expected changed-frame count is 3 and replay must be identical.
+
+Then double-click `验证当前版本.cmd`. The prior 337 generated/hidden regressions remain and the Animation suite must report `28/28`, for 365 total cases. The final line must be `CDR-032 OFFLINE VERIFICATION PASSED`. No real installation, visible GUI, desktop content, live input or persisted commercial bytes are involved.

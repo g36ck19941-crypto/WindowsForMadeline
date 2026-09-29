@@ -12,6 +12,10 @@ CDR-031 was accepted by the developer on 2026-09-29. Its platform-neutral tracke
 
 CDR-032 is authorized only for offline connection of validated immutable catalog frames to deterministic animation presentation. It must not open visible GUI, use live input, write the installation, persist commercial bytes, access the game or allow rendering to modify simulation.
 
+CDR-032 is now locally implementation-complete and awaiting developer acceptance. The independent Animation module resolves catalog frames at fixed 60 Hz, handles loop/final-frame/direct-goto timing, composes origin/position/flip into immutable transparent canvases and hands them one-way to Rendering. Release passes with 0 warnings/errors, 28/28 animation cases and 365/365 total regressions; the generated demo runs 8 ticks, 8 presents, 3 pixel changes and identical replay. No visible GUI, live input, installation access/write or persisted commercial bytes occurred.
+
+CDR-031 was reverified and audited for publication at `311c426`, but the first push/read-back attempt failed because GitHub port 443 was unreachable. Do not claim publication until a later push and read-back succeed.
+
 CDR-030 acceptance is committed at `43cad14`; after two transient network failures it was published and read back at `codex/cdr-030-synthetic-presentation` = `43cad14a04dd1b397c50d77652f32e4b1dbdd34c`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
@@ -24,11 +28,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Re-run the CDR-031 gate, audit and publish its accepted commit, then implement CDR-032 within the offline-only boundary.
+Retry exact CDR-031 publication when GitHub connectivity returns. Stop for developer acceptance of CDR-032; do not upload it or begin CDR-040/visible GUI without separate authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: publish accepted CDR-031, then implement CDR-032 offline validated-catalog animation presentation
+- Scope: CDR-032 implementation, generated demo, verification and acceptance package are complete; CDR-031 remote publication remains a network retry
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

@@ -6,12 +6,14 @@
 App ───────────────┬─> Install
                    ├─> AssetWorker.Client ─IPC─> AssetWorker.Process
                    ├─> Desktop
+                   ├─> Animation ──> Rendering
                    ├─> Rendering
                    └─> Simulation + Entity modules
 
 Install ─────────────> Contracts
 AssetWorker ─────────> Contracts
 Desktop ─────────────> Contracts
+Animation ───────────> Contracts + Rendering
 Rendering ───────────> Contracts
 Entity modules ──────> Simulation.Core
 Simulation.Core ─────> Contracts
@@ -70,6 +72,8 @@ Renderer ───────────────────────�
 Rendering delay cannot feed back into simulation time. UI dispatcher timing cannot advance animations or entity state.
 
 CDR-030 splits presentation again: `CelesteDesktop.Rendering` owns immutable-frame validation, ordered health events, changed-fingerprint detection and bounded recovery; `CelesteDesktop.Rendering.Windows` owns the hidden HWND, D3D11 and DirectComposition COM resources. The Windows backend cannot reference Simulation, Player, assets on disk or live input. A completed DirectComposition commit is not human-visibility evidence.
+
+CDR-032 adds `CelesteDesktop.Animation` between validated catalogs and Rendering. It consumes caller-provided fixed ticks and immutable catalog frames, resolves loop/final-frame/direct-goto timing, composes a bounded transparent canvas and submits it one-way to Rendering. It has no reference to Simulation, Desktop, filesystem or live input, so neither renderer timing nor presentation failure can advance or rewrite physics.
 
 ## 5. Entity isolation
 

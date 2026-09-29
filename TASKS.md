@@ -156,10 +156,12 @@
 ### CDR-032 — Asset-to-animation presentation
 
 - Owner: Primary
-- State: authorized on 2026-09-29; implementation pending
+- State: implementation complete on 2026-09-29; developer acceptance pending
 - Scope: convert validated immutable catalog animation frames into offline immutable render snapshots with deterministic animation timing and explicit health events
 - Forbidden: visible GUI, live input, installation writes, commercial-byte persistence, filesystem/game access and render-to-physics feedback
-- Gate: generated catalog fixtures, deterministic tick-to-frame tests, hidden/generated presentation proof and cumulative demo; no human-visibility claim.
+- Evidence: Release 0 warnings/errors; 28/28 animation cases and 365 total regressions; cumulative parsed/catalogued two-frame demo runs 8 fixed ticks, 8 offline presents, 3 pixel changes and identical replay.
+- Manual acceptance: double-click `演示当前进度.cmd`, inspect the CDR-032 tick/frame table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/ANIMATION_PRESENTATION.md`.
+- Gate: keep local until developer acceptance. CDR-040 Theo Crystal and any visible GUI require separate authorization; no human-visibility claim.
 
 ## P4 — Interaction entities
 

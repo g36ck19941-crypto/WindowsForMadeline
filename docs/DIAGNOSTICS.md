@@ -48,6 +48,8 @@ Rendering lifecycle events outside the linear success chain are `RENDER_BACKEND_
 
 Desktop capture emits `DESKTOP_SNAPSHOT_CAPTURED` with sequence, visible/filtered counts and bounded DPI range only. It never carries source tokens, native handles, titles, content, screenshots, input or process identity.
 
+Animation presentation emits `ANIMATION_STATE_SELECTED`, `ANIMATION_STATE_TRANSITIONED`, `ANIMATION_FRAME_RESOLVED` and `ANIMATION_FRAME_COMPOSED`. Frame events may contain a SHA-256 fingerprint and dimensions but never pixel payloads. Resolution and composition do not imply render submission, presentation or human visibility.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

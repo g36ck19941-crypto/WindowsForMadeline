@@ -50,6 +50,8 @@
 
 桌面采集使用 `DESKTOP_SNAPSHOT_CAPTURED`，只包含序号、可见/过滤数量和受限 DPI 范围。不得包含源令牌、原生句柄、标题、内容、截图、输入或进程身份。
 
+动画呈现使用 `ANIMATION_STATE_SELECTED`、`ANIMATION_STATE_TRANSITIONED`、`ANIMATION_FRAME_RESOLVED` 和 `ANIMATION_FRAME_COMPOSED`。帧事件可包含 SHA-256 指纹和尺寸，但不得包含像素载荷；解析或合成不代表已经提交渲染、完成 Present 或人眼可见。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

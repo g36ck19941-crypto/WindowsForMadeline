@@ -11,6 +11,7 @@ using CelesteDesktop.Simulation.Core;
 using CelesteDesktop.Player;
 using CelesteDesktop.Rendering;
 using CelesteDesktop.Desktop;
+using CelesteDesktop.Animation;
 
 const int width = 8;
 const int height = 6;
@@ -57,6 +58,7 @@ var player = RunSyntheticPlayer();
 var traversal = RunSyntheticTraversal();
 var presentation = RunSyntheticPresentation();
 var desktop = RunSyntheticDesktop();
+var animationPresentation = RunSyntheticAnimationPresentation(catalog);
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -66,7 +68,7 @@ if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 var page = metadata.Pages.Single();
 if (catalog.Entities.Count != 2 ||
     catalog.Entities.Any(entity => entity.Animations.Count != 1) ||
-    catalog.Entities.Sum(entity => entity.Animations.Sum(animation => animation.Frames.Count)) != 2 ||
+    catalog.Entities.Sum(entity => entity.Animations.Sum(animation => animation.Frames.Count)) != 3 ||
     catalog.DecodedPageCount != 1 ||
     pageSource.OpenCount != 1)
 {
@@ -78,7 +80,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-031",
+    demoId = "CDR-032",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -92,7 +94,8 @@ var manifest = new
         "CDR-021 applied generated Normal and Jump input snapshots",
         "CDR-022 applied generated Dash, Wall and Climb state transitions",
         "CDR-030 exercised generated premultiplied frames through the isolated presentation health chain",
-        "CDR-031 tracked generated anonymous desktop geometry, DPI, visibility and velocity"
+        "CDR-031 tracked generated anonymous desktop geometry, DPI, visibility and velocity",
+        "CDR-032 resolved generated catalog animations by fixed tick and presented immutable composed frames offline"
     },
     independentValidation = new
     {
@@ -202,6 +205,17 @@ var manifest = new
         inputRead = 0,
         snapshots = desktop.Snapshots
     },
+    animationPresentation = new
+    {
+        source = "program-generated-validated-catalog",
+        tickCount = animationPresentation.Rows.Count,
+        animationPresentation.PresentedCount,
+        animationPresentation.FrameChangedCount,
+        animationPresentation.DeterministicReplay,
+        humanVisibilityConfirmed = false,
+        rows = animationPresentation.Rows,
+        events = animationPresentation.AnimationEvents
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -221,11 +235,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-031 cumulative synthetic desktop pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=2 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=2 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-032 cumulative offline animation presentation pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -275,6 +289,12 @@ static byte[] BuildSyntheticPixels(int width, int height)
     SetPixel(pixels, width, 0, 4, orange);
     SetPixel(pixels, width, 2, 4, orange);
 
+    SetPixel(pixels, width, 4, 0, orange);
+    SetPixel(pixels, width, 3, 1, cyan);
+    SetPixel(pixels, width, 4, 1, orange);
+    SetPixel(pixels, width, 5, 1, cyan);
+    SetPixel(pixels, width, 4, 2, orange);
+
     SetPixel(pixels, width, 5, 3, green);
     SetPixel(pixels, width, 6, 3, green);
     SetPixel(pixels, width, 4, 4, red);
@@ -306,8 +326,9 @@ static byte[] BuildSyntheticMetadata()
         writer.Write(1);
         writer.Write((short)1);
         writer.Write("demo/page0");
-        writer.Write((short)2);
+        writer.Write((short)3);
         WriteEntry(writer, "demo/player/idle00", 0, 0, 3, 5);
+        WriteEntry(writer, "demo/player/idle01", 3, 0, 3, 3);
         WriteEntry(writer, "demo/spring/idle00", 4, 3, 4, 3);
     }
 
@@ -388,8 +409,8 @@ static string BuildSyntheticSpriteXml() =>
     "<Sprites>" +
     "<player path=\"demo/player/\" start=\"idle\">" +
     "<Justify x=\"0.5\" y=\"1\"/>" +
-    "<Loop id=\"idle\" path=\"idle\" frames=\"0\"/>" +
-    "<Metadata><Frames path=\"idle\" hair=\"0,-2\"/></Metadata>" +
+    "<Loop id=\"idle\" path=\"idle\" frames=\"0-1\" delay=\"0.05\"/>" +
+    "<Metadata><Frames path=\"idle\" hair=\"0,-2|0,-2\"/></Metadata>" +
     "</player>" +
     "<spring path=\"demo/spring/\" start=\"idle\">" +
     "<Center/><Loop id=\"idle\" path=\"idle\" frames=\"0\"/>" +
@@ -405,7 +426,8 @@ static string BuildHtml(
     DemoPlayer player,
     DemoTraversal traversal,
     DemoPresentation presentation,
-    DemoDesktop desktop)
+    DemoDesktop desktop,
+    DemoAnimationPresentation animationPresentation)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -517,13 +539,25 @@ static string BuildHtml(
         }
     }
 
+    var animationRows = new StringBuilder();
+    foreach (var row in animationPresentation.Rows)
+    {
+        animationRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.AnimationId))
+            .Append("</td><td>").Append(row.FrameIndex)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.AtlasEntryId))
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.FrameFingerprint))
+            .Append("</td><td>").Append(row.PixelsChanged)
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-031 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-032 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -542,8 +576,8 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-031 累计项目进度演示</h1>
-          <div class="sub">程序生成的素材管线、确定性玩家状态、合成呈现健康链与匿名桌面几何</div>
+          <h1>CDR-032 累计项目进度演示</h1>
+          <div class="sub">程序生成素材目录、确定性动画选帧、离线合成呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
             <div class="stage"><b>CDR-010</b>安装结构验证合同</div>
@@ -558,6 +592,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-022</b>冲刺、墙滑/墙跳、攀爬与体力</div>
             <div class="stage"><b>CDR-030</b>棋盘格上传、提交、完成等待与像素变化诊断</div>
             <div class="stage"><b>CDR-031</b>匿名表面几何、DPI、可见性与速度</div>
+            <div class="stage"><b>CDR-032</b>目录动画逐 tick 选帧、透明画布合成与离线 Present</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -599,15 +634,55 @@ static string BuildHtml(
           <h2>CDR-031 匿名桌面几何轨迹（程序生成）</h2>
           <p>这里的两个表面完全由程序生成，用来演示负坐标、DPI、隐藏过滤和速度计算；不包含真实窗口标题、内容、截图、输入或句柄。</p>
           <table><thead><tr><th>Snapshot</th><th>匿名 ID</th><th>位置 / 大小</th><th>DPI</th><th>速度 px/s</th></tr></thead><tbody>{{desktopRows}}</tbody></table>
+          <h2>CDR-032 已验证目录 → 离线动画呈现</h2>
+          <p>player/idle 的 2 个程序生成帧来自本页同一套 Atlas/XML 解析与规范化目录。以固定 60 Hz 连续输入 {{animationPresentation.Rows.Count}} 个 tick，实际 Present {{animationPresentation.PresentedCount}} 次，检测到 {{animationPresentation.FrameChangedCount}} 次合成帧变化；重复运行：<span class="ok">{{(animationPresentation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>Tick</th><th>Animation</th><th>Frame</th><th>Atlas entry</th><th>合成帧 SHA-256</th><th>Pixels changed</th></tr></thead><tbody>{{animationRows}}</tbody></table>
           <div class="limits">
             <h2>这证明了什么</h2>
-            <p>当前项目能组合生成的动画帧目录，在固定 60 Hz 下推进 Actor/Solid 与玩家状态，把程序生成帧送入呈现合同，并以匿名方式计算可见表面的几何、DPI 与速度。完整验证还会在隐藏窗口中完成图形提交，并另行执行只读匿名桌面快照。</p>
+            <p>当前项目能把解析和规范化后的动画目录按固定 tick 解析为不可变帧，在透明画布上应用原点后交给呈现层；动画/渲染只消费快照，不会修改 Actor、Player 或物理状态。</p>
             <h2>仍未证明什么</h2>
             <p>CDR-016 已证明指定安装的素材格式兼容，但本演示仍不读取商业素材。当前只证明程序生成帧、隐藏原生提交和健康链，不连接真实角色动画，不进行真实桌面观察，也不产生 <code>HUMAN_VISIBILITY_CONFIRMED</code>。因此尚不能证明角色在桌面上人眼可见。</p>
           </div>
         </body>
         </html>
         """;
+}
+
+static DemoAnimationPresentation RunSyntheticAnimationPresentation(NormalizedAssetCatalog catalog)
+{
+    static DemoAnimationPresentation RunOnce(NormalizedAssetCatalog source)
+    {
+        var entity = source.Entities.Single(item => item.EntityId == "player");
+        var animationEvents = new List<AnimationDiagnosticEvent>();
+        var renderEvents = new List<RenderDiagnosticEvent>();
+        using var presenter = new RenderPresenter(new DemoPresenterBackendFactory(), renderEvents.Add, Guid.Empty);
+        presenter.Initialize(new PresentationGeometry(0, 0, 12, 12, 96, 96));
+        var offline = new OfflineAnimationPresenter(entity, presenter, 12, 12, animationEvents.Add);
+        var rows = new List<DemoAnimationRow>();
+        for (var tick = 0; tick < 8; tick++)
+        {
+            var result = offline.Present(new AnimationTickInput(tick, "idle", 6, 10));
+            if (!result.Presentation.Succeeded) throw new InvalidOperationException("Offline generated animation presentation failed.");
+            rows.Add(new DemoAnimationRow(
+                tick,
+                result.Animation.AnimationId,
+                result.Animation.FrameIndex,
+                result.Animation.AtlasEntryId,
+                result.ComposedFrame.ContentSha256,
+                result.Presentation.PixelsChanged));
+        }
+        return new DemoAnimationPresentation(
+            rows.AsReadOnly(),
+            renderEvents.Count(item => item.EventId == "PRESENTER_PRESENTED"),
+            renderEvents.Count(item => item.EventId == "PRESENTED_PIXELS_CHANGED"),
+            false,
+            animationEvents.AsReadOnly());
+    }
+
+    var first = RunOnce(catalog);
+    var second = RunOnce(catalog);
+    var deterministic = JsonSerializer.Serialize(first.Rows) == JsonSerializer.Serialize(second.Rows);
+    return first with { DeterministicReplay = deterministic };
 }
 
 static DemoDesktop RunSyntheticDesktop()
@@ -899,6 +974,21 @@ internal sealed record DemoPresentation(
     bool NativeHiddenSmokeValidatedSeparately);
 
 internal sealed record DemoDesktop(IReadOnlyList<DesktopSnapshot> Snapshots);
+
+internal sealed record DemoAnimationPresentation(
+    IReadOnlyList<DemoAnimationRow> Rows,
+    int PresentedCount,
+    int FrameChangedCount,
+    bool DeterministicReplay,
+    IReadOnlyList<AnimationDiagnosticEvent> AnimationEvents);
+
+internal sealed record DemoAnimationRow(
+    long Tick,
+    string AnimationId,
+    int FrameIndex,
+    string AtlasEntryId,
+    string FrameFingerprint,
+    bool PixelsChanged);
 
 internal sealed class DemoDesktopProvider(params IReadOnlyList<DesktopSurfaceCandidate>[] captures) : IDesktopSurfaceProvider
 {

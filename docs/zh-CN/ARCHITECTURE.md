@@ -8,12 +8,14 @@
 App ───────────────┬─> Install
                    ├─> AssetWorker.Client ─IPC─> AssetWorker.Process
                    ├─> Desktop
+                   ├─> Animation ──> Rendering
                    ├─> Rendering
                    └─> Simulation + Entity modules
 
 Install ─────────────> Contracts
 AssetWorker ─────────> Contracts
 Desktop ─────────────> Contracts
+Animation ───────────> Contracts + Rendering
 Rendering ───────────> Contracts
 Entity modules ──────> Simulation.Core
 Simulation.Core ─────> Contracts
@@ -72,6 +74,8 @@ Worker 必须：
 渲染延迟不能反向影响模拟时间。UI 调度器的时间不能推进动画或实体状态。
 
 CDR-030 又把呈现拆成两层：`CelesteDesktop.Rendering` 负责不可变帧验证、有序健康事件、指纹变化判断和有界恢复；`CelesteDesktop.Rendering.Windows` 只负责隐藏 HWND、D3D11 和 DirectComposition COM 资源。Windows 后端不能依赖 Simulation、Player、磁盘素材或实时输入。DirectComposition 提交完成不等于人眼可见。
+
+CDR-032 在已验证目录与 Rendering 之间加入 `CelesteDesktop.Animation`。它只消费调用方提供的固定 tick 和不可变目录帧，处理循环/末帧/直接 goto，合成受限透明画布，再单向提交给 Rendering。它不引用 Simulation、Desktop、文件系统或实时输入，因此渲染耗时和呈现失败都不能推进或改写物理。
 
 ## 5. 实体隔离
 

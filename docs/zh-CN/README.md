@@ -28,6 +28,7 @@
 | `PLAYER_DASH_WALL_CLIMB.md` | `../PLAYER_DASH_WALL_CLIMB.md` |
 | `SYNTHETIC_PRESENTATION.md` | `../SYNTHETIC_PRESENTATION.md` |
 | `DESKTOP_GEOMETRY.md` | `../DESKTOP_GEOMETRY.md` |
+| `ANIMATION_PRESENTATION.md` | `../ANIMATION_PRESENTATION.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -46,3 +47,4 @@
 | `updates/2026-09-28-cdr-022-player-traversal.md` | `../updates/2026-09-28-cdr-022-player-traversal.md` |
 | `updates/2026-09-29-cdr-030-synthetic-presentation.md` | `../updates/2026-09-29-cdr-030-synthetic-presentation.md` |
 | `updates/2026-09-29-cdr-031-desktop-geometry.md` | `../updates/2026-09-29-cdr-031-desktop-geometry.md` |
+| `updates/2026-09-29-cdr-032-animation-presentation.md` | `../updates/2026-09-29-cdr-032-animation-presentation.md` |

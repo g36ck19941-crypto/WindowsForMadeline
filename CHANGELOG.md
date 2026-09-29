@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — CDR-032 offline animation presentation
+
+- Added fixed-tick playback over validated immutable catalog animations, including loop, final-frame hold, bounded direct goto and requested-state reset.
+- Added bounded transparent-canvas composition using origin, position and horizontal flip, then connected composed frames one-way to Rendering.
+- Added distinct resolution/composition events and full structured failure diagnostics without a Simulation dependency or feedback path.
+- Added 28 focused cases and an 8-tick generated cumulative demo; all 365 regressions pass with 0 build warnings/errors, 0 visible GUI and 0 persisted commercial bytes.
+- CDR-031 upload remains pending because GitHub port 443 was unreachable; remote publication is not claimed.
+
 ## 2026-09-29 — CDR-031 accepted
 
 - Recorded developer acceptance of CDR-031 and authorization for independent-branch publication after a fresh gate and outbound audit.

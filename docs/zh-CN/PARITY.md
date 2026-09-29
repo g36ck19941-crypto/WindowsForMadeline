@@ -29,6 +29,7 @@
 | 移动 Solid 携带/LiftBoost | n/a | partial | unstarted | unstarted | CDR-020 核心合同/测试通过；原版参数与顺序一致性尚未建立 |
 | 合成 Windows 呈现 | n/a | exact_offline | partial | unstarted | CDR-030 隐藏 D3D11/DirectComposition 提交和恢复测试通过；尚未连接素材动画或进行可见观察 |
 | 匿名桌面几何 | n/a | exact_offline | partial | unstarted | CDR-031 合成跟踪和已授权的 Windows 汇总快照通过；尚未放置 Overlay 或进行可见观察 |
+| 目录动画呈现 | asset_exact | exact_offline | partial | unstarted | CDR-032 程序生成目录的选帧/合成/呈现通过；指定安装格式已另行验证，但没有保存或可见显示真实像素 |
 | Theo Crystal | unstarted | unstarted | unstarted | unstarted | 拿取/投掷/碰撞交互 |
 | Glider | unstarted | unstarted | unstarted | unstarted | 拿取/下落/发射交互 |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player 和受支持实体 |
