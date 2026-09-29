@@ -15,7 +15,8 @@ public enum PlayerTraversalEventKind
     ClimbReleased,
     ClimbJumped,
     ClimbHop,
-    StaminaDepleted
+    StaminaDepleted,
+    ExternalResourcesApplied
 }
 
 public sealed record PlayerTraversalEvent(

@@ -83,6 +83,7 @@ public sealed class PlayerTraversalController
         _lastUpdatedTick = world.Tick;
         _events.Clear();
         TickGlobalTimers();
+        ApplyExternalResources(effects.Resources, world.Tick);
         UpdateAim(input);
         ApplyAssists();
 
@@ -450,6 +451,25 @@ public sealed class PlayerTraversalController
         {
             Stamina = Tuning.ClimbMaxStamina;
         }
+    }
+
+    private void ApplyExternalResources(ExternalResourceEffect? effect, long tick)
+    {
+        if (effect is null)
+        {
+            return;
+        }
+
+        var resources = effect.Value;
+        if (resources.ChargeCount is int charges)
+        {
+            Dashes = Math.Clamp(charges, 0, MaxDashes);
+        }
+        if (resources.Stamina is decimal stamina)
+        {
+            Stamina = Math.Clamp(stamina, 0m, Tuning.ClimbMaxStamina);
+        }
+        _events.Add(new PlayerTraversalEvent(tick, PlayerTraversalEventKind.ExternalResourcesApplied));
     }
 
     private bool CanStartDash(PlayerInput input) =>

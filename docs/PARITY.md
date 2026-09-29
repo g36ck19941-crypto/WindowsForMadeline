@@ -31,7 +31,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Theo Crystal | asset_exact | partial | partial | unstarted | CDR-040 generated pickup/carry/throw/collision matrix passes; selected-install format was validated separately, but original numeric parity, asset animation and visible integration are not established |
 | Glider | asset_exact | partial | partial | unstarted | CDR-041 generated pickup/carry/fall-limit/Player-application/throw/flight matrix passes; selected-install format was validated separately, but formal App orchestration, original numeric parity, asset animation and visible integration are not established |
 | Spring | asset_exact | partial | partial | unstarted | CDR-042 generated four-direction lifecycle and Player/Theo/Glider application matrix passes; original contact/numeric parity, formal App routing, asset animation and visible integration are not established |
-| Refill | unstarted | unstarted | unstarted | unstarted | Respawn/cooldown |
+| Refill | unstarted | partial | partial | unstarted | CDR-043 generated collection/resource-restore/cooldown/respawn and Player-application matrix passes; original contact/respawn parity, formal App routing, asset animation and visible integration are not established |
 | Water | unstarted | unstarted | unstarted | unstarted | Volume behavior |
 | Bumper | unstarted | unstarted | unstarted | unstarted | Radial launch/cooldown |
 | Puffer | unstarted | unstarted | unstarted | unstarted | Swim/explosion/launch |

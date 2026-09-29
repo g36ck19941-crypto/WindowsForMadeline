@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — CDR-043 deterministic Refill
+
+- Added an isolated Refill module with immutable resource-aware contact, lifecycle, target restore effect and stable event snapshots.
+- Implemented collection, dash/stamina restoration request, cooldown, respawn, disable/enable and release-to-rearm behavior.
+- Added a generic bounded external-resource effect actually applied by Player without introducing Player dependencies into Refill.
+- Added a 42-case interaction matrix and a 16-tick cumulative demo; Release passes 531/531 with 0 warnings/errors.
+- Kept fidelity `partial`: formal App routing, original contact/respawn parity, special variants, asset animation and visible presentation remain unverified.
+
 ## 2026-09-29 — CDR-042 accepted
 
 - Recorded developer acceptance of CDR-042 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.

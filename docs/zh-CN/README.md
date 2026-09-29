@@ -29,6 +29,10 @@
 | `SYNTHETIC_PRESENTATION.md` | `../SYNTHETIC_PRESENTATION.md` |
 | `DESKTOP_GEOMETRY.md` | `../DESKTOP_GEOMETRY.md` |
 | `ANIMATION_PRESENTATION.md` | `../ANIMATION_PRESENTATION.md` |
+| `THEO_CRYSTAL.md` | `../THEO_CRYSTAL.md` |
+| `GLIDER.md` | `../GLIDER.md` |
+| `SPRING.md` | `../SPRING.md` |
+| `REFILL.md` | `../REFILL.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -48,3 +52,7 @@
 | `updates/2026-09-29-cdr-030-synthetic-presentation.md` | `../updates/2026-09-29-cdr-030-synthetic-presentation.md` |
 | `updates/2026-09-29-cdr-031-desktop-geometry.md` | `../updates/2026-09-29-cdr-031-desktop-geometry.md` |
 | `updates/2026-09-29-cdr-032-animation-presentation.md` | `../updates/2026-09-29-cdr-032-animation-presentation.md` |
+| `updates/2026-09-29-cdr-040-theo-crystal.md` | `../updates/2026-09-29-cdr-040-theo-crystal.md` |
+| `updates/2026-09-29-cdr-041-glider.md` | `../updates/2026-09-29-cdr-041-glider.md` |
+| `updates/2026-09-29-cdr-042-spring.md` | `../updates/2026-09-29-cdr-042-spring.md` |
+| `updates/2026-09-29-cdr-043-refill.md` | `../updates/2026-09-29-cdr-043-refill.md` |

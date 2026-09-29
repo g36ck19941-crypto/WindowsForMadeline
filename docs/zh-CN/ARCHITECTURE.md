@@ -87,6 +87,8 @@ CDR-041 把同一边界用于 `CelesteDesktop.Entity.Glider`，并增加一个�
 
 CDR-042 把可复用、按轴替换的 `ExternalVelocityEffect` 放在 `Simulation.Core`。`CelesteDesktop.Entity.Spring` 只输出这个效果、目标 ID 和目标类型，不引用任何目标模块；Player、Theo、Glider 通过自己的入口应用通用效果，并分别记录“已应用”事实。Spring 自己管理激活、压缩、冷却、待命和离开后重置，未来 App 只负责路由，不承载弹簧规则。
 
+CDR-043 在 `Simulation.Core` 加入受限的 `ExternalResourceEffect`。`CelesteDesktop.Entity.Refill` 根据不可变 Player 接触快照判断冲刺次数或体力是否不足，再输出目标 ID 和资源上限，不引用 Player；Player 通过自己的通用外部效果入口限制并应用数值，另外记录“已应用”事件。Refill 自己管理收集、冷却、重生、停用/启用和离开后重置，未来 App 只负责转交效果。
+
 ## 6. 预留扩展接口
 
 `docs/EXTENSIONS.md` 预留 `IAssetSourceProvider` 和 `IWorldContentProvider` 概念边界，使未来可以接入只读 Mod 素材和规范化关卡/地图描述，而不让这些格式耦合到 Simulation 或 App。

@@ -58,6 +58,8 @@ Glider 使用 `GLIDER_PICKED_UP`、`GLIDER_CARRIED`、`GLIDER_HOLD_BLOCKED`、`G
 
 Spring 使用 `SPRING_ACTIVATED`、`SPRING_LAUNCH_ISSUED`、`SPRING_RETRACTED`、`SPRING_COOLDOWN_STARTED`、`SPRING_READY`、`SPRING_DISABLED`、`SPRING_ENABLED` 和 `SPRING_CONTACT_IGNORED`。发射事件包含目标身份，但本身不证明目标已经应用；Player、Theo 或 Glider 会分别记录外部速度已应用。Spring 事件不代表素材、渲染或人眼可见。
 
+Refill 使用 `REFILL_COLLECTED`、`REFILL_RESTORE_ISSUED`、`REFILL_COOLDOWN_STARTED`、`REFILL_RESPAWNED`、`REFILL_DISABLED`、`REFILL_ENABLED` 和 `REFILL_CONTACT_IGNORED`。恢复请求包含目标 Player 身份，但本身不证明 Player 已经应用；Player 会另外记录 `ExternalResourcesApplied`。Refill 事件不代表素材、渲染或人眼可见。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

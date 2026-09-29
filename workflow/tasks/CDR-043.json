@@ -3,7 +3,7 @@
   "taskId": "CDR-043",
   "title": "Deterministic Refill entity",
   "owner": "Primary agent",
-  "state": "authorized",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-09-29",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
@@ -22,6 +22,15 @@
     "stable target identity deterministic replay and two-Refill isolation",
     "Player Solid Spring and unrelated-entity interaction coverage"
   ],
+  "features": [
+    "fixed-tick immutable Refill contact state effect and event snapshots",
+    "resource-aware Player contact with stable target identity",
+    "target-addressed dash-charge and stamina restoration effect",
+    "cooldown respawn disable enable and release-to-rearm lifecycle",
+    "generic external resource application owned and clamped by Player",
+    "stable Refill diagnostic event IDs",
+    "Player two-Refill Spring isolation and deterministic replay coverage"
+  ],
   "forbidden": [
     "visible GUI",
     "live input",
@@ -32,6 +41,21 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "refillTests": 42,
+    "totalRegressionTests": 531,
+    "demoTicks": 16,
+    "demoCollections": 2,
+    "demoRestoreRequests": 2,
+    "demoRespawns": 2,
+    "demoPlayerApplications": 2,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-044",
-  "nextAction": "Implement and verify CDR-043 locally. Keep it unuploaded until explicit developer acceptance."
+  "nextAction": "Developer reviews the generated CDR-043 report and 531-case offline gate. Keep CDR-043 local until explicit acceptance; CDR-044 remains unauthorized."
 }

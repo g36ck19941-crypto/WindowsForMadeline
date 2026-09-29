@@ -121,3 +121,9 @@
 双击 `演示当前进度.cmd`。累计报告新增 30 tick 的 Spring 轨迹；应看到 3 次 `SPRING_ACTIVATED`、3 次 `SPRING_LAUNCH_ISSUED`、3 次 `SPRING_READY`，并看到 Player、Theo、Glider 各实际应用一次速度，重放一致。
 
 然后双击 `验证当前版本.cmd`。Spring 应为 `42/42`，累计为 `489/489`，最后显示 `CDR-042 OFFLINE VERIFICATION PASSED`。这只证明程序生成接触、生命周期、带目标效果和离线实际应用；正式 App 路由、原版接触/数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。
+
+## CDR-043——Refill（补充水晶）确定性实体
+
+双击 `演示当前进度.cmd`。累计报告新增 16 tick 的 Refill 轨迹；应看到 2 次 `REFILL_COLLECTED`、2 次 `REFILL_RESTORE_ISSUED`、2 次 `REFILL_RESPAWNED`，并看到 Player 两次从“0 次冲刺、25 体力”实际恢复到“1 次冲刺、110 体力”，重放一致。
+
+然后双击 `验证当前版本.cmd`。Refill 应为 `42/42`，累计为 `531/531`，最后显示 `CDR-043 OFFLINE VERIFICATION PASSED`。这只证明程序生成接触、资源效果、冷却/重生和 Player 离线实际应用；正式 App 路由、原版接触/重生数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。

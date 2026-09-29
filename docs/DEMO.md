@@ -121,3 +121,9 @@ Then double-click `验证当前版本.cmd`. Player must report `33/33`, Glider `
 Double-click `演示当前进度.cmd`. The cumulative report adds a 30-tick generated Spring trajectory. It must contain three `SPRING_ACTIVATED`, three `SPRING_LAUNCH_ISSUED`, three `SPRING_READY` cycles and one actual velocity application each by Player, Theo and Glider, with identical replay.
 
 Then double-click `验证当前版本.cmd`. Spring must report `42/42`, for 489 total cases. The final line must be `CDR-042 OFFLINE VERIFICATION PASSED`. This proves generated contact/lifecycle, target-addressed effects and actual offline application only; formal App routing, original contact/numeric parity, real pixels, visible presentation, live input and installation access remain unproven.
+
+## CDR-043 — Deterministic Refill
+
+Double-click `演示当前进度.cmd`. The cumulative report adds a 16-tick generated Refill trajectory. It must contain two `REFILL_COLLECTED`, two `REFILL_RESTORE_ISSUED`, two `REFILL_RESPAWNED` cycles and two actual Player resource applications. Each application changes Player from 0 dash charges and 25 stamina to 1 charge and 110 stamina; replay must be identical.
+
+Then double-click `验证当前版本.cmd`. Refill must report `42/42`, for 531 total cases. The final line must be `CDR-043 OFFLINE VERIFICATION PASSED`. This proves generated contact/lifecycle, target-addressed resource effects and actual offline Player application only; formal App routing, original contact/respawn parity, real pixels, visible presentation, live input and installation access remain unproven.

@@ -85,6 +85,8 @@ CDR-041 applies the same boundary to `CelesteDesktop.Entity.Glider` and adds a n
 
 CDR-042 places the reusable axis-selective `ExternalVelocityEffect` in `Simulation.Core`. `CelesteDesktop.Entity.Spring` emits that effect together with a target ID and target kind, but references no target module. Player, Theo and Glider accept the generic effect through their own update entry and emit separate application facts. Spring owns activation, retraction, cooldown, ready and release-to-rearm state; future App orchestration routes effects but does not implement Spring rules.
 
+CDR-043 adds the bounded `ExternalResourceEffect` in `Simulation.Core`. `CelesteDesktop.Entity.Refill` decides whether an immutable Player contact actually lacks dash charges or stamina, then emits the target ID and maximum resource values without referencing Player. Player clamps and applies those values through its generic external-effects entry and records a separate application event. Refill owns collection, cooldown, respawn, disable/enable and release-to-rearm state; future App orchestration only routes the effect.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.
