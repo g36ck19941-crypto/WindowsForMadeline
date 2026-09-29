@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-030",
+  "title": "Synthetic DirectComposition presenter",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-09-29",
+  "scope": [
+    "src/CelesteDesktop.Rendering/**",
+    "src/CelesteDesktop.Rendering.Windows/**",
+    "tests/CelesteDesktop.Rendering.Tests/**",
+    "generated presentation section in the cumulative progress demo",
+    "tools/Verify-CDR030.ps1",
+    "developer-facing launchers and task records"
+  ],
+  "features": [
+    "program-generated premultiplied BGRA32 checkerboard",
+    "DPI-aware bounded presentation geometry with negative origin preservation",
+    "isolated upload submit present and pixel-change diagnostics",
+    "D3D11 upload to IDCompositionSurface",
+    "DirectComposition Commit and WaitForCommitCompletion",
+    "bounded device-loss recovery with full exception detail",
+    "hardware device with explicit WARP fallback"
+  ],
+  "forbidden": [
+    "Celeste or Everest launch",
+    "real installation access",
+    "visible GUI launch by the agent",
+    "real desktop observation",
+    "live input",
+    "commercial asset persistence",
+    "claiming human visibility from hidden presentation"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "renderingTests": 20,
+    "totalRegressionTests": 318,
+    "nativeHiddenPresentations": 2,
+    "demoPresentCalls": 3,
+    "demoPixelsChanged": 2,
+    "humanVisibilityConfirmed": false,
+    "commercialBytes": 0
+  },
+  "nextTask": "CDR-031",
+  "nextAction": "Await developer acceptance. Visible observation and real desktop geometry remain separately authorized gates."
+}

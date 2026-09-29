@@ -46,6 +46,8 @@
 
 如果下游事件缺失，必须准确报告停在哪个边界。`PRESENTED_PIXELS_CHANGED` 只能证明合成器输入改变，不能证明人眼看到了角色。
 
+线性成功链以外的渲染生命周期事件为 `RENDER_BACKEND_READY`、`RENDER_DEVICE_LOST` 和 `RENDER_DEVICE_RECOVERED`。可恢复设备丢失必须先记录失败阶段、HRESULT、完整有界异常链和恢复动作，再最多重建并重试一次。这些事件都不代表人眼可见。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

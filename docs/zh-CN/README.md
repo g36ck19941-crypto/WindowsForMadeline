@@ -24,6 +24,9 @@
 | `ASSET_CATALOG.md` | `../ASSET_CATALOG.md` |
 | `REAL_INSTALL_CONFORMANCE.md` | `../REAL_INSTALL_CONFORMANCE.md` |
 | `SIMULATION_CORE.md` | `../SIMULATION_CORE.md` |
+| `PLAYER_NORMAL_JUMP.md` | `../PLAYER_NORMAL_JUMP.md` |
+| `PLAYER_DASH_WALL_CLIMB.md` | `../PLAYER_DASH_WALL_CLIMB.md` |
+| `SYNTHETIC_PRESENTATION.md` | `../SYNTHETIC_PRESENTATION.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -38,3 +41,6 @@
 | `updates/2026-09-28-cdr-015-asset-catalog.md` | `../updates/2026-09-28-cdr-015-asset-catalog.md` |
 | `updates/2026-09-28-cdr-016-real-conformance.md` | `../updates/2026-09-28-cdr-016-real-conformance.md` |
 | `updates/2026-09-28-cdr-020-simulation-core.md` | `../updates/2026-09-28-cdr-020-simulation-core.md` |
+| `updates/2026-09-28-cdr-021-player-normal-jump.md` | `../updates/2026-09-28-cdr-021-player-normal-jump.md` |
+| `updates/2026-09-28-cdr-022-player-traversal.md` | `../updates/2026-09-28-cdr-022-player-traversal.md` |
+| `updates/2026-09-29-cdr-030-synthetic-presentation.md` | `../updates/2026-09-29-cdr-030-synthetic-presentation.md` |

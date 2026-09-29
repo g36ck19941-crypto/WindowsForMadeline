@@ -6,11 +6,12 @@ echo.
 echo ========================================
 echo  CelesteDesktopRuntime Verification
 echo ========================================
-echo  Release build and CDR-010 through CDR-022 offline regression checks.
+echo  Release build and CDR-010 through CDR-030 regression checks.
 echo  No real Celeste installation is accessed by this launcher.
+echo  CDR-030 uses a hidden native DirectComposition smoke test; no visible GUI is opened.
 echo.
 
-powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\Verify-CDR022.ps1"
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\Verify-CDR030.ps1"
 set "verify_exit=%ERRORLEVEL%"
 
 echo.

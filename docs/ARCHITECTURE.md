@@ -69,6 +69,8 @@ Renderer ───────────────────────�
 
 Rendering delay cannot feed back into simulation time. UI dispatcher timing cannot advance animations or entity state.
 
+CDR-030 splits presentation again: `CelesteDesktop.Rendering` owns immutable-frame validation, ordered health events, changed-fingerprint detection and bounded recovery; `CelesteDesktop.Rendering.Windows` owns the hidden HWND, D3D11 and DirectComposition COM resources. The Windows backend cannot reference Simulation, Player, assets on disk or live input. A completed DirectComposition commit is not human-visibility evidence.
+
 ## 5. Entity isolation
 
 Each entity module exposes state, deterministic update, collision response and semantic effects. Cross-entity behavior is expressed through narrow interaction contracts rather than type inspection in App. A disabled or failed optional entity cannot alter Player rules or prevent other entities from loading.

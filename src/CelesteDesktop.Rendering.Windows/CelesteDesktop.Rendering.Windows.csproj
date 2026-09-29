@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CelesteDesktop.Contracts\CelesteDesktop.Contracts.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Rendering\CelesteDesktop.Rendering.csproj" />
+  </ItemGroup>
+</Project>

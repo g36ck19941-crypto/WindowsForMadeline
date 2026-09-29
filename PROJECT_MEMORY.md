@@ -39,3 +39,5 @@ Last verified: 2026-09-28
 - CDR-021 新增独立 `CelesteDesktop.Player`：使用固定 60 Hz 合成输入快照实现跑动/减速、空中操控、超速回落、重力/快速下落、土狼时间、跳跃缓冲、水平跳跃加速、可变跳跃和碰撞/地面事件。30/30 专项、249 项总离线回归和 24 tick 双重重放演示通过。官方公开源码只支持部分参数和顺序证据，因此状态为 `partial`，不能宣称完整发行版手感；当前等待验收，未上传，并继续 CDR-022 离线实现。
 - CDR-022 在 Player 内新增 Normal/Dash/WallSlide/Climb traversal 状态层：八方向量化、冲刺次数/冷却/补充/攻击窗口、墙滑/蹬墙、攀爬速度/体力/疲劳/耗尽、攀爬跳、越过合成边缘和无限资源辅助都有逐 tick 事件与快照。44/44 traversal、33/33 Simulation.Core 与 298 项总离线回归通过；24 tick 演示包含墙滑、蹬墙、阻挡冲刺和攀爬并可完全重放。新轨迹同时发现并修复 `±0.5` 亚像素余量在零位移时抖动的核心缺陷。任务状态为 `partial`，等待验收、未上传；CDR-030 涉及 Windows 呈现/GUI，需新授权。
 - 开发者于 2026-09-29 确认累计 CDR-016/CDR-020/CDR-021/CDR-022 版本验证完成并要求继续下一项。四项均记为已验收并获准上传各自独立分支；CDR-021/CDR-022 的还原状态仍是 `partial`。CDR-030 只按程序生成图形实现与隐藏自动测试继续，不得打开可见 GUI、做真实桌面观察或访问游戏安装。
+- CDR-030 新增平台无关 Rendering 状态机和 Windows DirectComposition 后端：程序生成预乘 Alpha 棋盘格、DPI/负坐标合同、D3D11 上传、隐藏 HWND、`IDCompositionSurface`、`Commit`/`WaitForCommitCompletion`、分阶段健康事件和一次设备丢失恢复均已实现。20/20 专项与 318/318 总回归通过；真实隐藏路径提交两张生成帧。累计演示补回 CDR-016 独立验证说明并标明 CDR-017 至 CDR-019 未分配。任务等待验收；没有可见 GUI、真实桌面观察、商业素材或人眼可见证据。
+- 已验收的 CDR-016/CDR-020/CDR-021/CDR-022 上传连续两次遭遇 GitHub `Recv failure: Connection was reset`，远程更新未成立；不得把本地验收误报为已上传。

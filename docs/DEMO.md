@@ -85,3 +85,9 @@ Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, 
 Double-click `演示当前进度.cmd`. The cumulative report retains every earlier stage and adds a 24-tick traversal table. It must contain one `WallSlideStarted`, `WallJumped`, `DashStarted`, blocked dash and `ClimbStarted`; climb speed reaches `-45`, stamina decreases below 110, stationary special-state rows do not jitter, and replay is identical.
 
 Then double-click `验证当前版本.cmd`. Expected suite results are `15/15`, `27/27`, `35/35`, `31/31`, `44/44`, `29/29`, `10/10`, `33/33`, `30/30` and `44/44`, for 298 total cases, followed by the CDR-022 manifest check. This remains generated-input behavior with `partial` fidelity and no game, GUI, real desktop, installation or live input.
+
+## CDR-030 — Synthetic DirectComposition presentation
+
+Double-click `演示当前进度.cmd`. The cumulative report adds a generated premultiplied-alpha checkerboard and a presentation health-chain table. It also restores CDR-016 as a separately passed read-only milestone and explicitly states that CDR-017 through CDR-019 are unassigned reserved numbers. Expected values are 3 presents, 2 changed-pixel events, `human_visible=false` and 0 commercial bytes.
+
+Then double-click `验证当前版本.cmd`. The prior 298 cases remain, and the rendering suite must report `20/20`, for 318 total cases. The final line must be `CDR-030 HIDDEN VERIFICATION PASSED`. The native test creates a never-shown HWND and actually performs D3D11 uploads, DirectComposition `Commit` and `WaitForCommitCompletion`; it does not prove human visibility or inspect the real desktop.

@@ -85,3 +85,9 @@
 双击 `演示当前进度.cmd`。累计报告保留所有先前阶段，并新增 24 tick traversal 表格；应看到一次 `WallSlideStarted`、`WallJumped`、`DashStarted`、被墙阻挡的冲刺和 `ClimbStarted`。攀爬速度最后达到 `-45`，体力低于 110，速度为 0 的特殊状态行不再抖动，重复运行完全一致。
 
 然后双击 `验证当前版本.cmd`。十组结果应为 `15/15`、`27/27`、`35/35`、`31/31`、`44/44`、`29/29`、`10/10`、`33/33`、`30/30`、`44/44`，共 298 项，随后 CDR-022 演示清单核验通过。仍只证明 `partial` 的合成输入行为，不读取真实安装，不启动游戏、GUI 或真实桌面，也不读取实时输入。
+
+## CDR-030——合成 DirectComposition 呈现
+
+双击 `演示当前进度.cmd`。累计报告会新增程序生成的预乘 Alpha 棋盘格和呈现健康链表格，同时补回“CDR-016 已单独完成只读验证”的说明，并明确 CDR-017 至 CDR-019 是未分配的保留编号。预期显示 3 次 Present、2 次像素变化、`human_visible=false`、商业素材字节 0。
+
+然后双击 `验证当前版本.cmd`。原有 298 项必须继续通过，Rendering 专项应为 `20/20`，合计 318 项；最后一行应为 `CDR-030 HIDDEN VERIFICATION PASSED`。原生测试会创建从不显示的 HWND，真实执行 D3D11 上传、DirectComposition `Commit` 和 `WaitForCommitCompletion`，但不证明人眼可见，也不观察真实桌面。

@@ -24,9 +24,10 @@
 | Atlas `.data` 图页解码器 | asset_exact | exact_offline | partial | n/a | 指定安装重复指纹通过；尚未连接渲染器 |
 | Madeline 身体动画 | unstarted | unstarted | unstarted | unstarted | 只使用正版安装 |
 | Player 头发 | unstarted | unstarted | unstarted | unstarted | 程序化节点和遮罩 |
-| Normal/Jump | n/a | unstarted | unstarted | unstarted | 固定 60 Hz |
-| Dash/Wall/Climb | n/a | unstarted | unstarted | unstarted | 需要精确 tick/顺序证据 |
+| Normal/Jump | n/a | partial | partial | unstarted | CDR-021 合成输入逐 tick 通过；公开参数/顺序已覆盖，完整发行版行为和呈现未验证 |
+| Dash/Wall/Climb | n/a | partial | partial | unstarted | CDR-022 合成 traversal 通过；转角修正、单向平台、移动墙提升、阻挡器和高级技巧仍未验证 |
 | 移动 Solid 携带/LiftBoost | n/a | partial | unstarted | unstarted | CDR-020 核心合同/测试通过；原版参数与顺序一致性尚未建立 |
+| 合成 Windows 呈现 | n/a | exact_offline | partial | unstarted | CDR-030 隐藏 D3D11/DirectComposition 提交和恢复测试通过；尚未连接素材动画或进行可见观察 |
 | Theo Crystal | unstarted | unstarted | unstarted | unstarted | 拿取/投掷/碰撞交互 |
 | Glider | unstarted | unstarted | unstarted | unstarted | 拿取/下落/发射交互 |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player 和受支持实体 |

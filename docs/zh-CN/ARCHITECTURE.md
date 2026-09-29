@@ -71,6 +71,8 @@ Worker 必须：
 
 渲染延迟不能反向影响模拟时间。UI 调度器的时间不能推进动画或实体状态。
 
+CDR-030 又把呈现拆成两层：`CelesteDesktop.Rendering` 负责不可变帧验证、有序健康事件、指纹变化判断和有界恢复；`CelesteDesktop.Rendering.Windows` 只负责隐藏 HWND、D3D11 和 DirectComposition COM 资源。Windows 后端不能依赖 Simulation、Player、磁盘素材或实时输入。DirectComposition 提交完成不等于人眼可见。
+
 ## 5. 实体隔离
 
 每个实体模块公开自己的状态、确定性更新、碰撞响应和语义效果。跨实体行为通过窄交互合同表达，App 不得通过类型判断集中处理。某个可选实体禁用或失败时，不能改变 Player 规则，也不能阻止其他实体加载。

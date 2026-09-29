@@ -44,6 +44,8 @@ These events describe separate facts and must appear only when directly observed
 
 Missing downstream events must be reported as the exact remaining boundary. `PRESENTED_PIXELS_CHANGED` proves compositor input changed, not that a human saw it.
 
+Rendering lifecycle events outside the linear success chain are `RENDER_BACKEND_READY`, `RENDER_DEVICE_LOST` and `RENDER_DEVICE_RECOVERED`. A recoverable loss records the failed stage, HRESULT, full bounded exception chain and recovery action before one backend recreation and retry. None of these events implies visibility.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

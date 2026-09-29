@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — CDR-030 hidden DirectComposition presenter
+
+- Added an isolated rendering controller for immutable premultiplied BGRA32 frames, ordered upload/submit/present/change diagnostics and one bounded device-loss recovery.
+- Added a Windows backend that creates a never-shown HWND, uploads generated pixels with D3D11, writes an `IDCompositionSurface`, commits DirectComposition and waits for commit completion.
+- Added bounded DPI conversion, negative virtual-origin preservation, hardware/WARP selection and 20 rendering cases; all 318 regressions pass with 0 build warnings/errors.
+- Extended the cumulative demo with a generated presentation checkerboard and health chain; restored the separately passed CDR-016 milestone and explicitly marked CDR-017 through CDR-019 as unassigned reserved numbers.
+- Kept CDR-030 local pending acceptance and made no human-visibility claim. Two attempts to publish the previously accepted milestones failed because GitHub reset the connection; no remote update was claimed.
+
 ## 2026-09-29 — CDR-016 through CDR-022 accepted
 
 - Recorded developer acceptance of the cumulative CDR-016, CDR-020, CDR-021 and CDR-022 version after the developer completed verification.

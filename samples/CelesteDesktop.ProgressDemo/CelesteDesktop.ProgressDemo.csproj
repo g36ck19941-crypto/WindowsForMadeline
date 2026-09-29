@@ -9,5 +9,6 @@
     <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Catalog\CelesteDesktop.AssetWorker.Catalog.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Simulation.Core\CelesteDesktop.Simulation.Core.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Player\CelesteDesktop.Player.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.Rendering\CelesteDesktop.Rendering.csproj" />
   </ItemGroup>
 </Project>
