@@ -12,6 +12,7 @@ using CelesteDesktop.Player;
 using CelesteDesktop.Rendering;
 using CelesteDesktop.Desktop;
 using CelesteDesktop.Animation;
+using CelesteDesktop.Entity.Theo;
 
 const int width = 8;
 const int height = 6;
@@ -59,6 +60,7 @@ var traversal = RunSyntheticTraversal();
 var presentation = RunSyntheticPresentation();
 var desktop = RunSyntheticDesktop();
 var animationPresentation = RunSyntheticAnimationPresentation(catalog);
+var theo = RunSyntheticTheo();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -80,7 +82,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-032",
+    demoId = "CDR-040",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -95,7 +97,8 @@ var manifest = new
         "CDR-022 applied generated Dash, Wall and Climb state transitions",
         "CDR-030 exercised generated premultiplied frames through the isolated presentation health chain",
         "CDR-031 tracked generated anonymous desktop geometry, DPI, visibility and velocity",
-        "CDR-032 resolved generated catalog animations by fixed tick and presented immutable composed frames offline"
+        "CDR-032 resolved generated catalog animations by fixed tick and presented immutable composed frames offline",
+        "CDR-040 ran generated Theo pickup carry throw bounce and isolation behavior at fixed tick"
     },
     independentValidation = new
     {
@@ -216,6 +219,19 @@ var manifest = new
         rows = animationPresentation.Rows,
         events = animationPresentation.AnimationEvents
     },
+    theo = new
+    {
+        source = "program-generated-geometry-and-input",
+        fidelity = "partial",
+        tickCount = theo.Rows.Count,
+        theo.PickupCount,
+        theo.ThrowCount,
+        theo.HorizontalBounceCount,
+        theo.LandingCount,
+        theo.SquishCount,
+        theo.DeterministicReplay,
+        rows = theo.Rows
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -235,11 +251,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-032 cumulative offline animation presentation pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-040 cumulative deterministic Theo Crystal pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} theo_pickups={theo.PickupCount} theo_throws={theo.ThrowCount} theo_horizontal_bounces={theo.HorizontalBounceCount} theo_landings={theo.LandingCount} theo_replay={theo.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -251,7 +267,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-022-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-040-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -427,7 +443,8 @@ static string BuildHtml(
     DemoTraversal traversal,
     DemoPresentation presentation,
     DemoDesktop desktop,
-    DemoAnimationPresentation animationPresentation)
+    DemoAnimationPresentation animationPresentation,
+    DemoTheo theo)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -551,13 +568,25 @@ static string BuildHtml(
             .Append("</td></tr>");
     }
 
+    var theoRows = new StringBuilder();
+    foreach (var row in theo.Rows)
+    {
+        theoRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.State))
+            .Append("</td><td>").Append(row.X).Append(',').Append(row.Y)
+            .Append("</td><td>").Append(row.SpeedX).Append(',').Append(row.SpeedY)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.HolderId ?? "-"))
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-032 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-040 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -576,8 +605,8 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-032 累计项目进度演示</h1>
-          <div class="sub">程序生成素材目录、确定性动画选帧、离线合成呈现与匿名桌面几何</div>
+          <h1>CDR-040 累计项目进度演示</h1>
+          <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
             <div class="stage"><b>CDR-010</b>安装结构验证合同</div>
@@ -593,6 +622,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-030</b>棋盘格上传、提交、完成等待与像素变化诊断</div>
             <div class="stage"><b>CDR-031</b>匿名表面几何、DPI、可见性与速度</div>
             <div class="stage"><b>CDR-032</b>目录动画逐 tick 选帧、透明画布合成与离线 Present</div>
+            <div class="stage"><b>CDR-040</b>Theo 拿起、携带、投掷、碰撞反弹与故障隔离</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -637,6 +667,9 @@ static string BuildHtml(
           <h2>CDR-032 已验证目录 → 离线动画呈现</h2>
           <p>player/idle 的 2 个程序生成帧来自本页同一套 Atlas/XML 解析与规范化目录。以固定 60 Hz 连续输入 {{animationPresentation.Rows.Count}} 个 tick，实际 Present {{animationPresentation.PresentedCount}} 次，检测到 {{animationPresentation.FrameChangedCount}} 次合成帧变化；重复运行：<span class="ok">{{(animationPresentation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Animation</th><th>Frame</th><th>Atlas entry</th><th>合成帧 SHA-256</th><th>Pixels changed</th></tr></thead><tbody>{{animationRows}}</tbody></table>
+          <h2>CDR-040 Theo Crystal 纯离线交互轨迹</h2>
+          <p>Theo 使用程序生成的持有者快照和墙/地面：先被拿起并跟随移动，再继承持有者的 LiftSpeed 向右投掷，撞墙反弹并最终落地。共 {{theo.Rows.Count}} 个固定 tick；Pickup={{theo.PickupCount}}，Throw={{theo.ThrowCount}}，水平反弹={{theo.HorizontalBounceCount}}，落地/落地反弹={{theo.LandingCount}}；重复运行：<span class="ok">{{(theo.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>Tick</th><th>Theo state</th><th>位置 x,y</th><th>速度 x,y</th><th>持有者</th><th>事件</th></tr></thead><tbody>{{theoRows}}</tbody></table>
           <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
             <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
@@ -645,6 +678,7 @@ static string BuildHtml(
               <li><strong>会把图片摆正：</strong>程序会读取图片的原点和位置，把它放进透明画布，也支持左右翻转，避免换帧时角色位置无故跳动。</li>
               <li><strong>结果可以重复：</strong>同样的素材目录和时间点会得到同样的帧、同样的像素指纹，不会因为电脑快慢而随机改变。</li>
               <li><strong>不会破坏角色手感：</strong>动画和渲染只接收角色状态的副本。即使显示变慢或失败，也不会反过来改变角色位置、速度、碰撞或体力。</li>
+              <li><strong>Theo 已有独立实体逻辑：</strong>上面的轨迹真实运行了拿起、跟随、投掷、重力、摩擦、墙面反弹和落地；Theo 失败不会直接关闭 Player 或其他实体。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -657,12 +691,62 @@ static string BuildHtml(
               <li><strong>还没有完整 App 组装：</strong>素材、角色模拟、动画、桌面位置和可见窗口尚未由正式应用统一启动和管理。</li>
               <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>
               <li><strong>CDR-016 只证明格式兼容：</strong>它说明指定正版安装中的素材能被只读解析，不等于这些原版素材已经在本次演示里被连接和显示。</li>
+              <li><strong>Theo 手感仍是 partial：</strong>官方公开仓库没有 TheoCrystal 实体源码，因此当前数值是独立设计并由逐 tick 测试固定的离线基线，不宣称与商业发行版逐项完全一致。</li>
             </ul>
             <p class="plain"><strong>因此当前准确结论是：</strong>项目已经能离线生成并提交正确的动画帧，但尚未取得 <code>HUMAN_VISIBILITY_CONFIRMED</code>，还不能声称角色已经在人眼可见的真实桌面上运行。</p>
           </div>
         </body>
         </html>
         """;
+}
+
+static DemoTheo RunSyntheticTheo()
+{
+    static DemoTheo RunOnce()
+    {
+        var world = new SimulationWorld();
+        var actor = new Actor("demo-theo", 0, 0, 2, 2);
+        world.Add(actor);
+        world.Add(new Solid("demo-theo-floor", -40, 12, 80, 2));
+        world.Add(new Solid("demo-theo-wall", 22, -20, 2, 32));
+        var controller = new TheoCrystalController(actor);
+        var rows = new List<DemoTheoRow>();
+
+        for (var tick = 0; tick < 36; tick++)
+        {
+            var input = tick switch
+            {
+                0 => new TheoCrystalInput(TheoCrystalAction.Pickup, new TheoHolderSnapshot("demo-player", new SimPoint(2, 1), 1)),
+                1 => new TheoCrystalInput(TheoCrystalAction.None, new TheoHolderSnapshot("demo-player", new SimPoint(4, 0), 1)),
+                2 => new TheoCrystalInput(TheoCrystalAction.None, new TheoHolderSnapshot("demo-player", new SimPoint(6, 0), 1)),
+                3 => new TheoCrystalInput(TheoCrystalAction.Throw, new TheoHolderSnapshot("demo-player", new SimPoint(6, 0), 1, new SimVector(30m, -20m))),
+                _ => TheoCrystalInput.None
+            };
+            var snapshot = controller.Step(input, world);
+            rows.Add(new DemoTheoRow(
+                snapshot.Tick,
+                snapshot.State.ToString(),
+                snapshot.Position.X,
+                snapshot.Position.Y,
+                snapshot.Speed.X,
+                snapshot.Speed.Y,
+                snapshot.HolderId,
+                string.Join(", ", snapshot.Events.Select(item => item.EventId))));
+        }
+
+        return new DemoTheo(
+            rows.AsReadOnly(),
+            rows.Count(row => row.Events.Contains(TheoCrystalEventIds.PickedUp, StringComparison.Ordinal)),
+            rows.Count(row => row.Events.Contains(TheoCrystalEventIds.Thrown, StringComparison.Ordinal)),
+            rows.Count(row => row.Events.Contains(TheoCrystalEventIds.HorizontalBounced, StringComparison.Ordinal)),
+            rows.Count(row => row.Events.Contains(TheoCrystalEventIds.Landed, StringComparison.Ordinal) || row.Events.Contains(TheoCrystalEventIds.Bounced, StringComparison.Ordinal)),
+            rows.Count(row => row.Events.Contains(TheoCrystalEventIds.Squished, StringComparison.Ordinal)),
+            false);
+    }
+
+    var first = RunOnce();
+    var second = RunOnce();
+    return first with { DeterministicReplay = JsonSerializer.Serialize(first.Rows) == JsonSerializer.Serialize(second.Rows) };
 }
 
 static DemoAnimationPresentation RunSyntheticAnimationPresentation(NormalizedAssetCatalog catalog)
@@ -1006,6 +1090,25 @@ internal sealed record DemoAnimationRow(
     string AtlasEntryId,
     string FrameFingerprint,
     bool PixelsChanged);
+
+internal sealed record DemoTheo(
+    IReadOnlyList<DemoTheoRow> Rows,
+    int PickupCount,
+    int ThrowCount,
+    int HorizontalBounceCount,
+    int LandingCount,
+    int SquishCount,
+    bool DeterministicReplay);
+
+internal sealed record DemoTheoRow(
+    long Tick,
+    string State,
+    int X,
+    int Y,
+    decimal SpeedX,
+    decimal SpeedY,
+    string? HolderId,
+    string Events);
 
 internal sealed class DemoDesktopProvider(params IReadOnlyList<DesktopSurfaceCandidate>[] captures) : IDesktopSurfaceProvider
 {

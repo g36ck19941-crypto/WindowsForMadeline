@@ -40,11 +40,11 @@
 2. `CDR-031` 桌面几何适配：开发者已验收，复验为 19/19 专项、337/337 总回归和 1/1 真实匿名汇总；已上传到独立分支 `codex/cdr-031-desktop-geometry` 的 `311c426`，远程 `main` 未更新。
 3. `CDR-032` 素材到动画呈现：开发者已于 2026-09-29 验收；已上传到独立分支 `codex/cdr-032-animation-presentation` 的 `1c39c0a`，远程 `main` 未更新。固定 tick 选帧、循环/末帧/goto、原点/位置/翻转合成与单向 Rendering 交接已实现；28/28 专项、365/365 总回归和 8 tick 累计演示通过。
 
-CDR-040 Theo Crystal 已获纯离线授权；可见 GUI、实时输入、游戏/安装访问、安装写入和商业素材持久化仍未授权。
+CDR-040 Theo Crystal 已完成本地纯离线实现并等待验收；可见 GUI、实时输入、游戏/安装访问、安装写入和商业素材持久化仍未授权。
 
 ## P4 — 交互实体
 
-1. `CDR-040` Theo Crystal：Primary owner，已于 2026-09-29 授权，尚未验收。限定独立纯离线模块、程序生成几何/输入、逐 tick 测试、累计演示和项目记录；计划覆盖拿起、携带、放下、投掷、重力/摩擦、Solid 碰撞、落地弹跳、LiftSpeed 交接、受压失败和故障隔离。行为事实和完整交互矩阵建立前标为 `partial`。
+1. `CDR-040` Theo Crystal：Primary owner，已于 2026-09-29 完成本地实现，等待验收。拿起、携带、放下、投掷、重力/摩擦、Solid 碰撞、落地弹跳、LiftSpeed 交接、受压失败和故障隔离均已实现；37/37 专项、402/402 总回归与 36 tick 演示通过。官方公开仓库未提供 Theo 实体行为，数值还原仍标为 `partial`。验收见 `THEO_CRYSTAL.md`；未经验收不得上传，CDR-041 尚未授权。
 2. 后续依次为 Glider、Spring、Refill、Water、Bumper、Puffer，最后才考虑 Seeker；这些任务尚未获授权。
 
 每个实体拥有独立模块、日志、测试和交互矩阵；未通过与 Player、Solid 及受支持实体之间的交互矩阵前不能验收。

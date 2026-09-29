@@ -52,6 +52,8 @@
 
 动画呈现使用 `ANIMATION_STATE_SELECTED`、`ANIMATION_STATE_TRANSITIONED`、`ANIMATION_FRAME_RESOLVED` 和 `ANIMATION_FRAME_COMPOSED`。帧事件可包含 SHA-256 指纹和尺寸，但不得包含像素载荷；解析或合成不代表已经提交渲染、完成 Present 或人眼可见。
 
+Theo Crystal 使用 `THEO_PICKED_UP`、`THEO_CARRIED`、`THEO_HOLD_BLOCKED`、`THEO_DROPPED`、`THEO_THROWN`、`THEO_HORIZONTAL_BOUNCED`、`THEO_VERTICAL_BLOCKED`、`THEO_LANDED`、`THEO_BOUNCED`、`THEO_LIFT_CARRIED`、`THEO_LIFT_INHERITED` 和 `THEO_SQUISHED`。事件只包含受限的实体/持有者/Solid ID、tick、整数位置与速度。Theo 事件只证明模拟发生了状态变化，不证明素材、渲染或桌面可见。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

@@ -16,7 +16,9 @@ The accepted CDR-032 implementation resolves catalog frames at fixed 60 Hz, hand
 
 CDR-032 was freshly reverified at 365/365 with 0 build warnings/errors and passed an outbound audit with no commercial assets, game binaries, caches or local install paths. Exact commit `1c39c0af2e96c1f53e9fd2b4212beb8d23e9c0b1` was published and read back at `codex/cdr-032-animation-presentation`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
-At the developer's request, both root `.cmd` launchers now begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. This is launcher/documentation UX only; CDR-032 remains acceptance-pending.
+CDR-040 is locally implementation-complete and awaiting developer acceptance. The isolated Theo module implements generated-input pickup/carry/drop/throw, gravity/friction, collision bounce/landing, moving-solid lift inheritance and per-entity squish isolation. Release builds with 0 warnings/errors; 37/37 focused cases and 402/402 total regressions pass. The cumulative 36-tick demo records 1 pickup, 1 throw, 1 horizontal bounce, 2 landings and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial` because original Theo numeric behavior is not established.
+
+At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-040 milestone; launcher text does not change task acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
@@ -34,11 +36,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Implement and verify authorized CDR-040 locally. Do not upload it, open visible GUI or access the game installation without a later explicit gate.
+Stop for developer review of CDR-040. Do not upload it or start CDR-041 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: isolated CDR-040 Theo Crystal offline implementation after completed CDR-032 publication
+- Scope: CDR-040 acceptance handoff after completed local implementation and CDR-032 publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

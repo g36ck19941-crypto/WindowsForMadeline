@@ -12,5 +12,6 @@
     <ProjectReference Include="..\..\src\CelesteDesktop.Rendering\CelesteDesktop.Rendering.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Desktop\CelesteDesktop.Desktop.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Animation\CelesteDesktop.Animation.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Theo\CelesteDesktop.Entity.Theo.csproj" />
   </ItemGroup>
 </Project>

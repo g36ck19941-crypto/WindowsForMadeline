@@ -79,6 +79,8 @@ CDR-032 adds `CelesteDesktop.Animation` between validated catalogs and Rendering
 
 Each entity module exposes state, deterministic update, collision response and semantic effects. Cross-entity behavior is expressed through narrow interaction contracts rather than type inspection in App. A disabled or failed optional entity cannot alter Player rules or prevent other entities from loading.
 
+CDR-040 applies this rule to `CelesteDesktop.Entity.Theo`. The module references only `Simulation.Core`, accepts immutable holder/action snapshots and owns its state/events. Player interaction is a request/snapshot matrix in tests rather than a Player-to-Theo project dependency. A squished Theo stops only that controller; Player and a second Theo continue independently.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.

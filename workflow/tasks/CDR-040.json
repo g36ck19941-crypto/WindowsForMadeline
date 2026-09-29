@@ -3,7 +3,7 @@
   "taskId": "CDR-040",
   "title": "Deterministic Theo Crystal entity",
   "owner": "Primary agent",
-  "state": "authorized",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-09-29",
   "fidelity": "partial-until-source-facts-and-interaction-matrix-pass",
   "scope": [
@@ -33,6 +33,31 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "features": [
+    "fixed-tick immutable Theo input state and event snapshots",
+    "explicit pickup carry drop and facing-aware throw transitions",
+    "holder-relative positioning with obstruction reporting",
+    "gravity terminal fall friction and deterministic collision bounce",
+    "moving-solid carry and lift-speed inheritance",
+    "bounded per-entity squish isolation",
+    "stable Theo diagnostic event IDs",
+    "Player Solid two-Theo and deterministic replay interaction coverage"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "theoTests": 37,
+    "totalRegressionTests": 402,
+    "demoTicks": 36,
+    "demoPickups": 1,
+    "demoThrows": 1,
+    "demoHorizontalBounces": 1,
+    "demoLandings": 2,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-041",
-  "nextAction": "Implement and verify CDR-040 locally. Keep it unuploaded until developer acceptance."
+  "nextAction": "Developer reviews the generated CDR-040 report and 402-case offline gate. Keep CDR-040 local until explicit acceptance; CDR-041 remains unauthorized."
 }

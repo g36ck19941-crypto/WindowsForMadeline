@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — CDR-040 deterministic Theo Crystal
+
+- Added an isolated Theo Crystal module with immutable fixed-tick inputs, state snapshots and stable semantic events.
+- Implemented pickup, exact carry, drop, facing-aware throw, gravity, terminal fall, friction, Solid bounce/landing, moving-solid lift inheritance and per-entity squish isolation.
+- Added a Player/Solid/two-Theo interaction matrix and 37 focused cases; Release passes 402/402 total regressions with 0 warnings/errors.
+- Extended the cumulative report with a deterministic 36-tick Theo trajectory containing pickup, throw, horizontal bounce and landing events.
+- Kept behavior fidelity `partial`: no original numeric parity, asset animation, visible GUI, live input, installation access or commercial bytes are claimed.
+
 ## 2026-09-29 — CDR-032 accepted
 
 - Recorded developer acceptance of CDR-032 and authorization for independent-branch publication after a fresh full gate and outbound commercial-asset audit.

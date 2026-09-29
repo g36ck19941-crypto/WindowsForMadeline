@@ -81,6 +81,8 @@ CDR-032 在已验证目录与 Rendering 之间加入 `CelesteDesktop.Animation`�
 
 每个实体模块公开自己的状态、确定性更新、碰撞响应和语义效果。跨实体行为通过窄交互合同表达，App 不得通过类型判断集中处理。某个可选实体禁用或失败时，不能改变 Player 规则，也不能阻止其他实体加载。
 
+CDR-040 用 `CelesteDesktop.Entity.Theo` 落实这条规则。模块只依赖 `Simulation.Core`，接收不可变的持有者/动作快照，并自行拥有状态和事件。Player 交互通过测试中的请求/快照矩阵验证，不建立 Player 到 Theo 的项目依赖。某个 Theo 被夹坏后只停止自己的控制器，Player 和另一个 Theo 仍可继续。
+
 ## 6. 预留扩展接口
 
 `docs/EXTENSIONS.md` 预留 `IAssetSourceProvider` 和 `IWorldContentProvider` 概念边界，使未来可以接入只读 Mod 素材和规范化关卡/地图描述，而不让这些格式耦合到 Simulation 或 App。

@@ -30,7 +30,7 @@
 | 合成 Windows 呈现 | n/a | exact_offline | partial | unstarted | CDR-030 隐藏 D3D11/DirectComposition 提交和恢复测试通过；尚未连接素材动画或进行可见观察 |
 | 匿名桌面几何 | n/a | exact_offline | partial | unstarted | CDR-031 合成跟踪和已授权的 Windows 汇总快照通过；尚未放置 Overlay 或进行可见观察 |
 | 目录动画呈现 | asset_exact | exact_offline | partial | unstarted | CDR-032 程序生成目录的选帧/合成/呈现通过；指定安装格式已另行验证，但没有保存或可见显示真实像素 |
-| Theo Crystal | unstarted | unstarted | unstarted | unstarted | 拿取/投掷/碰撞交互 |
+| Theo Crystal | asset_exact | partial | partial | unstarted | CDR-040 生成输入的拿起/携带/投掷/碰撞矩阵通过；指定安装格式已另行验证，但原版数值、素材动画和可见集成尚未建立 |
 | Glider | unstarted | unstarted | unstarted | unstarted | 拿取/下落/发射交互 |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player 和受支持实体 |
 | Refill | unstarted | unstarted | unstarted | unstarted | 重生/冷却 |

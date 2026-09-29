@@ -50,6 +50,8 @@ Desktop capture emits `DESKTOP_SNAPSHOT_CAPTURED` with sequence, visible/filtere
 
 Animation presentation emits `ANIMATION_STATE_SELECTED`, `ANIMATION_STATE_TRANSITIONED`, `ANIMATION_FRAME_RESOLVED` and `ANIMATION_FRAME_COMPOSED`. Frame events may contain a SHA-256 fingerprint and dimensions but never pixel payloads. Resolution and composition do not imply render submission, presentation or human visibility.
 
+Theo Crystal emits `THEO_PICKED_UP`, `THEO_CARRIED`, `THEO_HOLD_BLOCKED`, `THEO_DROPPED`, `THEO_THROWN`, `THEO_HORIZONTAL_BOUNCED`, `THEO_VERTICAL_BLOCKED`, `THEO_LANDED`, `THEO_BOUNCED`, `THEO_LIFT_CARRIED`, `THEO_LIFT_INHERITED` and `THEO_SQUISHED`. Events contain bounded entity/holder/solid IDs, tick, integer position and velocity only. A Theo event proves a simulation transition, never an asset, render or visible-desktop result.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

@@ -103,3 +103,9 @@ Then double-click `验证当前版本.cmd`. The prior 318 cases remain, and the 
 Double-click `演示当前进度.cmd`. The cumulative generated pipeline now parses and catalogs two `player/idle` frames, then resolves them for 8 fixed ticks and sends eight immutable transparent-canvas frames through the offline presentation contract. Ticks 0–2 use `idle00`, ticks 3–5 use `idle01`, and ticks 6–7 loop to `idle00`; expected changed-frame count is 3 and replay must be identical.
 
 Then double-click `验证当前版本.cmd`. The prior 337 generated/hidden regressions remain and the Animation suite must report `28/28`, for 365 total cases. The final line must be `CDR-032 OFFLINE VERIFICATION PASSED`. No real installation, visible GUI, desktop content, live input or persisted commercial bytes are involved.
+
+## CDR-040 — Deterministic Theo Crystal
+
+Double-click `演示当前进度.cmd`. The cumulative report adds a 36-tick generated Theo trajectory. It must contain one `THEO_PICKED_UP`, one `THEO_THROWN`, one `THEO_HORIZONTAL_BOUNCED`, at least one landing (the current scenario has two) and an identical replay result.
+
+Then double-click `验证当前版本.cmd`. The prior 365 regressions remain and the Theo suite must report `37/37`, for 402 total cases. The final line must be `CDR-040 OFFLINE VERIFICATION PASSED`. This proves the independently designed offline baseline and isolation matrix only; it does not prove original Theo numeric parity, original pixels, visible presentation, live input or installation access.

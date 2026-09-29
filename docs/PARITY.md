@@ -28,7 +28,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Synthetic Windows presentation | n/a | exact_offline | partial | unstarted | CDR-030 hidden D3D11/DirectComposition commit and recovery tests pass; no asset animation or visible observation |
 | Anonymous desktop geometry | n/a | exact_offline | partial | unstarted | CDR-031 generated tracking and authorized aggregate-only Windows snapshot pass; no overlay placement or visible observation |
 | Catalog animation presentation | asset_exact | exact_offline | partial | unstarted | CDR-032 generated catalog-to-frame timing/composition/presentation passes; selected install format was validated separately, but no real pixels are persisted or visibly shown |
-| Theo Crystal | unstarted | unstarted | unstarted | unstarted | Hold/throw/collision interactions |
+| Theo Crystal | asset_exact | partial | partial | unstarted | CDR-040 generated pickup/carry/throw/collision matrix passes; selected-install format was validated separately, but original numeric parity, asset animation and visible integration are not established |
 | Glider | unstarted | unstarted | unstarted | unstarted | Hold/fall/launch interactions |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player and supported entities |
 | Refill | unstarted | unstarted | unstarted | unstarted | Respawn/cooldown |
