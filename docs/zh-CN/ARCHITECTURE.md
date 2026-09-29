@@ -83,6 +83,8 @@ CDR-032 在已验证目录与 Rendering 之间加入 `CelesteDesktop.Animation`�
 
 CDR-040 用 `CelesteDesktop.Entity.Theo` 落实这条规则。模块只依赖 `Simulation.Core`，接收不可变的持有者/动作快照，并自行拥有状态和事件。Player 交互通过测试中的请求/快照矩阵验证，不建立 Player 到 Theo 的项目依赖。某个 Theo 被夹坏后只停止自己的控制器，Player 和另一个 Theo 仍可继续。
 
+CDR-041 把同一边界用于 `CelesteDesktop.Entity.Glider`，并增加一个窄的对外效果合同。持有中的 Glider 只报告“携带者最大下落速度”和当前是否需要限制，不直接改写 Player；Player 的通用外部效果入口可以应用这个不可变上限，同时不引用 Glider。未来 App 组装层需要持续传递效果，Glider 本身仍不依赖 Player、Theo、渲染或平台代码。摧毁或受压只终止对应 Glider。
+
 ## 6. 预留扩展接口
 
 `docs/EXTENSIONS.md` 预留 `IAssetSourceProvider` 和 `IWorldContentProvider` 概念边界，使未来可以接入只读 Mod 素材和规范化关卡/地图描述，而不让这些格式耦合到 Simulation 或 App。

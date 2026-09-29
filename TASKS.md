@@ -182,7 +182,7 @@ Each entity owns a separate module, tests and parity row:
 
 Remaining order:
 
-2. CDR-041 Glider — authorized on 2026-09-29; isolated generated-input implementation pending
+2. CDR-041 Glider — implementation complete on 2026-09-29; developer acceptance pending. Isolated fixed-tick states cover pickup/carry/drop/throw, a holder fall-speed-limit effect applied through the generic Player external-effect contract, open/closed slow flight, collision bounce/landing, lift inheritance, destroy/squish isolation and stable events. Release passes Player 33/33, Glider 42/42 and 447/447 total regressions; the 48-tick generated demo records pickup, one fall-limit request, one Player application, throw, horizontal bounce, landing and identical replay. Fidelity remains `partial`; formal App orchestration, original numeric parity, asset animation and visible presentation remain unverified. Manual acceptance: double-click `演示当前进度.cmd`, inspect the Glider table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/GLIDER.md`. Keep local until acceptance; CDR-042 is unauthorized.
 3. CDR-042 Spring
 4. CDR-043 Refill
 5. CDR-044 Water

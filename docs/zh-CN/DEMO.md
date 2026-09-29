@@ -109,3 +109,9 @@
 双击 `演示当前进度.cmd`。累计报告新增 36 tick 的 Theo 轨迹；应看到 1 次 `THEO_PICKED_UP`、1 次 `THEO_THROWN`、1 次 `THEO_HORIZONTAL_BOUNCED`、至少 1 次落地（当前场景为 2 次），并标记重放一致。
 
 然后双击 `验证当前版本.cmd`。Theo 专项应为 `37/37`，累计为 `402/402`，最后显示 `CDR-040 OFFLINE VERIFICATION PASSED`。这只证明程序生成环境中的基础交互和故障隔离；不证明原版数值、原版像素、可见桌面、实时输入或安装目录连接。
+
+## CDR-041——Glider（水母）确定性实体
+
+双击 `演示当前进度.cmd`。累计报告新增 48 tick 的 Glider 轨迹；应看到 1 次 `GLIDER_PICKED_UP`、1 次 `GLIDER_HOLDER_FALL_LIMITED`、1 次 `GLIDER_THROWN`、1 次 `GLIDER_HORIZONTAL_BOUNCED`、至少 1 次落地，并标记重放一致。
+
+然后双击 `验证当前版本.cmd`。Player 应为 `33/33`、Glider 为 `42/42`，累计为 `447/447`，最后显示 `CDR-041 OFFLINE VERIFICATION PASSED`。不可变缓降效果已由 Player 在生成矩阵/演示中实际应用，但正式 App 组装、原版数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。

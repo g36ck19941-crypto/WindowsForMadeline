@@ -67,6 +67,13 @@ public sealed class PlayerNormalController
     public PlayerNormalSnapshot Step(
         PlayerInput input,
         SimulationWorld world,
+        Action<SimulationWorld>? beforePlayer = null) =>
+        Step(input, PlayerExternalEffects.None, world, beforePlayer);
+
+    public PlayerNormalSnapshot Step(
+        PlayerInput input,
+        PlayerExternalEffects effects,
+        SimulationWorld world,
         Action<SimulationWorld>? beforePlayer = null)
     {
         ArgumentNullException.ThrowIfNull(world);
@@ -74,13 +81,16 @@ public sealed class PlayerNormalController
         world.Step(currentWorld =>
         {
             beforePlayer?.Invoke(currentWorld);
-            result = Update(input, currentWorld);
+            result = Update(input, effects, currentWorld);
         });
 
         return result ?? throw new InvalidOperationException("Player step did not produce a snapshot.");
     }
 
-    public PlayerNormalSnapshot Update(PlayerInput input, SimulationWorld world)
+    public PlayerNormalSnapshot Update(PlayerInput input, SimulationWorld world) =>
+        Update(input, PlayerExternalEffects.None, world);
+
+    public PlayerNormalSnapshot Update(PlayerInput input, PlayerExternalEffects effects, SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         if (!world.IsAdvancing)
@@ -99,7 +109,7 @@ public sealed class PlayerNormalController
         UpdateCoyote(groundedAtStart);
         UpdateJumpBuffer(input);
         UpdateHorizontal(input, groundedAtStart);
-        UpdateVertical(input, groundedAtStart);
+        var appliedMaximumFallSpeed = UpdateVertical(input, effects, groundedAtStart, world.Tick);
         TryJump(input, world.Tick);
         Move(world);
 
@@ -119,6 +129,7 @@ public sealed class PlayerNormalController
             Facing,
             groundedAtEnd,
             MaxFall,
+            appliedMaximumFallSpeed,
             CoyoteTicksRemaining,
             JumpBufferTicksRemaining,
             VariableJumpTicksRemaining,
@@ -164,7 +175,7 @@ public sealed class PlayerNormalController
         SpeedX = Approach(SpeedX, target, (rate * multiplier) / SimulationConstants.TicksPerSecond);
     }
 
-    private void UpdateVertical(PlayerInput input, bool grounded)
+    private decimal UpdateVertical(PlayerInput input, PlayerExternalEffects effects, bool grounded, long tick)
     {
         if (input.MoveY == 1 && SpeedY >= Tuning.NormalMaxFall)
         {
@@ -190,6 +201,12 @@ public sealed class PlayerNormalController
                 SpeedY,
                 MaxFall,
                 (Tuning.Gravity * multiplier) / SimulationConstants.TicksPerSecond);
+
+            if (effects.MaximumFallSpeed is { } externalMaximum && SpeedY > externalMaximum)
+            {
+                SpeedY = externalMaximum;
+                _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.ExternalFallSpeedLimited, null));
+            }
         }
 
         if (VariableJumpTicksRemaining > 0)
@@ -203,6 +220,10 @@ public sealed class PlayerNormalController
                 VariableJumpTicksRemaining = 0;
             }
         }
+
+        return effects.MaximumFallSpeed is { } maximum
+            ? Math.Min(MaxFall, maximum)
+            : MaxFall;
     }
 
     private void TryJump(PlayerInput input, long tick)

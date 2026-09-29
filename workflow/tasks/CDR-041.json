@@ -3,12 +3,13 @@
   "taskId": "CDR-041",
   "title": "Deterministic Glider entity",
   "owner": "Primary agent",
-  "state": "authorized",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-09-29",
-  "fidelity": "partial-until-source-facts-and-interaction-matrix-pass",
+  "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Glider/**",
     "tests/CelesteDesktop.Entity.Glider.Tests/**",
+    "minimal Player external-effect contract and tests",
     "generated cumulative demo",
     "tools/Verify-CDR041.ps1",
     "developer launchers and project records"
@@ -32,6 +33,34 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "features": [
+    "fixed-tick immutable Glider input state effect and event snapshots",
+    "explicit pickup carry drop and facing-aware throw transitions",
+    "holder fall-speed-limit request applied through the generic Player external-effect contract",
+    "open closed free-flight gravity terminal fall and friction",
+    "solid bounce landing moving-solid carry and lift inheritance",
+    "bounded destroy and squish terminal states",
+    "stable Glider diagnostic event IDs",
+    "Player Solid Theo two-Glider and deterministic replay coverage"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "playerTests": 33,
+    "gliderTests": 42,
+    "totalRegressionTests": 447,
+    "demoTicks": 48,
+    "demoPickups": 1,
+    "demoThrows": 1,
+    "demoHolderFallLimits": 1,
+    "demoPlayerFallLimitsApplied": 1,
+    "demoHorizontalBounces": 1,
+    "demoLandings": 1,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-042",
-  "nextAction": "Implement and verify CDR-041 locally. Keep it unuploaded until developer acceptance."
+  "nextAction": "Developer reviews the generated CDR-041 report and 447-case offline gate. Keep CDR-041 local until explicit acceptance; CDR-042 remains unauthorized."
 }

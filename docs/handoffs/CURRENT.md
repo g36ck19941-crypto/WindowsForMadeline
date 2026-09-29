@@ -20,7 +20,9 @@ CDR-040 was accepted by the developer on 2026-09-29. The isolated Theo module im
 
 CDR-040 was freshly reverified and audited, then exact commit `23531c3b06251b940cfbb145e1b1be5810997cfd` was published and read back at `codex/cdr-040-theo-crystal`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. CDR-041 is now the active local implementation task and must remain unuploaded until later acceptance.
 
-At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-040 milestone; launcher text does not change task acceptance state.
+CDR-041 is locally implementation-complete and awaiting developer acceptance. The isolated Glider module implements generated-input pickup/carry/drop/throw, an immutable holder fall-speed-limit request applied through Player's generic external-effect entry, open/closed slow flight, gravity/friction, collision bounce/landing, moving-solid lift inheritance, destroy and per-entity squish isolation. Release builds with 0 warnings/errors; Player 33/33, Glider 42/42 and 447/447 total regressions pass. The cumulative 48-tick demo records 1 pickup, 1 fall-limit request, 1 Player application, 1 throw, 1 horizontal bounce, 1 landing and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App orchestration and original numeric behavior are not established.
+
+At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-041 milestone; launcher text does not change task acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
@@ -38,11 +40,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Reverify and audit CDR-040, publish the exact accepted commit to its independent branch, then implement and verify CDR-041 locally. Do not upload CDR-041, open visible GUI or access the game installation without a later explicit gate.
+Stop for developer review of CDR-041. Do not upload it or start CDR-042 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-040 exact publication followed by isolated CDR-041 Glider offline implementation
+- Scope: CDR-041 acceptance handoff after completed local implementation and CDR-040 publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

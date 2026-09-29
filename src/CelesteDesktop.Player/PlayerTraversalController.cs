@@ -54,15 +54,21 @@ public sealed class PlayerTraversalController
     public int WallSlideTicksRemaining { get; private set; }
     public int ClimbNoMoveTicksRemaining { get; private set; }
 
-    public PlayerTraversalSnapshot Step(PlayerInput input, SimulationWorld world)
+    public PlayerTraversalSnapshot Step(PlayerInput input, SimulationWorld world) =>
+        Step(input, PlayerExternalEffects.None, world);
+
+    public PlayerTraversalSnapshot Step(PlayerInput input, PlayerExternalEffects effects, SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         PlayerTraversalSnapshot? result = null;
-        world.Step(currentWorld => result = Update(input, currentWorld));
+        world.Step(currentWorld => result = Update(input, effects, currentWorld));
         return result ?? throw new InvalidOperationException("Player traversal step did not produce a snapshot.");
     }
 
-    public PlayerTraversalSnapshot Update(PlayerInput input, SimulationWorld world)
+    public PlayerTraversalSnapshot Update(PlayerInput input, SimulationWorld world) =>
+        Update(input, PlayerExternalEffects.None, world);
+
+    public PlayerTraversalSnapshot Update(PlayerInput input, PlayerExternalEffects effects, SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         if (!world.IsAdvancing)
@@ -90,7 +96,7 @@ public sealed class PlayerTraversalController
         switch (State)
         {
             case PlayerTraversalState.Normal:
-                UpdateNormal(input, world);
+                UpdateNormal(input, effects, world);
                 break;
             case PlayerTraversalState.Dash:
                 UpdateDash(input, world);
@@ -135,7 +141,7 @@ public sealed class PlayerTraversalController
         return new SimVector(moveX, moveY);
     }
 
-    private void UpdateNormal(PlayerInput input, SimulationWorld world)
+    private void UpdateNormal(PlayerInput input, PlayerExternalEffects effects, SimulationWorld world)
     {
         if (CanStartDash(input))
         {
@@ -160,7 +166,7 @@ public sealed class PlayerTraversalController
             return;
         }
 
-        var normal = _normal.Update(input, world);
+        var normal = _normal.Update(input, effects, world);
         MapNormalEvents(normal);
 
         var slideDirection = FindWallDirection(world, 1, input.MoveX);

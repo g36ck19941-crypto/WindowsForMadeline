@@ -31,7 +31,7 @@
 | 匿名桌面几何 | n/a | exact_offline | partial | unstarted | CDR-031 合成跟踪和已授权的 Windows 汇总快照通过；尚未放置 Overlay 或进行可见观察 |
 | 目录动画呈现 | asset_exact | exact_offline | partial | unstarted | CDR-032 程序生成目录的选帧/合成/呈现通过；指定安装格式已另行验证，但没有保存或可见显示真实像素 |
 | Theo Crystal | asset_exact | partial | partial | unstarted | CDR-040 生成输入的拿起/携带/投掷/碰撞矩阵通过；指定安装格式已另行验证，但原版数值、素材动画和可见集成尚未建立 |
-| Glider | unstarted | unstarted | unstarted | unstarted | 拿取/下落/发射交互 |
+| Glider | asset_exact | partial | partial | unstarted | CDR-041 生成输入的拿起/携带/缓降请求/Player 应用/投掷/滑落矩阵通过；指定安装格式已另行验证，但正式 App 组装、原版数值、素材动画和可见集成尚未建立 |
 | Spring | unstarted | unstarted | unstarted | unstarted | Player 和受支持实体 |
 | Refill | unstarted | unstarted | unstarted | unstarted | 重生/冷却 |
 | Water | unstarted | unstarted | unstarted | unstarted | 区域体积行为 |

@@ -16,6 +16,9 @@ var tests = new (string Name, Action Body)[]
     ("normal gravity advances speed", NormalGravityAdvances),
     ("held jump applies half gravity near apex", HeldJumpUsesHalfGravity),
     ("normal fall speed is capped", NormalFallIsCapped),
+    ("external fall limit rejects nonpositive values", ExternalFallLimitRejectsInvalid),
+    ("external fall limit caps player speed", ExternalFallLimitCapsSpeed),
+    ("removing external fall limit restores normal gravity", ExternalFallLimitRemovalRestoresGravity),
     ("fast fall target ramps by five per tick", FastFallTargetRamps),
     ("fast fall target returns toward normal", FastFallTargetRecovers),
     ("ground jump sets reference speed and timer", GroundJumpStarts),
@@ -79,6 +82,31 @@ static void InputAxesAreBounded()
 {
     Throws<ArgumentOutOfRangeException>(() => _ = new PlayerInput(2, 0, false, false));
     Throws<ArgumentOutOfRangeException>(() => _ = new PlayerInput(0, -2, false, false));
+}
+
+static void ExternalFallLimitRejectsInvalid()
+{
+    Throws<ArgumentOutOfRangeException>(() => _ = new PlayerExternalEffects(0m));
+    Throws<ArgumentOutOfRangeException>(() => _ = new PlayerExternalEffects(-1m));
+}
+
+static void ExternalFallLimitCapsSpeed()
+{
+    var fixture = Airborne(new SimVector(0m, 100m));
+    var snapshot = fixture.Controller.Step(Input(), new PlayerExternalEffects(40m), fixture.World);
+    Equal(40m, snapshot.Speed.Y);
+    Equal(40m, snapshot.AppliedMaximumFallSpeed);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.ExternalFallSpeedLimited), "External fall limit event was missing.");
+}
+
+static void ExternalFallLimitRemovalRestoresGravity()
+{
+    var fixture = Airborne(new SimVector(0m, 100m));
+    _ = fixture.Controller.Step(Input(), new PlayerExternalEffects(40m), fixture.World);
+    var snapshot = fixture.Controller.Step(Input(), fixture.World);
+    Assert(snapshot.Speed.Y > 40m, "Normal gravity did not resume after the effect was removed.");
+    Equal(fixture.Controller.MaxFall, snapshot.AppliedMaximumFallSpeed);
+    Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.ExternalFallSpeedLimited), "External fall limit leaked into the next tick.");
 }
 
 static void InitialGroundedTickIsQuiet()

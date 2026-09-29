@@ -81,6 +81,8 @@ Each entity module exposes state, deterministic update, collision response and s
 
 CDR-040 applies this rule to `CelesteDesktop.Entity.Theo`. The module references only `Simulation.Core`, accepts immutable holder/action snapshots and owns its state/events. Player interaction is a request/snapshot matrix in tests rather than a Player-to-Theo project dependency. A squished Theo stops only that controller; Player and a second Theo continue independently.
 
+CDR-041 applies the same boundary to `CelesteDesktop.Entity.Glider` and adds a narrow outward effect contract. A held Glider reports a maximum holder fall speed and whether limiting is currently required; it never mutates Player directly. Player's generic external-effect entry can apply that immutable cap without referencing Glider. Future App orchestration must continuously relay the effect, while Glider remains independent of Player, Theo, rendering and platform code. Destroy or squish terminates only the affected Glider.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.

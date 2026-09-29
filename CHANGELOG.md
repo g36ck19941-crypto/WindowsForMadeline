@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — CDR-041 deterministic Glider
+
+- Added an isolated Glider module with immutable fixed-tick actions, holder snapshots, outward holder effects, states and stable semantic events.
+- Implemented pickup/carry/drop/throw, holder fall-limit request plus application through Player's generic external-effect entry, open/closed slow flight, gravity/friction, Solid bounce/landing, lift inheritance, explicit destroy and per-entity squish isolation.
+- Added Player external-effect coverage and a Player/Solid/Theo/two-Glider interaction matrix; Player 33/33, Glider 42/42 and 447/447 total regressions pass with 0 warnings/errors.
+- Extended the cumulative report with a deterministic 48-tick Glider trajectory containing pickup, fall-limit request, Player application, throw, horizontal bounce and landing events.
+- Kept behavior fidelity `partial`: formal App orchestration, original numeric parity, asset animation, visible GUI, live input, installation access and commercial bytes are not claimed.
+
 ## 2026-09-29 — CDR-040 accepted
 
 - Recorded developer acceptance of CDR-040 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.

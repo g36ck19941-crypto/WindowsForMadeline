@@ -52,6 +52,8 @@ Animation presentation emits `ANIMATION_STATE_SELECTED`, `ANIMATION_STATE_TRANSI
 
 Theo Crystal emits `THEO_PICKED_UP`, `THEO_CARRIED`, `THEO_HOLD_BLOCKED`, `THEO_DROPPED`, `THEO_THROWN`, `THEO_HORIZONTAL_BOUNCED`, `THEO_VERTICAL_BLOCKED`, `THEO_LANDED`, `THEO_BOUNCED`, `THEO_LIFT_CARRIED`, `THEO_LIFT_INHERITED` and `THEO_SQUISHED`. Events contain bounded entity/holder/solid IDs, tick, integer position and velocity only. A Theo event proves a simulation transition, never an asset, render or visible-desktop result.
 
+Glider emits `GLIDER_PICKED_UP`, `GLIDER_CARRIED`, `GLIDER_HOLD_BLOCKED`, `GLIDER_DROPPED`, `GLIDER_THROWN`, `GLIDER_HOLDER_FALL_LIMITED`, `GLIDER_OPENED`, `GLIDER_CLOSED`, `GLIDER_HORIZONTAL_BOUNCED`, `GLIDER_VERTICAL_BLOCKED`, `GLIDER_LANDED`, `GLIDER_BOUNCED`, `GLIDER_LIFT_CARRIED`, `GLIDER_LIFT_INHERITED`, `GLIDER_DESTROYED` and `GLIDER_SQUISHED`. The fall-limit event proves an effect request was produced, not that Player applied it. Glider events never imply assets, rendering or human visibility.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.
