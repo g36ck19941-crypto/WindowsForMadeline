@@ -16,7 +16,7 @@ The accepted CDR-032 implementation resolves catalog frames at fixed 60 Hz, hand
 
 CDR-032 was freshly reverified at 365/365 with 0 build warnings/errors and passed an outbound audit with no commercial assets, game binaries, caches or local install paths. Exact commit `1c39c0af2e96c1f53e9fd2b4212beb8d23e9c0b1` was published and read back at `codex/cdr-032-animation-presentation`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
-CDR-040 is locally implementation-complete and awaiting developer acceptance. The isolated Theo module implements generated-input pickup/carry/drop/throw, gravity/friction, collision bounce/landing, moving-solid lift inheritance and per-entity squish isolation. Release builds with 0 warnings/errors; 37/37 focused cases and 402/402 total regressions pass. The cumulative 36-tick demo records 1 pickup, 1 throw, 1 horizontal bounce, 2 landings and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial` because original Theo numeric behavior is not established.
+CDR-040 was accepted by the developer on 2026-09-29. The isolated Theo module implements generated-input pickup/carry/drop/throw, gravity/friction, collision bounce/landing, moving-solid lift inheritance and per-entity squish isolation. Release builds with 0 warnings/errors; 37/37 focused cases and 402/402 total regressions pass. The cumulative 36-tick demo records 1 pickup, 1 throw, 1 horizontal bounce, 2 landings and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial` because original Theo numeric behavior is not established. Exact independent-branch publication is authorized after fresh verification and audit; CDR-041 Glider is authorized next under the same offline-only boundary.
 
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-040 milestone; launcher text does not change task acceptance state.
 
@@ -36,11 +36,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer review of CDR-040. Do not upload it or start CDR-041 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
+Reverify and audit CDR-040, publish the exact accepted commit to its independent branch, then implement and verify CDR-041 locally. Do not upload CDR-041, open visible GUI or access the game installation without a later explicit gate.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-040 acceptance handoff after completed local implementation and CDR-032 publication
+- Scope: CDR-040 exact publication followed by isolated CDR-041 Glider offline implementation
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

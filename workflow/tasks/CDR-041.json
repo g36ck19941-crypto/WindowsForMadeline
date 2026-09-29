@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-041",
+  "title": "Deterministic Glider entity",
+  "owner": "Primary agent",
+  "state": "authorized",
+  "authorizationDate": "2026-09-29",
+  "fidelity": "partial-until-source-facts-and-interaction-matrix-pass",
+  "scope": [
+    "src/CelesteDesktop.Entity.Glider/**",
+    "tests/CelesteDesktop.Entity.Glider.Tests/**",
+    "generated cumulative demo",
+    "tools/Verify-CDR041.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Glider input state and event snapshots",
+    "explicit pickup carry drop and facing-aware throw transitions",
+    "held falling slowdown and deterministic free-flight baseline",
+    "gravity terminal fall horizontal friction and solid collision",
+    "bounded bounce destruction and squish isolation",
+    "stable structured Glider events and deterministic replay",
+    "Player Solid Theo and two-Glider interaction matrix"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-042",
+  "nextAction": "Implement and verify CDR-041 locally. Keep it unuploaded until developer acceptance."
+}

@@ -3,8 +3,9 @@
   "taskId": "CDR-040",
   "title": "Deterministic Theo Crystal entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-29",
+  "acceptedDate": "2026-09-29",
   "fidelity": "partial-until-source-facts-and-interaction-matrix-pass",
   "scope": [
     "src/CelesteDesktop.Entity.Theo/**",
@@ -59,5 +60,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-041",
-  "nextAction": "Developer reviews the generated CDR-040 report and 402-case offline gate. Keep CDR-040 local until explicit acceptance; CDR-041 remains unauthorized."
+  "nextAction": "Reverify and publish exact accepted CDR-040 commit, then implement authorized CDR-041 Glider offline."
 }

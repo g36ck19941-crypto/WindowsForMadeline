@@ -44,8 +44,9 @@ CDR-040 Theo Crystal 已完成本地纯离线实现并等待验收；可见 GUI�
 
 ## P4 — 交互实体
 
-1. `CDR-040` Theo Crystal：Primary owner，已于 2026-09-29 完成本地实现，等待验收。拿起、携带、放下、投掷、重力/摩擦、Solid 碰撞、落地弹跳、LiftSpeed 交接、受压失败和故障隔离均已实现；37/37 专项、402/402 总回归与 36 tick 演示通过。官方公开仓库未提供 Theo 实体行为，数值还原仍标为 `partial`。验收见 `THEO_CRYSTAL.md`；未经验收不得上传，CDR-041 尚未授权。
-2. 后续依次为 Glider、Spring、Refill、Water、Bumper、Puffer，最后才考虑 Seeker；这些任务尚未获授权。
+1. `CDR-040` Theo Crystal：Primary owner，开发者已于 2026-09-29 验收并授权复验、审计后上传独立分支。拿起、携带、放下、投掷、重力/摩擦、Solid 碰撞、落地弹跳、LiftSpeed 交接、受压失败和故障隔离均已实现；37/37 专项、402/402 总回归与 36 tick 演示通过。数值还原仍标为 `partial`。
+2. `CDR-041` Glider：已于 2026-09-29 授权。限定独立纯离线模块、程序生成几何/输入、逐 tick 测试、累计演示和项目记录；不得打开 GUI、访问安装目录或保存商业素材。
+3. 后续依次为 Spring、Refill、Water、Bumper、Puffer，最后才考虑 Seeker；这些任务尚未获授权。
 
 每个实体拥有独立模块、日志、测试和交互矩阵；未通过与 Player、Solid 及受支持实体之间的交互矩阵前不能验收。
 

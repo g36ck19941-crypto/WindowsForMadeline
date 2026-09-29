@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — CDR-040 accepted
+
+- Recorded developer acceptance of CDR-040 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
+- Opened CDR-041 only for an isolated deterministic Glider module using generated geometry/input and verified contracts.
+- Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+
 ## 2026-09-29 — CDR-040 deterministic Theo Crystal
 
 - Added an isolated Theo Crystal module with immutable fixed-tick inputs, state snapshots and stable semantic events.

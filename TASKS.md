@@ -170,7 +170,7 @@ Each entity owns a separate module, tests and parity row:
 ### CDR-040 — Theo Crystal
 
 - Owner: Primary
-- State: implementation complete on 2026-09-29; developer acceptance pending
+- State: accepted by developer on 2026-09-29; independent-branch publication authorized after fresh verification and outbound audit
 - Scope: isolated `CelesteDesktop.Entity.Theo` deterministic fixed-tick module, focused tests, generated cumulative demo, verifier and project records
 - Implemented behavior: immutable input/state snapshots; explicit pickup/carry/drop/throw; holder-relative placement; gravity, terminal fall and friction; Solid collision, landing bounce and LiftSpeed handoff; bounded squish failure; structured events and deterministic replay
 - Required matrix: Theo with Player pickup/carry/throw requests, Theo with static/moving Solid, and failure isolation from Player and unrelated entities
@@ -178,11 +178,11 @@ Each entity owns a separate module, tests and parity row:
 - Fidelity: `partial`; the generated interaction matrix passes, but the official public repository does not expose Theo entity behavior and original numeric parity is not established
 - Forbidden: visible GUI, live input, game/install access or writes, commercial bytes, filesystem/platform/rendering/desktop dependencies
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the Theo table, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/THEO_CRYSTAL.md`.
-- Gate: keep local until developer acceptance. CDR-041 Glider is not authorized by CDR-040 completion.
+- Gate: accepted for exact independent-branch publication. CDR-041 Glider is authorized for generated offline geometry/input and verified contracts only.
 
 Remaining order:
 
-2. CDR-041 Glider
+2. CDR-041 Glider — authorized on 2026-09-29; isolated generated-input implementation pending
 3. CDR-042 Spring
 4. CDR-043 Refill
 5. CDR-044 Water
