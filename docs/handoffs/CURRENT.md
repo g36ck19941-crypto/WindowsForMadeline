@@ -6,7 +6,9 @@ Updated: 2026-09-29
 
 CDR-001 and CDR-010 through CDR-022 are accepted by the developer. The developer confirmed the cumulative CDR-016/CDR-020/CDR-021/CDR-022 version on 2026-09-29. A fresh CDR-022 gate passed with 0 build warnings/errors, 298/298 offline cases and an identical 24-tick traversal replay; the outbound audit found no commercial assets, decoded frames, audio, game binaries, caches or local installation paths. CDR-021 and CDR-022 fidelity remains `partial`. After two reset connections and a read-back proving no partial refs, the accepted milestones were published and verified: CDR-016 `22d7586`, CDR-020 `3dd4b37`, CDR-021 `eabe378`, CDR-022 `aed2b3f`. Remote `main` remains `d237277`.
 
-CDR-030 is locally implementation-complete and awaiting developer acceptance. The platform-neutral presenter, Windows D3D11/DirectComposition backend, detailed health events, DPI/negative-origin contracts and bounded device-loss recovery pass 20/20 rendering cases and 318/318 total regressions. The native hidden test submitted two generated frames through `Commit` and `WaitForCommitCompletion`. No visible GUI, real desktop observation, installation access, live input, commercial bytes or human-visibility claim occurred.
+CDR-030 was accepted by the developer on 2026-09-29. A fresh gate passed with 0 build warnings/errors, 20/20 rendering cases and 318/318 total regressions. The native hidden test submitted two generated frames through `Commit` and `WaitForCommitCompletion`. No visible GUI, real desktop observation, installation access, live input, commercial bytes or human-visibility claim occurred. Publication to an independent branch is authorized after audit.
+
+CDR-031 is authorized only for anonymous desktop geometry, DPI, visible-surface state and velocity. It must not read titles, text/content, screenshots, input, identity-bearing process metadata or expose native handles; it must not open visible GUI or access the game/install directory.
 
 The canonical review is `docs/reviews/CDR-001-ACCEPTANCE.md`. Developer-facing translations are isolated under `docs/zh-CN/` and never override the English contracts.
 
@@ -18,11 +20,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer acceptance of local CDR-030. A visible checkerboard observation and CDR-031 real desktop geometry both require explicit authorization before execution; do not upload CDR-030 before acceptance.
+Audit and publish accepted CDR-030 to an independent branch, then implement CDR-031 within the anonymous read-only boundary. Visible GUI remains forbidden.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-030 generated-graphics presentation, hidden native tests, cumulative demo and acceptance package are complete; no further implementation before the next authorization
-- Forbidden: Legacy changes, game/GUI launch, real desktop test, any real-install write, raw commercial data in repository/logs/evidence
+- Scope: publish accepted CDR-030, then implement CDR-031 anonymous geometry/DPI/visibility/velocity with generated fixtures and one aggregate-only hidden snapshot
+- Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

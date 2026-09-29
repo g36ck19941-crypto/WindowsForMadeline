@@ -37,4 +37,4 @@ It does not show Madeline, use commercial sprites, inspect desktop windows, or p
 
 ## Next gate
 
-CDR-030 remains local until developer acceptance. A visible checkerboard observation, CDR-031 real desktop geometry, and any live GUI session each require explicit authorization before execution.
+CDR-030 was accepted by the developer on 2026-09-29 and may be published to its independent branch after the outbound audit. CDR-031 is separately authorized only for anonymous geometry, DPI, visible-surface state and velocity; visible GUI, titles, content, screenshots and input remain forbidden.

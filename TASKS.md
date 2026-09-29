@@ -136,16 +136,20 @@
 ### CDR-030 — Synthetic DirectComposition presenter
 
 - Owner: Primary
-- State: implementation complete on 2026-09-29; developer acceptance pending
+- State: accepted by developer on 2026-09-29
 - Scope: isolated rendering controller, Windows DirectComposition backend, generated checkerboard, hidden native tests, cumulative demo and project records
 - Program-generated premultiplied BGRA32 checkerboard, bounded DPI/negative-origin geometry, D3D11 upload, DirectComposition surface/commit/completion, ordered health events and one-retry device-loss recovery.
 - Evidence: Release 0 warnings/errors; 20/20 rendering cases and 318 total regression cases; real hidden HWND path presented two generated frames through `Commit` and `WaitForCommitCompletion`; cumulative demo records 3 presents, 2 pixel changes, no human-visibility claim and 0 commercial bytes.
 - Manual acceptance: double-click `演示当前进度.cmd`, inspect the CDR-030 checkerboard/health chain and corrected CDR-016/017–019 explanation, then double-click `验证当前版本.cmd`; details in `docs/zh-CN/SYNTHETIC_PRESENTATION.md`
-- Gate: keep local until developer acceptance. Visible GUI, real desktop observation and CDR-031 real geometry remain separately authorized.
+- Gate: accepted for publication to an independent branch. CDR-031 is authorized only for anonymous geometry, DPI, visible-surface state and velocity; titles, content, screenshots, input and visible GUI remain forbidden.
 
 ### CDR-031 — Desktop geometry adapter
 
-- Anonymous visible surfaces and velocity; no titles, contents, screenshots or typed input.
+- Owner: Primary
+- State: authorized on 2026-09-29; implementation pending
+- Scope: anonymous desktop geometry, DPI, visible-surface state and velocity through isolated platform-neutral and Windows modules
+- Forbidden: window titles, text/content, screenshots, input, identity-bearing process metadata, raw native handles in contracts/evidence, visible GUI and game/install access
+- Gate: generated fixtures plus one read-only hidden Windows snapshot with aggregate-only evidence; no human-visibility claim.
 
 ### CDR-032 — Asset-to-animation presentation
 

@@ -3,8 +3,9 @@
   "taskId": "CDR-030",
   "title": "Synthetic DirectComposition presenter",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-29",
+  "acceptedDate": "2026-09-29",
   "scope": [
     "src/CelesteDesktop.Rendering/**",
     "src/CelesteDesktop.Rendering.Windows/**",
@@ -43,5 +44,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-031",
-  "nextAction": "Await developer acceptance. Visible observation and real desktop geometry remain separately authorized gates."
+  "nextAction": "Publish the audited accepted commit to an independent branch, then begin the separately authorized CDR-031 anonymous desktop adapter. Visible GUI remains forbidden."
 }

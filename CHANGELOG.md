@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — CDR-030 accepted
+
+- Recorded developer acceptance of CDR-030 and re-ran its gate: 0 build warnings/errors, 20/20 rendering cases and 318/318 total regressions passed.
+- Authorized independent-branch publication after the outbound audit.
+- Opened CDR-031 only for anonymous geometry, DPI, visible-surface state and velocity; titles, content, screenshots, input and visible GUI remain forbidden.
+
 ## 2026-09-29 — CDR-030 hidden DirectComposition presenter
 
 - Added an isolated rendering controller for immutable premultiplied BGRA32 frames, ordered upload/submit/present/change diagnostics and one bounded device-loss recovery.
