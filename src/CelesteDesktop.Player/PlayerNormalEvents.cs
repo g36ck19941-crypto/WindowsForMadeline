@@ -7,7 +7,8 @@ public enum PlayerNormalEventKind
     Jumped,
     HorizontalBlocked,
     VerticalBlocked,
-    ExternalFallSpeedLimited
+    ExternalFallSpeedLimited,
+    ExternalVelocityApplied
 }
 
 public sealed record PlayerNormalEvent(

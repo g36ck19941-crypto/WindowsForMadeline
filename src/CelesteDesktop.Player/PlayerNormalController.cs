@@ -111,6 +111,7 @@ public sealed class PlayerNormalController
         UpdateHorizontal(input, groundedAtStart);
         var appliedMaximumFallSpeed = UpdateVertical(input, effects, groundedAtStart, world.Tick);
         TryJump(input, world.Tick);
+        ApplyExternalVelocity(effects.Velocity, world.Tick);
         Move(world);
 
         var groundedAtEnd = SpeedY >= 0m && world.IsGrounded(Actor);
@@ -241,6 +242,21 @@ public sealed class PlayerNormalController
         _variableJumpSpeed = SpeedY;
         _wasGrounded = false;
         _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.Jumped, null));
+    }
+
+    private void ApplyExternalVelocity(ExternalVelocityEffect? effect, long tick)
+    {
+        if (effect is not { } velocity)
+        {
+            return;
+        }
+
+        var next = velocity.Apply(new SimVector(SpeedX, SpeedY));
+        SpeedX = next.X;
+        SpeedY = next.Y;
+        VariableJumpTicksRemaining = 0;
+        _wasGrounded = false;
+        _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.ExternalVelocityApplied, null));
     }
 
     private void Move(SimulationWorld world)

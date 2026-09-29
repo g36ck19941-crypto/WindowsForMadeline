@@ -31,6 +31,13 @@ public sealed class TheoCrystalController
     public TheoCrystalSnapshot Step(
         TheoCrystalInput input,
         SimulationWorld world,
+        Action<SimulationWorld>? beforeTheo = null) =>
+        Step(input, null, world, beforeTheo);
+
+    public TheoCrystalSnapshot Step(
+        TheoCrystalInput input,
+        ExternalVelocityEffect? externalVelocity,
+        SimulationWorld world,
         Action<SimulationWorld>? beforeTheo = null)
     {
         ArgumentNullException.ThrowIfNull(world);
@@ -38,12 +45,18 @@ public sealed class TheoCrystalController
         world.Step(currentWorld =>
         {
             beforeTheo?.Invoke(currentWorld);
-            result = Update(input, currentWorld);
+            result = Update(input, externalVelocity, currentWorld);
         });
         return result ?? throw new InvalidOperationException("Theo step did not produce a snapshot.");
     }
 
-    public TheoCrystalSnapshot Update(TheoCrystalInput input, SimulationWorld world)
+    public TheoCrystalSnapshot Update(TheoCrystalInput input, SimulationWorld world) =>
+        Update(input, null, world);
+
+    public TheoCrystalSnapshot Update(
+        TheoCrystalInput input,
+        ExternalVelocityEffect? externalVelocity,
+        SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         if (!world.IsAdvancing)
@@ -66,9 +79,13 @@ public sealed class TheoCrystalController
         switch (State)
         {
             case TheoCrystalState.Free:
-                UpdateFree(input, world);
+                UpdateFree(input, externalVelocity, world);
                 break;
             case TheoCrystalState.Held:
+                if (externalVelocity is not null)
+                {
+                    throw new InvalidOperationException("Held Theo cannot accept external velocity.");
+                }
                 UpdateHeld(input, world);
                 break;
             case TheoCrystalState.Squished:
@@ -84,7 +101,10 @@ public sealed class TheoCrystalController
         return Capture(world);
     }
 
-    private void UpdateFree(TheoCrystalInput input, SimulationWorld world)
+    private void UpdateFree(
+        TheoCrystalInput input,
+        ExternalVelocityEffect? externalVelocity,
+        SimulationWorld world)
     {
         if (input.Action == TheoCrystalAction.Pickup)
         {
@@ -126,6 +146,14 @@ public sealed class TheoCrystalController
                 SpeedY,
                 Tuning.MaximumFallSpeed,
                 Tuning.Gravity / SimulationConstants.TicksPerSecond);
+
+        if (externalVelocity is { } velocity)
+        {
+            var next = velocity.Apply(new SimVector(SpeedX, SpeedY));
+            SpeedX = next.X;
+            SpeedY = next.Y;
+            AddEvent(world.Tick, TheoCrystalEventKind.ExternalVelocityApplied, null, null);
+        }
 
         MoveFree(world);
         var groundedAtEnd = SpeedY >= 0m && world.IsGrounded(Actor);

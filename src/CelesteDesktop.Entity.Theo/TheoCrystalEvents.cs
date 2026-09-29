@@ -15,7 +15,8 @@ public enum TheoCrystalEventKind
     Bounced,
     LiftCarried,
     LiftInherited,
-    Squished
+    Squished,
+    ExternalVelocityApplied
 }
 
 public sealed record TheoCrystalEvent(
@@ -42,6 +43,7 @@ public static class TheoCrystalEventIds
     public const string LiftCarried = "THEO_LIFT_CARRIED";
     public const string LiftInherited = "THEO_LIFT_INHERITED";
     public const string Squished = "THEO_SQUISHED";
+    public const string ExternalVelocityApplied = "THEO_EXTERNAL_VELOCITY_APPLIED";
 
     public static string For(TheoCrystalEventKind kind) => kind switch
     {
@@ -57,6 +59,7 @@ public static class TheoCrystalEventIds
         TheoCrystalEventKind.LiftCarried => LiftCarried,
         TheoCrystalEventKind.LiftInherited => LiftInherited,
         TheoCrystalEventKind.Squished => Squished,
+        TheoCrystalEventKind.ExternalVelocityApplied => ExternalVelocityApplied,
         _ => throw new ArgumentOutOfRangeException(nameof(kind))
     };
 }

@@ -27,3 +27,5 @@ CDR-013 使用公开 Monocle 镜像确认 Packer 会把页面名解析为 `.data
 CDR-040 所参考的 Celeste 官方公开仓库没有提供 Theo Crystal 实体实现，因此本项目使用独立设计的固定 tick 基线和已经验证的 Actor/Solid 合同。程序生成的 Player/Solid/实体交互测试只证明确定性和故障隔离，不能证明原版数值一致；在获得更强证据并单独记录前，行为保持 `partial`。
 
 CDR-041 所参考的官方公开仓库同样没有发布商业版 Glider 实体实现。拿起、携带者缓降效果、飞行和碰撞参数均基于已验证本地合同独立设计。程序生成的 Player/Solid/Theo/双 Glider 矩阵只证明确定性、效果隔离和故障隔离，行为保持 `partial`。
+
+CDR-042 没有足够公开事实可以确定商业版 Spring 的完整接触规则、时间和发射数值。四方向效果和生命周期基于已验证的固定 tick 与通用运动合同独立设计。程序生成的 Player/Theo/Glider/双 Spring 矩阵只证明确定性路由和隔离，行为保持 `partial`。

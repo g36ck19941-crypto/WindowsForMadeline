@@ -14,7 +14,7 @@
 - 支持拿起、携带、放下、投掷，以及持有位置被墙挡住时的明确事件。
 - 自由状态支持 60 Hz 固定步进、重力、最大下落速度、水平摩擦、墙面反弹、落地与弹跳。
 - 支持移动 Solid 携带和松手/投掷时继承平台或持有者速度。
-- 输出稳定事件，例如 `THEO_PICKED_UP`、`THEO_THROWN`、`THEO_HORIZONTAL_BOUNCED`、`THEO_LANDED` 和 `THEO_SQUISHED`。
+- 输出稳定事件，例如 `THEO_PICKED_UP`、`THEO_THROWN`、`THEO_HORIZONTAL_BOUNCED`、`THEO_LANDED`、`THEO_SQUISHED` 和 `THEO_EXTERNAL_VELOCITY_APPLIED`。
 - 两个 Theo、Player、静态/移动 Solid 和受压失败都有隔离测试。
 
 ## 怎样验收

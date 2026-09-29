@@ -32,7 +32,7 @@
 | 目录动画呈现 | asset_exact | exact_offline | partial | unstarted | CDR-032 程序生成目录的选帧/合成/呈现通过；指定安装格式已另行验证，但没有保存或可见显示真实像素 |
 | Theo Crystal | asset_exact | partial | partial | unstarted | CDR-040 生成输入的拿起/携带/投掷/碰撞矩阵通过；指定安装格式已另行验证，但原版数值、素材动画和可见集成尚未建立 |
 | Glider | asset_exact | partial | partial | unstarted | CDR-041 生成输入的拿起/携带/缓降请求/Player 应用/投掷/滑落矩阵通过；指定安装格式已另行验证，但正式 App 组装、原版数值、素材动画和可见集成尚未建立 |
-| Spring | unstarted | unstarted | unstarted | unstarted | Player 和受支持实体 |
+| Spring | asset_exact | partial | partial | unstarted | CDR-042 程序生成的四方向生命周期及 Player/Theo/Glider 应用矩阵通过；原版接触/数值、正式 App 路由、素材动画和可见集成尚未建立 |
 | Refill | unstarted | unstarted | unstarted | unstarted | 重生/冷却 |
 | Water | unstarted | unstarted | unstarted | unstarted | 区域体积行为 |
 | Bumper | unstarted | unstarted | unstarted | unstarted | 径向弹射/冷却 |

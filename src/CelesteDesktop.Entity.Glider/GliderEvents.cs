@@ -19,7 +19,8 @@ public enum GliderEventKind
     LiftCarried,
     LiftInherited,
     Destroyed,
-    Squished
+    Squished,
+    ExternalVelocityApplied
 }
 
 public sealed record GliderEvent(
@@ -50,6 +51,7 @@ public static class GliderEventIds
     public const string LiftInherited = "GLIDER_LIFT_INHERITED";
     public const string Destroyed = "GLIDER_DESTROYED";
     public const string Squished = "GLIDER_SQUISHED";
+    public const string ExternalVelocityApplied = "GLIDER_EXTERNAL_VELOCITY_APPLIED";
 
     public static string For(GliderEventKind kind) => kind switch
     {
@@ -69,6 +71,7 @@ public static class GliderEventIds
         GliderEventKind.LiftInherited => LiftInherited,
         GliderEventKind.Destroyed => Destroyed,
         GliderEventKind.Squished => Squished,
+        GliderEventKind.ExternalVelocityApplied => ExternalVelocityApplied,
         _ => throw new ArgumentOutOfRangeException(nameof(kind))
     };
 }

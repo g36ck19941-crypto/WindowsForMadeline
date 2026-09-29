@@ -30,7 +30,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Catalog animation presentation | asset_exact | exact_offline | partial | unstarted | CDR-032 generated catalog-to-frame timing/composition/presentation passes; selected install format was validated separately, but no real pixels are persisted or visibly shown |
 | Theo Crystal | asset_exact | partial | partial | unstarted | CDR-040 generated pickup/carry/throw/collision matrix passes; selected-install format was validated separately, but original numeric parity, asset animation and visible integration are not established |
 | Glider | asset_exact | partial | partial | unstarted | CDR-041 generated pickup/carry/fall-limit/Player-application/throw/flight matrix passes; selected-install format was validated separately, but formal App orchestration, original numeric parity, asset animation and visible integration are not established |
-| Spring | unstarted | unstarted | unstarted | unstarted | Player and supported entities |
+| Spring | asset_exact | partial | partial | unstarted | CDR-042 generated four-direction lifecycle and Player/Theo/Glider application matrix passes; original contact/numeric parity, formal App routing, asset animation and visible integration are not established |
 | Refill | unstarted | unstarted | unstarted | unstarted | Respawn/cooldown |
 | Water | unstarted | unstarted | unstarted | unstarted | Volume behavior |
 | Bumper | unstarted | unstarted | unstarted | unstarted | Radial launch/cooldown |

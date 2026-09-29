@@ -115,3 +115,9 @@ Then double-click `验证当前版本.cmd`. The prior 365 regressions remain and
 Double-click `演示当前进度.cmd`. The cumulative report adds a 48-tick generated Glider trajectory. It must contain one `GLIDER_PICKED_UP`, one `GLIDER_HOLDER_FALL_LIMITED`, one `GLIDER_THROWN`, one `GLIDER_HORIZONTAL_BOUNCED`, at least one landing and an identical replay result.
 
 Then double-click `验证当前版本.cmd`. Player must report `33/33`, Glider `42/42`, for 447 total cases. The final line must be `CDR-041 OFFLINE VERIFICATION PASSED`. The immutable fall-limit is actually applied by Player in the generated matrix/demo, but formal App orchestration, original numeric parity, real pixels, visible presentation, live input and installation access remain unproven.
+
+## CDR-042 — Deterministic Spring
+
+Double-click `演示当前进度.cmd`. The cumulative report adds a 30-tick generated Spring trajectory. It must contain three `SPRING_ACTIVATED`, three `SPRING_LAUNCH_ISSUED`, three `SPRING_READY` cycles and one actual velocity application each by Player, Theo and Glider, with identical replay.
+
+Then double-click `验证当前版本.cmd`. Spring must report `42/42`, for 489 total cases. The final line must be `CDR-042 OFFLINE VERIFICATION PASSED`. This proves generated contact/lifecycle, target-addressed effects and actual offline application only; formal App routing, original contact/numeric parity, real pixels, visible presentation, live input and installation access remain unproven.

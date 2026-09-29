@@ -27,18 +27,31 @@ public sealed class GliderController
     public string? HolderId { get; private set; }
 
     public GliderSnapshot Step(GliderInput input, SimulationWorld world, Action<SimulationWorld>? beforeGlider = null)
+        => Step(input, null, world, beforeGlider);
+
+    public GliderSnapshot Step(
+        GliderInput input,
+        ExternalVelocityEffect? externalVelocity,
+        SimulationWorld world,
+        Action<SimulationWorld>? beforeGlider = null)
     {
         ArgumentNullException.ThrowIfNull(world);
         GliderSnapshot? result = null;
         world.Step(currentWorld =>
         {
             beforeGlider?.Invoke(currentWorld);
-            result = Update(input, currentWorld);
+            result = Update(input, externalVelocity, currentWorld);
         });
         return result ?? throw new InvalidOperationException("Glider step did not produce a snapshot.");
     }
 
-    public GliderSnapshot Update(GliderInput input, SimulationWorld world)
+    public GliderSnapshot Update(GliderInput input, SimulationWorld world) =>
+        Update(input, null, world);
+
+    public GliderSnapshot Update(
+        GliderInput input,
+        ExternalVelocityEffect? externalVelocity,
+        SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
         if (!world.IsAdvancing)
@@ -71,9 +84,13 @@ public sealed class GliderController
         switch (State)
         {
             case GliderState.Free:
-                UpdateFree(input, world);
+                UpdateFree(input, externalVelocity, world);
                 break;
             case GliderState.Held:
+                if (externalVelocity is not null)
+                {
+                    throw new InvalidOperationException("Held Glider cannot accept external velocity.");
+                }
                 holderEffect = UpdateHeld(input, world);
                 break;
             default:
@@ -88,7 +105,10 @@ public sealed class GliderController
         return Capture(world, holderEffect);
     }
 
-    private void UpdateFree(GliderInput input, SimulationWorld world)
+    private void UpdateFree(
+        GliderInput input,
+        ExternalVelocityEffect? externalVelocity,
+        SimulationWorld world)
     {
         if (input.Action == GliderAction.Pickup)
         {
@@ -122,6 +142,13 @@ public sealed class GliderController
 
         SpeedX = Approach(SpeedX, 0m, Tuning.HorizontalFriction / SimulationConstants.TicksPerSecond);
         SpeedY = grounded ? 0m : Approach(SpeedY, Tuning.MaximumFallSpeed, Tuning.Gravity / SimulationConstants.TicksPerSecond);
+        if (externalVelocity is { } velocity)
+        {
+            var next = velocity.Apply(new SimVector(SpeedX, SpeedY));
+            SpeedX = next.X;
+            SpeedY = next.Y;
+            AddEvent(world.Tick, GliderEventKind.ExternalVelocityApplied, null, null);
+        }
         MoveFree(world);
 
         var groundedAtEnd = SpeedY >= 0m && world.IsGrounded(Actor);

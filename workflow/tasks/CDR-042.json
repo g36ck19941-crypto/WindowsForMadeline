@@ -3,7 +3,7 @@
   "taskId": "CDR-042",
   "title": "Deterministic Spring entity",
   "owner": "Primary agent",
-  "state": "authorized",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-09-29",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
@@ -22,6 +22,15 @@
     "Player Theo Glider Solid and two-Spring interaction matrix",
     "failure isolation stable diagnostics and deterministic replay"
   ],
+  "features": [
+    "fixed-tick immutable Spring contact state launch effect and event snapshots",
+    "up right down and left axis-selective launch effects",
+    "activation retraction cooldown ready disable and enable lifecycle",
+    "release-to-rearm protection against repeated touching activation",
+    "generic external velocity application by Player Theo and Glider",
+    "stable Spring diagnostic event IDs",
+    "Player Theo Glider two-Spring and deterministic replay coverage"
+  ],
   "forbidden": [
     "visible GUI",
     "live input",
@@ -32,6 +41,23 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "springTests": 42,
+    "totalRegressionTests": 489,
+    "demoTicks": 30,
+    "demoActivations": 3,
+    "demoLaunches": 3,
+    "demoReadyTransitions": 3,
+    "demoPlayerApplications": 1,
+    "demoTheoApplications": 1,
+    "demoGliderApplications": 1,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-043",
-  "nextAction": "Publish accepted CDR-041 exactly, then implement and verify CDR-042 locally. Keep CDR-042 unuploaded until later developer acceptance."
+  "nextAction": "Developer reviews the generated CDR-042 report and 489-case offline gate. Keep CDR-042 local until explicit acceptance; CDR-043 remains unauthorized."
 }

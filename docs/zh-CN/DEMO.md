@@ -115,3 +115,9 @@
 双击 `演示当前进度.cmd`。累计报告新增 48 tick 的 Glider 轨迹；应看到 1 次 `GLIDER_PICKED_UP`、1 次 `GLIDER_HOLDER_FALL_LIMITED`、1 次 `GLIDER_THROWN`、1 次 `GLIDER_HORIZONTAL_BOUNCED`、至少 1 次落地，并标记重放一致。
 
 然后双击 `验证当前版本.cmd`。Player 应为 `33/33`、Glider 为 `42/42`，累计为 `447/447`，最后显示 `CDR-041 OFFLINE VERIFICATION PASSED`。不可变缓降效果已由 Player 在生成矩阵/演示中实际应用，但正式 App 组装、原版数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。
+
+## CDR-042——Spring（弹簧）确定性实体
+
+双击 `演示当前进度.cmd`。累计报告新增 30 tick 的 Spring 轨迹；应看到 3 次 `SPRING_ACTIVATED`、3 次 `SPRING_LAUNCH_ISSUED`、3 次 `SPRING_READY`，并看到 Player、Theo、Glider 各实际应用一次速度，重放一致。
+
+然后双击 `验证当前版本.cmd`。Spring 应为 `42/42`，累计为 `489/489`，最后显示 `CDR-042 OFFLINE VERIFICATION PASSED`。这只证明程序生成接触、生命周期、带目标效果和离线实际应用；正式 App 路由、原版接触/数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。

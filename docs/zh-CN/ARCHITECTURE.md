@@ -85,6 +85,8 @@ CDR-040 用 `CelesteDesktop.Entity.Theo` 落实这条规则。模块只依赖 `S
 
 CDR-041 把同一边界用于 `CelesteDesktop.Entity.Glider`，并增加一个窄的对外效果合同。持有中的 Glider 只报告“携带者最大下落速度”和当前是否需要限制，不直接改写 Player；Player 的通用外部效果入口可以应用这个不可变上限，同时不引用 Glider。未来 App 组装层需要持续传递效果，Glider 本身仍不依赖 Player、Theo、渲染或平台代码。摧毁或受压只终止对应 Glider。
 
+CDR-042 把可复用、按轴替换的 `ExternalVelocityEffect` 放在 `Simulation.Core`。`CelesteDesktop.Entity.Spring` 只输出这个效果、目标 ID 和目标类型，不引用任何目标模块；Player、Theo、Glider 通过自己的入口应用通用效果，并分别记录“已应用”事实。Spring 自己管理激活、压缩、冷却、待命和离开后重置，未来 App 只负责路由，不承载弹簧规则。
+
 ## 6. 预留扩展接口
 
 `docs/EXTENSIONS.md` 预留 `IAssetSourceProvider` 和 `IWorldContentProvider` 概念边界，使未来可以接入只读 Mod 素材和规范化关卡/地图描述，而不让这些格式耦合到 Simulation 或 App。

@@ -14,6 +14,7 @@ using CelesteDesktop.Desktop;
 using CelesteDesktop.Animation;
 using CelesteDesktop.Entity.Theo;
 using CelesteDesktop.Entity.Glider;
+using CelesteDesktop.Entity.Spring;
 
 const int width = 8;
 const int height = 6;
@@ -63,6 +64,7 @@ var desktop = RunSyntheticDesktop();
 var animationPresentation = RunSyntheticAnimationPresentation(catalog);
 var theo = RunSyntheticTheo();
 var glider = RunSyntheticGlider();
+var spring = RunSyntheticSpring();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -84,7 +86,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-041",
+    demoId = "CDR-042",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -101,7 +103,8 @@ var manifest = new
         "CDR-031 tracked generated anonymous desktop geometry, DPI, visibility and velocity",
         "CDR-032 resolved generated catalog animations by fixed tick and presented immutable composed frames offline",
         "CDR-040 ran generated Theo pickup carry throw bounce and isolation behavior at fixed tick",
-        "CDR-041 ran generated Glider pickup carry fall-limit throw glide bounce and isolation behavior at fixed tick"
+        "CDR-041 ran generated Glider pickup carry fall-limit throw glide bounce and isolation behavior at fixed tick",
+        "CDR-042 ran generated Spring activation retract cooldown reset and target launch effects at fixed tick"
     },
     independentValidation = new
     {
@@ -250,6 +253,20 @@ var manifest = new
         glider.DeterministicReplay,
         rows = glider.Rows
     },
+    spring = new
+    {
+        source = "program-generated-geometry-and-input",
+        fidelity = "partial",
+        tickCount = spring.Rows.Count,
+        spring.ActivationCount,
+        spring.LaunchCount,
+        spring.ReadyCount,
+        spring.PlayerApplicationCount,
+        spring.TheoApplicationCount,
+        spring.GliderApplicationCount,
+        spring.DeterministicReplay,
+        rows = spring.Rows
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -269,11 +286,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-041 cumulative deterministic Glider pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} theo_pickups={theo.PickupCount} theo_throws={theo.ThrowCount} theo_horizontal_bounces={theo.HorizontalBounceCount} theo_landings={theo.LandingCount} theo_replay={theo.DeterministicReplay.ToString().ToLowerInvariant()} glider_ticks={glider.Rows.Count} glider_pickups={glider.PickupCount} glider_throws={glider.ThrowCount} glider_fall_limits={glider.HolderFallLimitedCount} glider_player_fall_limits_applied={glider.PlayerFallLimitAppliedCount} glider_horizontal_bounces={glider.HorizontalBounceCount} glider_landings={glider.LandingCount} glider_replay={glider.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-042 cumulative deterministic Spring pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} theo_pickups={theo.PickupCount} theo_throws={theo.ThrowCount} theo_horizontal_bounces={theo.HorizontalBounceCount} theo_landings={theo.LandingCount} theo_replay={theo.DeterministicReplay.ToString().ToLowerInvariant()} glider_ticks={glider.Rows.Count} glider_pickups={glider.PickupCount} glider_throws={glider.ThrowCount} glider_fall_limits={glider.HolderFallLimitedCount} glider_player_fall_limits_applied={glider.PlayerFallLimitAppliedCount} glider_horizontal_bounces={glider.HorizontalBounceCount} glider_landings={glider.LandingCount} glider_replay={glider.DeterministicReplay.ToString().ToLowerInvariant()} spring_ticks={spring.Rows.Count} spring_activations={spring.ActivationCount} spring_launches={spring.LaunchCount} spring_ready={spring.ReadyCount} spring_player_applied={spring.PlayerApplicationCount} spring_theo_applied={spring.TheoApplicationCount} spring_glider_applied={spring.GliderApplicationCount} spring_replay={spring.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -285,7 +302,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-041-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-042-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -463,7 +480,8 @@ static string BuildHtml(
     DemoDesktop desktop,
     DemoAnimationPresentation animationPresentation,
     DemoTheo theo,
-    DemoGlider glider)
+    DemoGlider glider,
+    DemoSpring spring)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -614,13 +632,28 @@ static string BuildHtml(
             .Append("</td></tr>");
     }
 
+    var springRows = new StringBuilder();
+    foreach (var row in spring.Rows)
+    {
+        springRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.State))
+            .Append("</td><td>").Append(row.RetractedTicks).Append('/').Append(row.CooldownTicks)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.TargetId ?? "-"))
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.TargetKind ?? "-"))
+            .Append("</td><td>").Append(row.PlayerSpeedX).Append(',').Append(row.PlayerSpeedY)
+            .Append("</td><td>").Append(row.TheoSpeedX).Append(',').Append(row.TheoSpeedY)
+            .Append("</td><td>").Append(row.GliderSpeedX).Append(',').Append(row.GliderSpeedY)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-041 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-042 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -639,7 +672,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-041 累计项目进度演示</h1>
+          <h1>CDR-042 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -658,6 +691,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-032</b>目录动画逐 tick 选帧、透明画布合成与离线 Present</div>
             <div class="stage"><b>CDR-040</b>Theo 拿起、携带、投掷、碰撞反弹与故障隔离</div>
             <div class="stage"><b>CDR-041</b>Glider 拿起、缓降请求、投掷、滑落反弹与故障隔离</div>
+            <div class="stage"><b>CDR-042</b>Spring 激活、压缩、冷却、复位与目标发射</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -708,6 +742,9 @@ static string BuildHtml(
           <h2>CDR-041 Glider 纯离线交互轨迹</h2>
           <p>Glider 使用程序生成的 Player、持有者快照和墙/地面：被拿起后对过快下落给出受限请求，下一 tick 由 Player 的通用外部效果入口实际应用，再被投掷、展开缓慢下落、撞墙反弹并落地。共 {{glider.Rows.Count}} 个固定 tick；Pickup={{glider.PickupCount}}，Throw={{glider.ThrowCount}}，缓降请求={{glider.HolderFallLimitedCount}}，Player 实际应用={{glider.PlayerFallLimitAppliedCount}}，水平反弹={{glider.HorizontalBounceCount}}，落地/落地反弹={{glider.LandingCount}}；重复运行：<span class="ok">{{(glider.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Glider state</th><th>位置 x,y</th><th>速度 x,y</th><th>展开</th><th>缓降请求</th><th>Player Y 速度</th><th>Player 已应用</th><th>事件</th></tr></thead><tbody>{{gliderRows}}</tbody></table>
+          <h2>CDR-042 Spring 纯离线交互轨迹</h2>
+          <p>同一个程序生成的向上 Spring 依次接触 Player、Theo 和 Glider。每次接触都会输出带目标身份的发射效果，目标控制器在同一个固定 tick 真实应用速度；Spring 随后经历压缩、冷却和自动复位。共 {{spring.Rows.Count}} 个固定 tick；激活={{spring.ActivationCount}}，发射={{spring.LaunchCount}}，复位={{spring.ReadyCount}}，Player/Theo/Glider 实际应用={{spring.PlayerApplicationCount}}/{{spring.TheoApplicationCount}}/{{spring.GliderApplicationCount}}；重复运行：<span class="ok">{{(spring.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>Tick</th><th>Spring state</th><th>压缩/冷却剩余</th><th>目标</th><th>目标类型</th><th>Player 速度</th><th>Theo 速度</th><th>Glider 速度</th><th>Spring 事件</th></tr></thead><tbody>{{springRows}}</tbody></table>
           <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
             <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
@@ -718,6 +755,7 @@ static string BuildHtml(
               <li><strong>不会破坏角色手感：</strong>动画和渲染只接收角色状态的副本。即使显示变慢或失败，也不会反过来改变角色位置、速度、碰撞或体力。</li>
               <li><strong>Theo 已有独立实体逻辑：</strong>上面的轨迹真实运行了拿起、跟随、投掷、重力、摩擦、墙面反弹和落地；Theo 失败不会直接关闭 Player 或其他实体。</li>
               <li><strong>Glider 已有独立实体逻辑：</strong>上面的轨迹真实运行了拿起、携带者缓降请求、投掷、展开、缓慢下落、墙面反弹和落地；Glider 失败不会直接关闭 Player、Theo 或另一个 Glider。</li>
+              <li><strong>Spring 已有独立实体逻辑：</strong>上面的轨迹真实运行了接触激活、压缩、冷却、复位，并把带目标身份的方向速度实际应用到 Player、Theo 和 Glider；一个 Spring 的状态不会改写另一个 Spring。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -732,6 +770,7 @@ static string BuildHtml(
               <li><strong>CDR-016 只证明格式兼容：</strong>它说明指定正版安装中的素材能被只读解析，不等于这些原版素材已经在本次演示里被连接和显示。</li>
               <li><strong>Theo 手感仍是 partial：</strong>官方公开仓库没有 TheoCrystal 实体源码，因此当前数值是独立设计并由逐 tick 测试固定的离线基线，不宣称与商业发行版逐项完全一致。</li>
               <li><strong>Glider 手感仍是 partial：</strong>官方公开仓库没有发布商业版 Glider 实体行为，因此缓降、投掷和反弹数值是独立设计的确定性基线；Player 已能通过通用效果入口应用缓降，但正式 App 尚未负责持续组装这个交互。</li>
+              <li><strong>Spring 手感仍是 partial：</strong>四个方向、压缩/冷却周期和发射速度已有确定性测试，但原版商业发行版的完整数值与接触判定尚未建立；当前演示只证明程序生成接触和通用运动效果链。</li>
             </ul>
             <p class="plain"><strong>因此当前准确结论是：</strong>项目已经能离线生成并提交正确的动画帧，但尚未取得 <code>HUMAN_VISIBILITY_CONFIRMED</code>，还不能声称角色已经在人眼可见的真实桌面上运行。</p>
           </div>
@@ -854,6 +893,93 @@ static DemoGlider RunSyntheticGlider()
             rows.Count(row => row.Events.Contains(GliderEventIds.Landed, StringComparison.Ordinal) || row.Events.Contains(GliderEventIds.Bounced, StringComparison.Ordinal)),
             rows.Count(row => row.Events.Contains(GliderEventIds.Destroyed, StringComparison.Ordinal)),
             rows.Count(row => row.PlayerFallLimitApplied),
+            false);
+    }
+
+    var first = RunOnce();
+    var second = RunOnce();
+    return first with { DeterministicReplay = JsonSerializer.Serialize(first.Rows) == JsonSerializer.Serialize(second.Rows) };
+}
+
+static DemoSpring RunSyntheticSpring()
+{
+    static DemoSpring RunOnce()
+    {
+        var world = new SimulationWorld();
+        var playerActor = new Actor("spring-demo-player", 0, 0, 1, 2);
+        var theoActor = new Actor("spring-demo-theo", 20, 0, 2, 2);
+        var gliderActor = new Actor("spring-demo-glider", 40, 0, 2, 2);
+        world.Add(playerActor);
+        world.Add(theoActor);
+        world.Add(gliderActor);
+
+        var spring = new SpringController(
+            "demo-spring",
+            new SimPoint(8, 10),
+            SpringOrientation.Up);
+        var player = new PlayerNormalController(playerActor, initialSpeed: new SimVector(0m, 80m));
+        var theo = new TheoCrystalController(theoActor, initialSpeed: new SimVector(0m, 50m));
+        var glider = new GliderController(gliderActor, initialSpeed: new SimVector(0m, 20m));
+        var rows = new List<DemoSpringRow>();
+
+        for (var tick = 0; tick < 30; tick++)
+        {
+            SpringSnapshot? springSnapshot = null;
+            PlayerNormalSnapshot? playerSnapshot = null;
+            TheoCrystalSnapshot? theoSnapshot = null;
+            GliderSnapshot? gliderSnapshot = null;
+            world.Step(current =>
+            {
+                var contact = tick switch
+                {
+                    0 => new SpringContact("spring-demo-player", SpringTargetKind.Player, new SimPoint(playerActor.X, playerActor.Y), new SimVector(player.SpeedX, player.SpeedY)),
+                    10 => new SpringContact("spring-demo-theo", SpringTargetKind.Theo, new SimPoint(theoActor.X, theoActor.Y), new SimVector(theo.SpeedX, theo.SpeedY)),
+                    20 => new SpringContact("spring-demo-glider", SpringTargetKind.Glider, new SimPoint(gliderActor.X, gliderActor.Y), new SimVector(glider.SpeedX, glider.SpeedY)),
+                    _ => null
+                };
+                springSnapshot = spring.Update(new SpringInput(contact), current);
+                var launch = springSnapshot.LaunchEffect;
+                var playerEffects = launch?.TargetKind == SpringTargetKind.Player
+                    ? new PlayerExternalEffects(null, launch.Velocity)
+                    : PlayerExternalEffects.None;
+                playerSnapshot = player.Update(new PlayerInput(0, 0, false, false), playerEffects, current);
+                theoSnapshot = theo.Update(
+                    TheoCrystalInput.None,
+                    launch?.TargetKind == SpringTargetKind.Theo ? launch.Velocity : null,
+                    current);
+                gliderSnapshot = glider.Update(
+                    GliderInput.None,
+                    launch?.TargetKind == SpringTargetKind.Glider ? launch.Velocity : null,
+                    current);
+            });
+
+            rows.Add(new DemoSpringRow(
+                springSnapshot!.Tick,
+                springSnapshot.State.ToString(),
+                springSnapshot.RetractedTicksRemaining,
+                springSnapshot.CooldownTicksRemaining,
+                springSnapshot.LaunchEffect?.TargetId,
+                springSnapshot.LaunchEffect?.TargetKind.ToString(),
+                playerSnapshot!.Speed.X,
+                playerSnapshot.Speed.Y,
+                theoSnapshot!.Speed.X,
+                theoSnapshot.Speed.Y,
+                gliderSnapshot!.Speed.X,
+                gliderSnapshot.Speed.Y,
+                playerSnapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.ExternalVelocityApplied),
+                theoSnapshot.Events.Any(item => item.Kind == TheoCrystalEventKind.ExternalVelocityApplied),
+                gliderSnapshot.Events.Any(item => item.Kind == GliderEventKind.ExternalVelocityApplied),
+                string.Join(", ", springSnapshot.Events.Select(item => item.EventId))));
+        }
+
+        return new DemoSpring(
+            rows.AsReadOnly(),
+            rows.Count(row => row.Events.Contains(SpringEventIds.Activated, StringComparison.Ordinal)),
+            rows.Count(row => row.Events.Contains(SpringEventIds.LaunchIssued, StringComparison.Ordinal)),
+            rows.Count(row => row.Events.Contains(SpringEventIds.Ready, StringComparison.Ordinal)),
+            rows.Count(row => row.PlayerApplied),
+            rows.Count(row => row.TheoApplied),
+            rows.Count(row => row.GliderApplied),
             false);
     }
 
@@ -1245,6 +1371,34 @@ internal sealed record DemoGliderRow(
     bool HolderFallLimitRequired,
     decimal PlayerSpeedY,
     bool PlayerFallLimitApplied,
+    string Events);
+
+internal sealed record DemoSpring(
+    IReadOnlyList<DemoSpringRow> Rows,
+    int ActivationCount,
+    int LaunchCount,
+    int ReadyCount,
+    int PlayerApplicationCount,
+    int TheoApplicationCount,
+    int GliderApplicationCount,
+    bool DeterministicReplay);
+
+internal sealed record DemoSpringRow(
+    long Tick,
+    string State,
+    int RetractedTicks,
+    int CooldownTicks,
+    string? TargetId,
+    string? TargetKind,
+    decimal PlayerSpeedX,
+    decimal PlayerSpeedY,
+    decimal TheoSpeedX,
+    decimal TheoSpeedY,
+    decimal GliderSpeedX,
+    decimal GliderSpeedY,
+    bool PlayerApplied,
+    bool TheoApplied,
+    bool GliderApplied,
     string Events);
 
 internal sealed class DemoDesktopProvider(params IReadOnlyList<DesktopSurfaceCandidate>[] captures) : IDesktopSurfaceProvider

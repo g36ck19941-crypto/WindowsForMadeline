@@ -83,6 +83,8 @@ CDR-040 applies this rule to `CelesteDesktop.Entity.Theo`. The module references
 
 CDR-041 applies the same boundary to `CelesteDesktop.Entity.Glider` and adds a narrow outward effect contract. A held Glider reports a maximum holder fall speed and whether limiting is currently required; it never mutates Player directly. Player's generic external-effect entry can apply that immutable cap without referencing Glider. Future App orchestration must continuously relay the effect, while Glider remains independent of Player, Theo, rendering and platform code. Destroy or squish terminates only the affected Glider.
 
+CDR-042 places the reusable axis-selective `ExternalVelocityEffect` in `Simulation.Core`. `CelesteDesktop.Entity.Spring` emits that effect together with a target ID and target kind, but references no target module. Player, Theo and Glider accept the generic effect through their own update entry and emit separate application facts. Spring owns activation, retraction, cooldown, ready and release-to-rearm state; future App orchestration routes effects but does not implement Spring rules.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.

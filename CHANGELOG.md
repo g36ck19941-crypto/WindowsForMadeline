@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — CDR-042 deterministic Spring
+
+- Added an isolated Spring module with immutable contact, state, target launch effect and stable event snapshots.
+- Implemented four orientations, activation, retraction, cooldown, reset, disable/enable and release-to-rearm behavior.
+- Added a generic axis-selective external-velocity effect actually applied by Player, Theo and Glider without introducing Spring dependencies into those modules.
+- Added a 42-case interaction matrix, including safe default-input behavior, and a 30-tick cumulative demo; Release passes 489/489 with 0 warnings/errors.
+- Kept fidelity `partial`: formal App routing, original contact/numeric parity, asset animation and visible presentation remain unverified.
+
 ## 2026-09-29 — CDR-041 accepted
 
 - Recorded developer acceptance of CDR-041 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
