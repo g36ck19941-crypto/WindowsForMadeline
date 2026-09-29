@@ -47,5 +47,7 @@
   "nextTask": "CDR-030",
   "acceptedDate": "2026-09-29",
   "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
-  "nextAction": "Publish CDR-022 and begin CDR-030 with generated graphics and hidden automated tests only; visible GUI and real desktop observation remain separately gated."
+  "publishedBranch": "codex/cdr-022-player-traversal",
+  "publishedCommit": "aed2b3f6c39b71011cf4fcb37ee2ffb5c6c01c38",
+  "nextAction": "Publication complete; CDR-030 is locally complete and awaiting acceptance."
 }

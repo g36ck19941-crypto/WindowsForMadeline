@@ -46,5 +46,7 @@
   },
   "acceptedDate": "2026-09-29",
   "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
-  "nextAction": "Publish the accepted CDR-016 commit to its independent remote branch."
+  "publishedBranch": "codex/cdr-016-real-conformance",
+  "publishedCommit": "22d7586c44c611db0d11fc6da93bb9d45f368460",
+  "nextAction": "Publication complete; CDR-020 was completed under the prior authorization."
 }

@@ -42,5 +42,7 @@
   "nextTask": "CDR-022",
   "acceptedDate": "2026-09-29",
   "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
-  "nextAction": "Publish the accepted CDR-021 commit to its independent remote branch."
+  "publishedBranch": "codex/cdr-021-player-normal-jump",
+  "publishedCommit": "eabe378c26df70e771db9b7433b061c25c0c85c3",
+  "nextAction": "Publication complete; CDR-022 was completed under the prior authorization."
 }

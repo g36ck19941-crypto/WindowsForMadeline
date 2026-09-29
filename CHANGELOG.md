@@ -6,7 +6,7 @@
 - Added a Windows backend that creates a never-shown HWND, uploads generated pixels with D3D11, writes an `IDCompositionSurface`, commits DirectComposition and waits for commit completion.
 - Added bounded DPI conversion, negative virtual-origin preservation, hardware/WARP selection and 20 rendering cases; all 318 regressions pass with 0 build warnings/errors.
 - Extended the cumulative demo with a generated presentation checkerboard and health chain; restored the separately passed CDR-016 milestone and explicitly marked CDR-017 through CDR-019 as unassigned reserved numbers.
-- Kept CDR-030 local pending acceptance and made no human-visibility claim. Two attempts to publish the previously accepted milestones failed because GitHub reset the connection; no remote update was claimed.
+- Kept CDR-030 local pending acceptance and made no human-visibility claim. Two initial publication attempts were reset; after a read-back proved no partial refs, connectivity recovered and the accepted CDR-016/020/021/022 commits were published to four independent branches. Remote `main` remained unchanged.
 
 ## 2026-09-29 — CDR-016 through CDR-022 accepted
 

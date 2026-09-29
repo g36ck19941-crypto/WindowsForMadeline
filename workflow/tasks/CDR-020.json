@@ -42,5 +42,7 @@
   "nextTask": "CDR-021",
   "acceptedDate": "2026-09-29",
   "acceptanceScope": "Developer accepted the cumulative CDR-016 through CDR-022 version after verification.",
-  "nextAction": "Publish the accepted CDR-020 commit to its independent remote branch."
+  "publishedBranch": "codex/cdr-020-simulation-core",
+  "publishedCommit": "3dd4b3768a3b15e0650bd56179cb98d4c3ce0c60",
+  "nextAction": "Publication complete; CDR-021 was completed under the prior authorization."
 }
