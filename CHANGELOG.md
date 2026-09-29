@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — CDR-041 accepted
+
+- Recorded developer acceptance of CDR-041 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
+- Opened CDR-042 only for an isolated deterministic Spring module using generated geometry/input and verified contracts.
+- Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+
 ## 2026-09-29 — CDR-041 deterministic Glider
 
 - Added an isolated Glider module with immutable fixed-tick actions, holder snapshots, outward holder effects, states and stable semantic events.

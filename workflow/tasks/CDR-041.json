@@ -3,8 +3,9 @@
   "taskId": "CDR-041",
   "title": "Deterministic Glider entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-29",
+  "acceptedDate": "2026-09-29",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Glider/**",
@@ -62,5 +63,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-042",
-  "nextAction": "Developer reviews the generated CDR-041 report and 447-case offline gate. Keep CDR-041 local until explicit acceptance; CDR-042 remains unauthorized."
+  "nextAction": "Reverify and publish exact accepted CDR-041 commit, then implement authorized CDR-042 Spring offline."
 }

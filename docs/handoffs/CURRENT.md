@@ -20,7 +20,7 @@ CDR-040 was accepted by the developer on 2026-09-29. The isolated Theo module im
 
 CDR-040 was freshly reverified and audited, then exact commit `23531c3b06251b940cfbb145e1b1be5810997cfd` was published and read back at `codex/cdr-040-theo-crystal`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. CDR-041 is now the active local implementation task and must remain unuploaded until later acceptance.
 
-CDR-041 is locally implementation-complete and awaiting developer acceptance. The isolated Glider module implements generated-input pickup/carry/drop/throw, an immutable holder fall-speed-limit request applied through Player's generic external-effect entry, open/closed slow flight, gravity/friction, collision bounce/landing, moving-solid lift inheritance, destroy and per-entity squish isolation. Release builds with 0 warnings/errors; Player 33/33, Glider 42/42 and 447/447 total regressions pass. The cumulative 48-tick demo records 1 pickup, 1 fall-limit request, 1 Player application, 1 throw, 1 horizontal bounce, 1 landing and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App orchestration and original numeric behavior are not established.
+CDR-041 was accepted by the developer on 2026-09-29. The isolated Glider module implements generated-input pickup/carry/drop/throw, an immutable holder fall-speed-limit request applied through Player's generic external-effect entry, open/closed slow flight, gravity/friction, collision bounce/landing, moving-solid lift inheritance, destroy and per-entity squish isolation. Release builds with 0 warnings/errors; Player 33/33, Glider 42/42 and 447/447 total regressions pass. The cumulative 48-tick demo records 1 pickup, 1 fall-limit request, 1 Player application, 1 throw, 1 horizontal bounce, 1 landing and identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App orchestration and original numeric behavior are not established. Exact independent-branch publication is authorized after fresh verification and audit; CDR-042 Spring is authorized next under the same offline-only boundary.
 
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-041 milestone; launcher text does not change task acceptance state.
 
@@ -40,11 +40,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer review of CDR-041. Do not upload it or start CDR-042 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
+Complete the CDR-041 acceptance record, publish the exact accepted commit to its independent branch after the clean gate/audit, then implement and verify CDR-042 locally. Do not upload CDR-042, open visible GUI or access the game installation without a later explicit gate.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-041 acceptance handoff after completed local implementation and CDR-040 publication
+- Scope: CDR-041 exact publication followed by isolated CDR-042 Spring offline implementation
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

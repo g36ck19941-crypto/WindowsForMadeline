@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-042",
+  "title": "Deterministic Spring entity",
+  "owner": "Primary agent",
+  "state": "authorized",
+  "authorizationDate": "2026-09-29",
+  "fidelity": "partial-original-numeric-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.Entity.Spring/**",
+    "tests/CelesteDesktop.Entity.Spring.Tests/**",
+    "minimal generic external-effect integration and tests",
+    "generated cumulative demo",
+    "tools/Verify-CDR042.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Spring input state effect and event snapshots",
+    "four deterministic orientations with directional launch effects",
+    "bounded activation retract cooldown and reset lifecycle",
+    "stable target identity and once-per-contact activation",
+    "Player Theo Glider Solid and two-Spring interaction matrix",
+    "failure isolation stable diagnostics and deterministic replay"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-043",
+  "nextAction": "Publish accepted CDR-041 exactly, then implement and verify CDR-042 locally. Keep CDR-042 unuploaded until later developer acceptance."
+}
