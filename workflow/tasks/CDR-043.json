@@ -3,8 +3,9 @@
   "taskId": "CDR-043",
   "title": "Deterministic Refill entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted",
   "authorizationDate": "2026-09-29",
+  "acceptedDate": "2026-09-30",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Refill/**",
@@ -57,5 +58,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-044",
-  "nextAction": "Developer reviews the generated CDR-043 report and 531-case offline gate. Keep CDR-043 local until explicit acceptance; CDR-044 remains unauthorized."
+  "nextAction": "Reverify and publish exact accepted CDR-043 commit. Keep CDR-044 unauthorized until explicit developer approval."
 }

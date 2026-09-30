@@ -28,9 +28,9 @@ CDR-042 was accepted by the developer on 2026-09-29. The isolated Spring module 
 
 CDR-042 was freshly reverified and audited at 489/489 with 0 build warnings/errors. Exact commit `c2717fa90a74b7384638423d358abdddb6c58d70` was published and read back at `codex/cdr-042-spring`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. CDR-043 is now the active local implementation task and must remain unuploaded until later acceptance.
 
-CDR-043 is locally implementation-complete and awaiting developer acceptance. The isolated Refill module implements resource-aware Player contact, target-addressed dash/stamina restoration, cooldown/respawn, disable/enable and release-to-rearm. Player applies and clamps the generic external-resource effect through its own entry point; Refill references no Player module. Release builds with 0 warnings/errors; Refill 42/42 and 531/531 total regressions pass. The cumulative 16-tick demo records 2 collections, 2 restore requests, 2 respawns and 2 actual Player applications with identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App routing and original contact/respawn parity are not established.
+CDR-043 was accepted by the developer on 2026-09-30. The isolated Refill module implements resource-aware Player contact, target-addressed dash/stamina restoration, cooldown/respawn, disable/enable and release-to-rearm. Player applies and clamps the generic external-resource effect through its own entry point; Refill references no Player module. Release builds with 0 warnings/errors; Refill 42/42 and 531/531 total regressions pass. The cumulative 16-tick demo records 2 collections, 2 restore requests, 2 respawns and 2 actual Player applications with identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App routing and original contact/respawn parity are not established. Exact independent-branch publication is authorized after fresh verification and audit; CDR-044 remains unauthorized.
 
-At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-042 milestone; launcher text does not change task acceptance state.
+At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-043 milestone; launcher text does not change task acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
@@ -48,11 +48,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer review of CDR-043. Do not upload CDR-043 or start CDR-044 until explicit acceptance/authorization; do not open visible GUI or access the game installation.
+Complete the CDR-043 acceptance record and publish the exact accepted commit to its independent branch after the clean gate/audit. Do not start CDR-044, open visible GUI or access the game installation without a later explicit gate.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-043 acceptance handoff after exact CDR-042 publication
+- Scope: CDR-043 exact acceptance publication; CDR-044 remains unauthorized
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

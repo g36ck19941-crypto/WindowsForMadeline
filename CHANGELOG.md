@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-30 — CDR-043 accepted
+
+- Recorded developer acceptance of CDR-043 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
+- Kept CDR-044 Water unauthorized; acceptance of Refill does not authorize the next entity automatically.
+- Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
+
 ## 2026-09-29 — CDR-043 deterministic Refill
 
 - Added an isolated Refill module with immutable resource-aware contact, lifecycle, target restore effect and stable event snapshots.
