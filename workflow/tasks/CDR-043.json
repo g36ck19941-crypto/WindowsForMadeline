@@ -60,10 +60,11 @@
   "publication": {
     "acceptedCommit": "9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14",
     "targetBranch": "codex/cdr-043-refill",
-    "status": "pending-network",
-    "attempts": 2,
-    "lastError": "GitHub port 443 connection timeout"
+    "status": "published-and-read-back",
+    "attempts": 3,
+    "priorFailures": 2,
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
   },
   "nextTask": "CDR-044",
-  "nextAction": "Retry exact CDR-043 publication when GitHub connectivity returns. Keep CDR-044 unauthorized until explicit developer approval."
+  "nextAction": "Wait for explicit developer authorization before starting CDR-044 Water."
 }

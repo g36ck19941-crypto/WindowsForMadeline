@@ -4,7 +4,7 @@
 
 - Recorded developer acceptance of CDR-043 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.
 - Exact commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` passed Release with 0 warnings/errors, Refill 42/42 and 531/531 total regressions; the tracked-tree audit found no commercial media, binaries, archives, caches or build output.
-- Two publication attempts to `codex/cdr-043-refill` failed before any remote update because GitHub port 443 timed out. Publication remains pending network recovery.
+- After two port-443 timeouts, connectivity recovered and exact commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` was published and read back at `codex/cdr-043-refill`; remote `main` remained `d237277e10af090cf60ec015c22174565e6cdc0a`.
 - Kept CDR-044 Water unauthorized; acceptance of Refill does not authorize the next entity automatically.
 - Visible GUI, live input, game/install access or writes, and commercial-byte persistence remain forbidden.
 
