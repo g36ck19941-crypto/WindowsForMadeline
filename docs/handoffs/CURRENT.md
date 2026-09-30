@@ -30,6 +30,8 @@ CDR-042 was freshly reverified and audited at 489/489 with 0 build warnings/erro
 
 CDR-043 was accepted by the developer on 2026-09-30. The isolated Refill module implements resource-aware Player contact, target-addressed dash/stamina restoration, cooldown/respawn, disable/enable and release-to-rearm. Player applies and clamps the generic external-resource effect through its own entry point; Refill references no Player module. Release builds with 0 warnings/errors; Refill 42/42 and 531/531 total regressions pass. The cumulative 16-tick demo records 2 collections, 2 restore requests, 2 respawns and 2 actual Player applications with identical replay. It accessed no installation, opened no visible GUI, consumed no live input and persisted no commercial bytes. Behavior remains `partial`; formal App routing and original contact/respawn parity are not established. Exact independent-branch publication is authorized after fresh verification and audit; CDR-044 remains unauthorized.
 
+Exact acceptance commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` was freshly reverified at Refill 42/42 and 531/531 total with 0 build warnings/errors. The tracked-tree audit found no commercial media, game binaries, archives, caches or build output. Two pushes to `codex/cdr-043-refill` failed before changing the remote because GitHub port 443 timed out. Publication is pending network recovery; do not claim it is uploaded.
+
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-043 milestone; launcher text does not change task acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
@@ -48,11 +50,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Complete the CDR-043 acceptance record and publish the exact accepted commit to its independent branch after the clean gate/audit. Do not start CDR-044, open visible GUI or access the game installation without a later explicit gate.
+Retry publication of exact CDR-043 commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` to `codex/cdr-043-refill` when GitHub connectivity is available, then read back the branch and confirm remote `main` is unchanged. Do not start CDR-044, open visible GUI or access the game installation without a later explicit gate.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-043 exact acceptance publication; CDR-044 remains unauthorized
+- Scope: CDR-043 exact acceptance publication retry only; CDR-044 remains unauthorized
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

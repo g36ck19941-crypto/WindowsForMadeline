@@ -57,6 +57,13 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "acceptedCommit": "9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14",
+    "targetBranch": "codex/cdr-043-refill",
+    "status": "pending-network",
+    "attempts": 2,
+    "lastError": "GitHub port 443 connection timeout"
+  },
   "nextTask": "CDR-044",
-  "nextAction": "Reverify and publish exact accepted CDR-043 commit. Keep CDR-044 unauthorized until explicit developer approval."
+  "nextAction": "Retry exact CDR-043 publication when GitHub connectivity returns. Keep CDR-044 unauthorized until explicit developer approval."
 }
