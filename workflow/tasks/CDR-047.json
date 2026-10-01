@@ -3,8 +3,9 @@
   "taskId": "CDR-047",
   "title": "Deterministic Seeker entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted_published",
   "authorizationDate": "2026-10-01",
+  "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-navigation-and-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Seeker/**",
@@ -53,6 +54,14 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "acceptedCommit": "14a5142cad164617478a81fc74ad9490ee500ae6",
+    "targetBranch": "codex/cdr-047-seeker",
+    "status": "published-and-read-back",
+    "attempts": 2,
+    "priorFailures": 1,
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
   "nextTask": null,
-  "nextAction": "Wait for developer acceptance. Do not publish CDR-047 or start later runtime or visible integration without explicit authorization."
+  "nextAction": "CDR-047 is accepted and published. Wait for explicit authorization before starting any later runtime or visible integration task."
 }

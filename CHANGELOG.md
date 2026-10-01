@@ -7,7 +7,8 @@
 - Added 66 focused Seeker cases and extended the complete offline gate to 750 tests with a 0-warning/0-error Release build.
 - Extended the generated cumulative demo with a deterministic 30-tick trace covering patrol, alert, chase, windup, dash, target hit, wall stun, recovery and target loss.
 - Kept fidelity `partial`: a hit fact is not Player death, and original navigation, obstacle avoidance, damage/bounce behavior, numeric parity, assets/audio, App routing and visible presentation are not established.
-- CDR-047 remains acceptance-pending and unuploaded; no game, GUI, live input, real-install access/write or commercial asset was used.
+- The developer accepted CDR-047. Exact commit `14a5142cad164617478a81fc74ad9490ee500ae6` passed a fresh isolated 750/750 gate and clean outbound audit, then was published and read back at `codex/cdr-047-seeker`; remote `main` remained `d237277e10af090cf60ec015c22174565e6cdc0a`.
+- No game, GUI, live input, real-install access/write or commercial asset was used.
 
 ## 2026-10-01 — CDR-046 accepted; publication pending network
 

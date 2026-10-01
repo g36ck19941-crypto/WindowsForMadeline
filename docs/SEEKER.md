@@ -25,4 +25,4 @@ These steps prove only generated offline state behavior. They do not prove origi
 
 ## Next gate
 
-CDR-047 remains local until explicit developer acceptance. No later entity or visible/runtime integration may start automatically.
+CDR-047 was accepted and exact commit `14a5142` was published and read back at `codex/cdr-047-seeker`. No later entity or visible/runtime integration may start automatically without new authorization.

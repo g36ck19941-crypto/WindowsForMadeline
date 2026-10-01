@@ -56,6 +56,8 @@ At the developer's request, both root `.cmd` launchers begin with detailed plain
 
 On 2026-10-01 the developer authorized CDR-047 Seeker under a generated-only, fixed-tick, offline boundary. The independent module now covers bounded patrol/turn, eligible-target detection and identity lock, alert, chase, lost-target grace, windup, normalized dash, target-addressed hit facts, wall-hit stun, dash timeout, deterministic spawn recovery, disable/enable and two-Seeker isolation. Seeker passes 66/66 focused cases and the complete gate passes 750/750 with 0 Release warnings/errors. Its 30-tick generated demo records patrol 7, alert 3, chase-start 3, chased 3, windup 2, dash-start 2, dashed 1, target-hit 1, wall-hit 1, stunned/recovered 2 each and target-lost 1 with identical replay. Both root `.cmd` entries also completed successfully under their no-open/no-pause switches. A hit fact is not Player death. Original navigation, obstacle avoidance, damage/bounce behavior, numeric parity, assets/audio, formal App routing and visible presentation remain `partial` or unestablished. No game, GUI, live input, real-install access/write or commercial bytes were used. CDR-047 is acceptance-pending and must not be uploaded before explicit developer acceptance.
 
+The developer accepted CDR-047 on 2026-10-01 and authorized publication. Exact commit `14a5142cad164617478a81fc74ad9490ee500ae6` passed a fresh isolated Release gate with 0 warnings/errors, Seeker 66/66 and 750/750 total regressions. An initial restore-only attempt ended with stale MSBuild child-node exits; after shutting down build servers and disabling node reuse, the full gate passed without a product test failure. The outgoing exact tree contains 0 forbidden commercial-media/build-output paths, 0 binary diffs, 0 blobs over 1 MiB and 0 real-install/user-path hits. The exact commit was published and read back at `codex/cdr-047-seeker`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. No later task is authorized.
+
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
 CDR-031 was reverified and audited, then published and read back at `codex/cdr-031-desktop-geometry` = `311c426190489f329b48f983d405abc8c7345809` after one transient GitHub connectivity failure. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
@@ -72,11 +74,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Commit the verified CDR-047 implementation locally, then stop for explicit developer acceptance. Do not upload it or start another entity.
+CDR-047 is accepted and published. Stop for explicit developer authorization before starting any later runtime, visible integration or new entity task.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-047 local implementation, verification, commit and developer acceptance gate
+- Scope: post-CDR-047 authorization gate after exact independent-branch publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data
