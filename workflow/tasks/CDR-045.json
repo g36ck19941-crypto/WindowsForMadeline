@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-045",
+  "title": "Deterministic Bumper entity",
+  "owner": "Primary agent",
+  "state": "authorized_implementation_in_progress",
+  "authorizationDate": "2026-10-01",
+  "fidelity": "partial-original-numeric-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.Entity.Bumper/**",
+    "tests/CelesteDesktop.Entity.Bumper.Tests/**",
+    "minimal generic Player velocity-effect integration tests",
+    "generated cumulative demo",
+    "tools/Verify-CDR045.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Bumper input state effect and event snapshots",
+    "generated circular contact with radial launch direction",
+    "deterministic coincident-center fallback direction",
+    "bounded cooldown release-to-rearm disable and enable lifecycle",
+    "stable target identity deterministic replay and two-Bumper isolation",
+    "Player application through the existing generic external-velocity entry"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-046",
+  "nextAction": "Implement and verify CDR-045 locally. Do not publish CDR-044 or CDR-045, and do not start CDR-046 Puffer without developer acceptance and authorization."
+}

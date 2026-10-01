@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-01 — CDR-045 Bumper authorized
+
+- Recorded developer authorization for an isolated deterministic Bumper using generated geometry and contact input only.
+- Bounded implementation to circular contact, radial target-addressed launch, deterministic center fallback, cooldown, release-to-rearm, disable/enable, isolation and generic Player velocity application.
+- Kept CDR-044 awaiting acceptance and unuploaded; original numeric/visual parity, visible GUI, live input, game/install access, commercial bytes and CDR-046 Puffer remain outside the authorization.
+
 ## 2026-10-01 — CDR-044 Water authorized
 
 - Recorded developer authorization for an isolated deterministic Water volume using generated rectangles, velocities and swim axes only.

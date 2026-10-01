@@ -34,7 +34,9 @@ Exact acceptance commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` was freshly r
 
 On 2026-10-01 the developer authorized CDR-044 Water under the previously stated generated-only boundary. Scope is an isolated deterministic rectangular Water volume with enter/submerged/exit transitions, drag, neutral buoyancy, directional swim targets, speed limits, multiple occupants, disable/enable, isolation and separate generic Player velocity application. Original numeric/visual parity remains `partial`; visible GUI, live input, game/install access, commercial bytes and CDR-045 Bumper remain unauthorized.
 
-CDR-044 local implementation is complete and awaiting developer acceptance. The independent Water module consumes generated immutable rectangles, velocities and swim axes; records stable enter/submerged/motion/exit facts; produces bounded drag, neutral buoyancy and directional swim velocity; orders multiple occupants deterministically; and isolates disable/failure state. Player applies the target-addressed generic velocity separately. Release builds with 0 warnings/errors; Water 48/48 and 579/579 total regressions pass. The 12-tick demo records entered 3, submerged 13, motion issued 13, exited 2 and Player applied 10 with identical replay. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original surface/contact/numeric parity, formal App routing, assets and visible presentation are not established. Do not upload before acceptance and do not start CDR-045.
+CDR-044 local implementation is complete and awaiting developer acceptance. The independent Water module consumes generated immutable rectangles, velocities and swim axes; records stable enter/submerged/motion/exit facts; produces bounded drag, neutral buoyancy and directional swim velocity; orders multiple occupants deterministically; and isolates disable/failure state. Player applies the target-addressed generic velocity separately. Release builds with 0 warnings/errors; Water 48/48 and 579/579 total regressions pass. The 12-tick demo records entered 3, submerged 13, motion issued 13, exited 2 and Player applied 10 with identical replay. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original surface/contact/numeric parity, formal App routing, assets and visible presentation are not established. Do not upload before acceptance; CDR-045 was separately authorized as recorded below.
+
+On 2026-10-01 the developer separately authorized CDR-045 Bumper without accepting CDR-044. CDR-044 therefore remains acceptance-pending and unuploaded. CDR-045 is bounded to a generated deterministic circular contact, radial target-addressed launch, coincident-center fallback, cooldown, release-to-rearm, disable/enable, isolation and actual generic Player velocity application. Original numeric/trajectory/visual parity remains `partial`; visible GUI, live input, game/install access, commercial bytes and CDR-046 Puffer remain unauthorized.
 
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-044 milestone; launcher text does not change task acceptance state.
 
@@ -54,11 +56,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer acceptance of CDR-044. Do not publish it or start CDR-045 Bumper without explicit developer authorization.
+Implement and verify CDR-045 locally. Do not publish CDR-044 or CDR-045, and do not start CDR-046 Puffer without explicit developer acceptance and authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-044 developer acceptance gate; implementation is local and unuploaded
+- Scope: CDR-045 local pure-offline implementation; CDR-044 remains acceptance-pending and unuploaded
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

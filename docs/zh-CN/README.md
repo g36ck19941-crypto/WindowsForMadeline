@@ -34,6 +34,7 @@
 | `SPRING.md` | `../SPRING.md` |
 | `REFILL.md` | `../REFILL.md` |
 | `WATER.md` | `../WATER.md` |
+| `BUMPER.md` | `../BUMPER.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
