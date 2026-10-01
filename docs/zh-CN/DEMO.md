@@ -133,3 +133,9 @@
 双击 `演示当前进度.cmd`。累计报告会新增 12 tick 的程序生成 Water 轨迹，应包含 3 次 `WATER_ENTERED`、13 次 `WATER_SUBMERGED`、13 次 `WATER_MOTION_ISSUED`、2 次 `WATER_EXITED` 和 10 次 Player 实际速度应用。表格会展示自然阻力/浮力、方向游动、第二个合成浸没目标、离开和再次进入；重复运行必须完全一致。
 
 然后双击 `验证当前版本.cmd`。Water 应为 `48/48`，累计为 `579/579`，最后显示 `CDR-044 OFFLINE VERIFICATION PASSED`。这只证明程序生成矩形接触、确定性运动效果、多目标隔离和 Player 离线实际应用；正式 App 路由、原版水面/接触/数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。
+
+## CDR-045——Bumper（弹力球）确定性实体
+
+双击 `演示当前进度.cmd`。累计报告会新增 15 tick 的程序生成 Bumper 轨迹，应包含 4 次 `BUMPER_ACTIVATED`、4 次 `BUMPER_LAUNCH_ISSUED`、3 次 `BUMPER_READY`、1 次 `BUMPER_CENTER_FALLBACK_USED`、1 次 `BUMPER_CONTACT_IGNORED` 和 4 次 Player 实际速度应用。表格会展示右侧、斜向、中心重合回退和左侧弹飞，同时第二个 Bumper 保持独立；重复运行必须完全一致。
+
+然后双击 `验证当前版本.cmd`。Bumper 应为 `46/46`，累计为 `625/625`，最后显示 `CDR-045 OFFLINE VERIFICATION PASSED`。这只证明程序生成圆形接触、确定性径向速度、冷却/重新武装、双 Bumper 隔离、Player 实际应用和 Player 自己处理 Solid 碰撞；正式 App 路由、原版接触/数值/轨迹、原版像素与声音、可见桌面、实时输入和安装目录连接仍未证明。

@@ -60,6 +60,8 @@ Refill emits `REFILL_COLLECTED`, `REFILL_RESTORE_ISSUED`, `REFILL_COOLDOWN_START
 
 Water emits `WATER_ENTERED`, `WATER_SUBMERGED`, `WATER_MOTION_ISSUED`, `WATER_EXITED`, `WATER_DISABLED`, `WATER_ENABLED` and `WATER_CONTACT_IGNORED`. A motion-issued event identifies the intended target but does not prove application; Player records `ExternalVelocityApplied` separately. Events carry only bounded entity/target IDs and generated volume bounds, never live input, assets or desktop content. No Water event implies rendering or human visibility.
 
+Bumper emits `BUMPER_ACTIVATED`, `BUMPER_LAUNCH_ISSUED`, `BUMPER_CENTER_FALLBACK_USED`, `BUMPER_COOLDOWN_STARTED`, `BUMPER_READY`, `BUMPER_DISABLED`, `BUMPER_ENABLED` and `BUMPER_CONTACT_IGNORED`. A launch-issued event identifies the intended target and direction but does not prove application; Player records `ExternalVelocityApplied` separately. The center-fallback event makes the zero-distance direction decision observable instead of silently choosing one. No Bumper event implies assets, audio, rendering or human visibility.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

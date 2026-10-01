@@ -59,3 +59,4 @@
 | `updates/2026-09-29-cdr-042-spring.md` | `../updates/2026-09-29-cdr-042-spring.md` |
 | `updates/2026-09-29-cdr-043-refill.md` | `../updates/2026-09-29-cdr-043-refill.md` |
 | `updates/2026-10-01-cdr-044-water.md` | `../updates/2026-10-01-cdr-044-water.md` |
+| `updates/2026-10-01-cdr-045-bumper.md` | `../updates/2026-10-01-cdr-045-bumper.md` |

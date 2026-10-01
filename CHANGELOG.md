@@ -4,6 +4,9 @@
 
 - Recorded developer authorization for an isolated deterministic Bumper using generated geometry and contact input only.
 - Bounded implementation to circular contact, radial target-addressed launch, deterministic center fallback, cooldown, release-to-rearm, disable/enable, isolation and generic Player velocity application.
+- Completed the independent Bumper module and 46 focused cases; the complete Release gate passes 625/625 with 0 warnings/errors.
+- Extended the generated cumulative demo with a 15-tick Bumper trace: activated 4, launch issued 4, ready 3, center fallback 1, ignored 1 and Player applied 4, with identical replay.
+- Added stable Bumper diagnostics, English contracts, Chinese acceptance material and double-click developer entry updates.
 - Kept CDR-044 awaiting acceptance and unuploaded; original numeric/visual parity, visible GUI, live input, game/install access, commercial bytes and CDR-046 Puffer remain outside the authorization.
 
 ## 2026-10-01 — CDR-044 Water authorized

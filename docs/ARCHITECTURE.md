@@ -89,6 +89,8 @@ CDR-043 adds the bounded `ExternalResourceEffect` in `Simulation.Core`. `Celeste
 
 CDR-044 adds `CelesteDesktop.Entity.Water` as an isolated rectangular volume. It consumes immutable target bounds, velocity and generated swim axes, tracks occupants in stable ordinal order, and emits target-addressed `ExternalVelocityEffect` values for drag, neutral buoyancy, directional swimming and bounded speed. Water references no Player module; Player applies the generic velocity through its existing entry and records a separate application fact. Water owns enter/submerged/exit, disable/enable and multi-occupant state, while future App orchestration only supplies contacts and routes effects.
 
+CDR-045 adds `CelesteDesktop.Entity.Bumper` as an isolated circular-contact state machine. It receives generated target centers, checks a bounded radius, derives a deterministic outward unit direction (with an explicit upward fallback for coincident centers), and emits a target-addressed two-axis `ExternalVelocityEffect`. Bumper references no Player or Solid module; Player applies the velocity and remains responsible for later Solid collision. Bumper owns activation, cooldown, ready, release-to-rearm and disable/enable state, while future App orchestration only supplies contacts and routes effects.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.

@@ -3,7 +3,7 @@
   "taskId": "CDR-045",
   "title": "Deterministic Bumper entity",
   "owner": "Primary agent",
-  "state": "authorized_implementation_in_progress",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
@@ -22,6 +22,14 @@
     "stable target identity deterministic replay and two-Bumper isolation",
     "Player application through the existing generic external-velocity entry"
   ],
+  "features": [
+    "immutable fixed-tick Bumper contact state launch effect and event snapshots",
+    "generated circular range check with deterministic outward radial direction",
+    "explicit upward coincident-center fallback with stable diagnostic event",
+    "bounded cooldown ready release-to-rearm disable and enable lifecycle",
+    "target-addressed generic velocity effect actually applied by Player",
+    "Player-owned Solid collision and two-Bumper isolation coverage"
+  ],
   "forbidden": [
     "visible GUI",
     "live input",
@@ -32,6 +40,23 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "bumperTests": 46,
+    "totalRegressionTests": 625,
+    "demoTicks": 15,
+    "demoActivations": 4,
+    "demoLaunches": 4,
+    "demoReady": 3,
+    "demoCenterFallbacks": 1,
+    "demoIgnoredContacts": 1,
+    "demoPlayerApplications": 4,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-046",
-  "nextAction": "Implement and verify CDR-045 locally. Do not publish CDR-044 or CDR-045, and do not start CDR-046 Puffer without developer acceptance and authorization."
+  "nextAction": "Wait for developer acceptance. Do not publish CDR-044 or CDR-045, and do not start CDR-046 Puffer without explicit authorization."
 }

@@ -91,6 +91,8 @@ CDR-043 在 `Simulation.Core` 加入受限的 `ExternalResourceEffect`。`Celest
 
 CDR-044 新增隔离的 `CelesteDesktop.Entity.Water` 矩形体积模块。它只接收不可变的目标矩形、速度和程序生成游动方向，按稳定顺序记录浸没目标，并输出带目标 ID 的通用速度效果，实现水平阻力、自然上浮、方向游动和限速。Water 不引用 Player；Player 通过已有入口应用速度并另记“已应用”事实。进入/浸没/离开、停用/启用和多目标状态归 Water 管理，未来 App 只负责提供接触并转交效果。
 
+CDR-045 新增隔离的 `CelesteDesktop.Entity.Bumper` 圆形接触状态机。它只接收程序生成的目标中心，检查受限半径，计算确定性的向外单位方向；目标中心与 Bumper 中心重合时会明确记录并固定向上回退。Bumper 输出带目标 ID 的双轴通用速度效果，不引用 Player 或 Solid；Player 自己应用速度并继续负责之后的 Solid 碰撞。激活、冷却、可用、离开后重新武装和停用/启用由 Bumper 管理，未来 App 只负责提供接触并转交效果。
+
 ## 6. 预留扩展接口
 
 `docs/EXTENSIONS.md` 预留 `IAssetSourceProvider` 和 `IWorldContentProvider` 概念边界，使未来可以接入只读 Mod 素材和规范化关卡/地图描述，而不让这些格式耦合到 Simulation 或 App。

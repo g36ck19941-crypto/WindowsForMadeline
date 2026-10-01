@@ -38,7 +38,9 @@ CDR-044 local implementation is complete and awaiting developer acceptance. The 
 
 On 2026-10-01 the developer separately authorized CDR-045 Bumper without accepting CDR-044. CDR-044 therefore remains acceptance-pending and unuploaded. CDR-045 is bounded to a generated deterministic circular contact, radial target-addressed launch, coincident-center fallback, cooldown, release-to-rearm, disable/enable, isolation and actual generic Player velocity application. Original numeric/trajectory/visual parity remains `partial`; visible GUI, live input, game/install access, commercial bytes and CDR-046 Puffer remain unauthorized.
 
-At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-044 milestone; launcher text does not change task acceptance state.
+CDR-045 local implementation is complete and awaiting developer acceptance. The independent Bumper module consumes generated target centers, checks a circular radius, calculates deterministic outward radial velocity, records an explicit upward fallback at coincident centers, and owns cooldown, ready, release-to-rearm and disable/enable state. Player applies the target-addressed generic velocity separately and remains responsible for Solid collision. Release builds with 0 warnings/errors; Bumper 46/46 and 625/625 total regressions pass. The 15-tick demo records activated 4, launch issued 4, ready 3, center fallback 1, ignored 1 and Player applied 4 with identical replay; a second Bumper remains isolated. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original contact/numeric/path parity, formal App routing, assets, audio and visible presentation are not established. Do not upload CDR-044 or CDR-045 before their respective acceptance, and do not start CDR-046.
+
+At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-045 milestone; launcher text does not change either task's acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
@@ -56,11 +58,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Implement and verify CDR-045 locally. Do not publish CDR-044 or CDR-045, and do not start CDR-046 Puffer without explicit developer acceptance and authorization.
+Stop for developer acceptance. CDR-044 and CDR-045 are separate local acceptance candidates and neither is uploaded. Do not publish either task or start CDR-046 Puffer without explicit developer acceptance and authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-045 local pure-offline implementation; CDR-044 remains acceptance-pending and unuploaded
+- Scope: separate CDR-044 and CDR-045 developer acceptance gates; both implementations are local and unuploaded
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

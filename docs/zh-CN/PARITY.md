@@ -35,7 +35,7 @@
 | Spring | asset_exact | partial | partial | unstarted | CDR-042 程序生成的四方向生命周期及 Player/Theo/Glider 应用矩阵通过；原版接触/数值、正式 App 路由、素材动画和可见集成尚未建立 |
 | Refill | unstarted | partial | partial | unstarted | CDR-043 程序生成的收集/资源恢复/冷却/重生及 Player 应用矩阵通过；原版接触/重生数值、正式 App 路由、素材动画和可见集成尚未建立 |
 | Water | unstarted | partial | partial | unstarted | CDR-044 程序生成的重叠/进入/浸没/阻力/浮力/游动限速/离开及 Player 应用矩阵通过；原版水面/接触/数值、正式 App 路由、素材动画和可见集成尚未建立 |
-| Bumper | unstarted | unstarted | unstarted | unstarted | 径向弹射/冷却 |
+| Bumper | unstarted | partial | partial | unstarted | CDR-045 程序生成的圆形接触/径向弹飞/中心回退/冷却/重新武装及 Player 应用矩阵通过；原版接触/数值/轨迹、正式 App 路由、素材、声音和可见集成尚未建立 |
 | Puffer | unstarted | unstarted | unstarted | unstarted | 游动/爆炸/弹射 |
 | Seeker | unstarted | unstarted | unstarted | unstarted | 后置复杂实体 |
 | 关卡/地图 | deferred | deferred | deferred | deferred | 未来 `IWorldContentProvider`；当前无解析器 |

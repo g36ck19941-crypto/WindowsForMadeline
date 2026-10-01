@@ -40,7 +40,7 @@
 2. `CDR-031` 桌面几何适配：开发者已验收，复验为 19/19 专项、337/337 总回归和 1/1 真实匿名汇总；已上传到独立分支 `codex/cdr-031-desktop-geometry` 的 `311c426`，远程 `main` 未更新。
 3. `CDR-032` 素材到动画呈现：开发者已于 2026-09-29 验收；已上传到独立分支 `codex/cdr-032-animation-presentation` 的 `1c39c0a`，远程 `main` 未更新。固定 tick 选帧、循环/末帧/goto、原点/位置/翻转合成与单向 Rendering 交接已实现；28/28 专项、365/365 总回归和 8 tick 累计演示通过。
 
-CDR-040 Theo Crystal、CDR-041 Glider、CDR-042 Spring 与 CDR-043 Refill 均已验收并上传独立分支；CDR-044 Water 已在本地完成并等待验收，尚未上传；CDR-045 Bumper 已单独授权并正在本地实现，这不构成 CDR-044 验收。可见 GUI、实时输入、游戏/安装访问、安装写入和商业素材持久化仍未授权。
+CDR-040 Theo Crystal、CDR-041 Glider、CDR-042 Spring 与 CDR-043 Refill 均已验收并上传独立分支；CDR-044 Water 与 CDR-045 Bumper 已分别在本地完成并等待验收，均未上传；CDR-045 的单独授权不构成 CDR-044 验收。可见 GUI、实时输入、游戏/安装访问、安装写入和商业素材持久化仍未授权。
 
 ## P4 — 交互实体
 
@@ -49,7 +49,7 @@ CDR-040 Theo Crystal、CDR-041 Glider、CDR-042 Spring 与 CDR-043 Refill 均已
 3. `CDR-042` Spring：开发者已于 2026-09-29 验收；复验/审计通过并上传到 `codex/cdr-042-spring` 的 `c2717fa`，远程 `main` 未更新。支持四方向发射、压缩/冷却/复位、停用/启用、离开后重触发和带目标身份的速度效果；Player、Theo、Glider 均实际应用。Spring 42/42、489/489 总回归和 30 tick 演示通过，行为仍为 `partial`。
 4. `CDR-043` Refill：开发者已于 2026-09-30 验收；精确提交 `9d05ea67` 已通过 Release 0 警告/错误、Refill 42/42、531/531 总回归和出站审计，并上传回读到 `codex/cdr-043-refill`，远程 `main` 未改变。功能支持按资源缺口收集、带目标身份的冲刺/体力恢复、冷却/重生、停用/启用和离开后重触发；Player 会实际应用并限制资源上限。16 tick 演示通过，行为仍为 `partial`。CDR-044 已于 2026-10-01 单独授权，详见下一项。
 5. `CDR-044` Water：Primary owner，本地实现完成，等待开发者验收且未上传。支持矩形进入/浸没/离开、阻力、自然上浮、方向游动、限速、多目标稳定排序、停用/启用和隔离；Water 发出的目标速度由 Player 自己实际应用。Water 48/48、累计 579/579、Release 0 警告/错误；12 tick 演示记录进入 3、浸没 13、运动请求 13、离开 2、Player 应用 10，重放一致。原版数值/水面、正式 App、素材和可见呈现仍为 `partial`。CDR-045 已单独授权，但不代表 CDR-044 已验收。
-6. `CDR-045` Bumper：Primary owner，已于 2026-10-01 授权本地纯离线实现。范围为程序生成圆形接触、径向弹飞、中心重合固定回退、冷却/重新武装、停用/启用、两个 Bumper 隔离、Player 实际应用、测试和累计演示。原版数值/移动轨迹/特殊变体、素材、声音、正式 App 和可见呈现仍为 `partial`。CDR-046 Puffer 和后置 Seeker 尚未授权。
+6. `CDR-045` Bumper：Primary owner，本地实现完成，等待开发者验收且未上传。支持圆形范围判断、向外径向弹飞、中心重合固定向上回退、冷却/恢复可用、离开后重新武装、停用/启用、双 Bumper 隔离、Player 实际应用和 Player 自己处理 Solid 碰撞。Bumper 46/46、累计 625/625、Release 0 警告/错误；15 tick 演示记录激活 4、弹飞请求 4、冷却完成 3、中心回退 1、忽略 1、Player 应用 4，重放一致。原版数值/移动轨迹/特殊变体、素材、声音、正式 App 和可见呈现仍为 `partial`。CDR-046 Puffer 和后置 Seeker 尚未授权。
 
 每个实体拥有独立模块、日志、测试和交互矩阵；未通过与 Player、Solid 及受支持实体之间的交互矩阵前不能验收。
 

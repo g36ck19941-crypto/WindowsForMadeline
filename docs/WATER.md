@@ -28,4 +28,4 @@ This is an offline acceptance candidate only. It does not prove original numeric
 
 ## Next gate
 
-CDR-045 Bumper is not authorized by CDR-044 implementation or acceptance.
+CDR-045 Bumper was separately authorized on 2026-10-01 and is now a distinct local acceptance candidate. That later authorization does not accept or publish CDR-044.

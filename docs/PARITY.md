@@ -33,7 +33,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Spring | asset_exact | partial | partial | unstarted | CDR-042 generated four-direction lifecycle and Player/Theo/Glider application matrix passes; original contact/numeric parity, formal App routing, asset animation and visible integration are not established |
 | Refill | unstarted | partial | partial | unstarted | CDR-043 generated collection/resource-restore/cooldown/respawn and Player-application matrix passes; original contact/respawn parity, formal App routing, asset animation and visible integration are not established |
 | Water | unstarted | partial | partial | unstarted | CDR-044 generated overlap/enter/submerged/drag/buoyancy/swim-limit/exit and Player-application matrix passes; original surface/contact/numeric parity, formal App routing, asset animation and visible integration are not established |
-| Bumper | unstarted | unstarted | unstarted | unstarted | Radial launch/cooldown |
+| Bumper | unstarted | partial | partial | unstarted | CDR-045 generated circular contact/radial launch/fallback/cooldown/rearm and Player-application matrix passes; original contact/numeric/path parity, formal App routing, assets, audio and visible integration are not established |
 | Puffer | unstarted | unstarted | unstarted | unstarted | Swim/explosion/launch |
 | Seeker | unstarted | unstarted | unstarted | unstarted | Deferred complexity |
 | Levels/maps | deferred | deferred | deferred | deferred | Future `IWorldContentProvider`; no current parser |
