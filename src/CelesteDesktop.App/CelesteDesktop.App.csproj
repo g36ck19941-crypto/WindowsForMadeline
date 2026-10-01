@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CelesteDesktop.Animation\CelesteDesktop.Animation.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Contracts\CelesteDesktop.Contracts.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Bumper\CelesteDesktop.Entity.Bumper.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Glider\CelesteDesktop.Entity.Glider.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Puffer\CelesteDesktop.Entity.Puffer.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Refill\CelesteDesktop.Entity.Refill.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Seeker\CelesteDesktop.Entity.Seeker.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Spring\CelesteDesktop.Entity.Spring.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Theo\CelesteDesktop.Entity.Theo.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Entity.Water\CelesteDesktop.Entity.Water.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Player\CelesteDesktop.Player.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Rendering\CelesteDesktop.Rendering.csproj" />
+    <ProjectReference Include="..\CelesteDesktop.Simulation.Core\CelesteDesktop.Simulation.Core.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-050",
+  "title": "Offline App orchestration and lifecycle",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-10-01",
+  "fidelity": "partial-visible-host-and-original-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.App/**",
+    "tests/CelesteDesktop.App.Tests/**",
+    "generated cumulative demo",
+    "tools/Verify-CDR050.ps1",
+    "developer launchers and project records"
+  ],
+  "features": [
+    "explicit start pause resume stop fault and dispose lifecycle",
+    "exactly one SimulationWorld step per App tick",
+    "stable optional entity update and effect routing order",
+    "Player Theo and Glider target routing with explicit conflicts",
+    "optional entity and presentation failure isolation",
+    "post-simulation immutable animation presentation"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "claiming original parity or human visibility"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "appTests": 50,
+    "totalRegressionTests": 800,
+    "demoTicks": 4,
+    "demoSimulationCompleted": 4,
+    "demoEffectRoutes": 2,
+    "demoPresentationCallsBeforeIsolation": 2,
+    "demoDisabledComponents": 1,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
+  "publication": {
+    "status": "not-authorized-before-acceptance"
+  },
+  "nextTask": null,
+  "nextAction": "Wait for explicit developer acceptance before publication or later integration."
+}

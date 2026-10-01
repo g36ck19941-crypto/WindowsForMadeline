@@ -23,7 +23,8 @@ echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演�
  echo 10. 运行 Bumper 的圆形接触、径向弹飞、冷却、重新武装、中心回退和 Player 实际应用轨迹。
  echo 11. 运行 Puffer 的左右游动、接近预警、爆炸弹射、冷却重生、中心回退和 Player 实际应用轨迹。
  echo 12. 运行 Seeker 的巡逻、发现、追逐、蓄力、冲刺、命中、撞墙眩晕和恢复轨迹。
- echo 13. 生成一份本地 HTML 报告，方便直接查看结果。
+ echo 13. 把以上模块交给 App 统一启动和逐 tick 调度，并演示暂停、恢复、停止和呈现故障隔离。
+ echo 14. 生成一份本地 HTML 报告，方便直接查看结果。
 echo.
 echo  你应该看到：
 echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
@@ -36,26 +37,27 @@ echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
  echo  - CDR-045 的 15 个时间点，以及 Bumper 四次弹飞、三次冷却完成、中心回退、范围外忽略和四次 Player 实际应用。
  echo  - CDR-046 的 20 个时间点，以及 Puffer 游动/转向、三次预警/爆炸/弹射、两次重生、中心回退和三次 Player 实际应用。
  echo  - CDR-047 的 30 个时间点，以及 Seeker 三次发现、两次冲刺、一次目标命中、一次撞墙、两次眩晕恢复和一次目标丢失。
+ echo  - CDR-050 的 4 个 App 时间点：World 也恰好推进 4 次；效果被路由，暂停后可恢复，呈现故障后模拟仍继续并正常停止。
 echo  - 重复运行结果一致，并标明商业素材字节为 0。
 echo.
 echo  请注意：
 echo  - 报告里的图片全部由程序生成，不是 Celeste 原版角色素材。
-echo  - 这能证明离线动画管线已连接，不能证明角色已显示在真实桌面。
+echo  - 这能证明离线模块已由 App 按顺序统一运行，不能证明角色已显示在真实桌面。
 echo  - 这个入口不会启动 Celeste、Everest，也不会读取或写入游戏安装目录。
 echo.
 
-set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-047-demo-runtime\dotnet-home"
-set "APPDATA=%CD%\artifacts\cdr-047-demo-runtime\appdata"
-set "NUGET_PACKAGES=%CD%\artifacts\cdr-047-demo-runtime\nuget-packages"
+set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-050-demo-runtime\dotnet-home"
+set "APPDATA=%CD%\artifacts\cdr-050-demo-runtime\appdata"
+set "NUGET_PACKAGES=%CD%\artifacts\cdr-050-demo-runtime\nuget-packages"
 set "DOTNET_CLI_TELEMETRY_OPTOUT=1"
 set "DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1"
 set "DOTNET_NOLOGO=1"
 set "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=0"
 
-dotnet restore "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configfile "%CD%\NuGet.Config"
+dotnet restore "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configfile "%CD%\NuGet.Offline.Config"
 if errorlevel 1 goto demo_failed
 
-dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-047-demo"
+dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-050-demo"
 if errorlevel 1 (
     goto demo_failed
 )
@@ -63,16 +65,16 @@ if errorlevel 1 (
 echo.
 echo 演示报告已经生成。
 if /i "%CDR_DEMO_NO_OPEN%"=="1" goto report_ready
-start "" "%CD%\artifacts\cdr-047-demo\index.html"
+start "" "%CD%\artifacts\cdr-050-demo\index.html"
 if errorlevel 1 (
     echo 无法自动打开报告，请手动打开下面的文件：
-    echo %CD%\artifacts\cdr-047-demo\index.html
+    echo %CD%\artifacts\cdr-050-demo\index.html
 )
 
 :report_ready
 echo.
-echo 报告位置：%CD%\artifacts\cdr-047-demo\index.html
-echo 验收时请重点查看 CDR-047 Seeker 的巡逻、发现、追逐、蓄力、冲刺、命中、撞墙眩晕、恢复、隔离和页面底部限制说明。
+echo 报告位置：%CD%\artifacts\cdr-050-demo\index.html
+echo 验收时请重点查看 CDR-050 App 的 4 个 tick、效果路由、暂停恢复、呈现故障隔离、正常停止和页面底部限制说明。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause

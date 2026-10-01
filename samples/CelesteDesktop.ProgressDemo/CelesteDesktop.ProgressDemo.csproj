@@ -20,5 +20,6 @@
     <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Bumper\CelesteDesktop.Entity.Bumper.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Puffer\CelesteDesktop.Entity.Puffer.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Seeker\CelesteDesktop.Entity.Seeker.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.App\CelesteDesktop.App.csproj" />
   </ItemGroup>
 </Project>

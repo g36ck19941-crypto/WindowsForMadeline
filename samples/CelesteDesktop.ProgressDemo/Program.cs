@@ -75,6 +75,7 @@ var water = RunSyntheticWater();
 var bumper = RunSyntheticBumper();
 var puffer = RunSyntheticPuffer();
 var seeker = RunSyntheticSeeker();
+var app = Cdr050Demo.Run();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -96,7 +97,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-047",
+    demoId = "CDR-050",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -119,7 +120,8 @@ var manifest = new
         "CDR-044 ran generated Water enter submerged drag buoyancy swim limit exit and isolation behavior at fixed tick",
         "CDR-045 ran generated Bumper circular contact radial launch cooldown rearm fallback and isolation behavior at fixed tick",
         "CDR-046 ran generated Puffer bounded swim warning explosion launch respawn fallback and isolation behavior at fixed tick",
-        "CDR-047 ran generated Seeker patrol alert chase windup dash hit wall-stun recovery and isolation behavior at fixed tick"
+        "CDR-047 ran generated Seeker patrol alert chase windup dash hit wall-stun recovery and isolation behavior at fixed tick",
+        "CDR-050 orchestrated lifecycle, one simulation step per App tick, effect routing and presentation isolation offline"
     },
     independentValidation = new
     {
@@ -358,6 +360,21 @@ var manifest = new
         seeker.DeterministicReplay,
         rows = seeker.Rows
     },
+    app = new
+    {
+        source = "program-generated-input-and-existing-verified-contracts",
+        fidelity = "partial",
+        tickCount = app.Rows.Count,
+        app.SimulationCompletedCount,
+        app.EffectRoutedCount,
+        app.PresentationCalls,
+        app.ComponentDisabledCount,
+        app.Paused,
+        app.Resumed,
+        app.FinalLifecycle,
+        app.DeterministicReplay,
+        rows = app.Rows
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -377,11 +394,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-047 cumulative deterministic Seeker pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} theo_pickups={theo.PickupCount} theo_throws={theo.ThrowCount} theo_horizontal_bounces={theo.HorizontalBounceCount} theo_landings={theo.LandingCount} theo_replay={theo.DeterministicReplay.ToString().ToLowerInvariant()} glider_ticks={glider.Rows.Count} glider_pickups={glider.PickupCount} glider_throws={glider.ThrowCount} glider_fall_limits={glider.HolderFallLimitedCount} glider_player_fall_limits_applied={glider.PlayerFallLimitAppliedCount} glider_horizontal_bounces={glider.HorizontalBounceCount} glider_landings={glider.LandingCount} glider_replay={glider.DeterministicReplay.ToString().ToLowerInvariant()} spring_ticks={spring.Rows.Count} spring_activations={spring.ActivationCount} spring_launches={spring.LaunchCount} spring_ready={spring.ReadyCount} spring_player_applied={spring.PlayerApplicationCount} spring_theo_applied={spring.TheoApplicationCount} spring_glider_applied={spring.GliderApplicationCount} spring_replay={spring.DeterministicReplay.ToString().ToLowerInvariant()} refill_ticks={refill.Rows.Count} refill_collections={refill.CollectionCount} refill_restores={refill.RestoreCount} refill_respawns={refill.RespawnCount} refill_player_applied={refill.PlayerApplicationCount} refill_replay={refill.DeterministicReplay.ToString().ToLowerInvariant()} water_ticks={water.Rows.Count} water_entered={water.EnteredCount} water_submerged={water.SubmergedCount} water_motion_issued={water.MotionIssuedCount} water_exited={water.ExitedCount} water_player_applied={water.PlayerApplicationCount} water_replay={water.DeterministicReplay.ToString().ToLowerInvariant()} bumper_ticks={bumper.Rows.Count} bumper_activations={bumper.ActivationCount} bumper_launches={bumper.LaunchCount} bumper_ready={bumper.ReadyCount} bumper_center_fallback={bumper.CenterFallbackCount} bumper_ignored={bumper.IgnoredCount} bumper_player_applied={bumper.PlayerApplicationCount} bumper_replay={bumper.DeterministicReplay.ToString().ToLowerInvariant()} puffer_ticks={puffer.Rows.Count} puffer_swam={puffer.SwamCount} puffer_turned={puffer.TurnedCount} puffer_warnings={puffer.WarningCount} puffer_explosions={puffer.ExplosionCount} puffer_launches={puffer.LaunchCount} puffer_respawns={puffer.RespawnCount} puffer_center_fallback={puffer.CenterFallbackCount} puffer_ignored={puffer.IgnoredCount} puffer_player_applied={puffer.PlayerApplicationCount} puffer_replay={puffer.DeterministicReplay.ToString().ToLowerInvariant()} seeker_ticks={seeker.Rows.Count} seeker_patrolled={seeker.PatrolCount} seeker_alerted={seeker.AlertCount} seeker_chase_started={seeker.ChaseStartCount} seeker_chased={seeker.ChasedCount} seeker_windups={seeker.WindupCount} seeker_dash_started={seeker.DashStartCount} seeker_dashed={seeker.DashedCount} seeker_target_hits={seeker.TargetHitCount} seeker_wall_hits={seeker.WallHitCount} seeker_stunned={seeker.StunnedCount} seeker_recovered={seeker.RecoveredCount} seeker_target_lost={seeker.TargetLostCount} seeker_replay={seeker.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-050 cumulative offline App orchestration pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_presentation_calls={app.PresentationCalls} app_component_disabled={app.ComponentDisabledCount} app_paused={app.Paused.ToString().ToLowerInvariant()} app_resumed={app.Resumed.ToString().ToLowerInvariant()} app_stopped={string.Equals(app.FinalLifecycle, "Stopped", StringComparison.Ordinal).ToString().ToLowerInvariant()} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -393,7 +410,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-046-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-050-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -577,7 +594,8 @@ static string BuildHtml(
     DemoWater water,
     DemoBumper bumper,
     DemoPuffer puffer,
-    DemoSeeker seeker)
+    DemoSeeker seeker,
+    DemoApp app)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -815,13 +833,25 @@ static string BuildHtml(
             .Append("</td></tr>");
     }
 
+    var appRows = new StringBuilder();
+    foreach (var row in app.Rows)
+    {
+        appRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(row.WorldTick)
+            .Append("</td><td>").Append(row.PlayerX).Append(',').Append(row.PlayerY)
+            .Append("</td><td>").Append(row.PlayerSpeedX).Append(',').Append(row.PlayerSpeedY)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.EventIds))
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(string.IsNullOrEmpty(row.DisabledComponents) ? "-" : row.DisabledComponents))
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-047 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-050 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -840,7 +870,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-046 累计项目进度演示</h1>
+          <h1>CDR-050 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -865,6 +895,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-045</b>Bumper 圆形接触、径向弹飞、冷却、重新武装与隔离</div>
             <div class="stage"><b>CDR-046</b>Puffer 游动、预警、爆炸弹射、冷却重生与隔离</div>
             <div class="stage"><b>CDR-047</b>Seeker 巡逻、发现、追逐、冲刺、撞墙眩晕与恢复</div>
+            <div class="stage"><b>CDR-050</b>App 统一启动、逐 tick 编排、效果路由、暂停恢复与故障隔离</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -933,6 +964,9 @@ static string BuildHtml(
           <h2>CDR-047 Seeker 纯离线交互轨迹</h2>
           <p>程序生成一个 Seeker、目标位置、墙面碰撞信号和第二个隔离 Seeker。主 Seeker 会巡逻，发现目标后经过预警、追逐和蓄力进入冲刺；第一轮命中目标并输出带身份的命中效果，第二轮撞墙进入眩晕，随后回到出生点恢复；第三轮展示丢失目标后返回巡逻。共 {{seeker.Rows.Count}} 个固定 tick；巡逻={{seeker.PatrolCount}}，发现={{seeker.AlertCount}}，开始追逐={{seeker.ChaseStartCount}}，追逐步进={{seeker.ChasedCount}}，蓄力={{seeker.WindupCount}}，开始冲刺={{seeker.DashStartCount}}，冲刺步进={{seeker.DashedCount}}，命中={{seeker.TargetHitCount}}，撞墙={{seeker.WallHitCount}}，眩晕={{seeker.StunnedCount}}，恢复={{seeker.RecoveredCount}}，目标丢失={{seeker.TargetLostCount}}；重复运行：<span class="ok">{{(seeker.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Seeker state</th><th>位置 X,Y</th><th>状态/丢失计时</th><th>目标 X,Y</th><th>撞墙</th><th>命中目标</th><th>另一个 Seeker</th><th>Seeker 事件</th></tr></thead><tbody>{{seekerRows}}</tbody></table>
+          <h2>CDR-050 App 统一编排与生命周期</h2>
+          <p>程序把 Player、全部离线实体和呈现阶段放进同一个 App 会话。连续运行 {{app.Rows.Count}} 个 App tick，模拟完成 {{app.SimulationCompletedCount}} 次、路由效果 {{app.EffectRoutedCount}} 次；中途暂停并恢复一次。第 2 次呈现被故意触发异常后，呈现组件被单独禁用，但模拟继续到 tick 4 并正常停止。重复运行：<span class="ok">{{(app.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>App Tick</th><th>World Tick</th><th>Player 位置</th><th>Player 速度</th><th>结构化事件</th><th>已隔离组件</th></tr></thead><tbody>{{appRows}}</tbody></table>
           <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
             <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
@@ -949,6 +983,7 @@ static string BuildHtml(
               <li><strong>Bumper 已有独立弹飞逻辑：</strong>上面的轨迹真实运行了圆形范围判断、多个方向的径向弹飞、中心重合时固定向上回退、冷却、离开后重新武装和范围外忽略；Player 自己应用速度，另一个 Bumper 始终保持独立。</li>
               <li><strong>Puffer 已有独立游动与爆炸逻辑：</strong>上面的轨迹真实运行了左右游动/转向、接近预警、一次爆炸弹射、中心重合向上回退、冷却重生和范围外忽略；Player 自己应用速度，另一个 Puffer 独立运行。</li>
               <li><strong>Seeker 已有独立追逐状态机：</strong>上面的轨迹真实运行了巡逻、发现目标、预警、追逐、蓄力、定向冲刺、目标命中、撞墙眩晕、恢复和丢失目标；另一个 Seeker 始终独立运行。</li>
+              <li><strong>App 已能统一组织离线模块：</strong>一次 App tick 只推进一次模拟，再按明确顺序把实体效果交给 Player/Theo/Glider，最后才把不可变动画帧交给呈现层；暂停、恢复、停止和呈现故障都有可追踪事件。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -958,7 +993,7 @@ static string BuildHtml(
             <ul>
               <li><strong>这次使用的是程序生成测试图：</strong>不是 Celeste 的原版角色图片，也没有把任何商业素材保存进项目。</li>
               <li><strong>Present 不等于肉眼可见：</strong>它只说明渲染后端接收并提交了画面；当前走的是隐藏、离线验证路径，没有把角色窗口显示到真实桌面。</li>
-              <li><strong>还没有完整 App 组装：</strong>素材、角色模拟、动画、桌面位置和可见窗口尚未由正式应用统一启动和管理。</li>
+              <li><strong>还没有可见桌面宿主：</strong>CDR-050 已完成纯离线 App 统一编排，但没有打开窗口、接入实时键盘、读取真实桌面或验证人眼可见。</li>
               <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>
               <li><strong>CDR-016 只证明格式兼容：</strong>它说明指定正版安装中的素材能被只读解析，不等于这些原版素材已经在本次演示里被连接和显示。</li>
               <li><strong>Theo 手感仍是 partial：</strong>官方公开仓库没有 TheoCrystal 实体源码，因此当前数值是独立设计并由逐 tick 测试固定的离线基线，不宣称与商业发行版逐项完全一致。</li>

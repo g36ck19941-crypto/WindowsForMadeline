@@ -82,6 +82,8 @@ Seeker emits `SEEKER_PATROLLED`, `SEEKER_TURNED`, `SEEKER_ALERTED`, `SEEKER_CHAS
 
 Every error code has one owning subsystem. App may surface it but must not reinterpret it.
 
+CDR-050 App events are `APP_STARTED`, `APP_TICK_STARTED`, `APP_SIMULATION_COMPLETED`, `APP_EFFECT_ROUTED`, `APP_EFFECT_CONFLICT`, `APP_EFFECT_TARGET_UNRESOLVED`, `APP_SEEKER_HIT_OBSERVED`, `APP_PRESENTATION_COMPLETED`, `APP_COMPONENT_DISABLED`, `APP_TICK_COMPLETED`, `APP_PAUSED`, `APP_RESUMED`, `APP_STOPPED`, `APP_FAULTED` and `APP_DISPOSED`. Each record includes sequence, tick, stage, outcome, component and optional target/detail. Failures include type, message, HResult, stack and inner exception. These events prove orchestration facts only; none implies original parity or human visibility.
+
 AssetWorker supervision returns a stable operation code, bounded protocol detail code, state, observed exit code and recovery action. The process fallback event is `ASSET_WORKER_PROCESS_FAILED`; it is written as one bounded JSON record to stderr and never mixed with binary stdout IPC.
 
 ## 4. Storage and support bundle

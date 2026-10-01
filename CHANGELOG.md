@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-01 — CDR-050 offline App orchestration implemented
+
+- Added `CelesteDesktop.App` with explicit lifecycle, one simulation step per App tick, stable entity/effect routing and post-simulation presentation.
+- Added deterministic conflict handling, unknown-target diagnostics, optional component isolation and full exception capture.
+- Added 50 focused tests and a four-tick cumulative generated demo; full regression target is 800/800.
+- Kept visible GUI, live input, game/install access and commercial-byte persistence out of scope. CDR-050 is local and acceptance-pending; it has not been uploaded.
+
 ## 2026-10-01 — CDR-047 Seeker authorized and implemented
 
 - Recorded developer authorization for an isolated deterministic Seeker using generated geometry, targets and fixed-tick input only.
