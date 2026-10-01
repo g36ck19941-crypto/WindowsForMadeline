@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-01 — CDR-044 Water authorized
+
+- Recorded developer authorization for an isolated deterministic Water volume using generated rectangles, velocities and swim axes only.
+- Bounded implementation to enter/submerged/exit transitions, drag, buoyancy, directional swim targets, speed limits, multiple-occupant isolation and generic Player velocity application.
+- Kept original numeric parity, visible GUI, live input, game/install access, commercial bytes and CDR-045 Bumper outside the authorization.
+
 ## 2026-09-30 — CDR-043 accepted
 
 - Recorded developer acceptance of CDR-043 and authorization for exact independent-branch publication after a fresh full gate and outbound audit.

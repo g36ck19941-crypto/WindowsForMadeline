@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-044",
+  "title": "Deterministic Water volume",
+  "owner": "Primary agent",
+  "state": "authorized_implementation",
+  "authorizationDate": "2026-10-01",
+  "fidelity": "partial-original-numeric-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.Entity.Water/**",
+    "tests/CelesteDesktop.Entity.Water.Tests/**",
+    "minimal generic Player velocity-effect integration tests",
+    "generated cumulative demo",
+    "tools/Verify-CDR044.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Water volume input state effect and event snapshots",
+    "generated rectangular overlap with explicit enter submerged exit transitions",
+    "target-addressed drag buoyancy swim-axis and speed-limit effect",
+    "multiple occupants deterministic ordering and per-volume isolation",
+    "disable enable lifecycle with explicit occupant exits",
+    "Player application through the existing generic external-velocity entry"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-045",
+  "nextAction": "Implement and verify CDR-044 locally. Do not publish before developer acceptance and do not start CDR-045 Bumper without explicit authorization."
+}

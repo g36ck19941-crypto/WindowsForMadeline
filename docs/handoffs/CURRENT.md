@@ -1,6 +1,6 @@
 # Current Handoff
 
-Updated: 2026-09-29
+Updated: 2026-10-01
 
 ## Current state
 
@@ -32,6 +32,8 @@ CDR-043 was accepted by the developer on 2026-09-30. The isolated Refill module 
 
 Exact acceptance commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` was freshly reverified at Refill 42/42 and 531/531 total with 0 build warnings/errors. The tracked-tree audit found no commercial media, game binaries, archives, caches or build output. After two GitHub port-443 timeouts, connectivity recovered and the exact commit was published and read back at `codex/cdr-043-refill`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
+On 2026-10-01 the developer authorized CDR-044 Water under the previously stated generated-only boundary. Scope is an isolated deterministic rectangular Water volume with enter/submerged/exit transitions, drag, neutral buoyancy, directional swim targets, speed limits, multiple occupants, disable/enable, isolation and separate generic Player velocity application. Original numeric/visual parity remains `partial`; visible GUI, live input, game/install access, commercial bytes and CDR-045 Bumper remain unauthorized.
+
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-043 milestone; launcher text does not change task acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
@@ -50,11 +52,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop at the authorization gate. Do not start CDR-044 Water, open visible GUI or access the game installation without later explicit developer authorization.
+Implement CDR-044 Water locally, run focused tests and the complete offline verifier, update the cumulative generated demo and prepare developer acceptance material. Do not publish before acceptance and do not start CDR-045 Bumper.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: post-CDR-043 authorization gate; CDR-044 remains unauthorized
+- Scope: CDR-044 generated-only Water module, tests, cumulative demo, verifier and records
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data
