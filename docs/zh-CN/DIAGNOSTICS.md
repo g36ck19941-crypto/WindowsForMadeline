@@ -64,6 +64,8 @@ Water 使用 `WATER_ENTERED`、`WATER_SUBMERGED`、`WATER_MOTION_ISSUED`、`WATE
 
 Bumper 使用 `BUMPER_ACTIVATED`、`BUMPER_LAUNCH_ISSUED`、`BUMPER_CENTER_FALLBACK_USED`、`BUMPER_COOLDOWN_STARTED`、`BUMPER_READY`、`BUMPER_DISABLED`、`BUMPER_ENABLED` 和 `BUMPER_CONTACT_IGNORED`。弹飞请求包含目标身份和方向，但本身不证明 Player 已经应用；Player 会另外记录 `ExternalVelocityApplied`。中心回退事件让“零距离时为什么向上弹”可被直接诊断，而不是静默猜测。Bumper 事件不代表素材、声音、渲染或人眼可见。
 
+Puffer 使用 `PUFFER_SWAM`、`PUFFER_TURNED`、`PUFFER_WARNING_STARTED`、`PUFFER_EXPLODED`、`PUFFER_LAUNCH_ISSUED`、`PUFFER_CENTER_FALLBACK_USED`、`PUFFER_SPENT_STARTED`、`PUFFER_RESPAWNED`、`PUFFER_DISABLED`、`PUFFER_ENABLED` 和 `PUFFER_CONTACT_IGNORED`。预警和爆炸事件只包含受限的目标 ID，不包含实时输入或内容；弹射请求本身不证明 Player 已应用，Player 会另外记录 `ExternalVelocityApplied`。游动、转向和重生事件只证明模拟状态，不代表素材、声音、渲染或人眼可见。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

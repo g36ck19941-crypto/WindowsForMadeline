@@ -28,4 +28,4 @@ This is an offline acceptance candidate only. It does not prove original numeric
 
 ## Next gate
 
-CDR-045 Bumper was separately authorized on 2026-10-01 and is now a distinct local acceptance candidate. That later authorization does not accept or publish CDR-044.
+CDR-044 was accepted on 2026-10-01. Exact publication to `codex/cdr-044-water` is pending a retry after a GitHub port-443 timeout; this does not change the `partial` fidelity boundary.

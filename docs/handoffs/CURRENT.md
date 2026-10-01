@@ -44,7 +44,9 @@ On 2026-10-01 the developer accepted CDR-044 and CDR-045 and authorized CDR-046 
 
 CDR-046 is active under a generated-only boundary. Planned scope is a standalone fixed-tick Puffer with bounded horizontal swim, proximity warning fuse, deterministic radial explosion and target-addressed launch, coincident-center upward fallback, spent cooldown/respawn, disable/enable, stable diagnostics, two-Puffer isolation and actual generic Player velocity application. Original commercial movement/contact/timing/numeric parity, special variants, assets, audio, formal App routing and visible presentation remain unestablished and must stay `partial`. Visible GUI, live input, Celeste/Everest launch, game/install access or writes and commercial-byte persistence remain forbidden.
 
-At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-045 milestone; launcher text does not change either task's acceptance state.
+CDR-046 local implementation is complete and awaiting developer acceptance. The standalone Puffer advances between generated horizontal bounds at fixed 60 Hz, records stable swim/turn facts, locks one eligible target during warning, emits one radial target-addressed launch with an explicit coincident-center upward fallback, remains spent until deterministic spawn reset, supports disable/enable and release-to-rearm, and stays isolated from a second Puffer. Player applies the velocity separately and remains responsible for Solid collision. Release builds with 0 warnings/errors; Puffer 59/59 and 684/684 total regressions pass. The 20-tick demo records swim 8, turn 3, warning/explosion/launch 3 each, respawn 2, center fallback 1, ignored 1 and Player applied 3 with identical replay. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original movement/contact/timing/numeric parity, special interactions, assets, audio, formal App routing and visible presentation are not established. Do not upload CDR-046 or start deferred CDR-047 before later explicit developer acceptance/authorization.
+
+At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-046 milestone; launcher text does not change its acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
@@ -62,11 +64,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Retry exact CDR-044/CDR-045 independent-branch publication and read back both refs when GitHub connectivity returns. In parallel, implement and verify authorized CDR-046 locally; do not publish it or start deferred CDR-047 without later developer acceptance and authorization.
+Retry exact CDR-044/CDR-045 independent-branch publication and read back both refs when GitHub connectivity returns. CDR-046 is a separate local acceptance candidate; do not publish it or start deferred CDR-047 without later developer acceptance and authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: exact CDR-044/CDR-045 publication retry plus generated-only CDR-046 implementation
+- Scope: exact CDR-044/CDR-045 publication retry plus CDR-046 developer acceptance gate
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

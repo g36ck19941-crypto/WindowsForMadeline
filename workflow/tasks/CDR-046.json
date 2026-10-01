@@ -3,7 +3,7 @@
   "taskId": "CDR-046",
   "title": "Deterministic Puffer entity",
   "owner": "Primary agent",
-  "state": "authorized_in_progress",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
@@ -22,6 +22,14 @@
     "spent cooldown respawn disable enable and two-Puffer isolation",
     "Player application through the existing generic external-velocity entry"
   ],
+  "features": [
+    "immutable fixed-tick Puffer input state effect and event snapshots",
+    "generated bounded horizontal swim with exact sixty-hertz movement and stable turns",
+    "proximity warning with locked target identity and one deterministic radial explosion",
+    "target-addressed launch with explicit coincident-center upward fallback",
+    "spent cooldown spawn reset disable enable release-to-rearm and two-Puffer isolation",
+    "target-addressed generic velocity effect actually applied by Player"
+  ],
   "forbidden": [
     "visible GUI",
     "live input",
@@ -32,6 +40,26 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "pufferTests": 59,
+    "totalRegressionTests": 684,
+    "demoTicks": 20,
+    "demoSwam": 8,
+    "demoTurned": 3,
+    "demoWarnings": 3,
+    "demoExplosions": 3,
+    "demoLaunches": 3,
+    "demoRespawns": 2,
+    "demoCenterFallbacks": 1,
+    "demoIgnoredContacts": 1,
+    "demoPlayerApplications": 3,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-047",
-  "nextAction": "Implement and verify CDR-046 locally. Do not publish it or start deferred CDR-047 without later developer acceptance and authorization."
+  "nextAction": "Wait for developer acceptance. Do not publish CDR-046 or start deferred CDR-047 without later explicit authorization."
 }

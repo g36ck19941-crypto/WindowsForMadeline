@@ -91,6 +91,8 @@ CDR-044 adds `CelesteDesktop.Entity.Water` as an isolated rectangular volume. It
 
 CDR-045 adds `CelesteDesktop.Entity.Bumper` as an isolated circular-contact state machine. It receives generated target centers, checks a bounded radius, derives a deterministic outward unit direction (with an explicit upward fallback for coincident centers), and emits a target-addressed two-axis `ExternalVelocityEffect`. Bumper references no Player or Solid module; Player applies the velocity and remains responsible for later Solid collision. Bumper owns activation, cooldown, ready, release-to-rearm and disable/enable state, while future App orchestration only supplies contacts and routes effects.
 
+CDR-046 adds `CelesteDesktop.Entity.Puffer` as an isolated swim/explosion state machine. It advances between caller-provided horizontal bounds at fixed tick, locks one eligible target during a warning fuse, emits one radial target-addressed `ExternalVelocityEffect`, then remains spent until deterministic spawn reset. Puffer references no Player, Solid, rendering, desktop or filesystem module; Player applies the effect and owns later collision. Disable/enable resets only that Puffer, and a second controller advances independently. Future App orchestration supplies generated or normalized contacts and routes effects without owning Puffer rules.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.

@@ -18,5 +18,6 @@
     <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Refill\CelesteDesktop.Entity.Refill.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Water\CelesteDesktop.Entity.Water.csproj" />
     <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Bumper\CelesteDesktop.Entity.Bumper.csproj" />
+    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Puffer\CelesteDesktop.Entity.Puffer.csproj" />
   </ItemGroup>
 </Project>

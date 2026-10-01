@@ -29,6 +29,6 @@ This is an offline acceptance candidate only. It does not prove original numeric
 
 ## Next gate
 
-CDR-044 remains awaiting developer acceptance and unuploaded. CDR-046 Puffer is not authorized by CDR-045 implementation or acceptance.
+CDR-044 and CDR-045 were accepted on 2026-10-01; their exact independent-branch publication is pending a retry after a GitHub port-443 timeout. CDR-046 Puffer was separately authorized and completed locally, but remains unaccepted and unuploaded.
 
-Current state: CDR-045 local implementation and verification are complete, awaiting developer acceptance and not uploaded.
+Current state: CDR-045 accepted and exact publication pending network retry.

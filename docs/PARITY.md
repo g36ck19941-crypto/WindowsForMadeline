@@ -34,7 +34,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Refill | unstarted | partial | partial | unstarted | CDR-043 generated collection/resource-restore/cooldown/respawn and Player-application matrix passes; original contact/respawn parity, formal App routing, asset animation and visible integration are not established |
 | Water | unstarted | partial | partial | unstarted | CDR-044 generated overlap/enter/submerged/drag/buoyancy/swim-limit/exit and Player-application matrix passes; original surface/contact/numeric parity, formal App routing, asset animation and visible integration are not established |
 | Bumper | unstarted | partial | partial | unstarted | CDR-045 generated circular contact/radial launch/fallback/cooldown/rearm and Player-application matrix passes; original contact/numeric/path parity, formal App routing, assets, audio and visible integration are not established |
-| Puffer | unstarted | unstarted | unstarted | unstarted | Swim/explosion/launch |
+| Puffer | asset_exact | partial | partial | unstarted | CDR-046 generated bounded swim/warning/explosion/respawn and Player-application matrix passes; selected-install format was validated separately, but original movement/contact/timing/numeric parity, special interactions, formal App routing, animation/audio and visible integration are not established |
 | Seeker | unstarted | unstarted | unstarted | unstarted | Deferred complexity |
 | Levels/maps | deferred | deferred | deferred | deferred | Future `IWorldContentProvider`; no current parser |
 | Data-only Mod assets | deferred | n/a | deferred | deferred | Future `IAssetSourceProvider`; no current directory access |

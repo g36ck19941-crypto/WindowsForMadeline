@@ -62,6 +62,8 @@ Water emits `WATER_ENTERED`, `WATER_SUBMERGED`, `WATER_MOTION_ISSUED`, `WATER_EX
 
 Bumper emits `BUMPER_ACTIVATED`, `BUMPER_LAUNCH_ISSUED`, `BUMPER_CENTER_FALLBACK_USED`, `BUMPER_COOLDOWN_STARTED`, `BUMPER_READY`, `BUMPER_DISABLED`, `BUMPER_ENABLED` and `BUMPER_CONTACT_IGNORED`. A launch-issued event identifies the intended target and direction but does not prove application; Player records `ExternalVelocityApplied` separately. The center-fallback event makes the zero-distance direction decision observable instead of silently choosing one. No Bumper event implies assets, audio, rendering or human visibility.
 
+Puffer emits `PUFFER_SWAM`, `PUFFER_TURNED`, `PUFFER_WARNING_STARTED`, `PUFFER_EXPLODED`, `PUFFER_LAUNCH_ISSUED`, `PUFFER_CENTER_FALLBACK_USED`, `PUFFER_SPENT_STARTED`, `PUFFER_RESPAWNED`, `PUFFER_DISABLED`, `PUFFER_ENABLED` and `PUFFER_CONTACT_IGNORED`. Warning and explosion events carry the locked target ID but no live input or content. A launch-issued event proves only that Puffer produced a target-addressed velocity; Player records `ExternalVelocityApplied` separately. Swim/turn/respawn facts describe simulation state only and never imply assets, audio, rendering or human visibility.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.
