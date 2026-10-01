@@ -87,6 +87,8 @@ CDR-042 places the reusable axis-selective `ExternalVelocityEffect` in `Simulati
 
 CDR-043 adds the bounded `ExternalResourceEffect` in `Simulation.Core`. `CelesteDesktop.Entity.Refill` decides whether an immutable Player contact actually lacks dash charges or stamina, then emits the target ID and maximum resource values without referencing Player. Player clamps and applies those values through its generic external-effects entry and records a separate application event. Refill owns collection, cooldown, respawn, disable/enable and release-to-rearm state; future App orchestration only routes the effect.
 
+CDR-044 adds `CelesteDesktop.Entity.Water` as an isolated rectangular volume. It consumes immutable target bounds, velocity and generated swim axes, tracks occupants in stable ordinal order, and emits target-addressed `ExternalVelocityEffect` values for drag, neutral buoyancy, directional swimming and bounded speed. Water references no Player module; Player applies the generic velocity through its existing entry and records a separate application fact. Water owns enter/submerged/exit, disable/enable and multi-occupant state, while future App orchestration only supplies contacts and routes effects.
+
 ## 6. Reserved extension seams
 
 `docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.

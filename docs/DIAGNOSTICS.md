@@ -58,6 +58,8 @@ Spring emits `SPRING_ACTIVATED`, `SPRING_LAUNCH_ISSUED`, `SPRING_RETRACTED`, `SP
 
 Refill emits `REFILL_COLLECTED`, `REFILL_RESTORE_ISSUED`, `REFILL_COOLDOWN_STARTED`, `REFILL_RESPAWNED`, `REFILL_DISABLED`, `REFILL_ENABLED` and `REFILL_CONTACT_IGNORED`. A restore-issued event identifies the intended Player but does not itself prove application; Player records `ExternalResourcesApplied` separately. No Refill event implies assets, rendering or human visibility.
 
+Water emits `WATER_ENTERED`, `WATER_SUBMERGED`, `WATER_MOTION_ISSUED`, `WATER_EXITED`, `WATER_DISABLED`, `WATER_ENABLED` and `WATER_CONTACT_IGNORED`. A motion-issued event identifies the intended target but does not prove application; Player records `ExternalVelocityApplied` separately. Events carry only bounded entity/target IDs and generated volume bounds, never live input, assets or desktop content. No Water event implies rendering or human visibility.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

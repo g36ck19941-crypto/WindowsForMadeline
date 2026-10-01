@@ -127,3 +127,9 @@ Then double-click `验证当前版本.cmd`. Spring must report `42/42`, for 489 
 Double-click `演示当前进度.cmd`. The cumulative report adds a 16-tick generated Refill trajectory. It must contain two `REFILL_COLLECTED`, two `REFILL_RESTORE_ISSUED`, two `REFILL_RESPAWNED` cycles and two actual Player resource applications. Each application changes Player from 0 dash charges and 25 stamina to 1 charge and 110 stamina; replay must be identical.
 
 Then double-click `验证当前版本.cmd`. Refill must report `42/42`, for 531 total cases. The final line must be `CDR-043 OFFLINE VERIFICATION PASSED`. This proves generated contact/lifecycle, target-addressed resource effects and actual offline Player application only; formal App routing, original contact/respawn parity, real pixels, visible presentation, live input and installation access remain unproven.
+
+## CDR-044 — Deterministic Water
+
+Double-click `演示当前进度.cmd`. The cumulative report adds a 12-tick generated Water trajectory. It must contain three `WATER_ENTERED`, thirteen `WATER_SUBMERGED`, thirteen `WATER_MOTION_ISSUED`, two `WATER_EXITED` facts and ten actual Player velocity applications. The table shows neutral drag/buoyancy, directional swimming, a second generated occupant, exit and re-entry; replay must be identical.
+
+Then double-click `验证当前版本.cmd`. Water must report `48/48`, for 579 total cases. The final line must be `CDR-044 OFFLINE VERIFICATION PASSED`. This proves generated rectangular contacts, deterministic motion effects, multi-occupant isolation and actual offline Player application only; formal App routing, original surface/contact/numeric parity, real pixels, visible presentation, live input and installation access remain unproven.

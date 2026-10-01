@@ -19,7 +19,8 @@ echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演�
  echo  6. 运行 Glider 的拿起、缓降请求、Player 实际应用、投掷、滑落、反弹和落地轨迹。
  echo  7. 运行 Spring 的激活、压缩、冷却、复位，以及 Player、Theo、Glider 实际受力轨迹。
  echo  8. 运行 Refill 的收集、Player 冲刺/体力恢复、冷却和重生轨迹。
- echo  9. 生成一份本地 HTML 报告，方便直接查看结果。
+ echo  9. 运行 Water 的进入、浸没、阻力、浮力、方向游动、限速、离开和 Player 实际应用轨迹。
+ echo 10. 生成一份本地 HTML 报告，方便直接查看结果。
 echo.
 echo  你应该看到：
 echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
@@ -28,6 +29,7 @@ echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
  echo  - CDR-041 的 48 个时间点，以及 Glider 的缓降请求、Player 应用、投掷、展开、反弹和落地事件。
  echo  - CDR-042 的 30 个时间点，以及 Spring 三次激活、三次复位和三个目标各一次实际速度变化。
  echo  - CDR-043 的 16 个时间点，以及 Refill 两次收集、两次 Player 资源恢复和两次重生。
+ echo  - CDR-044 的 12 个时间点，以及 Water 进入、持续浸没、多目标、离开、再次进入和十次 Player 实际速度应用。
 echo  - 重复运行结果一致，并标明商业素材字节为 0。
 echo.
 echo  请注意：
@@ -36,9 +38,9 @@ echo  - 这能证明离线动画管线已连接，不能证明角色已显示在
 echo  - 这个入口不会启动 Celeste、Everest，也不会读取或写入游戏安装目录。
 echo.
 
-set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-043-demo-runtime\dotnet-home"
-set "APPDATA=%CD%\artifacts\cdr-043-demo-runtime\appdata"
-set "NUGET_PACKAGES=%CD%\artifacts\cdr-043-demo-runtime\nuget-packages"
+set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-044-demo-runtime\dotnet-home"
+set "APPDATA=%CD%\artifacts\cdr-044-demo-runtime\appdata"
+set "NUGET_PACKAGES=%CD%\artifacts\cdr-044-demo-runtime\nuget-packages"
 set "DOTNET_CLI_TELEMETRY_OPTOUT=1"
 set "DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1"
 set "DOTNET_NOLOGO=1"
@@ -47,7 +49,7 @@ set "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=0"
 dotnet restore "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configfile "%CD%\NuGet.Config"
 if errorlevel 1 goto demo_failed
 
-dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-043-demo"
+dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-044-demo"
 if errorlevel 1 (
     goto demo_failed
 )
@@ -55,16 +57,16 @@ if errorlevel 1 (
 echo.
 echo 演示报告已经生成。
 if /i "%CDR_DEMO_NO_OPEN%"=="1" goto report_ready
-start "" "%CD%\artifacts\cdr-043-demo\index.html"
+start "" "%CD%\artifacts\cdr-044-demo\index.html"
 if errorlevel 1 (
     echo 无法自动打开报告，请手动打开下面的文件：
-    echo %CD%\artifacts\cdr-043-demo\index.html
+    echo %CD%\artifacts\cdr-044-demo\index.html
 )
 
 :report_ready
 echo.
-echo 报告位置：%CD%\artifacts\cdr-043-demo\index.html
-echo 验收时请重点查看 CDR-043 Refill 的两次收集、Player 冲刺/体力恢复、两次重生和页面底部限制说明。
+echo 报告位置：%CD%\artifacts\cdr-044-demo\index.html
+echo 验收时请重点查看 CDR-044 Water 的进入/离开、浸没目标、阻力/浮力/游动速度、Player 实际应用和页面底部限制说明。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause

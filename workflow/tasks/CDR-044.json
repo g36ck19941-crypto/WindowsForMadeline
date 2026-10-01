@@ -3,7 +3,7 @@
   "taskId": "CDR-044",
   "title": "Deterministic Water volume",
   "owner": "Primary agent",
-  "state": "authorized_implementation",
+  "state": "implementation_complete_acceptance_pending",
   "authorizationDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
@@ -22,6 +22,14 @@
     "disable enable lifecycle with explicit occupant exits",
     "Player application through the existing generic external-velocity entry"
   ],
+  "features": [
+    "immutable fixed-tick Water volume contacts snapshots effects and events",
+    "rectangular overlap with explicit entered submerged exited and ignored facts",
+    "horizontal drag neutral buoyancy directional swim targets and bounded velocity",
+    "stable multi-occupant ordering duplicate rejection and two-volume isolation",
+    "disable enable lifecycle with explicit occupant exits",
+    "target-addressed generic velocity effect actually applied by Player"
+  ],
   "forbidden": [
     "visible GUI",
     "live input",
@@ -32,6 +40,22 @@
     "filesystem platform rendering or desktop dependencies",
     "claiming original parity without evidence"
   ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "waterTests": 48,
+    "totalRegressionTests": 579,
+    "demoTicks": 12,
+    "demoEntered": 3,
+    "demoSubmerged": 13,
+    "demoMotionIssued": 13,
+    "demoExited": 2,
+    "demoPlayerApplications": 10,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
   "nextTask": "CDR-045",
-  "nextAction": "Implement and verify CDR-044 locally. Do not publish before developer acceptance and do not start CDR-045 Bumper without explicit authorization."
+  "nextAction": "Wait for developer acceptance. Do not publish CDR-044 or start CDR-045 Bumper without explicit authorization."
 }

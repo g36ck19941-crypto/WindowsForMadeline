@@ -34,7 +34,9 @@ Exact acceptance commit `9d05ea67ed4c0aa7dcb45bddd74ba67577e17b14` was freshly r
 
 On 2026-10-01 the developer authorized CDR-044 Water under the previously stated generated-only boundary. Scope is an isolated deterministic rectangular Water volume with enter/submerged/exit transitions, drag, neutral buoyancy, directional swim targets, speed limits, multiple occupants, disable/enable, isolation and separate generic Player velocity application. Original numeric/visual parity remains `partial`; visible GUI, live input, game/install access, commercial bytes and CDR-045 Bumper remain unauthorized.
 
-At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-043 milestone; launcher text does not change task acceptance state.
+CDR-044 local implementation is complete and awaiting developer acceptance. The independent Water module consumes generated immutable rectangles, velocities and swim axes; records stable enter/submerged/motion/exit facts; produces bounded drag, neutral buoyancy and directional swim velocity; orders multiple occupants deterministically; and isolates disable/failure state. Player applies the target-addressed generic velocity separately. Release builds with 0 warnings/errors; Water 48/48 and 579/579 total regressions pass. The 12-tick demo records entered 3, submerged 13, motion issued 13, exited 2 and Player applied 10 with identical replay. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original surface/contact/numeric parity, formal App routing, assets and visible presentation are not established. Do not upload before acceptance and do not start CDR-045.
+
+At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-044 milestone; launcher text does not change task acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
@@ -52,11 +54,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Implement CDR-044 Water locally, run focused tests and the complete offline verifier, update the cumulative generated demo and prepare developer acceptance material. Do not publish before acceptance and do not start CDR-045 Bumper.
+Stop for developer acceptance of CDR-044. Do not publish it or start CDR-045 Bumper without explicit developer authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-044 generated-only Water module, tests, cumulative demo, verifier and records
+- Scope: CDR-044 developer acceptance gate; implementation is local and unuploaded
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

@@ -33,6 +33,7 @@
 | `GLIDER.md` | `../GLIDER.md` |
 | `SPRING.md` | `../SPRING.md` |
 | `REFILL.md` | `../REFILL.md` |
+| `WATER.md` | `../WATER.md` |
 | `REFERENCE_POLICY.md` | `../REFERENCE_POLICY.md` |
 | `PARITY.md` | `../PARITY.md` |
 | `TASKS.md` | `../../TASKS.md` |
@@ -56,3 +57,4 @@
 | `updates/2026-09-29-cdr-041-glider.md` | `../updates/2026-09-29-cdr-041-glider.md` |
 | `updates/2026-09-29-cdr-042-spring.md` | `../updates/2026-09-29-cdr-042-spring.md` |
 | `updates/2026-09-29-cdr-043-refill.md` | `../updates/2026-09-29-cdr-043-refill.md` |
+| `updates/2026-10-01-cdr-044-water.md` | `../updates/2026-10-01-cdr-044-water.md` |

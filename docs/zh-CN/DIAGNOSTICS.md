@@ -60,6 +60,8 @@ Spring 使用 `SPRING_ACTIVATED`、`SPRING_LAUNCH_ISSUED`、`SPRING_RETRACTED`�
 
 Refill 使用 `REFILL_COLLECTED`、`REFILL_RESTORE_ISSUED`、`REFILL_COOLDOWN_STARTED`、`REFILL_RESPAWNED`、`REFILL_DISABLED`、`REFILL_ENABLED` 和 `REFILL_CONTACT_IGNORED`。恢复请求包含目标 Player 身份，但本身不证明 Player 已经应用；Player 会另外记录 `ExternalResourcesApplied`。Refill 事件不代表素材、渲染或人眼可见。
 
+Water 使用 `WATER_ENTERED`、`WATER_SUBMERGED`、`WATER_MOTION_ISSUED`、`WATER_EXITED`、`WATER_DISABLED`、`WATER_ENABLED` 和 `WATER_CONTACT_IGNORED`。运动请求包含目标身份，但本身不证明 Player 已经应用；Player 会另外记录 `ExternalVelocityApplied`。事件只包含受限的实体/目标 ID 和程序生成水体矩形，不包含实时输入、素材或桌面内容。Water 事件不代表渲染或人眼可见。
+
 ## 3. 错误分类
 
 - `INSTALL_*`：目录选择、路径包含、文件缺失或版本不支持。

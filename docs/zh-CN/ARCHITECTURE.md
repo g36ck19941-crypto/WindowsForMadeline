@@ -89,6 +89,8 @@ CDR-042 把可复用、按轴替换的 `ExternalVelocityEffect` 放在 `Simulati
 
 CDR-043 在 `Simulation.Core` 加入受限的 `ExternalResourceEffect`。`CelesteDesktop.Entity.Refill` 根据不可变 Player 接触快照判断冲刺次数或体力是否不足，再输出目标 ID 和资源上限，不引用 Player；Player 通过自己的通用外部效果入口限制并应用数值，另外记录“已应用”事件。Refill 自己管理收集、冷却、重生、停用/启用和离开后重置，未来 App 只负责转交效果。
 
+CDR-044 新增隔离的 `CelesteDesktop.Entity.Water` 矩形体积模块。它只接收不可变的目标矩形、速度和程序生成游动方向，按稳定顺序记录浸没目标，并输出带目标 ID 的通用速度效果，实现水平阻力、自然上浮、方向游动和限速。Water 不引用 Player；Player 通过已有入口应用速度并另记“已应用”事实。进入/浸没/离开、停用/启用和多目标状态归 Water 管理，未来 App 只负责提供接触并转交效果。
+
 ## 6. 预留扩展接口
 
 `docs/EXTENSIONS.md` 预留 `IAssetSourceProvider` 和 `IWorldContentProvider` 概念边界，使未来可以接入只读 Mod 素材和规范化关卡/地图描述，而不让这些格式耦合到 Simulation 或 App。

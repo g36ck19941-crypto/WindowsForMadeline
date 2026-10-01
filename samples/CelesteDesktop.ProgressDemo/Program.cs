@@ -16,6 +16,7 @@ using CelesteDesktop.Entity.Theo;
 using CelesteDesktop.Entity.Glider;
 using CelesteDesktop.Entity.Spring;
 using CelesteDesktop.Entity.Refill;
+using CelesteDesktop.Entity.Water;
 
 const int width = 8;
 const int height = 6;
@@ -67,6 +68,7 @@ var theo = RunSyntheticTheo();
 var glider = RunSyntheticGlider();
 var spring = RunSyntheticSpring();
 var refill = RunSyntheticRefill();
+var water = RunSyntheticWater();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -88,7 +90,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-043",
+    demoId = "CDR-044",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -107,7 +109,8 @@ var manifest = new
         "CDR-040 ran generated Theo pickup carry throw bounce and isolation behavior at fixed tick",
         "CDR-041 ran generated Glider pickup carry fall-limit throw glide bounce and isolation behavior at fixed tick",
         "CDR-042 ran generated Spring activation retract cooldown reset and target launch effects at fixed tick",
-        "CDR-043 ran generated Refill collection resource restoration cooldown respawn and isolation at fixed tick"
+        "CDR-043 ran generated Refill collection resource restoration cooldown respawn and isolation at fixed tick",
+        "CDR-044 ran generated Water enter submerged drag buoyancy swim limit exit and isolation behavior at fixed tick"
     },
     independentValidation = new
     {
@@ -282,6 +285,19 @@ var manifest = new
         refill.DeterministicReplay,
         rows = refill.Rows
     },
+    water = new
+    {
+        source = "program-generated-geometry-and-input",
+        fidelity = "partial",
+        tickCount = water.Rows.Count,
+        water.EnteredCount,
+        water.SubmergedCount,
+        water.MotionIssuedCount,
+        water.ExitedCount,
+        water.PlayerApplicationCount,
+        water.DeterministicReplay,
+        rows = water.Rows
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -301,11 +317,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-043 cumulative deterministic Refill pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} theo_pickups={theo.PickupCount} theo_throws={theo.ThrowCount} theo_horizontal_bounces={theo.HorizontalBounceCount} theo_landings={theo.LandingCount} theo_replay={theo.DeterministicReplay.ToString().ToLowerInvariant()} glider_ticks={glider.Rows.Count} glider_pickups={glider.PickupCount} glider_throws={glider.ThrowCount} glider_fall_limits={glider.HolderFallLimitedCount} glider_player_fall_limits_applied={glider.PlayerFallLimitAppliedCount} glider_horizontal_bounces={glider.HorizontalBounceCount} glider_landings={glider.LandingCount} glider_replay={glider.DeterministicReplay.ToString().ToLowerInvariant()} spring_ticks={spring.Rows.Count} spring_activations={spring.ActivationCount} spring_launches={spring.LaunchCount} spring_ready={spring.ReadyCount} spring_player_applied={spring.PlayerApplicationCount} spring_theo_applied={spring.TheoApplicationCount} spring_glider_applied={spring.GliderApplicationCount} spring_replay={spring.DeterministicReplay.ToString().ToLowerInvariant()} refill_ticks={refill.Rows.Count} refill_collections={refill.CollectionCount} refill_restores={refill.RestoreCount} refill_respawns={refill.RespawnCount} refill_player_applied={refill.PlayerApplicationCount} refill_replay={refill.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-044 cumulative deterministic Water pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} theo_pickups={theo.PickupCount} theo_throws={theo.ThrowCount} theo_horizontal_bounces={theo.HorizontalBounceCount} theo_landings={theo.LandingCount} theo_replay={theo.DeterministicReplay.ToString().ToLowerInvariant()} glider_ticks={glider.Rows.Count} glider_pickups={glider.PickupCount} glider_throws={glider.ThrowCount} glider_fall_limits={glider.HolderFallLimitedCount} glider_player_fall_limits_applied={glider.PlayerFallLimitAppliedCount} glider_horizontal_bounces={glider.HorizontalBounceCount} glider_landings={glider.LandingCount} glider_replay={glider.DeterministicReplay.ToString().ToLowerInvariant()} spring_ticks={spring.Rows.Count} spring_activations={spring.ActivationCount} spring_launches={spring.LaunchCount} spring_ready={spring.ReadyCount} spring_player_applied={spring.PlayerApplicationCount} spring_theo_applied={spring.TheoApplicationCount} spring_glider_applied={spring.GliderApplicationCount} spring_replay={spring.DeterministicReplay.ToString().ToLowerInvariant()} refill_ticks={refill.Rows.Count} refill_collections={refill.CollectionCount} refill_restores={refill.RestoreCount} refill_respawns={refill.RespawnCount} refill_player_applied={refill.PlayerApplicationCount} refill_replay={refill.DeterministicReplay.ToString().ToLowerInvariant()} water_ticks={water.Rows.Count} water_entered={water.EnteredCount} water_submerged={water.SubmergedCount} water_motion_issued={water.MotionIssuedCount} water_exited={water.ExitedCount} water_player_applied={water.PlayerApplicationCount} water_replay={water.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -317,7 +333,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-043-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-044-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -497,7 +513,8 @@ static string BuildHtml(
     DemoTheo theo,
     DemoGlider glider,
     DemoSpring spring,
-    DemoRefill refill)
+    DemoRefill refill,
+    DemoWater water)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -676,13 +693,26 @@ static string BuildHtml(
             .Append("</td></tr>");
     }
 
+    var waterRows = new StringBuilder();
+    foreach (var row in water.Rows)
+    {
+        waterRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.State))
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Occupants))
+            .Append("</td><td>").Append(row.MoveX).Append(',').Append(row.MoveY)
+            .Append("</td><td>").Append(decimal.Round(row.PlayerSpeedX, 3)).Append(',').Append(decimal.Round(row.PlayerSpeedY, 3))
+            .Append("</td><td>").Append(row.PlayerApplied)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
+            .Append("</td></tr>");
+    }
+
     return $$"""
         <!doctype html>
         <html lang="zh-CN">
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-043 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-044 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -701,7 +731,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-043 累计项目进度演示</h1>
+          <h1>CDR-044 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -722,6 +752,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-041</b>Glider 拿起、缓降请求、投掷、滑落反弹与故障隔离</div>
             <div class="stage"><b>CDR-042</b>Spring 激活、压缩、冷却、复位与目标发射</div>
             <div class="stage"><b>CDR-043</b>Refill 收集、冲刺/体力恢复、冷却与重生</div>
+            <div class="stage"><b>CDR-044</b>Water 进入/浸没/离开、阻力、浮力、游动与限速</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -778,6 +809,9 @@ static string BuildHtml(
           <h2>CDR-043 Refill 纯离线交互轨迹</h2>
           <p>程序先把 Player 的冲刺次数和体力降到不足，再让 Player 接触 Refill。Refill 只输出带目标身份的资源恢复效果，由 Player 在同一个固定 tick 自己应用；Refill 随后进入冷却并自动重生。共 {{refill.Rows.Count}} 个固定 tick；收集={{refill.CollectionCount}}，恢复请求={{refill.RestoreCount}}，重生={{refill.RespawnCount}}，Player 实际应用={{refill.PlayerApplicationCount}}；重复运行：<span class="ok">{{(refill.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Refill state</th><th>重生剩余</th><th>Player 冲刺</th><th>Player 体力</th><th>Player 已应用</th><th>Refill 事件</th></tr></thead><tbody>{{refillRows}}</tbody></table>
+          <h2>CDR-044 Water 纯离线交互轨迹</h2>
+          <p>程序生成一个矩形水体和 Player 接触。Player 先以较快速度进入，水体逐 tick 输出带目标身份的阻力与浮力效果；中段加入方向游动和第二个合成漂浮目标，随后离开并再次进入。共 {{water.Rows.Count}} 个固定 tick；进入={{water.EnteredCount}}，浸没事实={{water.SubmergedCount}}，运动请求={{water.MotionIssuedCount}}，离开={{water.ExitedCount}}，Player 实际应用={{water.PlayerApplicationCount}}；重复运行：<span class="ok">{{(water.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>Tick</th><th>Water state</th><th>浸没目标</th><th>游动 X,Y</th><th>Player 速度</th><th>Player 已应用</th><th>Water 事件</th></tr></thead><tbody>{{waterRows}}</tbody></table>
           <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
             <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
@@ -790,6 +824,7 @@ static string BuildHtml(
               <li><strong>Glider 已有独立实体逻辑：</strong>上面的轨迹真实运行了拿起、携带者缓降请求、投掷、展开、缓慢下落、墙面反弹和落地；Glider 失败不会直接关闭 Player、Theo 或另一个 Glider。</li>
               <li><strong>Spring 已有独立实体逻辑：</strong>上面的轨迹真实运行了接触激活、压缩、冷却、复位，并把带目标身份的方向速度实际应用到 Player、Theo 和 Glider；一个 Spring 的状态不会改写另一个 Spring。</li>
               <li><strong>Refill 已有独立实体逻辑：</strong>上面的轨迹真实运行了收集、冲刺次数与体力恢复、冷却和重生；恢复效果由 Player 自己应用，一个 Refill 的冷却不会改写另一个 Refill 或 Spring。</li>
+              <li><strong>Water 已有独立体积逻辑：</strong>上面的轨迹真实运行了矩形重叠、进入、持续浸没、水平阻力、自然上浮、方向游动、限速、离开和再次进入；Water 发出的速度效果由 Player 自己应用，多个目标按稳定顺序隔离。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -806,6 +841,7 @@ static string BuildHtml(
               <li><strong>Glider 手感仍是 partial：</strong>官方公开仓库没有发布商业版 Glider 实体行为，因此缓降、投掷和反弹数值是独立设计的确定性基线；Player 已能通过通用效果入口应用缓降，但正式 App 尚未负责持续组装这个交互。</li>
               <li><strong>Spring 手感仍是 partial：</strong>四个方向、压缩/冷却周期和发射速度已有确定性测试，但原版商业发行版的完整数值与接触判定尚未建立；当前演示只证明程序生成接触和通用运动效果链。</li>
               <li><strong>Refill 手感仍是 partial：</strong>恢复目标、冷却和重生已有确定性测试，但原版商业发行版的完整接触范围、重生时长和特殊变体尚未建立；当前演示只证明程序生成资源效果链。</li>
+              <li><strong>Water 手感仍是 partial：</strong>进入/离开、阻力、浮力、方向游动和限速已有确定性测试，但原版水面、跳出水面、完整接触判定、特殊水体和商业发行版数值尚未建立；当前演示只证明程序生成矩形与运动效果链。</li>
             </ul>
             <p class="plain"><strong>因此当前准确结论是：</strong>项目已经能离线生成并提交正确的动画帧，但尚未取得 <code>HUMAN_VISIBILITY_CONFIRMED</code>，还不能声称角色已经在人眼可见的真实桌面上运行。</p>
           </div>
@@ -1080,6 +1116,89 @@ static DemoRefill RunSyntheticRefill()
             rows.Count(row => row.PlayerApplied),
             false);
     }
+
+    var first = RunOnce();
+    var second = RunOnce();
+    return first with { DeterministicReplay = JsonSerializer.Serialize(first.Rows) == JsonSerializer.Serialize(second.Rows) };
+}
+
+static DemoWater RunSyntheticWater()
+{
+    static DemoWater RunOnce()
+    {
+        var world = new SimulationWorld();
+        var actor = new Actor("water-demo-player", 1, 1, 1, 2);
+        world.Add(actor);
+        var player = new PlayerNormalController(actor, initialSpeed: new SimVector(100m, 40m));
+        var water = new WaterController(
+            "demo-water",
+            new SimRect(0, 0, 40, 20),
+            new WaterTuning(60m, 60m, 20m, 300m, 240m));
+        var rows = new List<DemoWaterRow>();
+
+        for (var tick = 0; tick < 12; tick++)
+        {
+            WaterSnapshot? waterSnapshot = null;
+            PlayerNormalSnapshot? playerSnapshot = null;
+            var moveX = tick is >= 3 and <= 5 ? 1 : tick is >= 6 and <= 7 ? -1 : 0;
+            var moveY = tick is >= 3 and <= 5 ? -1 : tick is >= 6 and <= 7 ? 1 : 0;
+            world.Step(current =>
+            {
+                var contacts = new List<WaterContact>();
+                if (tick is not (8 or 9))
+                {
+                    contacts.Add(new WaterContact(
+                        "water-demo-player",
+                        actor.Bounds,
+                        new SimVector(player.SpeedX, player.SpeedY),
+                        moveX,
+                        moveY));
+                }
+                if (tick is >= 4 and <= 6)
+                {
+                    contacts.Add(new WaterContact(
+                        "generated-floater",
+                        new SimRect(20, 4, 2, 2),
+                        new SimVector(0m, 20m),
+                        0,
+                        0));
+                }
+
+                waterSnapshot = water.Update(new WaterInput(contacts), current);
+                var effect = waterSnapshot.MotionEffects
+                    .SingleOrDefault(item => item.TargetId == "water-demo-player");
+                playerSnapshot = player.Update(
+                    new PlayerInput(0, 0, false, false),
+                    new PlayerExternalEffects(null, effect?.Velocity),
+                    current);
+            });
+
+            rows.Add(new DemoWaterRow(
+                waterSnapshot!.Tick,
+                waterSnapshot.State.ToString(),
+                string.Join(", ", waterSnapshot.Occupants),
+                moveX,
+                moveY,
+                playerSnapshot!.Speed.X,
+                playerSnapshot.Speed.Y,
+                waterSnapshot.MotionEffects.Any(item => item.TargetId == "water-demo-player") &&
+                    playerSnapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.ExternalVelocityApplied),
+                string.Join(", ", waterSnapshot.Events.Select(item => $"{item.EventId}:{item.TargetId ?? "-"}"))));
+        }
+
+        return new DemoWater(
+            rows.AsReadOnly(),
+            rows.Sum(row => CountEvent(row.Events, WaterEventIds.Entered)),
+            rows.Sum(row => CountEvent(row.Events, WaterEventIds.Submerged)),
+            rows.Sum(row => CountEvent(row.Events, WaterEventIds.MotionIssued)),
+            rows.Sum(row => CountEvent(row.Events, WaterEventIds.Exited)),
+            rows.Count(row => row.PlayerApplied),
+            false);
+    }
+
+    static int CountEvent(string events, string eventId) =>
+        events.Split(", ", StringSplitOptions.RemoveEmptyEntries)
+            .Count(item => item.StartsWith(eventId + ":", StringComparison.Ordinal));
 
     var first = RunOnce();
     var second = RunOnce();
@@ -1513,6 +1632,26 @@ internal sealed record DemoRefillRow(
     int RespawnTicks,
     int PlayerDashes,
     decimal PlayerStamina,
+    bool PlayerApplied,
+    string Events);
+
+internal sealed record DemoWater(
+    IReadOnlyList<DemoWaterRow> Rows,
+    int EnteredCount,
+    int SubmergedCount,
+    int MotionIssuedCount,
+    int ExitedCount,
+    int PlayerApplicationCount,
+    bool DeterministicReplay);
+
+internal sealed record DemoWaterRow(
+    long Tick,
+    string State,
+    string Occupants,
+    int MoveX,
+    int MoveY,
+    decimal PlayerSpeedX,
+    decimal PlayerSpeedY,
     bool PlayerApplied,
     string Events);
 

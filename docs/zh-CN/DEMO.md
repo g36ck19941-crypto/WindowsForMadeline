@@ -127,3 +127,9 @@
 双击 `演示当前进度.cmd`。累计报告新增 16 tick 的 Refill 轨迹；应看到 2 次 `REFILL_COLLECTED`、2 次 `REFILL_RESTORE_ISSUED`、2 次 `REFILL_RESPAWNED`，并看到 Player 两次从“0 次冲刺、25 体力”实际恢复到“1 次冲刺、110 体力”，重放一致。
 
 然后双击 `验证当前版本.cmd`。Refill 应为 `42/42`，累计为 `531/531`，最后显示 `CDR-043 OFFLINE VERIFICATION PASSED`。这只证明程序生成接触、资源效果、冷却/重生和 Player 离线实际应用；正式 App 路由、原版接触/重生数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。
+
+## CDR-044——Water（水体）确定性体积
+
+双击 `演示当前进度.cmd`。累计报告会新增 12 tick 的程序生成 Water 轨迹，应包含 3 次 `WATER_ENTERED`、13 次 `WATER_SUBMERGED`、13 次 `WATER_MOTION_ISSUED`、2 次 `WATER_EXITED` 和 10 次 Player 实际速度应用。表格会展示自然阻力/浮力、方向游动、第二个合成浸没目标、离开和再次进入；重复运行必须完全一致。
+
+然后双击 `验证当前版本.cmd`。Water 应为 `48/48`，累计为 `579/579`，最后显示 `CDR-044 OFFLINE VERIFICATION PASSED`。这只证明程序生成矩形接触、确定性运动效果、多目标隔离和 Player 离线实际应用；正式 App 路由、原版水面/接触/数值、原版像素、可见桌面、实时输入和安装目录连接仍未证明。

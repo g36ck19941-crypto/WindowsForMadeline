@@ -4,6 +4,9 @@
 
 - Recorded developer authorization for an isolated deterministic Water volume using generated rectangles, velocities and swim axes only.
 - Bounded implementation to enter/submerged/exit transitions, drag, buoyancy, directional swim targets, speed limits, multiple-occupant isolation and generic Player velocity application.
+- Completed the independent Water module and 48 focused cases; the complete Release gate passes 579/579 with 0 warnings/errors.
+- Extended the generated cumulative demo with a 12-tick Water trace: entered 3, submerged 13, motion issued 13, exited 2 and Player applied 10, with identical replay.
+- Added stable Water diagnostics, English contracts, Chinese acceptance material and double-click developer entry updates.
 - Kept original numeric parity, visible GUI, live input, game/install access, commercial bytes and CDR-045 Bumper outside the authorization.
 
 ## 2026-09-30 — CDR-043 accepted
