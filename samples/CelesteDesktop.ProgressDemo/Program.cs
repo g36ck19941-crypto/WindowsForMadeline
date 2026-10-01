@@ -76,6 +76,7 @@ var bumper = RunSyntheticBumper();
 var puffer = RunSyntheticPuffer();
 var seeker = RunSyntheticSeeker();
 var app = Cdr050Demo.Run();
+var host = Cdr051Demo.Run();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -97,7 +98,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-050",
+    demoId = "CDR-051",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -121,7 +122,8 @@ var manifest = new
         "CDR-045 ran generated Bumper circular contact radial launch cooldown rearm fallback and isolation behavior at fixed tick",
         "CDR-046 ran generated Puffer bounded swim warning explosion launch respawn fallback and isolation behavior at fixed tick",
         "CDR-047 ran generated Seeker patrol alert chase windup dash hit wall-stun recovery and isolation behavior at fixed tick",
-        "CDR-050 orchestrated lifecycle, one simulation step per App tick, effect routing and presentation isolation offline"
+        "CDR-050 orchestrated lifecycle, one simulation step per App tick, effect routing and presentation isolation offline",
+        "CDR-051 scheduled the App at fixed 60 Hz with bounded catch-up, generated input and graceful stop"
     },
     independentValidation = new
     {
@@ -375,6 +377,21 @@ var manifest = new
         app.DeterministicReplay,
         rows = app.Rows
     },
+    host = new
+    {
+        source = "program-generated-clock-and-input",
+        fidelity = "offline-host-only",
+        normalExecutedTicks = host.NormalCadence.ExecutedTicks,
+        normalDroppedIntervals = host.NormalCadence.DroppedIntervals,
+        normalDelayCalls = host.NormalCadence.DelayCalls,
+        normalFinalLifecycle = host.NormalCadence.FinalLifecycle,
+        backlogExecutedTicks = host.BacklogCadence.ExecutedTicks,
+        backlogDroppedIntervals = host.BacklogCadence.DroppedIntervals,
+        backlogDelayCalls = host.BacklogCadence.DelayCalls,
+        backlogFinalLifecycle = host.BacklogCadence.FinalLifecycle,
+        backlogEventIds = host.BacklogCadence.EventIds,
+        host.DeterministicReplay
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -394,11 +411,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-050 cumulative offline App orchestration pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} carry_events={simulation.CarryEventCount} blocked_events={simulation.BlockedEventCount} player_ticks={player.Rows.Count} max_run_reached={player.MaxRunReached.ToString().ToLowerInvariant()} jump_events={player.JumpEventCount} traversal_ticks={traversal.Rows.Count} dash_started={traversal.DashStartedCount} wall_slide_started={traversal.WallSlideStartedCount} wall_jumped={traversal.WallJumpedCount} climb_started={traversal.ClimbStartedCount} traversal_replay={traversal.DeterministicReplay.ToString().ToLowerInvariant()} present_calls={presentation.PresentCalls} pixels_changed={presentation.PixelsChangedCount} desktop_snapshots={desktop.Snapshots.Count} visible_surfaces={desktop.Snapshots[^1].Surfaces.Count} moved_surfaces={desktop.Snapshots[^1].Surfaces.Count(item => item.VelocityX != 0 || item.VelocityY != 0)} animation_ticks={animationPresentation.Rows.Count} animation_presented={animationPresentation.PresentedCount} animation_frame_changes={animationPresentation.FrameChangedCount} animation_replay={animationPresentation.DeterministicReplay.ToString().ToLowerInvariant()} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_presentation_calls={app.PresentationCalls} app_component_disabled={app.ComponentDisabledCount} app_paused={app.Paused.ToString().ToLowerInvariant()} app_resumed={app.Resumed.ToString().ToLowerInvariant()} app_stopped={string.Equals(app.FinalLifecycle, "Stopped", StringComparison.Ordinal).ToString().ToLowerInvariant()} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-051 cumulative offline Headless App Host pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} player_ticks={player.Rows.Count} traversal_ticks={traversal.Rows.Count} animation_ticks={animationPresentation.Rows.Count} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_component_disabled={app.ComponentDisabledCount} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} host_normal_ticks={host.NormalCadence.ExecutedTicks} host_normal_dropped={host.NormalCadence.DroppedIntervals} host_backlog_ticks={host.BacklogCadence.ExecutedTicks} host_backlog_dropped={host.BacklogCadence.DroppedIntervals} host_backlog_event={host.BacklogCadence.EventIds.Contains("APP_HOST_BACKLOG_DROPPED", StringComparison.Ordinal).ToString().ToLowerInvariant()} host_stopped={(host.NormalCadence.FinalLifecycle == "Stopped" && host.BacklogCadence.FinalLifecycle == "Stopped").ToString().ToLowerInvariant()} host_replay={host.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -410,7 +427,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-050-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-051-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -595,7 +612,8 @@ static string BuildHtml(
     DemoBumper bumper,
     DemoPuffer puffer,
     DemoSeeker seeker,
-    DemoApp app)
+    DemoApp app,
+    DemoHeadlessHost host)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -851,7 +869,7 @@ static string BuildHtml(
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-050 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-051 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -870,7 +888,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-050 累计项目进度演示</h1>
+          <h1>CDR-051 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -896,6 +914,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-046</b>Puffer 游动、预警、爆炸弹射、冷却重生与隔离</div>
             <div class="stage"><b>CDR-047</b>Seeker 巡逻、发现、追逐、冲刺、撞墙眩晕与恢复</div>
             <div class="stage"><b>CDR-050</b>App 统一启动、逐 tick 编排、效果路由、暂停恢复与故障隔离</div>
+            <div class="stage"><b>CDR-051</b>无界面宿主固定 60 Hz 调度、有限追赶、取消与可靠退出</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -967,6 +986,10 @@ static string BuildHtml(
           <h2>CDR-050 App 统一编排与生命周期</h2>
           <p>程序把 Player、全部离线实体和呈现阶段放进同一个 App 会话。连续运行 {{app.Rows.Count}} 个 App tick，模拟完成 {{app.SimulationCompletedCount}} 次、路由效果 {{app.EffectRoutedCount}} 次；中途暂停并恢复一次。第 2 次呈现被故意触发异常后，呈现组件被单独禁用，但模拟继续到 tick 4 并正常停止。重复运行：<span class="ok">{{(app.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>App Tick</th><th>World Tick</th><th>Player 位置</th><th>Player 速度</th><th>结构化事件</th><th>已隔离组件</th></tr></thead><tbody>{{appRows}}</tbody></table>
+          <h2>CDR-051 无界面 App 宿主调度</h2>
+          <p>正常节奏运行 {{host.NormalCadence.ExecutedTicks}} tick，等待 {{host.NormalCadence.DelayCalls}} 次，丢弃积压 {{host.NormalCadence.DroppedIntervals}}；模拟“电脑短暂卡住”的积压节奏时，只追赶 {{host.BacklogCadence.ExecutedTicks}} tick，并明确丢弃 {{host.BacklogCadence.DroppedIntervals}} 个过期时间片，避免一次卡顿后无限追赶。两次都正常停止，重复运行：<span class="ok">{{(host.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <p>积压保护日志：<code>APP_HOST_BACKLOG_DROPPED</code>。它表示宿主明确丢弃了过期时间片，不表示这些时间片被悄悄执行。</p>
+          <table><thead><tr><th>场景</th><th>实际执行 tick</th><th>丢弃过期时间片</th><th>等待次数</th><th>最终状态</th></tr></thead><tbody><tr><td>正常 60 Hz</td><td>{{host.NormalCadence.ExecutedTicks}}</td><td>{{host.NormalCadence.DroppedIntervals}}</td><td>{{host.NormalCadence.DelayCalls}}</td><td>{{host.NormalCadence.FinalLifecycle}}</td></tr><tr><td>积压保护</td><td>{{host.BacklogCadence.ExecutedTicks}}</td><td>{{host.BacklogCadence.DroppedIntervals}}</td><td>{{host.BacklogCadence.DelayCalls}}</td><td>{{host.BacklogCadence.FinalLifecycle}}</td></tr></tbody></table>
           <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
             <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
@@ -984,6 +1007,7 @@ static string BuildHtml(
               <li><strong>Puffer 已有独立游动与爆炸逻辑：</strong>上面的轨迹真实运行了左右游动/转向、接近预警、一次爆炸弹射、中心重合向上回退、冷却重生和范围外忽略；Player 自己应用速度，另一个 Puffer 独立运行。</li>
               <li><strong>Seeker 已有独立追逐状态机：</strong>上面的轨迹真实运行了巡逻、发现目标、预警、追逐、蓄力、定向冲刺、目标命中、撞墙眩晕、恢复和丢失目标；另一个 Seeker 始终独立运行。</li>
               <li><strong>App 已能统一组织离线模块：</strong>一次 App tick 只推进一次模拟，再按明确顺序把实体效果交给 Player/Theo/Glider，最后才把不可变动画帧交给呈现层；暂停、恢复、停止和呈现故障都有可追踪事件。</li>
+              <li><strong>App 已有无界面运行节奏：</strong>宿主按固定 60 Hz 请求下一 tick，短暂卡顿时最多有限追赶，过期积压会留下明确记录；取消或达到演示上限后会停止并释放会话。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -994,6 +1018,7 @@ static string BuildHtml(
               <li><strong>这次使用的是程序生成测试图：</strong>不是 Celeste 的原版角色图片，也没有把任何商业素材保存进项目。</li>
               <li><strong>Present 不等于肉眼可见：</strong>它只说明渲染后端接收并提交了画面；当前走的是隐藏、离线验证路径，没有把角色窗口显示到真实桌面。</li>
               <li><strong>还没有可见桌面宿主：</strong>CDR-050 已完成纯离线 App 统一编排，但没有打开窗口、接入实时键盘、读取真实桌面或验证人眼可见。</li>
+              <li><strong>CDR-051 仍是 Headless：</strong>它只证明后台时钟和退出流程，不是可双击运行的正式桌面角色程序，也没有读取真实键盘、桌面或正版安装。</li>
               <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>
               <li><strong>CDR-016 只证明格式兼容：</strong>它说明指定正版安装中的素材能被只读解析，不等于这些原版素材已经在本次演示里被连接和显示。</li>
               <li><strong>Theo 手感仍是 partial：</strong>官方公开仓库没有 TheoCrystal 实体源码，因此当前数值是独立设计并由逐 tick 测试固定的离线基线，不宣称与商业发行版逐项完全一致。</li>

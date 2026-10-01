@@ -3,8 +3,9 @@
   "taskId": "CDR-050",
   "title": "Offline App orchestration and lifecycle",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted_published",
   "authorizationDate": "2026-10-01",
+  "acceptedDate": "2026-10-01",
   "fidelity": "partial-visible-host-and-original-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.App/**",
@@ -46,8 +47,15 @@
     "commercialBytes": 0
   },
   "publication": {
-    "status": "not-authorized-before-acceptance"
+    "acceptedCommit": "8430a85c7f48c30615afad7a53eb5e7b88595131",
+    "targetBranch": "codex/cdr-050-app-orchestration",
+    "status": "published-and-read-back",
+    "attempts": 3,
+    "priorFailures": 2,
+    "failure": null,
+    "remoteCommit": "8430a85c7f48c30615afad7a53eb5e7b88595131",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
   },
-  "nextTask": null,
-  "nextAction": "Wait for explicit developer acceptance before publication or later integration."
+  "nextTask": "CDR-051",
+  "nextAction": "CDR-050 is complete. Keep CDR-051 local until developer acceptance."
 }

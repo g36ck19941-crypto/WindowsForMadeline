@@ -84,6 +84,8 @@ Every error code has one owning subsystem. App may surface it but must not reint
 
 CDR-050 App events are `APP_STARTED`, `APP_TICK_STARTED`, `APP_SIMULATION_COMPLETED`, `APP_EFFECT_ROUTED`, `APP_EFFECT_CONFLICT`, `APP_EFFECT_TARGET_UNRESOLVED`, `APP_SEEKER_HIT_OBSERVED`, `APP_PRESENTATION_COMPLETED`, `APP_COMPONENT_DISABLED`, `APP_TICK_COMPLETED`, `APP_PAUSED`, `APP_RESUMED`, `APP_STOPPED`, `APP_FAULTED` and `APP_DISPOSED`. Each record includes sequence, tick, stage, outcome, component and optional target/detail. Failures include type, message, HResult, stack and inner exception. These events prove orchestration facts only; none implies original parity or human visibility.
 
+CDR-051 host events are `APP_HOST_STARTED`, `APP_HOST_TICK_DISPATCHED`, `APP_HOST_BACKLOG_DROPPED`, `APP_HOST_CANCELLED`, `APP_HOST_STOPPED`, `APP_HOST_FAULTED` and `APP_HOST_DISPOSED`. Each record includes sequence, App tick, monotonic clock timestamp, executed tick count, dropped interval count and bounded detail. Host failures use the same full exception shape. A backlog-drop event proves scheduling protection acted; it does not imply a simulation tick was executed for each dropped interval.
+
 AssetWorker supervision returns a stable operation code, bounded protocol detail code, state, observed exit code and recovery action. The process fallback event is `ASSET_WORKER_PROCESS_FAILED`; it is written as one bounded JSON record to stderr and never mixed with binary stdout IPC.
 
 ## 4. Storage and support bundle

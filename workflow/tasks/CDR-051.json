@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-051",
+  "title": "Pure-offline Headless App Host",
+  "owner": "Primary agent",
+  "state": "ready_for_acceptance",
+  "authorizationDate": "2026-10-01",
+  "fidelity": "offline-host-only-visible-runtime-unestablished",
+  "scope": [
+    "src/CelesteDesktop.App/**",
+    "tests/CelesteDesktop.App.Host.Tests/**",
+    "generated cumulative demo",
+    "verification launcher and project records"
+  ],
+  "features": [
+    "injected monotonic clock and delay boundary",
+    "fixed sixty hertz scheduling",
+    "bounded catch-up and explicit dropped backlog facts",
+    "immutable generated App input source",
+    "cancellation graceful stop and disposal",
+    "stable structured host diagnostics"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "desktop observation",
+    "Celeste or Everest launch",
+    "game or installation access or writes",
+    "commercial-byte persistence",
+    "wall-clock-dependent simulation assertions"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "hostTests": 26,
+    "totalRegressionTests": 826,
+    "normalExecutedTicks": 6,
+    "normalDroppedIntervals": 0,
+    "backlogExecutedTicks": 4,
+    "backlogDroppedIntervals": 4,
+    "finalLifecycle": "Stopped",
+    "deterministicReplay": true,
+    "rootLaunchersPassed": 2,
+    "visibleGui": false,
+    "liveInput": false,
+    "desktopObservation": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
+  "nextAction": "Developer acceptance. Do not upload CDR-051 or begin a later task before explicit authorization."
+}

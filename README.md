@@ -13,12 +13,12 @@
 
 ## 当前状态
 
-CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 至 CDR-047 已由开发者验收并上传各自独立分支，远程 `main` 未改变。CDR-050 已完成纯离线 App 统一编排、生命周期、效果路由和故障隔离，当前等待验收，尚未上传。可见 GUI、实时输入和安装目录访问仍未授权。
+CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 至 CDR-047 已由开发者验收并上传各自独立分支，远程 `main` 未改变。CDR-050 已验收并上传到 `codex/cdr-050-app-orchestration` 的 `8430a85`。CDR-051 已完成固定 60 Hz、有限补算的纯离线无界面 App 宿主，当前等待验收，尚未上传。可见 GUI、实时输入和安装目录访问仍未授权。
 
 ## 开发者双击入口
 
-- `演示当前进度.cmd`：生成程序化 Atlas/XML、Actor/Solid 场景、玩家输入、棋盘格、匿名桌面几何、Theo、Glider、Spring、Refill、Water、Bumper、Puffer 与 Seeker 交互轨迹，实际经过 CDR-012/013/014/015/020/021/022/030/031/032/040/041/042/043/044/045/046/047，再打开本地 HTML 报告。
-- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-050 的 800 项离线/隐藏回归；不读取真实安装或桌面内容，也不打开可见窗口。
+- `演示当前进度.cmd`：生成程序化 Atlas/XML、Actor/Solid 场景、玩家输入、棋盘格、匿名桌面几何、实体交互、App 编排和固定 60 Hz/积压保护宿主轨迹，再打开本地 HTML 报告。
+- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-051 的 826 项离线/隐藏回归；不读取真实安装或桌面内容，也不打开可见窗口。
 - `验证真实安装兼容性.cmd`：显式选择正版安装后执行 CDR-016 只读核验；不启动游戏或 GUI，证据写在项目目录。
 - `tools/*.ps1` 保留给代理和 CI，不再要求开发者手动输入。
 
@@ -47,3 +47,5 @@ CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 �
 21. `docs/REFILL.md`
 22. `docs/WATER.md`
 23. `docs/BUMPER.md`
+24. `docs/APP_ORCHESTRATION.md`
+25. `docs/APP_HOST.md`

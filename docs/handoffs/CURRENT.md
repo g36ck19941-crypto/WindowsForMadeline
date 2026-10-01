@@ -60,6 +60,12 @@ The developer accepted CDR-047 on 2026-10-01 and authorized publication. Exact c
 
 On 2026-10-01 the developer authorized CDR-050 pure-offline App orchestration and lifecycle using generated input and existing verified contracts only. `CelesteDesktop.App` is locally implementation-complete: explicit lifecycle, exactly one world step per App tick, stable producer/update ordering, target-addressed Player/Theo/Glider routing, explicit first-wins conflicts and unknown targets, Seeker hit as an observed fact only, post-simulation presentation, and optional entity/presentation isolation with full exception details. Focused App tests pass 50/50 and the complete gate passes 800/800 with 0 Release warnings/errors. The four-tick demo records four simulation completions, two routes, pause/resume, one deliberately isolated presentation failure, continued simulation, normal stop and identical replay. Both root launchers pass with report opening and pause disabled. No GUI, live input, game/install access or commercial bytes were used. Do not upload before explicit developer acceptance.
 
+The developer accepted CDR-050 and authorized publication plus the next target. Exact commit `8430a85c7f48c30615afad7a53eb5e7b88595131` passed a fresh 800/800 gate with 0 Release warnings/errors. Its outgoing tree has 0 forbidden media/build paths, binary diffs, blobs over 1 MiB or real-install/user-path hits. Two pushes to `codex/cdr-050-app-orchestration` failed because GitHub TCP 443 timed out; DNS resolved, but publication is still pending and must be retried/read back before it is reported successful. CDR-051 Headless App Host is now authorized under generated-only offline boundaries: injected monotonic clock, fixed 60 Hz scheduling, bounded catch-up, immutable generated input source, cancellation, graceful stop/dispose and stable host diagnostics. Visible GUI, live input, desktop observation, game/install access or writes and commercial bytes remain forbidden.
+
+CDR-051 is locally implementation-complete and acceptance-pending. `OfflineAppHost` uses injected monotonic time to dispatch consecutive generated inputs at fixed 60 Hz, limits catch-up to four ticks per cycle and records older overdue intervals as `APP_HOST_BACKLOG_DROPPED`. Cancellation, normal stop, disposal, clock/input failures and full exception details are explicit. Focused tests pass 26/26 and the full Release gate passes 826/826 with 0 warnings/errors. The cumulative demo runs 6 normal ticks with 0 drops, then simulates an eight-interval stall that runs 4 ticks and drops 4; both end Stopped and replay identically. Both root `.cmd` entries pass under no-open/no-pause switches. No GUI, live input, desktop observation, game/install access or commercial bytes were used. Do not upload CDR-051 before explicit developer acceptance.
+
+GitHub connectivity recovered after those two earlier failures. Accepted CDR-050 exact commit `8430a85c7f48c30615afad7a53eb5e7b88595131` was published and read back at `codex/cdr-050-app-orchestration`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. This publication contains no CDR-051 work.
+
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
 
 CDR-031 was reverified and audited, then published and read back at `codex/cdr-031-desktop-geometry` = `311c426190489f329b48f983d405abc8c7345809` after one transient GitHub connectivity failure. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
@@ -76,11 +82,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Wait for explicit developer acceptance before publication or later integration.
+Present CDR-051 for developer acceptance; do not upload it or begin a later target without authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-050 pure-offline App orchestration, tests, cumulative demo, verification and delivery records
+- Scope: CDR-051 acceptance handoff
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

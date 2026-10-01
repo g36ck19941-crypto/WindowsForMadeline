@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-01 — CDR-051 pure-offline headless App host implemented
+
+- Added injected monotonic time, fixed 60 Hz App dispatch and consecutive immutable generated inputs.
+- Added bounded four-tick catch-up with explicit stale-interval drops, cancellation, graceful stop/dispose and full host failure diagnostics.
+- Added 26 focused tests and two generated demo cadences; the full Release gate passes 826/826 with 0 warnings/errors, and both root `.cmd` entries pass.
+- Kept GUI, live input, desktop observation, game/install access and commercial bytes out of scope. CDR-051 is local and acceptance-pending.
+- After two earlier network failures, published and read back accepted CDR-050 exact commit `8430a85` at `codex/cdr-050-app-orchestration`; remote `main` remained unchanged.
+
+## 2026-10-01 — CDR-050 accepted; CDR-051 authorized
+
+- The developer accepted exact CDR-050 commit `8430a85`; a fresh gate passed 800/800 with 0 Release warnings/errors and the outbound tree audit was clean.
+- Publication to `codex/cdr-050-app-orchestration` remains pending after two GitHub TCP 443 timeouts; remote publication is not claimed.
+- Authorized CDR-051 as the next pure-offline target: an injected-clock headless App host with fixed 60 Hz scheduling, bounded catch-up, generated input, cancellation and graceful shutdown.
+
 ## 2026-10-01 — CDR-050 offline App orchestration implemented
 
 - Added `CelesteDesktop.App` with explicit lifecycle, one simulation step per App tick, stable entity/effect routing and post-simulation presentation.
