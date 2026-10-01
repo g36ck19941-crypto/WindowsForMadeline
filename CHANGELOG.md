@@ -4,7 +4,7 @@
 
 - Recorded developer acceptance of Water and Bumper and authorization for exact independent-branch publication after fresh verification and outbound audit.
 - CDR-044 exact commit `009c8811a5a1fe381909914dfd507cd356f6036d` passed 579/579; CDR-045 exact commit `556939cbbbe5410bf6c86bdafeaa0aab333c7121` passed 625/625, both with 0 Release warnings/errors.
-- The outgoing trees contain no commercial media, decoded frames, audio, game binaries, caches, build output or selected-install paths. The first publication attempt failed on GitHub port 443 and remains pending retry.
+- The outgoing trees contain no commercial media, decoded frames, audio, game binaries, caches, build output or selected-install paths. After one GitHub port-443 timeout, exact commits were published and read back at `codex/cdr-044-water` and `codex/cdr-045-bumper`; remote `main` remained unchanged.
 - Authorized CDR-046 Puffer for generated-only deterministic swim, warning/explosion/launch lifecycle, cooldown/respawn, isolation and generic Player velocity application.
 - Completed the independent Puffer module and 59 focused cases; the complete Release gate passes 684/684 with 0 warnings/errors.
 - Extended the generated cumulative demo with a 20-tick Puffer trace: swim 8, turn 3, warning/explosion/launch 3 each, respawn 2, center fallback 1, ignored 1 and Player applied 3, with identical replay.

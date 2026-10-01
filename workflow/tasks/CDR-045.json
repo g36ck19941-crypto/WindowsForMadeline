@@ -3,7 +3,7 @@
   "taskId": "CDR-045",
   "title": "Deterministic Bumper entity",
   "owner": "Primary agent",
-  "state": "accepted_publication_pending_network",
+  "state": "accepted_published",
   "authorizationDate": "2026-10-01",
   "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
@@ -61,10 +61,11 @@
   "publication": {
     "acceptedCommit": "556939cbbbe5410bf6c86bdafeaa0aab333c7121",
     "targetBranch": "codex/cdr-045-bumper",
-    "status": "pending-network",
-    "attempts": 1,
-    "lastError": "GitHub port 443 connection timeout"
+    "status": "published-and-read-back",
+    "attempts": 2,
+    "priorFailures": 1,
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
   },
   "nextTask": "CDR-046",
-  "nextAction": "Retry exact CDR-045 publication when GitHub connectivity returns and implement the authorized generated-only CDR-046 Puffer task."
+  "nextAction": "CDR-045 is published. CDR-046 is a separate local acceptance candidate."
 }

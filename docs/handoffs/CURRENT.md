@@ -42,6 +42,8 @@ CDR-045 local implementation is complete and awaiting developer acceptance. The 
 
 On 2026-10-01 the developer accepted CDR-044 and CDR-045 and authorized CDR-046 Puffer. CDR-044 exact commit `009c8811a5a1fe381909914dfd507cd356f6036d` passed its isolated fresh gate at 579/579 with 0 Release warnings/errors. CDR-045 exact commit `556939cbbbe5410bf6c86bdafeaa0aab333c7121` passed its fresh gate at 625/625 with 0 Release warnings/errors. Both exact outgoing trees contain no commercial media, decoded frames, audio, game binaries, caches, build output or selected-install path. The first two-ref push attempt failed because GitHub port 443 timed out; neither branch may be reported published until a successful push and read-back.
 
+GitHub connectivity recovered. Exact commit `009c8811a5a1fe381909914dfd507cd356f6036d` was published and read back at `codex/cdr-044-water`; exact commit `556939cbbbe5410bf6c86bdafeaa0aab333c7121` was published and read back at `codex/cdr-045-bumper`. Remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. CDR-046 commit `903d137` remains local and unuploaded pending separate developer acceptance.
+
 CDR-046 is active under a generated-only boundary. Planned scope is a standalone fixed-tick Puffer with bounded horizontal swim, proximity warning fuse, deterministic radial explosion and target-addressed launch, coincident-center upward fallback, spent cooldown/respawn, disable/enable, stable diagnostics, two-Puffer isolation and actual generic Player velocity application. Original commercial movement/contact/timing/numeric parity, special variants, assets, audio, formal App routing and visible presentation remain unestablished and must stay `partial`. Visible GUI, live input, Celeste/Everest launch, game/install access or writes and commercial-byte persistence remain forbidden.
 
 CDR-046 local implementation is complete and awaiting developer acceptance. The standalone Puffer advances between generated horizontal bounds at fixed 60 Hz, records stable swim/turn facts, locks one eligible target during warning, emits one radial target-addressed launch with an explicit coincident-center upward fallback, remains spent until deterministic spawn reset, supports disable/enable and release-to-rearm, and stays isolated from a second Puffer. Player applies the velocity separately and remains responsible for Solid collision. Release builds with 0 warnings/errors; Puffer 59/59 and 684/684 total regressions pass. The 20-tick demo records swim 8, turn 3, warning/explosion/launch 3 each, respawn 2, center fallback 1, ignored 1 and Player applied 3 with identical replay. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original movement/contact/timing/numeric parity, special interactions, assets, audio, formal App routing and visible presentation are not established. Do not upload CDR-046 or start deferred CDR-047 before later explicit developer acceptance/authorization.
@@ -64,11 +66,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Retry exact CDR-044/CDR-045 independent-branch publication and read back both refs when GitHub connectivity returns. CDR-046 is a separate local acceptance candidate; do not publish it or start deferred CDR-047 without later developer acceptance and authorization.
+Stop for developer acceptance of local CDR-046. CDR-044 and CDR-045 are already published and read back. Do not publish CDR-046 or start deferred CDR-047 without later developer acceptance and authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: exact CDR-044/CDR-045 publication retry plus CDR-046 developer acceptance gate
+- Scope: CDR-046 developer acceptance gate after exact CDR-044/CDR-045 publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

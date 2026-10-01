@@ -29,6 +29,6 @@ This is an offline acceptance candidate only. It does not prove original numeric
 
 ## Next gate
 
-CDR-044 and CDR-045 were accepted on 2026-10-01; their exact independent-branch publication is pending a retry after a GitHub port-443 timeout. CDR-046 Puffer was separately authorized and completed locally, but remains unaccepted and unuploaded.
+CDR-044 and CDR-045 were accepted and published on independent branches on 2026-10-01. CDR-046 Puffer was separately authorized and completed locally, but remains unaccepted and unuploaded.
 
-Current state: CDR-045 accepted and exact publication pending network retry.
+Current state: CDR-045 accepted and published at `codex/cdr-045-bumper` exact commit `556939cb`.

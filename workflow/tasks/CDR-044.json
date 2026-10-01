@@ -3,7 +3,7 @@
   "taskId": "CDR-044",
   "title": "Deterministic Water volume",
   "owner": "Primary agent",
-  "state": "accepted_publication_pending_network",
+  "state": "accepted_published",
   "authorizationDate": "2026-10-01",
   "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
@@ -60,10 +60,11 @@
   "publication": {
     "acceptedCommit": "009c8811a5a1fe381909914dfd507cd356f6036d",
     "targetBranch": "codex/cdr-044-water",
-    "status": "pending-network",
-    "attempts": 1,
-    "lastError": "GitHub port 443 connection timeout"
+    "status": "published-and-read-back",
+    "attempts": 2,
+    "priorFailures": 1,
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
   },
   "nextTask": "CDR-045",
-  "nextAction": "Retry exact CDR-044 publication when GitHub connectivity returns. CDR-045 was accepted separately and CDR-046 is authorized."
+  "nextAction": "CDR-044 is published. CDR-046 is a separate local acceptance candidate."
 }

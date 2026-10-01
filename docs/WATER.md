@@ -28,4 +28,4 @@ This is an offline acceptance candidate only. It does not prove original numeric
 
 ## Next gate
 
-CDR-044 was accepted on 2026-10-01. Exact publication to `codex/cdr-044-water` is pending a retry after a GitHub port-443 timeout; this does not change the `partial` fidelity boundary.
+CDR-044 was accepted and published at `codex/cdr-044-water` exact commit `009c8811` on 2026-10-01. This does not change the `partial` fidelity boundary.
