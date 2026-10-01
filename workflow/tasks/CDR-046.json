@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-046",
+  "title": "Deterministic Puffer entity",
+  "owner": "Primary agent",
+  "state": "authorized_in_progress",
+  "authorizationDate": "2026-10-01",
+  "fidelity": "partial-original-numeric-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.Entity.Puffer/**",
+    "tests/CelesteDesktop.Entity.Puffer.Tests/**",
+    "minimal generic Player velocity-effect integration tests",
+    "generated cumulative demo",
+    "tools/Verify-CDR046.ps1",
+    "developer launchers and project records"
+  ],
+  "plannedFeatures": [
+    "immutable fixed-tick Puffer input state effect and event snapshots",
+    "generated bounded horizontal swim patrol with stable direction changes",
+    "proximity-triggered warning fuse and one deterministic radial explosion",
+    "target-addressed launch with explicit coincident-center upward fallback",
+    "spent cooldown respawn disable enable and two-Puffer isolation",
+    "Player application through the existing generic external-velocity entry"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering or desktop dependencies",
+    "claiming original parity without evidence"
+  ],
+  "nextTask": "CDR-047",
+  "nextAction": "Implement and verify CDR-046 locally. Do not publish it or start deferred CDR-047 without later developer acceptance and authorization."
+}

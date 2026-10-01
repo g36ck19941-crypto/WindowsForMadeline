@@ -3,8 +3,9 @@
   "taskId": "CDR-044",
   "title": "Deterministic Water volume",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted_publication_pending_network",
   "authorizationDate": "2026-10-01",
+  "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Water/**",
@@ -56,6 +57,13 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "acceptedCommit": "009c8811a5a1fe381909914dfd507cd356f6036d",
+    "targetBranch": "codex/cdr-044-water",
+    "status": "pending-network",
+    "attempts": 1,
+    "lastError": "GitHub port 443 connection timeout"
+  },
   "nextTask": "CDR-045",
-  "nextAction": "Wait for developer acceptance and do not publish CDR-044. CDR-045 Bumper was separately authorized on 2026-10-01."
+  "nextAction": "Retry exact CDR-044 publication when GitHub connectivity returns. CDR-045 was accepted separately and CDR-046 is authorized."
 }

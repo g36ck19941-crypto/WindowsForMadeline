@@ -40,6 +40,10 @@ On 2026-10-01 the developer separately authorized CDR-045 Bumper without accepti
 
 CDR-045 local implementation is complete and awaiting developer acceptance. The independent Bumper module consumes generated target centers, checks a circular radius, calculates deterministic outward radial velocity, records an explicit upward fallback at coincident centers, and owns cooldown, ready, release-to-rearm and disable/enable state. Player applies the target-addressed generic velocity separately and remains responsible for Solid collision. Release builds with 0 warnings/errors; Bumper 46/46 and 625/625 total regressions pass. The 15-tick demo records activated 4, launch issued 4, ready 3, center fallback 1, ignored 1 and Player applied 4 with identical replay; a second Bumper remains isolated. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original contact/numeric/path parity, formal App routing, assets, audio and visible presentation are not established. Do not upload CDR-044 or CDR-045 before their respective acceptance, and do not start CDR-046.
 
+On 2026-10-01 the developer accepted CDR-044 and CDR-045 and authorized CDR-046 Puffer. CDR-044 exact commit `009c8811a5a1fe381909914dfd507cd356f6036d` passed its isolated fresh gate at 579/579 with 0 Release warnings/errors. CDR-045 exact commit `556939cbbbe5410bf6c86bdafeaa0aab333c7121` passed its fresh gate at 625/625 with 0 Release warnings/errors. Both exact outgoing trees contain no commercial media, decoded frames, audio, game binaries, caches, build output or selected-install path. The first two-ref push attempt failed because GitHub port 443 timed out; neither branch may be reported published until a successful push and read-back.
+
+CDR-046 is active under a generated-only boundary. Planned scope is a standalone fixed-tick Puffer with bounded horizontal swim, proximity warning fuse, deterministic radial explosion and target-addressed launch, coincident-center upward fallback, spent cooldown/respawn, disable/enable, stable diagnostics, two-Puffer isolation and actual generic Player velocity application. Original commercial movement/contact/timing/numeric parity, special variants, assets, audio, formal App routing and visible presentation remain unestablished and must stay `partial`. Visible GUI, live input, Celeste/Everest launch, game/install access or writes and commercial-byte persistence remain forbidden.
+
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-045 milestone; launcher text does not change either task's acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
@@ -58,11 +62,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer acceptance. CDR-044 and CDR-045 are separate local acceptance candidates and neither is uploaded. Do not publish either task or start CDR-046 Puffer without explicit developer acceptance and authorization.
+Retry exact CDR-044/CDR-045 independent-branch publication and read back both refs when GitHub connectivity returns. In parallel, implement and verify authorized CDR-046 locally; do not publish it or start deferred CDR-047 without later developer acceptance and authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: separate CDR-044 and CDR-045 developer acceptance gates; both implementations are local and unuploaded
+- Scope: exact CDR-044/CDR-045 publication retry plus generated-only CDR-046 implementation
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

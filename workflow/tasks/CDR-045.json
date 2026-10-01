@@ -3,8 +3,9 @@
   "taskId": "CDR-045",
   "title": "Deterministic Bumper entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted_publication_pending_network",
   "authorizationDate": "2026-10-01",
+  "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Bumper/**",
@@ -57,6 +58,13 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "acceptedCommit": "556939cbbbe5410bf6c86bdafeaa0aab333c7121",
+    "targetBranch": "codex/cdr-045-bumper",
+    "status": "pending-network",
+    "attempts": 1,
+    "lastError": "GitHub port 443 connection timeout"
+  },
   "nextTask": "CDR-046",
-  "nextAction": "Wait for developer acceptance. Do not publish CDR-044 or CDR-045, and do not start CDR-046 Puffer without explicit authorization."
+  "nextAction": "Retry exact CDR-045 publication when GitHub connectivity returns and implement the authorized generated-only CDR-046 Puffer task."
 }
