@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-01 — CDR-046 accepted; publication pending network
+
+- Recorded developer acceptance of CDR-046 Puffer.
+- Freshly verified exact commit `903d1372bc56730d9ab0cef95fd8ae10ffc6aa28` in an isolated worktree: Release 0 warnings/errors, Puffer 59/59 and 684/684 total regressions.
+- Audited the exact outgoing tree: 0 tracked commercial-media/build-output paths, 0 binary diffs and 0 blobs over 1 MiB; generic `Celeste.exe` text appears only in the bounded install-verifier contract and synthetic tests.
+- Publication to `codex/cdr-046-puffer` remains pending because local DNS succeeds but TCP connections to GitHub port 443 time out. No remote ref was reported as updated.
+- Kept CDR-047 Seeker deferred and unauthorized.
+
 ## 2026-10-01 — CDR-044/CDR-045 accepted; CDR-046 authorized
 
 - Recorded developer acceptance of Water and Bumper and authorization for exact independent-branch publication after fresh verification and outbound audit.

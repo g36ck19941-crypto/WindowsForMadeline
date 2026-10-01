@@ -3,8 +3,9 @@
   "taskId": "CDR-046",
   "title": "Deterministic Puffer entity",
   "owner": "Primary agent",
-  "state": "implementation_complete_acceptance_pending",
+  "state": "accepted_publication_pending_network",
   "authorizationDate": "2026-10-01",
+  "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
   "scope": [
     "src/CelesteDesktop.Entity.Puffer/**",
@@ -60,6 +61,13 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
+  "publication": {
+    "acceptedCommit": "903d1372bc56730d9ab0cef95fd8ae10ffc6aa28",
+    "targetBranch": "codex/cdr-046-puffer",
+    "status": "pending-network",
+    "attempts": 1,
+    "lastError": "GitHub TCP port 443 connection timeout after DNS resolution"
+  },
   "nextTask": "CDR-047",
-  "nextAction": "Wait for developer acceptance. Do not publish CDR-046 or start deferred CDR-047 without later explicit authorization."
+  "nextAction": "Retry exact CDR-046 publication when GitHub TCP 443 connectivity returns. Do not start deferred CDR-047 without explicit authorization."
 }

@@ -48,6 +48,8 @@ CDR-046 is active under a generated-only boundary. Planned scope is a standalone
 
 CDR-046 local implementation is complete and awaiting developer acceptance. The standalone Puffer advances between generated horizontal bounds at fixed 60 Hz, records stable swim/turn facts, locks one eligible target during warning, emits one radial target-addressed launch with an explicit coincident-center upward fallback, remains spent until deterministic spawn reset, supports disable/enable and release-to-rearm, and stays isolated from a second Puffer. Player applies the velocity separately and remains responsible for Solid collision. Release builds with 0 warnings/errors; Puffer 59/59 and 684/684 total regressions pass. The 20-tick demo records swim 8, turn 3, warning/explosion/launch 3 each, respawn 2, center fallback 1, ignored 1 and Player applied 3 with identical replay. Installation access, visible GUI, live input and commercial bytes are 0. Behavior remains `partial`; original movement/contact/timing/numeric parity, special interactions, assets, audio, formal App routing and visible presentation are not established. Do not upload CDR-046 or start deferred CDR-047 before later explicit developer acceptance/authorization.
 
+On 2026-10-01 the developer accepted CDR-046 and authorized its independent-branch publication. Exact commit `903d1372bc56730d9ab0cef95fd8ae10ffc6aa28` passed a fresh isolated gate with 0 Release warnings/errors, Puffer 59/59 and 684/684 total regressions. Its outgoing tree has 0 forbidden commercial-media/build-output paths, 0 binary diffs and 0 blobs over 1 MiB; `Celeste.exe` appears only as a generic install-verifier filename in contracts and synthetic tests, not as a binary or real path. DNS resolves GitHub, but local TCP 443 connections time out, so `codex/cdr-046-puffer` is not published yet. CDR-047 remains deferred and unauthorized.
+
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-046 milestone; launcher text does not change its acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
@@ -66,11 +68,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Stop for developer acceptance of local CDR-046. CDR-044 and CDR-045 are already published and read back. Do not publish CDR-046 or start deferred CDR-047 without later developer acceptance and authorization.
+Retry exact CDR-046 publication and read back `codex/cdr-046-puffer` when GitHub TCP 443 connectivity returns. Do not start deferred CDR-047 without explicit developer authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-046 developer acceptance gate after exact CDR-044/CDR-045 publication
+- Scope: exact CDR-046 independent-branch publication retry after verification and audit
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data
