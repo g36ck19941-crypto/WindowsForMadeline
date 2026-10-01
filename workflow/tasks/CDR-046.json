@@ -3,7 +3,7 @@
   "taskId": "CDR-046",
   "title": "Deterministic Puffer entity",
   "owner": "Primary agent",
-  "state": "accepted_publication_pending_network",
+  "state": "accepted_published",
   "authorizationDate": "2026-10-01",
   "acceptedDate": "2026-10-01",
   "fidelity": "partial-original-numeric-parity-unestablished",
@@ -64,10 +64,11 @@
   "publication": {
     "acceptedCommit": "903d1372bc56730d9ab0cef95fd8ae10ffc6aa28",
     "targetBranch": "codex/cdr-046-puffer",
-    "status": "pending-network",
-    "attempts": 1,
-    "lastError": "GitHub TCP port 443 connection timeout after DNS resolution"
+    "status": "published-and-read-back",
+    "attempts": 2,
+    "priorFailures": 1,
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
   },
   "nextTask": "CDR-047",
-  "nextAction": "Retry exact CDR-046 publication when GitHub TCP 443 connectivity returns. Do not start deferred CDR-047 without explicit authorization."
+  "nextAction": "CDR-046 is published. Do not start deferred CDR-047 without explicit authorization."
 }

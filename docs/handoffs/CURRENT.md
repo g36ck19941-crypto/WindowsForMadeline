@@ -50,6 +50,8 @@ CDR-046 local implementation is complete and awaiting developer acceptance. The 
 
 On 2026-10-01 the developer accepted CDR-046 and authorized its independent-branch publication. Exact commit `903d1372bc56730d9ab0cef95fd8ae10ffc6aa28` passed a fresh isolated gate with 0 Release warnings/errors, Puffer 59/59 and 684/684 total regressions. Its outgoing tree has 0 forbidden commercial-media/build-output paths, 0 binary diffs and 0 blobs over 1 MiB; `Celeste.exe` appears only as a generic install-verifier filename in contracts and synthetic tests, not as a binary or real path. DNS resolves GitHub, but local TCP 443 connections time out, so `codex/cdr-046-puffer` is not published yet. CDR-047 remains deferred and unauthorized.
 
+GitHub TCP 443 connectivity recovered. Exact commit `903d1372bc56730d9ab0cef95fd8ae10ffc6aa28` was published and read back at `codex/cdr-046-puffer`; remote `main` remains `d237277e10af090cf60ec015c22174565e6cdc0a`. CDR-047 remains deferred and unauthorized.
+
 At the developer's request, both root `.cmd` launchers begin with detailed plain-Chinese guidance: demonstration versus verification purpose, expected observations, meaning of success, remaining limitations and which failure excerpt to report. They now target the local CDR-046 milestone; launcher text does not change its acceptance state.
 
 The developer clarified that the primary target was the generated HTML report's “what this proves / does not prove” block. It now gives plain-language, itemized explanations of frame timing, placement, determinism, one-way rendering and the remaining generated-pixel/hidden-present/App/real-interaction gaps. The verifier requires stable IDs for both blocks.
@@ -68,11 +70,11 @@ Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds
 
 ## First next action
 
-Retry exact CDR-046 publication and read back `codex/cdr-046-puffer` when GitHub TCP 443 connectivity returns. Do not start deferred CDR-047 without explicit developer authorization.
+Stop for explicit developer authorization before starting deferred CDR-047 Seeker. CDR-046 is already published and read back.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: exact CDR-046 independent-branch publication retry after verification and audit
+- Scope: CDR-047 authorization gate after exact CDR-046 publication
 - Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data

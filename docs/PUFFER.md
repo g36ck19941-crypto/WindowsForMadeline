@@ -30,6 +30,6 @@ This is an offline acceptance candidate only. It does not prove original numeric
 
 ## Next gate
 
-CDR-047 Seeker remains deferred and unauthorized. CDR-046 was accepted on 2026-10-01; exact publication is waiting for GitHub TCP 443 connectivity to recover.
+CDR-047 Seeker remains deferred and unauthorized. CDR-046 was accepted and published on its independent branch on 2026-10-01.
 
-Current state: CDR-046 accepted; exact commit `903d137` passed 684/684 and outbound audit, but is not uploaded because the GitHub connection timed out.
+Current state: CDR-046 accepted and published at `codex/cdr-046-puffer` exact commit `903d137`; remote `main` is unchanged.
