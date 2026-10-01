@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-047",
+  "title": "Deterministic Seeker entity",
+  "owner": "Primary agent",
+  "state": "implementation_complete_acceptance_pending",
+  "authorizationDate": "2026-10-01",
+  "fidelity": "partial-original-navigation-and-numeric-parity-unestablished",
+  "scope": [
+    "src/CelesteDesktop.Entity.Seeker/**",
+    "tests/CelesteDesktop.Entity.Seeker.Tests/**",
+    "generated cumulative demo",
+    "tools/Verify-CDR047.ps1",
+    "developer launchers and project records"
+  ],
+  "features": [
+    "immutable fixed-tick Seeker input state hit and event snapshots",
+    "generated bounded patrol with stable turns",
+    "eligible target detection identity lock alert chase and lost-sight grace",
+    "windup normalized dash target-addressed hit and wall collision",
+    "stun recovery dash timeout disable enable and two-Seeker isolation"
+  ],
+  "forbidden": [
+    "visible GUI",
+    "live input",
+    "Celeste or Everest launch",
+    "game or installation access",
+    "installation writes",
+    "commercial-byte persistence",
+    "filesystem platform rendering desktop or Player dependencies",
+    "claiming Player death or original parity without evidence"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "seekerTests": 66,
+    "totalRegressionTests": 750,
+    "demoTicks": 30,
+    "demoPatrolled": 7,
+    "demoAlerted": 3,
+    "demoChaseStarted": 3,
+    "demoChased": 3,
+    "demoWindups": 2,
+    "demoDashStarted": 2,
+    "demoDashed": 1,
+    "demoTargetHits": 1,
+    "demoWallHits": 1,
+    "demoStunned": 2,
+    "demoRecovered": 2,
+    "demoTargetLost": 1,
+    "deterministicReplay": true,
+    "humanVisibilityConfirmed": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
+  "nextTask": null,
+  "nextAction": "Wait for developer acceptance. Do not publish CDR-047 or start later runtime or visible integration without explicit authorization."
+}

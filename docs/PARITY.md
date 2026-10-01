@@ -35,7 +35,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Water | unstarted | partial | partial | unstarted | CDR-044 generated overlap/enter/submerged/drag/buoyancy/swim-limit/exit and Player-application matrix passes; original surface/contact/numeric parity, formal App routing, asset animation and visible integration are not established |
 | Bumper | unstarted | partial | partial | unstarted | CDR-045 generated circular contact/radial launch/fallback/cooldown/rearm and Player-application matrix passes; original contact/numeric/path parity, formal App routing, assets, audio and visible integration are not established |
 | Puffer | asset_exact | partial | partial | unstarted | CDR-046 generated bounded swim/warning/explosion/respawn and Player-application matrix passes; selected-install format was validated separately, but original movement/contact/timing/numeric parity, special interactions, formal App routing, animation/audio and visible integration are not established |
-| Seeker | unstarted | unstarted | unstarted | unstarted | Deferred complexity |
+| Seeker | unstarted | partial | partial | unstarted | CDR-047 generated patrol/detection/chase/windup/dash/hit/wall-stun/recovery matrix passes; original navigation, obstacle avoidance, damage/bounce behavior, numeric parity, formal App routing, assets/audio and visible integration are not established |
 | Levels/maps | deferred | deferred | deferred | deferred | Future `IWorldContentProvider`; no current parser |
 | Data-only Mod assets | deferred | n/a | deferred | deferred | Future `IAssetSourceProvider`; no current directory access |
 | Story/cutscenes | unsupported | unsupported | unsupported | unsupported | Outside current product goal |

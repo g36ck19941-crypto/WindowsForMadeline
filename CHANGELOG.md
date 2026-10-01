@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-01 — CDR-047 Seeker authorized and implemented
+
+- Recorded developer authorization for an isolated deterministic Seeker using generated geometry, targets and fixed-tick input only.
+- Added bounded patrol/turn, target detection and identity lock, alert, chase, lost-target grace, windup, normalized dash, target-addressed hit facts, wall-hit stun, dash timeout, spawn recovery, disable/enable and two-Seeker isolation.
+- Added 66 focused Seeker cases and extended the complete offline gate to 750 tests with a 0-warning/0-error Release build.
+- Extended the generated cumulative demo with a deterministic 30-tick trace covering patrol, alert, chase, windup, dash, target hit, wall stun, recovery and target loss.
+- Kept fidelity `partial`: a hit fact is not Player death, and original navigation, obstacle avoidance, damage/bounce behavior, numeric parity, assets/audio, App routing and visible presentation are not established.
+- CDR-047 remains acceptance-pending and unuploaded; no game, GUI, live input, real-install access/write or commercial asset was used.
+
 ## 2026-10-01 — CDR-046 accepted; publication pending network
 
 - Recorded developer acceptance of CDR-046 Puffer.

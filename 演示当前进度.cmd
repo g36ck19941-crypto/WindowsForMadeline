@@ -22,7 +22,8 @@ echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演�
  echo  9. 运行 Water 的进入、浸没、阻力、浮力、方向游动、限速、离开和 Player 实际应用轨迹。
  echo 10. 运行 Bumper 的圆形接触、径向弹飞、冷却、重新武装、中心回退和 Player 实际应用轨迹。
  echo 11. 运行 Puffer 的左右游动、接近预警、爆炸弹射、冷却重生、中心回退和 Player 实际应用轨迹。
- echo 12. 生成一份本地 HTML 报告，方便直接查看结果。
+ echo 12. 运行 Seeker 的巡逻、发现、追逐、蓄力、冲刺、命中、撞墙眩晕和恢复轨迹。
+ echo 13. 生成一份本地 HTML 报告，方便直接查看结果。
 echo.
 echo  你应该看到：
 echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
@@ -34,6 +35,7 @@ echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
  echo  - CDR-044 的 12 个时间点，以及 Water 进入、持续浸没、多目标、离开、再次进入和十次 Player 实际速度应用。
  echo  - CDR-045 的 15 个时间点，以及 Bumper 四次弹飞、三次冷却完成、中心回退、范围外忽略和四次 Player 实际应用。
  echo  - CDR-046 的 20 个时间点，以及 Puffer 游动/转向、三次预警/爆炸/弹射、两次重生、中心回退和三次 Player 实际应用。
+ echo  - CDR-047 的 30 个时间点，以及 Seeker 三次发现、两次冲刺、一次目标命中、一次撞墙、两次眩晕恢复和一次目标丢失。
 echo  - 重复运行结果一致，并标明商业素材字节为 0。
 echo.
 echo  请注意：
@@ -42,9 +44,9 @@ echo  - 这能证明离线动画管线已连接，不能证明角色已显示在
 echo  - 这个入口不会启动 Celeste、Everest，也不会读取或写入游戏安装目录。
 echo.
 
-set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-046-demo-runtime\dotnet-home"
-set "APPDATA=%CD%\artifacts\cdr-046-demo-runtime\appdata"
-set "NUGET_PACKAGES=%CD%\artifacts\cdr-046-demo-runtime\nuget-packages"
+set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-047-demo-runtime\dotnet-home"
+set "APPDATA=%CD%\artifacts\cdr-047-demo-runtime\appdata"
+set "NUGET_PACKAGES=%CD%\artifacts\cdr-047-demo-runtime\nuget-packages"
 set "DOTNET_CLI_TELEMETRY_OPTOUT=1"
 set "DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1"
 set "DOTNET_NOLOGO=1"
@@ -53,7 +55,7 @@ set "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=0"
 dotnet restore "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configfile "%CD%\NuGet.Config"
 if errorlevel 1 goto demo_failed
 
-dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-046-demo"
+dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-047-demo"
 if errorlevel 1 (
     goto demo_failed
 )
@@ -61,16 +63,16 @@ if errorlevel 1 (
 echo.
 echo 演示报告已经生成。
 if /i "%CDR_DEMO_NO_OPEN%"=="1" goto report_ready
-start "" "%CD%\artifacts\cdr-046-demo\index.html"
+start "" "%CD%\artifacts\cdr-047-demo\index.html"
 if errorlevel 1 (
     echo 无法自动打开报告，请手动打开下面的文件：
-    echo %CD%\artifacts\cdr-046-demo\index.html
+    echo %CD%\artifacts\cdr-047-demo\index.html
 )
 
 :report_ready
 echo.
-echo 报告位置：%CD%\artifacts\cdr-046-demo\index.html
-echo 验收时请重点查看 CDR-046 Puffer 的游动/转向、预警、爆炸弹射、冷却重生、中心回退、Player 实际应用和页面底部限制说明。
+echo 报告位置：%CD%\artifacts\cdr-047-demo\index.html
+echo 验收时请重点查看 CDR-047 Seeker 的巡逻、发现、追逐、蓄力、冲刺、命中、撞墙眩晕、恢复、隔离和页面底部限制说明。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause

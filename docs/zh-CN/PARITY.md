@@ -37,7 +37,7 @@
 | Water | unstarted | partial | partial | unstarted | CDR-044 程序生成的重叠/进入/浸没/阻力/浮力/游动限速/离开及 Player 应用矩阵通过；原版水面/接触/数值、正式 App 路由、素材动画和可见集成尚未建立 |
 | Bumper | unstarted | partial | partial | unstarted | CDR-045 程序生成的圆形接触/径向弹飞/中心回退/冷却/重新武装及 Player 应用矩阵通过；原版接触/数值/轨迹、正式 App 路由、素材、声音和可见集成尚未建立 |
 | Puffer | asset_exact | partial | partial | unstarted | CDR-046 程序生成的有界游动/预警/爆炸/重生及 Player 应用矩阵通过；指定安装格式已另行验证，但原版轨迹/接触/时间/数值、特殊交互、正式 App 路由、动画声音和可见集成尚未建立 |
-| Seeker | unstarted | unstarted | unstarted | unstarted | 后置复杂实体 |
+| Seeker | unstarted | partial | partial | unstarted | CDR-047 程序生成的巡逻/发现/追逐/蓄力/冲刺/命中/撞墙眩晕/恢复矩阵通过；原版寻路、复杂地形避障、伤害/反弹、数值、正式 App、素材声音和可见集成尚未建立 |
 | 关卡/地图 | deferred | deferred | deferred | deferred | 未来 `IWorldContentProvider`；当前无解析器 |
 | 纯数据 Mod 素材 | deferred | n/a | deferred | deferred | 未来 `IAssetSourceProvider`；当前不访问目录 |
 | 剧情/过场 | unsupported | unsupported | unsupported | unsupported | 不属于当前产品目标 |
