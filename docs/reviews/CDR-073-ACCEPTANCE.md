@@ -1,6 +1,6 @@
 # CDR-073 Acceptance
 
-State: accepted by the developer on 2026-10-02; exact independent-branch publication authorized after fresh verification and outbound audit.
+State: accepted and published at `codex/cdr-073-player-upward-corner-correction` exact commit `c607e55d9ff28cabb718c2c1f68f0714641f8ad3`; remote `main` remained unchanged.
 
 ## Delivered
 

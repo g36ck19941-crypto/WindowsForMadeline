@@ -34,7 +34,7 @@
 ### CDR-073 — Player upward corner correction calibration
 
 - Owner: Primary
-- State: accepted by the developer on 2026-10-02; independent-branch publication authorized after fresh verification and outbound audit
+- State: accepted and published at `codex/cdr-073-player-upward-corner-correction` exact commit `c607e55d9ff28cabb718c2c1f68f0714641f8ad3`; remote `main` remained unchanged
 - File scope: `CelesteDesktop.Player` Normal movement/tuning/snapshot/events, the minimal `Simulation.Core.Actor.MoveXExact` support, their generated tests, cumulative demo, verification entry and project records
 - Scope: upward-only collision correction within 4 integer pixels, current horizontal-travel direction preference, exact horizontal correction that preserves subpixel remainder, remaining upward motion retry, immutable applied-offset evidence and stable diagnostic
 - Fidelity: `partial`; this is one upward Normal-movement collision rule, not complete Player or dash corner parity

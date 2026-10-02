@@ -4,6 +4,7 @@
 
 - Recorded developer acceptance of CDR-073 and authorization for exact independent-branch publication after a fresh gate and outbound audit.
 - Reverified the accepted tree at 0 Release warnings/errors, Simulation.Core 34/34, Player 50/50 and 884/884 total regressions.
+- Cleared two pre-existing documentation trailing-space findings, then published and read back exact commit `c607e55d9ff28cabb718c2c1f68f0714641f8ad3` at `codex/cdr-073-player-upward-corner-correction`; remote `main` remained unchanged.
 - Bounded CDR-074 to generated static one-way-platform contact: upward pass-through, landing/standing from above, explicit bounded drop-through, ordinary-Solid non-regression, immutable evidence and diagnostics. No runtime capability was added by this record-only update.
 
 ## 2026-10-02 — CDR-073 upward corner correction ready for acceptance

@@ -13,6 +13,7 @@ Last verified: 2026-10-02
 - GitHub 恢复后，CDR-071 精确提交 `9f5594a6e41b76323e2227eb0e4b0750f2733f9e` 已上传并回读到 `codex/cdr-071-player-lift-inheritance`，远程 `main` 保持 `d237277e10af090cf60ec015c22174565e6cdc0a`。开发者随后验收 CDR-072；精确提交 `cc77d1dd1c725ab37750cc0328cf1f2f8ead47f8` 的新鲜 878/878 门禁和出站审计通过。前两次推送因 GitHub TCP 443 超时失败，第三次已成功上传并回读到 `codex/cdr-072-player-wall-speed-retention`；远程 `main` 仍未改变，未验收的 CDR-073 没有进入该分支。
 - CDR-073 完成 Player 向上转角修正：上升碰到平台边角时最多搜索 4 个整数像素，优先当前横向运动方向，使用保留亚像素余量的精确横移后完成剩余上升；向下碰撞不修正。快照公开实际修正量，`UpwardCornerCorrected` 记录原阻挡 Solid。Simulation.Core 34/34、Player 50/50、总回归 884/884、Release 0 警告/错误；程序演示从 `(0,4)` 到 `(1,2)`、修正 `+1`、事件 1 次且上升速度保留、重放一致。行为仍为 `partial`，当前待验收且不得上传。
 - 开发者于 2026-10-02 验收 CDR-073 并授权上传，同时授权 CDR-074 单向平台纯离线确定性校准。CDR-073 新鲜复验仍为 Release 0 警告/错误、Simulation.Core 34/34、Player 50/50、总回归 884/884。CDR-074 限定为程序生成的静态单向平台：从下方穿过、从上方落地/站立、明确且有界的向下穿透状态、普通 Solid 不回归；不包含移动/特殊平台、游戏/GUI/实时输入、安装或本地参考访问、商业字节及 CDR-061。
+- CDR-073 出站审计先发现两份旧说明的行尾空格；清理后精确提交 `c607e55d9ff28cabb718c2c1f68f0714641f8ad3` 再次通过 884/884 门禁，禁止路径、二进制/商业媒体、超过 1 MiB 对象、真实安装/用户路径和 `diff --check` 均为 0，已上传并回读到 `codex/cdr-073-player-upward-corner-correction`。远程 `main` 保持 `d237277e10af090cf60ec015c22174565e6cdc0a`；CDR-074 实现不会进入该已固定分支。
 
 - 用户要求从全新项目角度实现原版 Madeline 与 Theo、Glider、Spring 等交互实体；不还原关卡。
 - 产品运行时不得启动 Celeste/Everest，而是只读解析用户正版安装中的 Atlas、Sprites 元数据和后续明确批准的音频数据。

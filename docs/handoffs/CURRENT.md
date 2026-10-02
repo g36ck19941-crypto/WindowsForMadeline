@@ -94,17 +94,17 @@ CDR-071 was accepted by the developer on 2026-10-02 with publication and the nex
 
 The developer accepted CDR-072 on 2026-10-02 and authorized the next bounded Player calibration task. Its four-tick horizontal wall-speed retention window stores the first incoming collision speed once, restores it when the wall clears, cancels on opposite input, ordinary jump or external velocity, and expires without same-tick recreation. Exact accepted commit `cc77d1dd1c725ab37750cc0328cf1f2f8ead47f8` passed a fresh Release gate at Player 45/45 and 878/878 total with 0 warnings/errors. Its outbound audit found zero forbidden paths, binary diffs, blobs over 1 MiB, real-install paths or diff-check findings. The first two pushes timed out on GitHub TCP 443; the third exact push succeeded and was read back at `codex/cdr-072-player-wall-speed-retention`. Remote `main` remained `d237277e10af090cf60ec015c22174565e6cdc0a`, and no CDR-073 work was included.
 
-The developer accepted CDR-073 on 2026-10-02 and authorized its independent-branch publication plus CDR-074. The accepted upward-only Normal Player corner correction searches no farther than four integer pixels, prefers current horizontal travel, preserves the horizontal subpixel remainder and retries only unfinished rise. A fresh gate still passes with 0 Release warnings/errors, Simulation.Core 34/34, Player 50/50 and 884/884 total regressions. Publish only the exact acceptance commit after outbound audit.
+The developer accepted CDR-073 on 2026-10-02 and authorized its independent-branch publication plus CDR-074. The accepted upward-only Normal Player corner correction searches no farther than four integer pixels, prefers current horizontal travel, preserves the horizontal subpixel remainder and retries only unfinished rise. After clearing two historical documentation whitespace findings, exact acceptance commit `c607e55d9ff28cabb718c2c1f68f0714641f8ad3` passed the fresh 884/884 gate and a zero-finding outbound audit, then was published and read back at `codex/cdr-073-player-upward-corner-correction`. Remote `main` remained `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 CDR-074 is authorized under a generated-only offline boundary. It is limited to static one-way-platform geometry and filtered vertical contact: upward pass-through, landing and stable grounding from above, explicit bounded drop-through until the actor clears the selected platform, ordinary-Solid non-regression, immutable evidence and stable diagnostics. Moving/special platform variants, game/GUI/live input, installation or local-reference access, commercial bytes and CDR-061 are forbidden.
 
 ## First next action
 
-Create the CDR-073 acceptance commit, run the exact outbound audit, publish/read back only that commit, then implement and verify CDR-074. Do not start CDR-061 while CDR-060 remains pending.
+Implement and verify CDR-074 within its generated-only static one-way-platform scope. Do not upload it before developer acceptance, and do not start CDR-061 while CDR-060 remains pending.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: exact CDR-073 acceptance publication followed by generated-only CDR-074 static one-way-platform calibration, while preserving the CDR-060/CDR-061 gate
+- Scope: generated-only CDR-074 static one-way-platform calibration while preserving the fixed CDR-073 branch and CDR-060/CDR-061 gate
 - Forbidden: marking CDR-060 accepted or creating its dedicated release branch before acceptance, CDR-061 implementation, uploading any CDR-074 implementation through the CDR-073 branch, moving/special one-way variants, Legacy changes, game or visible GUI launch, titles/content/screenshots/live input, identity-bearing metadata, native handles in contracts/evidence, any real-install/local-reference/map/Mod access or write, executable Mod content, raw commercial data
