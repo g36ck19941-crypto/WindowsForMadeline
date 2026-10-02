@@ -4,6 +4,10 @@ Updated: 2026-10-02
 
 ## Current state
 
+On 2026-10-02 the developer separately authorized additive CDR-070 development-only local behavior reference work and stated that all obtained/decompiled content must remain off GitHub. It may read only the explicitly selected legitimate local assembly, use pinned repository-local ILSpy after explicit first-use restore consent, and write only under ignored `local-cache`. It must not launch the game/Everest, write the installation, auto-discover installations, persist real paths, or track/package decompiled source, IL or commercial content. CDR-060 remains acceptance-pending and unuploaded; CDR-061 remains unauthorized.
+
+CDR-070 is locally implementation-complete and acceptance-pending. The pinned ILSpy restore succeeded from the official NuGet source. An authorized read of `Celeste.dll` produced 1,369 C# reference files under a SHA-256-addressed ignored cache; the summary manifest contains no installation path or source payload and records no launch, no installation writes, no tracked commercial reference and no exact-parity claim. Release builds with 0 warnings/errors; 10/10 focused safety cases and 866/866 total regressions pass. Git-ignore and tracked-tree checks exclude the local cache and selected-install path. Do not upload before explicit developer acceptance.
+
 CDR-001 and CDR-010 through CDR-022 are accepted by the developer. The developer confirmed the cumulative CDR-016/CDR-020/CDR-021/CDR-022 version on 2026-09-29. A fresh CDR-022 gate passed with 0 build warnings/errors, 298/298 offline cases and an identical 24-tick traversal replay; the outbound audit found no commercial assets, decoded frames, audio, game binaries, caches or local installation paths. CDR-021 and CDR-022 fidelity remains `partial`. After two reset connections and a read-back proving no partial refs, the accepted milestones were published and verified: CDR-016 `22d7586`, CDR-020 `3dd4b37`, CDR-021 `eabe378`, CDR-022 `aed2b3f`. Remote `main` remains `d237277`.
 
 CDR-030 was accepted by the developer on 2026-09-29. A fresh gate passed with 0 build warnings/errors, 20/20 rendering cases and 318/318 total regressions. The native hidden test submitted two generated frames through `Commit` and `WaitForCommitCompletion`. No visible GUI, real desktop observation, installation access, live input, commercial bytes or human-visibility claim occurred. Publication to an independent branch is authorized after audit.
@@ -86,11 +90,11 @@ CDR-060 is locally implementation-complete and acceptance-pending. It compiles t
 
 ## First next action
 
-Present CDR-060 for developer acceptance; do not upload it or begin CDR-061 without explicit authorization.
+Present CDR-070 for developer acceptance. Do not upload CDR-060 or CDR-070 before their respective explicit acceptance, and do not begin CDR-061.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-060 acceptance handoff
+- Scope: CDR-070 acceptance handoff while preserving the CDR-060 acceptance gate
 - Forbidden: CDR-060 upload before acceptance, CDR-061 implementation, Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install/map/Mod access or write, executable Mod content, raw commercial data

@@ -13,13 +13,14 @@
 
 ## 当前状态
 
-CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 至 CDR-047、CDR-050 和 CDR-051 已由开发者验收并上传各自独立分支，远程 `main` 未改变。CDR-060 已完成纯数据素材/世界提供器合同、预算保护和程序生成演示，当前等待验收，尚未上传。可见 GUI、实时输入、真实地图/Mod 读取和安装目录访问仍未授权。
+CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 至 CDR-047、CDR-050 和 CDR-051 已由开发者验收并上传各自独立分支，远程 `main` 未改变。CDR-060 已完成并等待验收，尚未上传。CDR-070 已获单独授权，用于建立仅保存在 `local-cache` 的本地行为参考；它不改变 CDR-060 的验收状态。
 
 ## 开发者双击入口
 
 - `演示当前进度.cmd`：生成程序化 Atlas/XML、Actor/Solid 场景、玩家输入、棋盘格、匿名桌面几何、实体交互、App 编排、固定 60 Hz 宿主和未来扩展接口示例，再打开本地 HTML 报告。
 - `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-060 的 856 项离线/隐藏回归；不读取真实安装、地图、Mod 或桌面内容，也不打开可见窗口。
 - `验证真实安装兼容性.cmd`：显式选择正版安装后执行 CDR-016 只读核验；不启动游戏或 GUI，证据写在项目目录。
+- `建立本地行为参考.cmd`：显式选择正版安装，在首次下载固定版本 ILSpy 前征求同意，并把反编译参考只保存在 Git 忽略的 `local-cache`；不启动游戏、不写安装目录。
 - `tools/*.ps1` 保留给代理和 CI，不再要求开发者手动输入。
 
 开始任何工作前阅读：
@@ -50,3 +51,4 @@ CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 �
 24. `docs/APP_ORCHESTRATION.md`
 25. `docs/APP_HOST.md`
 26. `docs/EXTENSION_PROVIDER_CONTRACTS.md`
+27. `docs/LOCAL_BEHAVIOR_REFERENCE.md`

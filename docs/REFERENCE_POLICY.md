@@ -18,6 +18,8 @@
 
 `solstice23/desk-madeline` establishes that direct Atlas reading and DirectComposition presentation are feasible. It is not the code base, architecture owner or fidelity oracle for this project.
 
+CDR-070 permits static inspection of the developer's explicitly selected local Celeste assembly through pinned ILSpy. The resulting source and IL are commercial local reference material: they stay under ignored `local-cache`, are never committed or redistributed, and are never compiled into the product. Before implementation, observations must be restated as project-owned behavior contracts or test matrices; line-by-line translation remains forbidden. Static inspection strengthens evidence for constants and control flow but does not establish exact runtime or human-feel parity by itself.
+
 For CDR-012, the public Crunch binary-format description supplied the packer's field vocabulary, while desk-madeline was used only as secondary confirmation of the `.meta` header and stored trim-offset interpretation. The local reader, contracts, budgets, validation flow and tests were independently designed. Real-install conformance remains unknown until CDR-016.
 
 For CDR-013, the public Monocle mirror confirms that Packer metadata resolves page names to `.data` streams, but its mirrored version does not expose the Celeste-branch run decoder. The run layout was recorded as a local synthetic contract from secondary format observations. The decoder types, budgets, validation order, immutable output and tests were independently designed; no external source was copied. Real-install conformance remains unknown until CDR-016.

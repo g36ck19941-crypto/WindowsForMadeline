@@ -938,6 +938,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-050</b>App 统一启动、逐 tick 编排、效果路由、暂停恢复与故障隔离</div>
             <div class="stage"><b>CDR-051</b>无界面宿主固定 60 Hz 调度、有限追赶、取消与可靠退出</div>
             <div class="stage"><b>CDR-060</b>纯数据素材提供器与不可变世界内容提供器合同</div>
+            <div class="stage"><b>CDR-070</b>本地行为参考建立器；反编译内容只留在 Git 忽略缓存，不进入本演示或产品运行时</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-070",
+  "title": "Development-only local behavior reference builder",
+  "owner": "Primary agent",
+  "state": "ready_for_acceptance",
+  "authorizationDate": "2026-10-02",
+  "scope": ["explicit selected-install assembly read", "pinned repository-local ILSpy invocation", "Git-ignored hash-addressed cache", "summary-only manifest", "synthetic safety tests and bilingual records"],
+  "forbidden": ["game or Everest launch", "installation writes or automatic discovery", "decompiled source IL commercial assets or real paths in Git", "compiling or generating product code from decompiled source", "line-by-line copying", "exact-parity claims from static evidence"],
+  "dependency": { "tool": "ilspycmd", "version": "11.1.0.9782", "restore": "explicit first-use consent" },
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "focusedTests": 10,
+    "totalRegressionTests": 866,
+    "localSourceFiles": 1369,
+    "gameLaunched": false,
+    "installationWrites": 0,
+    "commercialReferenceTracked": false,
+    "selectedInstallPathPersisted": false,
+    "exactParityEstablished": false
+  },
+  "gate": "Ready for developer acceptance. Do not upload CDR-070 before explicit acceptance; CDR-060 remains separately acceptance-pending and CDR-061 remains unauthorized."
+}

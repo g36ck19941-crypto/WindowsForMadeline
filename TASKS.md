@@ -2,6 +2,17 @@
 
 任务顺序是强制依赖，不得跳过。Primary agent 为默认 owner；任何范围变化必须先更新本文件。
 
+## Additive evidence tooling
+
+### CDR-070 — Development-only local behavior reference
+
+- Owner: Primary
+- State: authorized and in progress on 2026-10-02; separate from the sequential CDR-060/CDR-061 gate
+- Scope: explicit-path local assembly read, pinned ILSpy, hash-addressed Git-ignored cache, summary-only manifest and safety tests
+- Forbidden: game launch, installation writes, automatic discovery, Git/publish/package of decompiled source or commercial data, compiling reference source and exact-parity claims
+- Purpose: strengthen later behavior calibration without making the product depend on the game or distributing protected material
+- Gate: one real local generation, no tracked/leaked reference content, focused plus full regression verification, bilingual acceptance handoff; no upload before acceptance
+
 ## P0 — Foundation
 
 ### CDR-001 — Architecture and diagnostics foundation

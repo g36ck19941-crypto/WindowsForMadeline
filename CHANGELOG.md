@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-02 — CDR-070 local behavior reference authorized
+
+- Added the task without replacing the existing roadmap or changing CDR-060 acceptance state.
+- Added an explicit-path builder, pinned repository-local ILSpy manifest, hash-addressed ignored cache, summary-only manifest and synthetic safety tests.
+- Added a plain-Chinese launcher that requests consent before first-use tool restore and explains what the evidence can and cannot prove.
+- Kept game launch, installation writes, automatic discovery, decompiled/commercial content, runtime dependency and exact-parity claims out of scope.
+- Completed one authorized local generation with 1,369 ignored reference files; Release passed with 0 warnings/errors, 10/10 focused safety cases and 866/866 total regressions. CDR-070 remains unuploaded pending acceptance.
+
 ## 2026-10-02 — CDR-051 published; CDR-060 provider contracts implemented
 
 - Published and read back accepted CDR-051 exact commit `6c60fee` at `codex/cdr-051-headless-app-host`; remote `main` remained unchanged.

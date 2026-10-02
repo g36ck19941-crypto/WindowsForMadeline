@@ -103,7 +103,11 @@ CDR-060 compiles `IAssetSourceProvider` and `IWorldContentProvider` as data-only
 
 These are provider contracts only. No real provider, plugin loader, map parser or Mod reader is implemented in the current phase.
 
-## 7. Current non-goals
+## 7. Development-only local behavior reference
+
+CDR-070 is outside the product runtime. Its explicit-path CLI reads one selected local assembly and invokes a pinned repository-local ILSpy tool without loading or executing the assembly. Decompiled material is stored only in the Git-ignored `local-cache` and is never a compile input. Only summary facts without paths or source payloads may be recorded. Product behavior continues to be independently specified and implemented through the module contracts above.
+
+## 8. Current non-goals
 
 - current-phase levels, rooms, story or map loading;
 - arbitrary Everest runtime hooks, executable Mod code or code-driven skins;
