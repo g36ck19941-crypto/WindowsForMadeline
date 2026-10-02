@@ -30,3 +30,7 @@ State: implementation complete and ready for developer acceptance; not uploaded.
 ## Project role and limits
 
 This prevents a one-pixel platform edge from stopping an otherwise valid rise and makes the correction observable instead of hidden. It supplies a precise correction primitive for later movement calibration. It does not establish downward or dash correction, one-way platforms, ducking, holdable modifiers, special environments, audio, animation or complete original feel.
+
+## After acceptance
+
+After explicit developer acceptance, publish only the freshly verified and audited CDR-073 acceptance commit to its independent branch. The recommended next bounded task is CDR-074 one-way-platform calibration: generated-only pass-through from below, standing from above and explicit drop-through state. It remains unauthorized until the developer explicitly accepts CDR-073 and starts it. Visible GUI, live input, game/install access, commercial bytes and CDR-061 remain forbidden.
