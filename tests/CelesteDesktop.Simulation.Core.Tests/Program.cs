@@ -10,6 +10,7 @@ var tests = new (string Name, Action Body)[]
     ("negative subpixels accumulate deterministically", NegativeSubpixelsAccumulate),
     ("positive midpoint stays stable at zero displacement", PositiveMidpointDoesNotDrift),
     ("negative midpoint stays stable at zero displacement", NegativeMidpointDoesNotDrift),
+    ("exact horizontal correction preserves subpixel remainder", ExactHorizontalCorrectionPreservesRemainder),
     ("movement outside a step is rejected", MovementOutsideStepIsRejected),
     ("tick increments exactly once", TickIncrementsExactlyOnce),
     ("horizontal collision stops at the first pixel", HorizontalCollisionStops),
@@ -148,10 +149,23 @@ static void NegativeSubpixelsAccumulate()
     Equal(0m, actor.XSubpixel);
 }
 
+static void ExactHorizontalCorrectionPreservesRemainder()
+{
+    var (world, actor) = ActorWorld();
+    world.Step(_ => actor.MoveX(-0.5m, world));
+    Equal(0, actor.X);
+    Equal(-0.5m, actor.XSubpixel);
+
+    world.Step(_ => actor.MoveXExact(1, world));
+    Equal(1, actor.X);
+    Equal(-0.5m, actor.XSubpixel);
+}
+
 static void MovementOutsideStepIsRejected()
 {
     var (world, actor) = ActorWorld();
     Throws<InvalidOperationException>(() => actor.MoveX(1m, world));
+    Throws<InvalidOperationException>(() => actor.MoveXExact(1, world));
 }
 
 static void TickIncrementsExactlyOnce()

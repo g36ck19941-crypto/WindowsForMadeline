@@ -29,7 +29,8 @@ echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演�
  echo 16. 在进度目录中说明 CDR-070 本地行为参考工具与产品运行时相互隔离。
  echo 17. 演示 CDR-071 从高速右移并上升的平台起跳，实际应用有界平台速度。
  echo 18. 演示 CDR-072 高速撞墙后在 4 tick 内保留并恢复横向速度。
- echo 19. 生成一份本地 HTML 报告，方便直接查看结果。
+ echo 19. 演示 CDR-073 向上擦到平台边角时，在 4 像素内精确横移并继续上升。
+ echo 20. 生成一份本地 HTML 报告，方便直接查看结果。
 echo.
 echo  你应该看到：
 echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
@@ -47,6 +48,7 @@ echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
  echo  - CDR-060 的 4 字节程序素材、1 个世界/房间、2 个 Solid、1 个出生点和 3 个实体；两种超预算请求都被拒绝。
  echo  - CDR-071 的平台起跳继承速度为 (250,-130)，并出现一次 LiftVelocityApplied 诊断。
  echo  - CDR-072 先保留 90 横向速度和 4 tick 窗口，墙移开后恢复到 90，并各出现一次保留/恢复诊断。
+ echo  - CDR-073 从 (0,4) 向上撞到边角后右移 1 像素到 (1,2)，出现一次 UpwardCornerCorrected，且上升速度没有被清零。
 echo  - 重复运行结果一致，并标明商业素材字节为 0。
 echo.
 echo  请注意：
@@ -57,9 +59,9 @@ echo  - CDR-070 只提供本机行为证据，不会自动把反编译内容变�
 echo  - 这个入口不会启动 Celeste、Everest，也不会读取或写入游戏安装目录。
 echo.
 
-set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-060-demo-runtime\dotnet-home"
-set "APPDATA=%CD%\artifacts\cdr-060-demo-runtime\appdata"
-set "NUGET_PACKAGES=%CD%\artifacts\cdr-060-demo-runtime\nuget-packages"
+set "DOTNET_CLI_HOME=%CD%\artifacts\current-progress-runtime\dotnet-home"
+set "APPDATA=%CD%\artifacts\current-progress-runtime\appdata"
+set "NUGET_PACKAGES=%CD%\artifacts\current-progress-runtime\nuget-packages"
 set "DOTNET_CLI_TELEMETRY_OPTOUT=1"
 set "DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1"
 set "DOTNET_NOLOGO=1"
@@ -68,7 +70,7 @@ set "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=0"
 dotnet restore "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configfile "%CD%\NuGet.Offline.Config"
 if errorlevel 1 goto demo_failed
 
-dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-060-demo"
+dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\current-progress-demo"
 if errorlevel 1 (
     goto demo_failed
 )
@@ -76,16 +78,16 @@ if errorlevel 1 (
 echo.
 echo 演示报告已经生成。
 if /i "%CDR_DEMO_NO_OPEN%"=="1" goto report_ready
-start "" "%CD%\artifacts\cdr-060-demo\index.html"
+start "" "%CD%\artifacts\current-progress-demo\index.html"
 if errorlevel 1 (
     echo 无法自动打开报告，请手动打开下面的文件：
-    echo %CD%\artifacts\cdr-060-demo\index.html
+    echo %CD%\artifacts\current-progress-demo\index.html
 )
 
 :report_ready
 echo.
-echo 报告位置：%CD%\artifacts\cdr-060-demo\index.html
-echo 验收时请查看 CDR-060 的程序数据接口，以及目录中的 CDR-070 本地证据工具说明；反编译内容本身不会进入这份报告。
+echo 报告位置：%CD%\artifacts\current-progress-demo\index.html
+echo 验收 CDR-073 时请查看 Player 说明中的转角修正结果；CDR-060 接口和 CDR-070 本地证据工具仍作为累计阶段保留，反编译内容本身不会进入报告。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause

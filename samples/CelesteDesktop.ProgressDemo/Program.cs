@@ -99,7 +99,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-060",
+    demoId = "CDR-073",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -126,7 +126,9 @@ var manifest = new
         "CDR-050 orchestrated lifecycle, one simulation step per App tick, effect routing and presentation isolation offline",
         "CDR-051 scheduled the App at fixed 60 Hz with bounded catch-up, generated input and graceful stop",
         "CDR-060 exchanged bounded generated assets and immutable room descriptions through data-only provider contracts",
-        "CDR-071 applied bounded moving-Solid lift velocity to an ordinary generated Player jump"
+        "CDR-071 applied bounded moving-Solid lift velocity to an ordinary generated Player jump",
+        "CDR-072 retained and restored generated horizontal wall speed through a fixed four-tick window",
+        "CDR-073 corrected a generated upward corner collision by an explicit bounded integer offset"
     },
     independentValidation = new
     {
@@ -200,6 +202,13 @@ var manifest = new
         player.RestoredWallSpeed,
         player.WallRetainedEventCount,
         player.WallRestoredEventCount,
+        player.UpwardCornerCorrectionX,
+        player.CornerStartX,
+        player.CornerFinalX,
+        player.CornerStartY,
+        player.CornerFinalY,
+        player.CornerCorrectionEventCount,
+        player.CornerVerticalSpeedPreserved,
         deterministicReplay = player.DeterministicReplay,
         rows = player.Rows
     },
@@ -405,6 +414,7 @@ var manifest = new
     },
     extensionContracts = new
     {
+        taskId = "CDR-060",
         source = "synthetic-providers-only",
         fidelity = "contract-only",
         extensionContracts.AssetProviderId,
@@ -444,7 +454,7 @@ File.WriteAllText(
     BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host, extensionContracts),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-060 cumulative offline provider-contract pipeline");
+Console.WriteLine("DEMO CDR-073 cumulative offline project progress");
 Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} player_ticks={player.Rows.Count} traversal_ticks={traversal.Rows.Count} animation_ticks={animationPresentation.Rows.Count} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_component_disabled={app.ComponentDisabledCount} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} host_normal_ticks={host.NormalCadence.ExecutedTicks} host_normal_dropped={host.NormalCadence.DroppedIntervals} host_backlog_ticks={host.BacklogCadence.ExecutedTicks} host_backlog_dropped={host.BacklogCadence.DroppedIntervals} host_backlog_event={host.BacklogCadence.EventIds.Contains("APP_HOST_BACKLOG_DROPPED", StringComparison.Ordinal).ToString().ToLowerInvariant()} host_stopped={(host.NormalCadence.FinalLifecycle == "Stopped" && host.BacklogCadence.FinalLifecycle == "Stopped").ToString().ToLowerInvariant()} host_replay={host.DeterministicReplay.ToString().ToLowerInvariant()} provider_asset_bytes={extensionContracts.AssetBytes} provider_asset_budget_rejected={extensionContracts.AssetBudgetRejected.ToString().ToLowerInvariant()} provider_worlds={extensionContracts.WorldCount} provider_rooms={extensionContracts.RoomCount} provider_solids={extensionContracts.SolidCount} provider_spawns={extensionContracts.SpawnCount} provider_entities={extensionContracts.EntityCount} provider_world_budget_rejected={extensionContracts.WorldBudgetRejected.ToString().ToLowerInvariant()} provider_replay={extensionContracts.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
@@ -900,7 +910,7 @@ static string BuildHtml(
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-060 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-073 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -919,7 +929,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-060 累计项目进度演示</h1>
+          <h1>CDR-073 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -950,6 +960,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-070</b>本地行为参考建立器；反编译内容只留在 Git 忽略缓存，不进入本演示或产品运行时</div>
             <div class="stage"><b>CDR-071</b>移动 Solid 起跳时的有界水平/向上速度继承与诊断</div>
             <div class="stage"><b>CDR-072</b>横向撞墙速度的 4 tick 保留、恢复、取消与过期</div>
+            <div class="stage"><b>CDR-073</b>向上擦碰平台边角时，在 4 像素内做可诊断的横向修正</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -969,7 +980,7 @@ static string BuildHtml(
           <p>程序生成一个 Actor、一个移动平台和一面静态墙，连续运行 {{simulation.Rows.Count}} 个固定 tick。平台累计移动到 x={{simulation.FinalPlatformX}}，Actor 在平台携带与自身亚像素移动后到 x={{simulation.FinalActorX}}；重复运行结果 <span class="ok">{{(simulation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Actor x,y</th><th>Solid x,y</th><th>Actor X 余量</th><th>事件</th></tr></thead><tbody>{{simulationRows}}</tbody></table>
           <h2>CDR-021 Normal / Jump 轨迹</h2>
-          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。CDR-072 再让角色以 {{player.RetainedWallSpeed}} 的速度撞墙，保留窗口={{player.InitialWallRetentionTicks}} tick；墙移开后恢复速度={{player.RestoredWallSpeed}}，WallSpeedRetained/Restored={{player.WallRetainedEventCount}}/{{player.WallRestoredEventCount}}。</p>
+          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。CDR-072 再让角色以 {{player.RetainedWallSpeed}} 的速度撞墙，保留窗口={{player.InitialWallRetentionTicks}} tick；墙移开后恢复速度={{player.RestoredWallSpeed}}，WallSpeedRetained/Restored={{player.WallRetainedEventCount}}/{{player.WallRestoredEventCount}}。CDR-073 用程序生成的平台边角阻挡上升路径；角色从 ({{player.CornerStartX}},{{player.CornerStartY}}) 自动横移 {{player.UpwardCornerCorrectionX}} 像素到 ({{player.CornerFinalX}},{{player.CornerFinalY}})，UpwardCornerCorrected={{player.CornerCorrectionEventCount}}，上升速度继续保留={{player.CornerVerticalSpeedPreserved}}。</p>
           <table><thead><tr><th>Tick</th><th>Player x,y</th><th>Speed x,y</th><th>Grounded</th><th>Coyote/Buffer/Variable</th><th>事件</th></tr></thead><tbody>{{playerRows}}</tbody></table>
           <h2>CDR-022 Dash / Wall / Climb 轨迹</h2>
           <p>合成角色先贴右墙下滑并蹬墙，随后向右冲刺撞墙，再抓墙向上攀爬。DashStarted={{traversal.DashStartedCount}}，WallSlideStarted={{traversal.WallSlideStartedCount}}，WallJumped={{traversal.WallJumpedCount}}，ClimbStarted={{traversal.ClimbStartedCount}}；重复运行：<span class="ok">{{(traversal.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
@@ -1826,6 +1837,20 @@ static DemoPlayer RunPlayerOnce()
         wallWorld,
         current => wall.Move(20m, 0m, current));
 
+    const int cornerStartX = 0;
+    const int cornerStartY = 4;
+    var cornerWorld = new SimulationWorld();
+    var cornerActor = new Actor("corner-player", cornerStartX, cornerStartY, 2, 2);
+    var corner = new Solid("corner-platform", -2, 1, 3, 2);
+    cornerWorld.Add(cornerActor);
+    cornerWorld.Add(corner);
+    var cornerController = new PlayerNormalController(
+        cornerActor,
+        initialSpeed: new SimVector(0m, -120m));
+    var cornerSnapshot = cornerController.Step(
+        new PlayerInput(1, 0, jumpPressed: false, jumpHeld: true),
+        cornerWorld);
+
     return new DemoPlayer(
         rows.AsReadOnly(),
         rows.Any(row => row.SpeedX == NormalJumpTuning.ReferencePartial.MaxRun),
@@ -1839,6 +1864,13 @@ static DemoPlayer RunPlayerOnce()
         restoredSnapshot.Speed.X,
         retainedSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.WallSpeedRetained),
         restoredSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.WallSpeedRestored),
+        cornerSnapshot.UpwardCornerCorrectionX,
+        cornerStartX,
+        cornerSnapshot.Position.X,
+        cornerStartY,
+        cornerSnapshot.Position.Y,
+        cornerSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.UpwardCornerCorrected),
+        cornerSnapshot.Speed.Y < 0m,
         false);
 }
 
@@ -1987,6 +2019,13 @@ internal sealed record DemoPlayer(
     decimal RestoredWallSpeed,
     int WallRetainedEventCount,
     int WallRestoredEventCount,
+    int UpwardCornerCorrectionX,
+    int CornerStartX,
+    int CornerFinalX,
+    int CornerStartY,
+    int CornerFinalY,
+    int CornerCorrectionEventCount,
+    bool CornerVerticalSpeedPreserved,
     bool DeterministicReplay);
 
 internal sealed record DemoPlayerRow(

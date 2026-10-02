@@ -10,6 +10,7 @@ public enum PlayerNormalEventKind
     WallSpeedRestored,
     WallSpeedRetentionCancelled,
     WallSpeedRetentionExpired,
+    UpwardCornerCorrected,
     HorizontalBlocked,
     VerticalBlocked,
     ExternalFallSpeedLimited,

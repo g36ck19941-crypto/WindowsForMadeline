@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-02 — CDR-073 upward corner correction ready for acceptance
+
+- Added an upward-only Player corner correction that searches at most four integer pixels, prefers the current horizontal travel direction and retries the blocked remainder of the rise.
+- Added `Actor.MoveXExact` so a correction is not erased by midpoint rounding and preserves the existing horizontal subpixel remainder.
+- Added one Simulation.Core case and five Player cases for left/right correction, direction preference, four-pixel bound and downward exclusion; Simulation.Core passes 34/34, Player 50/50 and the full Release gate 884/884.
+- Extended the cumulative generated demo with `(0,4) -> (1,2)`, correction `+1`, one `UpwardCornerCorrected` event, preserved upward speed and identical replay. CDR-073 remains `partial`, local and unuploaded pending acceptance.
+- Recorded developer acceptance of CDR-072. Exact commit `cc77d1d` passed its fresh 878/878 acceptance gate and clean outbound audit, but the first independent-branch push failed on GitHub TCP 443 and remains pending.
+- Corrected the CDR-071 publication record: exact commit `9f5594a` is now published and read back at `codex/cdr-071-player-lift-inheritance`; remote `main` remains unchanged.
+
 ## 2026-10-02 — CDR-072 wall-speed retention ready for acceptance
 
 - Added a fixed four-tick Player horizontal wall-speed retention window, restoration when the wall clears, reverse-input cancellation and explicit expiration.

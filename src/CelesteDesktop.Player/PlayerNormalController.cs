@@ -117,7 +117,7 @@ public sealed class PlayerNormalController
         var appliedMaximumFallSpeed = UpdateVertical(input, effects, groundedAtStart, world.Tick);
         var appliedLiftSpeed = TryJump(input, world.Tick);
         ApplyExternalVelocity(effects.Velocity, world.Tick);
-        Move(world);
+        var upwardCornerCorrectionX = Move(input, world);
 
         var groundedAtEnd = SpeedY >= 0m && world.IsGrounded(Actor);
         if (_initialized && groundedAtEnd && !_wasGrounded)
@@ -139,6 +139,7 @@ public sealed class PlayerNormalController
             appliedLiftSpeed,
             _wallSpeedRetained,
             _wallSpeedRetentionTicks,
+            upwardCornerCorrectionX,
             CoyoteTicksRemaining,
             JumpBufferTicksRemaining,
             VariableJumpTicksRemaining,
@@ -336,7 +337,7 @@ public sealed class PlayerNormalController
         _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.WallSpeedRetentionCancelled, null));
     }
 
-    private void Move(SimulationWorld world)
+    private int Move(PlayerInput input, SimulationWorld world)
     {
         var incomingSpeedX = SpeedX;
         var horizontal = Actor.MoveX(SpeedX / SimulationConstants.TicksPerSecond, world);
@@ -361,6 +362,16 @@ public sealed class PlayerNormalController
         var vertical = Actor.MoveY(SpeedY / SimulationConstants.TicksPerSecond, world);
         if (vertical.Blocked)
         {
+            var correctionX = TryUpwardCornerCorrection(input, vertical, world);
+            if (correctionX != 0)
+            {
+                _events.Add(new PlayerNormalEvent(
+                    world.Tick,
+                    PlayerNormalEventKind.UpwardCornerCorrected,
+                    vertical.BlockingSolidId));
+                return correctionX;
+            }
+
             SpeedY = 0m;
             VariableJumpTicksRemaining = 0;
             _events.Add(new PlayerNormalEvent(
@@ -368,6 +379,74 @@ public sealed class PlayerNormalController
                 PlayerNormalEventKind.VerticalBlocked,
                 vertical.BlockingSolidId));
         }
+
+        return 0;
+    }
+
+    private int TryUpwardCornerCorrection(
+        PlayerInput input,
+        ActorMoveResult vertical,
+        SimulationWorld world)
+    {
+        if (vertical.RequestedPixels >= 0 || SpeedY >= 0m)
+        {
+            return 0;
+        }
+
+        var remainingY = vertical.RequestedPixels - vertical.MovedPixels;
+        if (remainingY >= 0)
+        {
+            return 0;
+        }
+
+        var preferredDirection = Math.Sign(SpeedX);
+        if (preferredDirection == 0)
+        {
+            preferredDirection = input.MoveX != 0 ? input.MoveX : Facing;
+        }
+
+        for (var distance = 1; distance <= Tuning.UpwardCornerCorrectionPixels; distance++)
+        {
+            foreach (var direction in new[] { preferredDirection, -preferredDirection })
+            {
+                var offsetX = checked(direction * distance);
+                if (!CanCorrectAroundCorner(world, offsetX, remainingY))
+                {
+                    continue;
+                }
+
+                var horizontal = Actor.MoveXExact(offsetX, world);
+                var retry = Actor.MoveY(remainingY, world);
+                if (horizontal.Blocked || retry.Blocked)
+                {
+                    throw new InvalidOperationException("Validated upward corner correction was unexpectedly blocked.");
+                }
+                return offsetX;
+            }
+        }
+
+        return 0;
+    }
+
+    private bool CanCorrectAroundCorner(SimulationWorld world, int offsetX, int remainingY)
+    {
+        var horizontalDirection = Math.Sign(offsetX);
+        for (var x = horizontalDirection; x != offsetX + horizontalDirection; x += horizontalDirection)
+        {
+            if (world.FirstSolidAt(Actor, x, 0) is not null)
+            {
+                return false;
+            }
+        }
+
+        for (var y = -1; y >= remainingY; y--)
+        {
+            if (world.FirstSolidAt(Actor, offsetX, y) is not null)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void TickTimers(bool groundedAtStart)
@@ -407,7 +486,7 @@ public sealed class PlayerNormalController
             tuning.NormalMaxFall <= 0m || tuning.FastMaxFall < tuning.NormalMaxFall ||
             tuning.FastFallAcceleration <= 0m || tuning.JumpSpeed >= 0m ||
             tuning.MaximumHorizontalLiftSpeed <= 0m || tuning.MaximumUpwardLiftSpeed <= 0m ||
-            tuning.WallSpeedRetentionTicks <= 0 ||
+            tuning.WallSpeedRetentionTicks <= 0 || tuning.UpwardCornerCorrectionPixels <= 0 ||
             tuning.CoyoteTicks <= 0 || tuning.JumpBufferTicks <= 0 ||
             tuning.VariableJumpTicks <= 0)
         {

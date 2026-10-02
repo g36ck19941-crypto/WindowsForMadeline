@@ -16,7 +16,7 @@
 ### CDR-071 — Player moving-platform jump inheritance calibration
 
 - Owner: Primary
-- State: accepted by the developer on 2026-10-02; independent-branch publication authorized after fresh audit
+- State: accepted and published at `codex/cdr-071-player-lift-inheritance` exact commit `9f5594a6e41b76323e2227eb0e4b0750f2733f9e`
 - Scope: bounded horizontal/upward lift inheritance on ordinary jump, downward rejection, immutable applied-lift evidence, stable diagnostic and generated moving-Solid tests
 - Fidelity: `partial`; this is one Normal/Jump rule, not complete Player parity
 - Forbidden: reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
@@ -25,11 +25,21 @@
 ### CDR-072 — Player horizontal wall-speed retention calibration
 
 - Owner: Primary
-- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- State: accepted by the developer on 2026-10-02; exact commit `cc77d1dd1c725ab37750cc0328cf1f2f8ead47f8` passed fresh verification and audit, but independent-branch publication is pending after one GitHub TCP 443 timeout
 - Scope: fixed 4-tick horizontal collision retention, restoration when the wall clears, reverse-input cancellation, expiration, immutable snapshot evidence and stable events
 - Fidelity: `partial`; this is one collision-feel rule, not complete Player parity
 - Evidence: Release 0 warnings/errors; Player 45/45; total 878/878; generated demo retains speed `90` for 4 ticks and restores `90` with one retain/restore event each; jump and external velocity cancel stale retention
 - Forbidden: reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
+
+### CDR-073 — Player upward corner correction calibration
+
+- Owner: Primary
+- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- File scope: `CelesteDesktop.Player` Normal movement/tuning/snapshot/events, the minimal `Simulation.Core.Actor.MoveXExact` support, their generated tests, cumulative demo, verification entry and project records
+- Scope: upward-only collision correction within 4 integer pixels, current horizontal-travel direction preference, exact horizontal correction that preserves subpixel remainder, remaining upward motion retry, immutable applied-offset evidence and stable diagnostic
+- Fidelity: `partial`; this is one upward Normal-movement collision rule, not complete Player or dash corner parity
+- Evidence: Release 0 warnings/errors; Simulation.Core 34/34; Player 50/50; total 884/884; generated demo moves from `(0,4)` to `(1,2)` with correction `+1`, one `UpwardCornerCorrected` event, preserved upward speed and identical replay
+- Forbidden: downward/dash corner correction, reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
 
 ## P0 — Foundation
 

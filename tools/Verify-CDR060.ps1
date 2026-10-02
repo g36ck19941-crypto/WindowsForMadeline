@@ -57,10 +57,11 @@ try {
 
     $manifest = Get-Content -LiteralPath (Join-Path $demoOutput 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
     $report = Get-Content -LiteralPath (Join-Path $demoOutput 'index.html') -Raw -Encoding UTF8
-    if ($manifest.demoId -ne 'CDR-060' -or
+    if ($manifest.demoId -notmatch '^CDR-[0-9]{3}$' -or
         $manifest.diagnosticPlaceholder -ne $true -or
         $manifest.source -ne 'program-generated' -or
         $manifest.persistedCommercialBytes -ne 0 -or
+        $manifest.extensionContracts.taskId -ne 'CDR-060' -or
         $manifest.extensionContracts.source -ne 'synthetic-providers-only' -or
         $manifest.extensionContracts.fidelity -ne 'contract-only' -or
         $manifest.extensionContracts.AssetProviderId -ne 'demo.assets' -or
@@ -88,6 +89,6 @@ try {
         throw 'CDR-060 demo report omitted required provider or limitation evidence.'
     }
 
-    Write-Host 'CDR-060 BASELINE VERIFICATION PASSED IN CURRENT TREE: provider contracts remain valid; 868 current non-reference regressions passed, including later CDR-071/CDR-072 Player cases; no real map, Mod directory, executable code, installation access, visible GUI or commercial bytes.'
+    Write-Host 'CDR-060 BASELINE VERIFICATION PASSED IN CURRENT TREE: provider contracts remain valid; 874 current non-reference regressions passed, including later CDR-071/CDR-072/CDR-073 Player cases; no real map, Mod directory, executable code, installation access, visible GUI or commercial bytes.'
 }
 finally { Pop-Location }

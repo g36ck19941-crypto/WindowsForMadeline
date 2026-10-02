@@ -36,6 +36,6 @@ try {
         throw 'CDR-072 demo report omitted the wall-speed explanation or diagnostics.'
     }
 
-    Write-Host 'CDR-072 OFFLINE VERIFICATION PASSED: Player 45/45 and 878/878 total regressions; generated wall collision retained speed 90 for four ticks and restored 90 with one retain/restore diagnostic; jump and external launches cancel stale retention; no game, GUI, install access or tracked reference content.'
+    Write-Host 'CDR-072 BASELINE VERIFICATION PASSED IN CURRENT TREE: Player 50/50 and 884/884 current total regressions, including later CDR-073 cases; generated wall collision still retains speed 90 for four ticks and restores 90 with one retain/restore diagnostic; no game, GUI, install access or tracked reference content.'
 }
 finally { Pop-Location }

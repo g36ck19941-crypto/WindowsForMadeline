@@ -15,6 +15,7 @@ public sealed record NormalJumpTuning(
     decimal MaximumHorizontalLiftSpeed,
     decimal MaximumUpwardLiftSpeed,
     int WallSpeedRetentionTicks,
+    int UpwardCornerCorrectionPixels,
     int CoyoteTicks,
     int JumpBufferTicks,
     int VariableJumpTicks)
@@ -34,6 +35,7 @@ public sealed record NormalJumpTuning(
         MaximumHorizontalLiftSpeed: 250m,
         MaximumUpwardLiftSpeed: 130m,
         WallSpeedRetentionTicks: 4,
+        UpwardCornerCorrectionPixels: 4,
         CoyoteTicks: 6,
         JumpBufferTicks: 5,
         VariableJumpTicks: 12);

@@ -42,6 +42,11 @@ var tests = new (string Name, Action Body)[]
     ("jump cancels wall speed retention", JumpCancelsWallRetention),
     ("external velocity cancels wall speed retention", ExternalVelocityCancelsWallRetention),
     ("wall speed retention expires after four ticks", WallSpeedRetentionExpires),
+    ("upward collision corrects around a right corner", UpwardCornerCorrectsRight),
+    ("upward collision corrects around a left corner", UpwardCornerCorrectsLeft),
+    ("upward corner correction prefers horizontal travel", UpwardCornerPrefersTravelDirection),
+    ("upward corner correction is bounded to four pixels", UpwardCornerCorrectionIsBounded),
+    ("downward collision never applies corner correction", DownwardCollisionDoesNotCorrect),
     ("floor collision zeros vertical speed", FloorCollisionZerosSpeed),
     ("ceiling collision cancels variable jump", CeilingCollisionCancelsVariableJump),
     ("landing and left-ground events are explicit", GroundTransitionEventsAreExplicit),
@@ -88,6 +93,7 @@ static void ReferenceConstantsMatch()
     Equal(250m, tuning.MaximumHorizontalLiftSpeed);
     Equal(130m, tuning.MaximumUpwardLiftSpeed);
     Equal(4, tuning.WallSpeedRetentionTicks);
+    Equal(4, tuning.UpwardCornerCorrectionPixels);
     Equal(6, tuning.CoyoteTicks);
     Equal(5, tuning.JumpBufferTicks);
     Equal(12, tuning.VariableJumpTicks);
@@ -459,6 +465,87 @@ static void WallSpeedRetentionExpires()
     Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRetentionExpired), "Wall speed expiration event missing.");
 }
 
+static void UpwardCornerCorrectsRight()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 4, 2, 2);
+    world.Add(actor);
+    world.Add(new Solid("corner", -2, 1, 3, 2));
+    var controller = new PlayerNormalController(actor, initialSpeed: new SimVector(0m, -120m));
+
+    var snapshot = controller.Step(Input(moveX: 1, jumpHeld: true), world);
+
+    Equal(1, snapshot.UpwardCornerCorrectionX);
+    Equal(1, snapshot.Position.X);
+    Equal(2, snapshot.Position.Y);
+    Assert(snapshot.Speed.Y < 0m, "Upward speed was cancelled after a valid correction.");
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.UpwardCornerCorrected && item.SolidId == "corner"), "Corner correction event missing.");
+    Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.VerticalBlocked), "Corrected movement was also reported as blocked.");
+}
+
+static void UpwardCornerCorrectsLeft()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 4, 2, 2);
+    world.Add(actor);
+    world.Add(new Solid("corner", 1, 1, 3, 2));
+    var controller = new PlayerNormalController(actor, initialSpeed: new SimVector(0m, -120m));
+
+    var snapshot = controller.Step(Input(moveX: -1, jumpHeld: true), world);
+
+    Equal(-1, snapshot.UpwardCornerCorrectionX);
+    Equal(-1, snapshot.Position.X);
+    Equal(2, snapshot.Position.Y);
+}
+
+static void UpwardCornerPrefersTravelDirection()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 4, 2, 2);
+    world.Add(actor);
+    world.Add(new Solid("narrow-ceiling", 0, 1, 3, 2));
+    var controller = new PlayerNormalController(actor, initialSpeed: new SimVector(90m, -120m));
+
+    var snapshot = controller.Step(Input(moveX: 1, jumpHeld: true), world);
+
+    Equal(1, snapshot.UpwardCornerCorrectionX);
+    Equal(3, snapshot.Position.X);
+}
+
+static void UpwardCornerCorrectionIsBounded()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 4, 2, 2);
+    world.Add(actor);
+    world.Add(new Solid("wide-ceiling", -4, 1, 10, 2));
+    var controller = new PlayerNormalController(actor, initialSpeed: new SimVector(0m, -120m));
+
+    var snapshot = controller.Step(Input(jumpHeld: true), world);
+
+    Equal(0, snapshot.UpwardCornerCorrectionX);
+    Equal(0, snapshot.Position.X);
+    Equal(3, snapshot.Position.Y);
+    Equal(0m, snapshot.Speed.Y);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.VerticalBlocked), "Uncorrectable ceiling did not report a block.");
+}
+
+static void DownwardCollisionDoesNotCorrect()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 2, 2);
+    world.Add(actor);
+    world.Add(new Solid("floor-edge", -2, 3, 3, 2));
+    var controller = new PlayerNormalController(actor, initialSpeed: new SimVector(0m, 120m));
+
+    var snapshot = controller.Step(Input(moveX: 1), world);
+
+    Equal(0, snapshot.UpwardCornerCorrectionX);
+    Equal(0, snapshot.Position.X);
+    Equal(1, snapshot.Position.Y);
+    Equal(0m, snapshot.Speed.Y);
+    Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.UpwardCornerCorrected), "Downward collision incorrectly applied upward correction.");
+}
+
 static void FloorCollisionZerosSpeed()
 {
     var world = new SimulationWorld();
@@ -477,7 +564,7 @@ static void CeilingCollisionCancelsVariableJump()
     var actor = new Actor("player", 0, 4, 2, 2);
     world.Add(actor);
     world.Add(new Solid("floor", 0, 6, 8, 2));
-    world.Add(new Solid("ceiling", 0, 0, 8, 2));
+    world.Add(new Solid("ceiling", -10, 0, 28, 2));
     var controller = new PlayerNormalController(actor);
     controller.Step(Input(jumpPressed: true, jumpHeld: true), world);
     var snapshot = controller.Step(Input(jumpHeld: true), world);

@@ -16,6 +16,7 @@ public sealed class PlayerNormalSnapshot
         SimVector appliedLiftSpeed,
         decimal wallSpeedRetained,
         int wallSpeedRetentionTicks,
+        int upwardCornerCorrectionX,
         int coyoteTicks,
         int jumpBufferTicks,
         int variableJumpTicks,
@@ -31,6 +32,7 @@ public sealed class PlayerNormalSnapshot
         AppliedLiftSpeed = appliedLiftSpeed;
         WallSpeedRetained = wallSpeedRetained;
         WallSpeedRetentionTicks = wallSpeedRetentionTicks;
+        UpwardCornerCorrectionX = upwardCornerCorrectionX;
         CoyoteTicks = coyoteTicks;
         JumpBufferTicks = jumpBufferTicks;
         VariableJumpTicks = variableJumpTicks;
@@ -47,6 +49,7 @@ public sealed class PlayerNormalSnapshot
     public SimVector AppliedLiftSpeed { get; }
     public decimal WallSpeedRetained { get; }
     public int WallSpeedRetentionTicks { get; }
+    public int UpwardCornerCorrectionX { get; }
     public int CoyoteTicks { get; }
     public int JumpBufferTicks { get; }
     public int VariableJumpTicks { get; }

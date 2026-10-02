@@ -63,6 +63,22 @@ public sealed class Actor
             result.Blocker?.Id);
     }
 
+    public ActorMoveResult MoveXExact(int pixels, SimulationWorld world)
+    {
+        ArgumentNullException.ThrowIfNull(world);
+        world.RequireActiveStep();
+        var result = MoveExact(pixels, MovementAxis.Horizontal, world, ignoredSolid: null);
+        if (result.MovedPixels != pixels)
+        {
+            world.RecordBlocked(this, result, MovementAxis.Horizontal, pixels);
+        }
+        return new ActorMoveResult(
+            MovementAxis.Horizontal,
+            pixels,
+            result.MovedPixels,
+            result.Blocker?.Id);
+    }
+
     public bool IsRiding(Solid solid)
     {
         ArgumentNullException.ThrowIfNull(solid);
