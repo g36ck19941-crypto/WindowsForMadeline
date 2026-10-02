@@ -16,7 +16,7 @@
 ### CDR-071 — Player moving-platform jump inheritance calibration
 
 - Owner: Primary
-- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- State: accepted by the developer on 2026-10-02; independent-branch publication authorized after fresh audit
 - Scope: bounded horizontal/upward lift inheritance on ordinary jump, downward rejection, immutable applied-lift evidence, stable diagnostic and generated moving-Solid tests
 - Fidelity: `partial`; this is one Normal/Jump rule, not complete Player parity
 - Forbidden: reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance

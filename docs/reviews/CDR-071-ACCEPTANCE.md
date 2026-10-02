@@ -1,6 +1,6 @@
 # CDR-071 Acceptance
 
-State: implementation complete and ready for developer acceptance; not uploaded.
+State: accepted by the developer on 2026-10-02; publication authorized after fresh outbound audit.
 
 ## Delivered
 

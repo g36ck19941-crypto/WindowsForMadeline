@@ -49,5 +49,5 @@
     "commercialBytes": 0
   },
   "nextTask": "CDR-061",
-  "nextAction": "Present CDR-060 for developer acceptance. Do not upload CDR-060 or start CDR-061 before explicit authorization."
+  "nextAction": "Present CDR-060 for developer acceptance. Its commit is already remotely reachable as a CDR-070 branch ancestor but has no accepted release branch; do not mark it accepted or start CDR-061 before explicit authorization."
 }

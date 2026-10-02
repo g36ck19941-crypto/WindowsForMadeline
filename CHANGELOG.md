@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 — CDR-071 accepted
+
+- The developer accepted CDR-071 and authorized independent-branch publication plus the next bounded development target.
+- Fresh verification still passes Player 38/38 and 871/871 total regressions with 0 Release warnings/errors.
+- Publication remains limited to the exact audited project-owned commit; local reference and commercial content remain excluded.
+- Corrected the prior "CDR-060 unuploaded" record: its unaccepted commit is already reachable as a CDR-070 branch ancestor. It still has no accepted release branch and CDR-061 remains unauthorized.
+
 ## 2026-10-02 — CDR-071 Player lift inheritance ready for acceptance
 
 - Added bounded moving-Solid lift inheritance to ordinary Player jumps: horizontal `[-250,250]`, upward at most `-130`, with downward lift rejected.

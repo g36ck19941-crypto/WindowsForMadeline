@@ -3,8 +3,9 @@
   "taskId": "CDR-071",
   "title": "Player Normal/Jump moving-platform lift inheritance calibration",
   "owner": "Primary agent",
-  "state": "ready_for_acceptance",
+  "state": "accepted",
   "authorizationDate": "2026-10-02",
+  "acceptanceDate": "2026-10-02",
   "scope": [
     "project-owned behavior specification from local static evidence",
     "bounded horizontal and upward lift velocity inheritance on normal jump",
@@ -34,5 +35,5 @@
     "installationAccesses": 0,
     "commercialReferenceTracked": false
   },
-  "gate": "Ready for developer acceptance. Do not upload before explicit acceptance; keep all other Player gaps explicit and do not start CDR-061 while CDR-060 remains pending."
+  "gate": "Accepted by the developer. Publish only the exact freshly verified and audited commit to an independent branch; keep all other Player gaps explicit and do not start CDR-061 while CDR-060 remains pending."
 }
