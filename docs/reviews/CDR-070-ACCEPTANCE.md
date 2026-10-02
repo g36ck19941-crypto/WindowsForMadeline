@@ -1,6 +1,6 @@
 # CDR-070 Acceptance
 
-State: ready for developer acceptance; not uploaded.
+State: accepted by the developer on 2026-10-02; publication pending fresh verification and audit.
 
 ## Delivered
 

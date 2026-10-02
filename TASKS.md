@@ -7,7 +7,7 @@
 ### CDR-070 — Development-only local behavior reference
 
 - Owner: Primary
-- State: authorized and in progress on 2026-10-02; separate from the sequential CDR-060/CDR-061 gate
+- State: accepted by the developer on 2026-10-02; independent-branch publication authorized after fresh verification and audit
 - Scope: explicit-path local assembly read, pinned ILSpy, hash-addressed Git-ignored cache, summary-only manifest and safety tests
 - Forbidden: game launch, installation writes, automatic discovery, Git/publish/package of decompiled source or commercial data, compiling reference source and exact-parity claims
 - Purpose: strengthen later behavior calibration without making the product depend on the game or distributing protected material

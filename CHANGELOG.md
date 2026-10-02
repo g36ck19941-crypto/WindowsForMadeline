@@ -2,6 +2,7 @@
 
 ## 2026-10-02 — CDR-070 local behavior reference authorized
 
+- The developer visually confirmed the corrected launcher and accepted CDR-070; independent-branch publication is authorized after a fresh gate and outbound audit.
 - Reworked the developer launcher into an ASCII-only CMD shim plus a UTF-8-BOM PowerShell 5 UI script. Both the argument path and the interactive path-prompt flow now exit 0 with readable Chinese output; CMD no longer parses Chinese text as commands.
 - Added the task without replacing the existing roadmap or changing CDR-060 acceptance state.
 - Added an explicit-path builder, pinned repository-local ILSpy manifest, hash-addressed ignored cache, summary-only manifest and synthetic safety tests.
