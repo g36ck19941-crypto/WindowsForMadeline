@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-02 — CDR-073 accepted; CDR-074 authorized
+
+- Recorded developer acceptance of CDR-073 and authorization for exact independent-branch publication after a fresh gate and outbound audit.
+- Reverified the accepted tree at 0 Release warnings/errors, Simulation.Core 34/34, Player 50/50 and 884/884 total regressions.
+- Bounded CDR-074 to generated static one-way-platform contact: upward pass-through, landing/standing from above, explicit bounded drop-through, ordinary-Solid non-regression, immutable evidence and diagnostics. No runtime capability was added by this record-only update.
+
 ## 2026-10-02 — CDR-073 upward corner correction ready for acceptance
 
 - Added an upward-only Player corner correction that searches at most four integer pixels, prefers the current horizontal travel direction and retries the blocked remainder of the rise.

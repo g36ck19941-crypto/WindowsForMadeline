@@ -34,12 +34,23 @@
 ### CDR-073 — Player upward corner correction calibration
 
 - Owner: Primary
-- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- State: accepted by the developer on 2026-10-02; independent-branch publication authorized after fresh verification and outbound audit
 - File scope: `CelesteDesktop.Player` Normal movement/tuning/snapshot/events, the minimal `Simulation.Core.Actor.MoveXExact` support, their generated tests, cumulative demo, verification entry and project records
 - Scope: upward-only collision correction within 4 integer pixels, current horizontal-travel direction preference, exact horizontal correction that preserves subpixel remainder, remaining upward motion retry, immutable applied-offset evidence and stable diagnostic
 - Fidelity: `partial`; this is one upward Normal-movement collision rule, not complete Player or dash corner parity
 - Evidence: Release 0 warnings/errors; Simulation.Core 34/34; Player 50/50; total 884/884; generated demo moves from `(0,4)` to `(1,2)` with correction `+1`, one `UpwardCornerCorrected` event, preserved upward speed and identical replay
 - Forbidden: downward/dash corner correction, reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
+
+### CDR-074 — Player one-way-platform calibration
+
+- Owner: Primary
+- State: authorized by the developer on 2026-10-02; implementation in progress
+- File scope: one-way-platform geometry and filtered vertical collision in `CelesteDesktop.Simulation.Core`; Player Normal input/state/snapshot/events; their generated tests; cumulative demo, verifier and project records
+- Scope: pass upward through a generated one-way platform, land and remain grounded from above, enter an explicit bounded drop-through state, ignore the selected platform until the actor clears it, and preserve ordinary Solid collision
+- Fidelity: `partial`; this calibrates static one-way-platform contact only, not moving platforms, ducking, dash corner correction, special platform variants or complete Player parity
+- Acceptance: deterministic per-tick tests for upward pass-through, downward landing, stable standing, explicit drop-through/rearm, side exclusion, Solid non-regression, immutable evidence and stable diagnostics; cumulative generated demo and complete Release gate
+- Forbidden: game/GUI/live input, installation or local-reference access, commercial bytes, CDR-061 work, moving/special one-way variants and upload before developer acceptance
+- Next gate: developer acceptance of CDR-074; no later calibration task begins automatically
 
 ## P0 — Foundation
 

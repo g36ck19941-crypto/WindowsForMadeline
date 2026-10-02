@@ -1,6 +1,6 @@
 # CDR-073 Acceptance
 
-State: implementation complete and ready for developer acceptance; not uploaded.
+State: accepted by the developer on 2026-10-02; exact independent-branch publication authorized after fresh verification and outbound audit.
 
 ## Delivered
 
@@ -33,4 +33,4 @@ This prevents a one-pixel platform edge from stopping an otherwise valid rise an
 
 ## After acceptance
 
-After explicit developer acceptance, publish only the freshly verified and audited CDR-073 acceptance commit to its independent branch. The recommended next bounded task is CDR-074 one-way-platform calibration: generated-only pass-through from below, standing from above and explicit drop-through state. It remains unauthorized until the developer explicitly accepts CDR-073 and starts it. Visible GUI, live input, game/install access, commercial bytes and CDR-061 remain forbidden.
+Publish only the freshly verified and audited CDR-073 acceptance commit to its independent branch. CDR-074 is now authorized as a generated-only one-way-platform calibration: pass-through from below, landing/standing from above and explicit bounded drop-through state. Visible GUI, live input, game/install or local-reference access, commercial bytes and CDR-061 remain forbidden.
