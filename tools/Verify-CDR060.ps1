@@ -89,6 +89,6 @@ try {
         throw 'CDR-060 demo report omitted required provider or limitation evidence.'
     }
 
-    Write-Host 'CDR-060 BASELINE VERIFICATION PASSED IN CURRENT TREE: provider contracts remain valid; 874 current non-reference regressions passed, including later CDR-071/CDR-072/CDR-073 Player cases; no real map, Mod directory, executable code, installation access, visible GUI or commercial bytes.'
+    Write-Host 'CDR-060 BASELINE VERIFICATION PASSED IN CURRENT TREE: provider contracts remain valid; 891 current non-reference regressions passed, including later CDR-071/CDR-072/CDR-073/CDR-074 Player cases; no real map, Mod directory, executable code, installation/local-reference access, visible GUI or commercial bytes.'
 }
 finally { Pop-Location }

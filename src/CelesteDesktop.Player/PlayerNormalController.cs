@@ -11,6 +11,8 @@ public sealed class PlayerNormalController
     private decimal _wallSpeedRetained;
     private int _wallSpeedRetentionTicks;
     private bool _wallRetentionHandledThisTick;
+    private string? _dropThroughPlatformId;
+    private int _dropThroughTicksRemaining;
     private long _lastUpdatedTick = -1;
 
     public PlayerNormalController(
@@ -108,7 +110,9 @@ public sealed class PlayerNormalController
         _events.Clear();
         _wallRetentionHandledThisTick = false;
 
-        var groundedAtStart = SpeedY >= 0m && world.IsGrounded(Actor);
+        RefreshDropThroughState(world, world.Tick);
+        TryStartDropThrough(input, world, world.Tick);
+        var groundedAtStart = SpeedY >= 0m && world.IsGrounded(Actor, _dropThroughPlatformId);
         RecordGroundTransition(world.Tick, groundedAtStart);
         UpdateCoyote(groundedAtStart);
         UpdateJumpBuffer(input);
@@ -118,8 +122,12 @@ public sealed class PlayerNormalController
         var appliedLiftSpeed = TryJump(input, world.Tick);
         ApplyExternalVelocity(effects.Velocity, world.Tick);
         var upwardCornerCorrectionX = Move(input, world);
+        AdvanceDropThroughState(world, world.Tick);
 
-        var groundedAtEnd = SpeedY >= 0m && world.IsGrounded(Actor);
+        var groundedAtEnd = SpeedY >= 0m && world.IsGrounded(Actor, _dropThroughPlatformId);
+        var groundedOneWayPlatformId = groundedAtEnd
+            ? world.FirstOneWayPlatformBelow(Actor, _dropThroughPlatformId)?.Id
+            : null;
         if (_initialized && groundedAtEnd && !_wasGrounded)
         {
             _events.Add(new PlayerNormalEvent(world.Tick, PlayerNormalEventKind.Landed, null));
@@ -140,6 +148,9 @@ public sealed class PlayerNormalController
             _wallSpeedRetained,
             _wallSpeedRetentionTicks,
             upwardCornerCorrectionX,
+            groundedOneWayPlatformId,
+            _dropThroughPlatformId,
+            _dropThroughTicksRemaining,
             CoyoteTicksRemaining,
             JumpBufferTicksRemaining,
             VariableJumpTicksRemaining,
@@ -274,6 +285,73 @@ public sealed class PlayerNormalController
         _wallSpeedRetentionTicks = 0;
     }
 
+    private void RefreshDropThroughState(SimulationWorld world, long tick)
+    {
+        if (_dropThroughPlatformId is null)
+        {
+            return;
+        }
+
+        var platform = world.FindOneWayPlatform(_dropThroughPlatformId);
+        if (platform is null || Actor.Bounds.Top >= platform.Bounds.Bottom)
+        {
+            EndDropThrough(tick, PlayerNormalEventKind.OneWayDropThroughCompleted);
+        }
+    }
+
+    private void TryStartDropThrough(PlayerInput input, SimulationWorld world, long tick)
+    {
+        if (!input.DropThroughPressed || _dropThroughPlatformId is not null ||
+            world.FirstSolidAt(Actor, 0, 1) is not null)
+        {
+            return;
+        }
+
+        var platform = world.FirstOneWayPlatformBelow(Actor);
+        if (platform is null)
+        {
+            return;
+        }
+
+        _dropThroughPlatformId = platform.Id;
+        _dropThroughTicksRemaining = Tuning.OneWayDropThroughTicks;
+        SpeedY = Math.Max(SpeedY, Tuning.OneWayDropThroughSpeed);
+        VariableJumpTicksRemaining = 0;
+        _events.Add(new PlayerNormalEvent(
+            tick,
+            PlayerNormalEventKind.OneWayDropThroughStarted,
+            platform.Id));
+    }
+
+    private void AdvanceDropThroughState(SimulationWorld world, long tick)
+    {
+        if (_dropThroughPlatformId is null)
+        {
+            return;
+        }
+
+        var platform = world.FindOneWayPlatform(_dropThroughPlatformId);
+        if (platform is null || Actor.Bounds.Top >= platform.Bounds.Bottom)
+        {
+            EndDropThrough(tick, PlayerNormalEventKind.OneWayDropThroughCompleted);
+            return;
+        }
+
+        _dropThroughTicksRemaining--;
+        if (_dropThroughTicksRemaining <= 0)
+        {
+            EndDropThrough(tick, PlayerNormalEventKind.OneWayDropThroughExpired);
+        }
+    }
+
+    private void EndDropThrough(long tick, PlayerNormalEventKind eventKind)
+    {
+        var platformId = _dropThroughPlatformId;
+        _dropThroughPlatformId = null;
+        _dropThroughTicksRemaining = 0;
+        _events.Add(new PlayerNormalEvent(tick, eventKind, platformId));
+    }
+
     private SimVector TryJump(PlayerInput input, long tick)
     {
         if (JumpBufferTicksRemaining <= 0 || CoyoteTicksRemaining <= 0)
@@ -359,7 +437,10 @@ public sealed class PlayerNormalController
                 horizontal.BlockingSolidId));
         }
 
-        var vertical = Actor.MoveY(SpeedY / SimulationConstants.TicksPerSecond, world);
+        var vertical = Actor.MoveYWithOneWayPlatforms(
+            SpeedY / SimulationConstants.TicksPerSecond,
+            world,
+            _dropThroughPlatformId);
         if (vertical.Blocked)
         {
             var correctionX = TryUpwardCornerCorrection(input, vertical, world);
@@ -376,8 +457,20 @@ public sealed class PlayerNormalController
             VariableJumpTicksRemaining = 0;
             _events.Add(new PlayerNormalEvent(
                 world.Tick,
-                PlayerNormalEventKind.VerticalBlocked,
-                vertical.BlockingSolidId));
+                vertical.BlockingOneWayPlatformId is null
+                    ? PlayerNormalEventKind.VerticalBlocked
+                    : PlayerNormalEventKind.OneWayPlatformLanded,
+                vertical.BlockingSurfaceId));
+        }
+        else if (SpeedY > 0m &&
+                 world.FirstOneWayPlatformBelow(Actor, _dropThroughPlatformId) is { } landedPlatform)
+        {
+            SpeedY = 0m;
+            VariableJumpTicksRemaining = 0;
+            _events.Add(new PlayerNormalEvent(
+                world.Tick,
+                PlayerNormalEventKind.OneWayPlatformLanded,
+                landedPlatform.Id));
         }
 
         return 0;
@@ -487,6 +580,7 @@ public sealed class PlayerNormalController
             tuning.FastFallAcceleration <= 0m || tuning.JumpSpeed >= 0m ||
             tuning.MaximumHorizontalLiftSpeed <= 0m || tuning.MaximumUpwardLiftSpeed <= 0m ||
             tuning.WallSpeedRetentionTicks <= 0 || tuning.UpwardCornerCorrectionPixels <= 0 ||
+            tuning.OneWayDropThroughSpeed <= 0m || tuning.OneWayDropThroughTicks <= 0 ||
             tuning.CoyoteTicks <= 0 || tuning.JumpBufferTicks <= 0 ||
             tuning.VariableJumpTicks <= 0)
         {

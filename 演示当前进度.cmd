@@ -30,7 +30,8 @@ echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演�
  echo 17. 演示 CDR-071 从高速右移并上升的平台起跳，实际应用有界平台速度。
  echo 18. 演示 CDR-072 高速撞墙后在 4 tick 内保留并恢复横向速度。
  echo 19. 演示 CDR-073 向上擦到平台边角时，在 4 像素内精确横移并继续上升。
- echo 20. 生成一份本地 HTML 报告，方便直接查看结果。
+ echo 20. 演示 CDR-074 从下方穿过单向平台、从上方落地，以及明确向下穿透后在下一层重新落地。
+ echo 21. 生成一份本地 HTML 报告，方便直接查看结果。
 echo.
 echo  你应该看到：
 echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
@@ -49,6 +50,7 @@ echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
  echo  - CDR-071 的平台起跳继承速度为 (250,-130)，并出现一次 LiftVelocityApplied 诊断。
  echo  - CDR-072 先保留 90 横向速度和 4 tick 窗口，墙移开后恢复到 90，并各出现一次保留/恢复诊断。
  echo  - CDR-073 从 (0,4) 向上撞到边角后右移 1 像素到 (1,2)，出现一次 UpwardCornerCorrected，且上升速度没有被清零。
+ echo  - CDR-074 能从下方穿过单向平台，从 y=0 向下穿透上层后在 y=19 落到下层，开始/完成/落地事件各 1 次，并能再次下穿。
 echo  - 重复运行结果一致，并标明商业素材字节为 0。
 echo.
 echo  请注意：
@@ -87,7 +89,7 @@ if errorlevel 1 (
 :report_ready
 echo.
 echo 报告位置：%CD%\artifacts\current-progress-demo\index.html
-echo 验收 CDR-073 时请查看 Player 说明中的转角修正结果；CDR-060 接口和 CDR-070 本地证据工具仍作为累计阶段保留，反编译内容本身不会进入报告。
+echo 验收 CDR-074 时请查看 Player 说明中的单向平台结果；CDR-060 接口和 CDR-070 本地证据工具仍作为累计阶段保留，反编译内容本身不会进入报告。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause

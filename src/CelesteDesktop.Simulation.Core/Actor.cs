@@ -63,6 +63,71 @@ public sealed class Actor
             result.Blocker?.Id);
     }
 
+    public ActorMoveResult MoveYWithOneWayPlatforms(
+        decimal displacement,
+        SimulationWorld world,
+        string? ignoredOneWayPlatformId = null)
+    {
+        ArgumentNullException.ThrowIfNull(world);
+        world.RequireActiveStep();
+        var pixels = _yRemainder.Consume(displacement);
+        if (pixels == 0 || IsSquished)
+        {
+            return new ActorMoveResult(MovementAxis.Vertical, pixels, 0, null, null);
+        }
+
+        var direction = Math.Sign(pixels);
+        var requested = Math.Abs((long)pixels);
+        var moved = 0;
+        Solid? solidBlocker = null;
+        OneWayPlatform? oneWayBlocker = null;
+        for (long index = 0; index < requested; index++)
+        {
+            var current = Bounds;
+            var candidate = current.Offset(0, direction);
+            solidBlocker = world.FirstCollision(candidate, ignoredSolid: null);
+            if (solidBlocker is not null)
+            {
+                break;
+            }
+
+            if (direction > 0)
+            {
+                oneWayBlocker = world.FirstOneWayCollision(
+                    current,
+                    candidate,
+                    ignoredOneWayPlatformId);
+                if (oneWayBlocker is not null)
+                {
+                    break;
+                }
+            }
+
+            Y = checked(Y + direction);
+            moved += direction;
+        }
+
+        if (moved != pixels)
+        {
+            _yRemainder.Reset();
+            if (solidBlocker is not null)
+            {
+                world.RecordBlocked(
+                    this,
+                    new ExactMoveResult(moved, solidBlocker),
+                    MovementAxis.Vertical,
+                    pixels);
+            }
+        }
+
+        return new ActorMoveResult(
+            MovementAxis.Vertical,
+            pixels,
+            moved,
+            solidBlocker?.Id,
+            oneWayBlocker?.Id);
+    }
+
     public ActorMoveResult MoveXExact(int pixels, SimulationWorld world)
     {
         ArgumentNullException.ThrowIfNull(world);
@@ -137,7 +202,9 @@ public sealed record ActorMoveResult(
     MovementAxis Axis,
     int RequestedPixels,
     int MovedPixels,
-    string? BlockingSolidId)
+    string? BlockingSolidId,
+    string? BlockingOneWayPlatformId = null)
 {
     public bool Blocked => RequestedPixels != MovedPixels;
+    public string? BlockingSurfaceId => BlockingSolidId ?? BlockingOneWayPlatformId;
 }

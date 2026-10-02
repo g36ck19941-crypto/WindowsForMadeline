@@ -44,11 +44,12 @@
 ### CDR-074 — Player one-way-platform calibration
 
 - Owner: Primary
-- State: authorized by the developer on 2026-10-02; implementation in progress
+- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
 - File scope: one-way-platform geometry and filtered vertical collision in `CelesteDesktop.Simulation.Core`; Player Normal input/state/snapshot/events; their generated tests; cumulative demo, verifier and project records
 - Scope: pass upward through a generated one-way platform, land and remain grounded from above, enter an explicit bounded drop-through state, ignore the selected platform until the actor clears it, and preserve ordinary Solid collision
 - Fidelity: `partial`; this calibrates static one-way-platform contact only, not moving platforms, ducking, dash corner correction, special platform variants or complete Player parity
 - Acceptance: deterministic per-tick tests for upward pass-through, downward landing, stable standing, explicit drop-through/rearm, side exclusion, Solid non-regression, immutable evidence and stable diagnostics; cumulative generated demo and complete Release gate
+- Evidence: Release 0 warnings/errors; Simulation.Core 42/42; Player 59/59; total 901/901; generated demo passes upward, drops from y=0, lands on `one-way-lower` at y=19, records start/completion/landing `1/1/1`, rearms and replays identically
 - Forbidden: game/GUI/live input, installation or local-reference access, commercial bytes, CDR-061 work, moving/special one-way variants and upload before developer acceptance
 - Next gate: developer acceptance of CDR-074; no later calibration task begins automatically
 

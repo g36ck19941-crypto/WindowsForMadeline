@@ -15,6 +15,14 @@ var tests = new (string Name, Action Body)[]
     ("tick increments exactly once", TickIncrementsExactlyOnce),
     ("horizontal collision stops at the first pixel", HorizontalCollisionStops),
     ("vertical collision stops at the first pixel", VerticalCollisionStops),
+    ("one-way platform permits upward passage", OneWayPlatformPermitsUpwardPassage),
+    ("one-way platform blocks downward crossing", OneWayPlatformBlocksDownwardCrossing),
+    ("ignored one-way platform permits downward passage", IgnoredOneWayPlatformPermitsDownwardPassage),
+    ("one-way platform never blocks horizontal motion", OneWayPlatformDoesNotBlockHorizontalMotion),
+    ("one-way platform participates in grounded query", OneWayPlatformGroundingIsExplicit),
+    ("ordinary solid remains authoritative above one-way platform", OrdinarySolidRemainsAuthoritative),
+    ("first registered one-way platform wins", FirstRegisteredOneWayPlatformWins),
+    ("one-way platform snapshots are immutable", OneWayPlatformSnapshotsAreImmutable),
     ("first registered solid wins collision ordering", FirstRegisteredSolidWins),
     ("collision clears blocked-axis remainder", CollisionClearsRemainder),
     ("actors do not collide with each other", ActorsDoNotCollide),
@@ -166,6 +174,7 @@ static void MovementOutsideStepIsRejected()
     var (world, actor) = ActorWorld();
     Throws<InvalidOperationException>(() => actor.MoveX(1m, world));
     Throws<InvalidOperationException>(() => actor.MoveXExact(1, world));
+    Throws<InvalidOperationException>(() => actor.MoveYWithOneWayPlatforms(1m, world));
 }
 
 static void TickIncrementsExactlyOnce()
@@ -197,6 +206,100 @@ static void VerticalCollisionStops()
     world.Step(_ => actor.MoveY(8m, world));
     Equal(2, actor.Y);
     Equal(MovementAxis.Vertical, world.Events.Single().Axis);
+}
+
+static void OneWayPlatformPermitsUpwardPassage()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 8, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", -4, 5, 10, 2));
+    ActorMoveResult? result = null;
+    world.Step(_ => result = actor.MoveYWithOneWayPlatforms(-6m, world));
+    Equal(2, actor.Y);
+    Assert(result is { Blocked: false }, "Upward movement was blocked by a one-way platform.");
+}
+
+static void OneWayPlatformBlocksDownwardCrossing()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 0, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", -4, 4, 10, 2));
+    ActorMoveResult? result = null;
+    world.Step(_ => result = actor.MoveYWithOneWayPlatforms(8m, world));
+    Equal(2, actor.Y);
+    Equal("platform", result!.BlockingOneWayPlatformId);
+    Equal<string?>(null, result.BlockingSolidId);
+    Equal("platform", result.BlockingSurfaceId);
+}
+
+static void IgnoredOneWayPlatformPermitsDownwardPassage()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 0, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", -4, 4, 10, 2));
+    ActorMoveResult? result = null;
+    world.Step(_ => result = actor.MoveYWithOneWayPlatforms(8m, world, "platform"));
+    Equal(8, actor.Y);
+    Assert(result is { Blocked: false }, "The explicitly ignored one-way platform still blocked movement.");
+}
+
+static void OneWayPlatformDoesNotBlockHorizontalMotion()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 4, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", 3, 4, 2, 2));
+    world.Step(_ => actor.MoveX(5m, world));
+    Equal(5, actor.X);
+}
+
+static void OneWayPlatformGroundingIsExplicit()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 2, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", -4, 4, 10, 2));
+    Assert(world.IsGrounded(actor), "Actor standing on one-way platform was not grounded.");
+    Assert(!world.IsGrounded(actor, "platform"), "Ignored one-way platform still grounded the actor.");
+    Equal("platform", world.FirstOneWayPlatformBelow(actor)?.Id);
+}
+
+static void OrdinarySolidRemainsAuthoritative()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 0, 2, 2);
+    world.Add(actor);
+    world.Add(new Solid("solid", -4, 3, 10, 1));
+    world.Add(new OneWayPlatform("platform", -4, 4, 10, 2));
+    ActorMoveResult? result = null;
+    world.Step(_ => result = actor.MoveYWithOneWayPlatforms(8m, world, "platform"));
+    Equal(1, actor.Y);
+    Equal("solid", result!.BlockingSolidId);
+    Equal<string?>(null, result.BlockingOneWayPlatformId);
+}
+
+static void FirstRegisteredOneWayPlatformWins()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("actor", 0, 0, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("first", -4, 4, 10, 2));
+    world.Add(new OneWayPlatform("second", -4, 4, 10, 2));
+    ActorMoveResult? result = null;
+    world.Step(_ => result = actor.MoveYWithOneWayPlatforms(8m, world));
+    Equal("first", result!.BlockingOneWayPlatformId);
+}
+
+static void OneWayPlatformSnapshotsAreImmutable()
+{
+    var world = new SimulationWorld();
+    world.Add(new OneWayPlatform("platform", 1, 2, 3, 4));
+    var snapshot = world.CaptureSnapshot();
+    Equal(new OneWayPlatformSnapshot("platform", new SimPoint(1, 2), 3, 4), snapshot.OneWayPlatforms.Single());
+    Assert(snapshot.OneWayPlatforms is IList list && list.IsReadOnly, "One-way platform snapshots were mutable.");
 }
 
 static void FirstRegisteredSolidWins()

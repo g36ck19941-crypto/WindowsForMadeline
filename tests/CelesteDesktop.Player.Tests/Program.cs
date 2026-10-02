@@ -47,6 +47,15 @@ var tests = new (string Name, Action Body)[]
     ("upward corner correction prefers horizontal travel", UpwardCornerPrefersTravelDirection),
     ("upward corner correction is bounded to four pixels", UpwardCornerCorrectionIsBounded),
     ("downward collision never applies corner correction", DownwardCollisionDoesNotCorrect),
+    ("one-way platform permits upward Player passage", OneWayPlatformPermitsUpwardPassage),
+    ("one-way platform catches Player from above", OneWayPlatformCatchesPlayerFromAbove),
+    ("exact one-way top contact lands in the same tick", ExactOneWayTopContactLandsImmediately),
+    ("Player stands stably on one-way platform", PlayerStandsOnOneWayPlatform),
+    ("explicit input starts bounded one-way drop-through", OneWayDropThroughStarts),
+    ("clearing one-way platform rearms drop-through", OneWayDropThroughCompletesAndRearms),
+    ("ordinary Solid rejects one-way drop-through", OrdinarySolidRejectsDropThrough),
+    ("one-way drop-through expires explicitly", OneWayDropThroughExpires),
+    ("one-way platform replay is deterministic", OneWayReplayIsDeterministic),
     ("floor collision zeros vertical speed", FloorCollisionZerosSpeed),
     ("ceiling collision cancels variable jump", CeilingCollisionCancelsVariableJump),
     ("landing and left-ground events are explicit", GroundTransitionEventsAreExplicit),
@@ -94,6 +103,8 @@ static void ReferenceConstantsMatch()
     Equal(130m, tuning.MaximumUpwardLiftSpeed);
     Equal(4, tuning.WallSpeedRetentionTicks);
     Equal(4, tuning.UpwardCornerCorrectionPixels);
+    Equal(60m, tuning.OneWayDropThroughSpeed);
+    Equal(12, tuning.OneWayDropThroughTicks);
     Equal(6, tuning.CoyoteTicks);
     Equal(5, tuning.JumpBufferTicks);
     Equal(12, tuning.VariableJumpTicks);
@@ -546,6 +557,131 @@ static void DownwardCollisionDoesNotCorrect()
     Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.UpwardCornerCorrected), "Downward collision incorrectly applied upward correction.");
 }
 
+static void OneWayPlatformPermitsUpwardPassage()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 8, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", -10, 5, 20, 2));
+    var controller = new PlayerNormalController(actor, initialSpeed: new SimVector(0m, -180m));
+    PlayerNormalSnapshot? snapshot = null;
+    for (var tick = 0; tick < 3; tick++)
+    {
+        snapshot = controller.Step(Input(jumpHeld: true), world);
+    }
+    Assert(actor.Bounds.Bottom <= 5, "Player did not pass completely above the one-way platform.");
+    Assert(snapshot!.Events.All(item => item.Kind != PlayerNormalEventKind.OneWayPlatformLanded), "Upward passage emitted a landing event.");
+}
+
+static void OneWayPlatformCatchesPlayerFromAbove()
+{
+    var fixture = FallingTowardOneWay();
+    var snapshot = fixture.Controller.Step(Input(), fixture.World);
+    Equal(3, snapshot.Position.Y);
+    Equal(0m, snapshot.Speed.Y);
+    Assert(snapshot.Grounded, "Player was not grounded after landing on the one-way platform.");
+    Equal("platform", snapshot.GroundedOneWayPlatformId);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayPlatformLanded && item.SolidId == "platform"), "One-way landing event was missing.");
+}
+
+static void ExactOneWayTopContactLandsImmediately()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 2, 2);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("platform", -10, 3, 20, 2));
+    var controller = new PlayerNormalController(
+        actor,
+        initialSpeed: new SimVector(0m, 60m));
+    var snapshot = controller.Step(Input(), world);
+    Equal(1, snapshot.Position.Y);
+    Equal(0m, snapshot.Speed.Y);
+    Equal("platform", snapshot.GroundedOneWayPlatformId);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayPlatformLanded), "Exact top contact delayed its landing event.");
+}
+
+static void PlayerStandsOnOneWayPlatform()
+{
+    var fixture = FallingTowardOneWay();
+    var landed = fixture.Controller.Step(Input(), fixture.World);
+    var standing = fixture.Controller.Step(Input(), fixture.World);
+    Equal(landed.Position, standing.Position);
+    Assert(standing.Grounded, "Player did not remain grounded on the one-way platform.");
+    Equal("platform", standing.GroundedOneWayPlatformId);
+    Assert(standing.Events.All(item => item.Kind != PlayerNormalEventKind.OneWayPlatformLanded), "Stable standing repeated the landing event.");
+}
+
+static void OneWayDropThroughStarts()
+{
+    var fixture = StandingOnOneWay();
+    _ = fixture.Controller.Step(Input(), fixture.World);
+    var snapshot = fixture.Controller.Step(Input(dropThroughPressed: true), fixture.World);
+    Equal("platform", snapshot.DropThroughPlatformId);
+    Equal(11, snapshot.DropThroughTicksRemaining);
+    Assert(!snapshot.Grounded, "Drop-through tick remained grounded.");
+    Assert(snapshot.Position.Y > 0, "Drop-through did not move Player below the platform top.");
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughStarted && item.SolidId == "platform"), "Drop-through start event was missing.");
+}
+
+static void OneWayDropThroughCompletesAndRearms()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 8, 11);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("upper", -20, 11, 40, 2));
+    world.Add(new OneWayPlatform("lower", -20, 30, 40, 2));
+    var controller = new PlayerNormalController(actor);
+    _ = controller.Step(Input(), world);
+    var snapshot = controller.Step(Input(dropThroughPressed: true), world);
+    var completed = false;
+    for (var tick = 0; tick < 30 && snapshot.GroundedOneWayPlatformId != "lower"; tick++)
+    {
+        snapshot = controller.Step(Input(), world);
+        completed |= snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughCompleted && item.SolidId == "upper");
+    }
+    Assert(completed, "Clearing the upper platform did not complete drop-through.");
+    Equal("lower", snapshot.GroundedOneWayPlatformId);
+
+    var second = controller.Step(Input(dropThroughPressed: true), world);
+    Equal("lower", second.DropThroughPlatformId);
+    Assert(second.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughStarted && item.SolidId == "lower"), "Drop-through did not rearm on a later platform.");
+}
+
+static void OrdinarySolidRejectsDropThrough()
+{
+    var fixture = Grounded();
+    _ = fixture.Controller.Step(Input(), fixture.World);
+    var snapshot = fixture.Controller.Step(Input(dropThroughPressed: true), fixture.World);
+    Equal<string?>(null, snapshot.DropThroughPlatformId);
+    Assert(snapshot.Grounded, "Ordinary Solid was bypassed by one-way drop-through input.");
+    Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.OneWayDropThroughStarted), "Solid contact emitted a one-way drop-through event.");
+}
+
+static void OneWayDropThroughExpires()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 8, 11);
+    world.Add(actor);
+    world.Add(new OneWayPlatform("deep", -20, 11, 40, 100));
+    var controller = new PlayerNormalController(actor);
+    _ = controller.Step(Input(), world);
+    var snapshot = controller.Step(Input(dropThroughPressed: true), world);
+    var expired = snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughExpired);
+    for (var tick = 0; tick < controller.Tuning.OneWayDropThroughTicks && !expired; tick++)
+    {
+        snapshot = controller.Step(Input(), world);
+        expired = snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughExpired && item.SolidId == "deep");
+    }
+    Assert(expired, "Bounded drop-through state did not expire explicitly.");
+    Equal<string?>(null, snapshot.DropThroughPlatformId);
+    Equal(0, snapshot.DropThroughTicksRemaining);
+}
+
+static void OneWayReplayIsDeterministic()
+{
+    Equal(RunOneWayReplay(), RunOneWayReplay());
+}
+
 static void FloorCollisionZerosSpeed()
 {
     var world = new SimulationWorld();
@@ -649,11 +785,36 @@ static string RunReplay()
     }));
 }
 
+static string RunOneWayReplay()
+{
+    var fixture = StandingOnOneWay();
+    var inputs = new[]
+    {
+        Input(),
+        Input(dropThroughPressed: true),
+        Input(),
+        Input(),
+        Input(),
+        Input()
+    };
+    return string.Join('|', inputs.Select(input =>
+    {
+        var snapshot = fixture.Controller.Step(input, fixture.World);
+        return $"{snapshot.Tick}:{snapshot.Position.X},{snapshot.Position.Y}:{snapshot.Speed.X},{snapshot.Speed.Y}:{snapshot.GroundedOneWayPlatformId}:{snapshot.DropThroughPlatformId},{snapshot.DropThroughTicksRemaining}:{string.Join(',', snapshot.Events.Select(item => item.Kind))}";
+    }));
+}
+
 static PlayerInput Input(
     int moveX = 0,
     int moveY = 0,
     bool jumpPressed = false,
-    bool jumpHeld = false) => new(moveX, moveY, jumpPressed, jumpHeld);
+    bool jumpHeld = false,
+    bool dropThroughPressed = false) => new(
+        moveX,
+        moveY,
+        jumpPressed,
+        jumpHeld,
+        dropThroughPressed: dropThroughPressed);
 
 static Fixture Grounded(SimVector initialSpeed = default)
 {
@@ -691,6 +852,30 @@ static Fixture FallingTowardFloor()
     world.Add(actor);
     world.Add(floor);
     return new Fixture(world, actor, floor, new PlayerNormalController(actor, initialSpeed: new SimVector(0m, 60m)));
+}
+
+static OneWayFixture FallingTowardOneWay()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 2, 2);
+    var platform = new OneWayPlatform("platform", -10, 5, 20, 2);
+    world.Add(actor);
+    world.Add(platform);
+    return new OneWayFixture(
+        world,
+        actor,
+        platform,
+        new PlayerNormalController(actor, initialSpeed: new SimVector(0m, 240m)));
+}
+
+static OneWayFixture StandingOnOneWay()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 8, 11);
+    var platform = new OneWayPlatform("platform", -20, 11, 40, 2);
+    world.Add(actor);
+    world.Add(platform);
+    return new OneWayFixture(world, actor, platform, new PlayerNormalController(actor));
 }
 
 static WallFixture WallCollision()
@@ -748,4 +933,10 @@ internal sealed record WallFixture(
     SimulationWorld World,
     Actor Actor,
     Solid Wall,
+    PlayerNormalController Controller);
+
+internal sealed record OneWayFixture(
+    SimulationWorld World,
+    Actor Actor,
+    OneWayPlatform Platform,
     PlayerNormalController Controller);

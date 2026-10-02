@@ -6,6 +6,7 @@ public sealed class SimulationWorld
 {
     private readonly List<Actor> _actors = [];
     private readonly List<Solid> _solids = [];
+    private readonly List<OneWayPlatform> _oneWayPlatforms = [];
     private readonly List<SimulationEvent> _events = [];
     private readonly HashSet<string> _ids = new(StringComparer.Ordinal);
     private bool _activeStep;
@@ -14,6 +15,7 @@ public sealed class SimulationWorld
     public bool IsAdvancing => _activeStep;
     public IReadOnlyList<Actor> Actors => _actors.AsReadOnly();
     public IReadOnlyList<Solid> Solids => _solids.AsReadOnly();
+    public IReadOnlyList<OneWayPlatform> OneWayPlatforms => _oneWayPlatforms.AsReadOnly();
     public IReadOnlyList<SimulationEvent> Events => _events.AsReadOnly();
 
     public void Add(Actor actor)
@@ -38,6 +40,14 @@ public sealed class SimulationWorld
         }
         AddId(solid.Id);
         _solids.Add(solid);
+    }
+
+    public void Add(OneWayPlatform platform)
+    {
+        ArgumentNullException.ThrowIfNull(platform);
+        EnsureMutable();
+        AddId(platform.Id);
+        _oneWayPlatforms.Add(platform);
     }
 
     public SimulationSnapshot Step(Action<SimulationWorld> update)
@@ -84,16 +94,51 @@ public sealed class SimulationWorld
             solid.Width,
             solid.Height,
             solid.XSubpixel,
-            solid.YSubpixel)));
+            solid.YSubpixel)),
+        _oneWayPlatforms.Select(platform => new OneWayPlatformSnapshot(
+            platform.Id,
+            new SimPoint(platform.X, platform.Y),
+            platform.Width,
+            platform.Height)));
 
-    public bool IsGrounded(Actor actor)
+    public bool IsGrounded(Actor actor, string? ignoredOneWayPlatformId = null)
     {
         ArgumentNullException.ThrowIfNull(actor);
         if (!_actors.Contains(actor))
         {
             throw new ArgumentException("Actor is not registered in this world.", nameof(actor));
         }
-        return FirstCollision(actor.Bounds.Offset(0, 1), ignoredSolid: null) is not null;
+        return FirstCollision(actor.Bounds.Offset(0, 1), ignoredSolid: null) is not null ||
+            FirstOneWayPlatformBelow(actor, ignoredOneWayPlatformId) is not null;
+    }
+
+    public OneWayPlatform? FirstOneWayPlatformBelow(
+        Actor actor,
+        string? ignoredOneWayPlatformId = null)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+        if (!_actors.Contains(actor))
+        {
+            throw new ArgumentException("Actor is not registered in this world.", nameof(actor));
+        }
+
+        foreach (var platform in _oneWayPlatforms)
+        {
+            if (!string.Equals(platform.Id, ignoredOneWayPlatformId, StringComparison.Ordinal) &&
+                actor.Bounds.Bottom == platform.Bounds.Top &&
+                actor.Bounds.OverlapsHorizontally(platform.Bounds))
+            {
+                return platform;
+            }
+        }
+        return null;
+    }
+
+    public OneWayPlatform? FindOneWayPlatform(string id)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        return _oneWayPlatforms.FirstOrDefault(
+            platform => string.Equals(platform.Id, id, StringComparison.Ordinal));
     }
 
     public Solid? FirstSolidAt(Actor actor, int offsetX, int offsetY)
@@ -121,6 +166,29 @@ public sealed class SimulationWorld
             if (!ReferenceEquals(solid, ignoredSolid) && bounds.Intersects(solid.Bounds))
             {
                 return solid;
+            }
+        }
+        return null;
+    }
+
+    internal OneWayPlatform? FirstOneWayCollision(
+        SimRect currentBounds,
+        SimRect candidateBounds,
+        string? ignoredOneWayPlatformId)
+    {
+        foreach (var platform in _oneWayPlatforms)
+        {
+            if (string.Equals(platform.Id, ignoredOneWayPlatformId, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var bounds = platform.Bounds;
+            if (currentBounds.Bottom <= bounds.Top &&
+                candidateBounds.Bottom > bounds.Top &&
+                candidateBounds.OverlapsHorizontally(bounds))
+            {
+                return platform;
             }
         }
         return null;

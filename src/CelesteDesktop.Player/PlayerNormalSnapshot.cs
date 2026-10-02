@@ -17,6 +17,9 @@ public sealed class PlayerNormalSnapshot
         decimal wallSpeedRetained,
         int wallSpeedRetentionTicks,
         int upwardCornerCorrectionX,
+        string? groundedOneWayPlatformId,
+        string? dropThroughPlatformId,
+        int dropThroughTicksRemaining,
         int coyoteTicks,
         int jumpBufferTicks,
         int variableJumpTicks,
@@ -33,6 +36,9 @@ public sealed class PlayerNormalSnapshot
         WallSpeedRetained = wallSpeedRetained;
         WallSpeedRetentionTicks = wallSpeedRetentionTicks;
         UpwardCornerCorrectionX = upwardCornerCorrectionX;
+        GroundedOneWayPlatformId = groundedOneWayPlatformId;
+        DropThroughPlatformId = dropThroughPlatformId;
+        DropThroughTicksRemaining = dropThroughTicksRemaining;
         CoyoteTicks = coyoteTicks;
         JumpBufferTicks = jumpBufferTicks;
         VariableJumpTicks = variableJumpTicks;
@@ -50,6 +56,9 @@ public sealed class PlayerNormalSnapshot
     public decimal WallSpeedRetained { get; }
     public int WallSpeedRetentionTicks { get; }
     public int UpwardCornerCorrectionX { get; }
+    public string? GroundedOneWayPlatformId { get; }
+    public string? DropThroughPlatformId { get; }
+    public int DropThroughTicksRemaining { get; }
     public int CoyoteTicks { get; }
     public int JumpBufferTicks { get; }
     public int VariableJumpTicks { get; }

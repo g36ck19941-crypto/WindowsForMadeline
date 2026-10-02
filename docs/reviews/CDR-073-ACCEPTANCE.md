@@ -24,7 +24,7 @@ State: accepted and published at `codex/cdr-073-player-upward-corner-correction`
 
 1. Double-click `演示当前进度.cmd`.
 2. Find CDR-073 in the Player explanation and confirm `(0,4)` to `(1,2)`, correction `1`, `UpwardCornerCorrected=1`, and preserved upward speed.
-3. Double-click `验证当前版本.cmd`; expect 0 build warnings/errors, Simulation.Core 34/34, Player 50/50, total 884/884 and the final CDR-073 pass marker.
+3. The accepted CDR-073 tree passed 0 build warnings/errors, Simulation.Core 34/34, Player 50/50 and 884/884. The current `验证当前版本.cmd` also includes later CDR-074 regressions, so its totals and final marker are higher.
 4. Confirm no game starts; only the developer-triggered generated HTML report may open.
 
 ## Project role and limits

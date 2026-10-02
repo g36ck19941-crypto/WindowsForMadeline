@@ -98,13 +98,15 @@ The developer accepted CDR-073 on 2026-10-02 and authorized its independent-bran
 
 CDR-074 is authorized under a generated-only offline boundary. It is limited to static one-way-platform geometry and filtered vertical contact: upward pass-through, landing and stable grounding from above, explicit bounded drop-through until the actor clears the selected platform, ordinary-Solid non-regression, immutable evidence and stable diagnostics. Moving/special platform variants, game/GUI/live input, installation or local-reference access, commercial bytes and CDR-061 are forbidden.
 
+CDR-074 is locally implementation-complete and acceptance-pending. Simulation.Core now owns immutable static one-way geometry and filters it only for downward top crossing; Player owns a platform-addressed drop-through state with 60 px/s minimum downward speed, a 12-tick safety bound, clear/rearm and explicit expiration. Exact top contact lands in the same tick, and ordinary Solids remain blocking. Eight core and nine Player cases bring Simulation.Core to 42/42, Player to 59/59 and the full Release gate to 901/901 with 0 warnings/errors. The generated demo passes upward, drops from y=0, lands on `one-way-lower` at y=19, emits start/completion/landing `1/1/1`, rearms and replays identically. Both root launchers are updated; no game, GUI, live input, installation/local-reference access or commercial bytes were used. Do not upload before explicit developer acceptance.
+
 ## First next action
 
-Implement and verify CDR-074 within its generated-only static one-way-platform scope. Do not upload it before developer acceptance, and do not start CDR-061 while CDR-060 remains pending.
+Present CDR-074 for developer acceptance. Do not upload it or begin CDR-075 before explicit developer authorization, and do not start CDR-061 while CDR-060 remains pending.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: generated-only CDR-074 static one-way-platform calibration while preserving the fixed CDR-073 branch and CDR-060/CDR-061 gate
-- Forbidden: marking CDR-060 accepted or creating its dedicated release branch before acceptance, CDR-061 implementation, uploading any CDR-074 implementation through the CDR-073 branch, moving/special one-way variants, Legacy changes, game or visible GUI launch, titles/content/screenshots/live input, identity-bearing metadata, native handles in contracts/evidence, any real-install/local-reference/map/Mod access or write, executable Mod content, raw commercial data
+- Scope: CDR-074 acceptance handoff while preserving the fixed CDR-073 branch and CDR-060/CDR-061 gate
+- Forbidden: marking CDR-060 accepted or creating its dedicated release branch before acceptance, CDR-061 implementation, CDR-074 upload before acceptance, CDR-075 implementation, uploading any CDR-074 implementation through the CDR-073 branch, moving/special one-way variants, Legacy changes, game or visible GUI launch, titles/content/screenshots/live input, identity-bearing metadata, native handles in contracts/evidence, any real-install/local-reference/map/Mod access or write, executable Mod content, raw commercial data

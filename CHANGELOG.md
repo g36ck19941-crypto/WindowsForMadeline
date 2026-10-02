@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 — CDR-074 one-way platforms ready for acceptance
+
+- Added immutable static one-way-platform geometry, deterministic registration order, upward/horizontal pass-through and downward top-contact blocking without changing ordinary Solid authority.
+- Added explicit platform-addressed Player drop-through with a minimum downward speed, 12-tick safety bound, clear/rearm and expiration outcomes; immutable snapshots and four stable event kinds expose every state.
+- Added eight Simulation.Core and nine Player cases, including same-tick exact-top landing, Solid non-bypass, bounded expiration and deterministic replay. Simulation.Core passes 42/42, Player 59/59 and the full Release gate 901/901 with 0 warnings/errors.
+- Extended the cumulative generated demo with upward passage, y=0 to y=19 drop/landing on a lower platform, start/completion/landing `1/1/1`, rearm and identical replay. CDR-074 remains `partial`, local and unuploaded pending acceptance.
+
 ## 2026-10-02 — CDR-073 accepted; CDR-074 authorized
 
 - Recorded developer acceptance of CDR-073 and authorization for exact independent-branch publication after a fresh gate and outbound audit.

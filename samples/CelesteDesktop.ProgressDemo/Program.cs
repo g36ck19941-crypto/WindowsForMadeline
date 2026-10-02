@@ -99,7 +99,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-073",
+    demoId = "CDR-074",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -128,7 +128,8 @@ var manifest = new
         "CDR-060 exchanged bounded generated assets and immutable room descriptions through data-only provider contracts",
         "CDR-071 applied bounded moving-Solid lift velocity to an ordinary generated Player jump",
         "CDR-072 retained and restored generated horizontal wall speed through a fixed four-tick window",
-        "CDR-073 corrected a generated upward corner collision by an explicit bounded integer offset"
+        "CDR-073 corrected a generated upward corner collision by an explicit bounded integer offset",
+        "CDR-074 passed upward through generated one-way geometry, landed from above and completed an explicit bounded drop-through"
     },
     independentValidation = new
     {
@@ -209,6 +210,14 @@ var manifest = new
         player.CornerFinalY,
         player.CornerCorrectionEventCount,
         player.CornerVerticalSpeedPreserved,
+        player.OneWayPassedUpward,
+        player.OneWayDropStartY,
+        player.OneWayLandingY,
+        player.OneWayLandedPlatformId,
+        player.OneWayDropStartedCount,
+        player.OneWayDropCompletedCount,
+        player.OneWayLandingCount,
+        player.OneWayDropRearmed,
         deterministicReplay = player.DeterministicReplay,
         rows = player.Rows
     },
@@ -454,7 +463,7 @@ File.WriteAllText(
     BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host, extensionContracts),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-073 cumulative offline project progress");
+Console.WriteLine("DEMO CDR-074 cumulative offline project progress");
 Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} player_ticks={player.Rows.Count} traversal_ticks={traversal.Rows.Count} animation_ticks={animationPresentation.Rows.Count} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_component_disabled={app.ComponentDisabledCount} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} host_normal_ticks={host.NormalCadence.ExecutedTicks} host_normal_dropped={host.NormalCadence.DroppedIntervals} host_backlog_ticks={host.BacklogCadence.ExecutedTicks} host_backlog_dropped={host.BacklogCadence.DroppedIntervals} host_backlog_event={host.BacklogCadence.EventIds.Contains("APP_HOST_BACKLOG_DROPPED", StringComparison.Ordinal).ToString().ToLowerInvariant()} host_stopped={(host.NormalCadence.FinalLifecycle == "Stopped" && host.BacklogCadence.FinalLifecycle == "Stopped").ToString().ToLowerInvariant()} host_replay={host.DeterministicReplay.ToString().ToLowerInvariant()} provider_asset_bytes={extensionContracts.AssetBytes} provider_asset_budget_rejected={extensionContracts.AssetBudgetRejected.ToString().ToLowerInvariant()} provider_worlds={extensionContracts.WorldCount} provider_rooms={extensionContracts.RoomCount} provider_solids={extensionContracts.SolidCount} provider_spawns={extensionContracts.SpawnCount} provider_entities={extensionContracts.EntityCount} provider_world_budget_rejected={extensionContracts.WorldBudgetRejected.ToString().ToLowerInvariant()} provider_replay={extensionContracts.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
@@ -910,7 +919,7 @@ static string BuildHtml(
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-073 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-074 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -929,7 +938,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-073 累计项目进度演示</h1>
+          <h1>CDR-074 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -961,6 +970,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-071</b>移动 Solid 起跳时的有界水平/向上速度继承与诊断</div>
             <div class="stage"><b>CDR-072</b>横向撞墙速度的 4 tick 保留、恢复、取消与过期</div>
             <div class="stage"><b>CDR-073</b>向上擦碰平台边角时，在 4 像素内做可诊断的横向修正</div>
+            <div class="stage"><b>CDR-074</b>单向平台从下穿过、从上落地和明确的向下穿透状态</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -980,7 +990,7 @@ static string BuildHtml(
           <p>程序生成一个 Actor、一个移动平台和一面静态墙，连续运行 {{simulation.Rows.Count}} 个固定 tick。平台累计移动到 x={{simulation.FinalPlatformX}}，Actor 在平台携带与自身亚像素移动后到 x={{simulation.FinalActorX}}；重复运行结果 <span class="ok">{{(simulation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Actor x,y</th><th>Solid x,y</th><th>Actor X 余量</th><th>事件</th></tr></thead><tbody>{{simulationRows}}</tbody></table>
           <h2>CDR-021 Normal / Jump 轨迹</h2>
-          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。CDR-072 再让角色以 {{player.RetainedWallSpeed}} 的速度撞墙，保留窗口={{player.InitialWallRetentionTicks}} tick；墙移开后恢复速度={{player.RestoredWallSpeed}}，WallSpeedRetained/Restored={{player.WallRetainedEventCount}}/{{player.WallRestoredEventCount}}。CDR-073 用程序生成的平台边角阻挡上升路径；角色从 ({{player.CornerStartX}},{{player.CornerStartY}}) 自动横移 {{player.UpwardCornerCorrectionX}} 像素到 ({{player.CornerFinalX}},{{player.CornerFinalY}})，UpwardCornerCorrected={{player.CornerCorrectionEventCount}}，上升速度继续保留={{player.CornerVerticalSpeedPreserved}}。</p>
+          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。CDR-072 再让角色以 {{player.RetainedWallSpeed}} 的速度撞墙，保留窗口={{player.InitialWallRetentionTicks}} tick；墙移开后恢复速度={{player.RestoredWallSpeed}}，WallSpeedRetained/Restored={{player.WallRetainedEventCount}}/{{player.WallRestoredEventCount}}。CDR-073 用程序生成的平台边角阻挡上升路径；角色从 ({{player.CornerStartX}},{{player.CornerStartY}}) 自动横移 {{player.UpwardCornerCorrectionX}} 像素到 ({{player.CornerFinalX}},{{player.CornerFinalY}})，UpwardCornerCorrected={{player.CornerCorrectionEventCount}}，上升速度继续保留={{player.CornerVerticalSpeedPreserved}}。CDR-074 另用两层程序生成单向平台：从下方上升可穿过={{player.OneWayPassedUpward}}；角色从 y={{player.OneWayDropStartY}} 明确向下穿透上层，在 y={{player.OneWayLandingY}} 落到 {{player.OneWayLandedPlatformId}}；开始/完成/落地事件={{player.OneWayDropStartedCount}}/{{player.OneWayDropCompletedCount}}/{{player.OneWayLandingCount}}，到下一层后可再次穿透={{player.OneWayDropRearmed}}。</p>
           <table><thead><tr><th>Tick</th><th>Player x,y</th><th>Speed x,y</th><th>Grounded</th><th>Coyote/Buffer/Variable</th><th>事件</th></tr></thead><tbody>{{playerRows}}</tbody></table>
           <h2>CDR-022 Dash / Wall / Climb 轨迹</h2>
           <p>合成角色先贴右墙下滑并蹬墙，随后向右冲刺撞墙，再抓墙向上攀爬。DashStarted={{traversal.DashStartedCount}}，WallSlideStarted={{traversal.WallSlideStartedCount}}，WallJumped={{traversal.WallJumpedCount}}，ClimbStarted={{traversal.ClimbStartedCount}}；重复运行：<span class="ok">{{(traversal.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
@@ -1058,6 +1068,7 @@ static string BuildHtml(
               <li><strong>App 已能统一组织离线模块：</strong>一次 App tick 只推进一次模拟，再按明确顺序把实体效果交给 Player/Theo/Glider，最后才把不可变动画帧交给呈现层；暂停、恢复、停止和呈现故障都有可追踪事件。</li>
               <li><strong>App 已有无界面运行节奏：</strong>宿主按固定 60 Hz 请求下一 tick，短暂卡顿时最多有限追赶，过期积压会留下明确记录；取消或达到演示上限后会停止并释放会话。</li>
               <li><strong>未来扩展已有安全插口：</strong>素材来源只能返回有长度和哈希的纯数据，房间只能描述矩形 Solid、出生点和项目支持的实体；路径、文件流、回调、程序集和任意脚本不会进入公共合同。</li>
+              <li><strong>单向平台已有确定性规则：</strong>角色可以从下方穿过、从上方落地并稳定站立，也可以进入有时限且有日志的向下穿透状态；普通 Solid 不会因此被穿透。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -1068,6 +1079,7 @@ static string BuildHtml(
               <li><strong>这次使用的是程序生成测试图：</strong>不是 Celeste 的原版角色图片，也没有把任何商业素材保存进项目。</li>
               <li><strong>Present 不等于肉眼可见：</strong>它只说明渲染后端接收并提交了画面；当前走的是隐藏、离线验证路径，没有把角色窗口显示到真实桌面。</li>
               <li><strong>还没有可见桌面宿主：</strong>CDR-050 已完成纯离线 App 统一编排，但没有打开窗口、接入实时键盘、读取真实桌面或验证人眼可见。</li>
+              <li><strong>单向平台仍是 partial：</strong>当前只验证静态程序生成平台；移动平台、特殊变体、下蹲联动和原版完整数值仍未建立。</li>
               <li><strong>CDR-051 仍是 Headless：</strong>它只证明后台时钟和退出流程，不是可双击运行的正式桌面角色程序，也没有读取真实键盘、桌面或正版安装。</li>
               <li><strong>CDR-060 不是地图或 Mod 读取器：</strong>它只建立未来接口并用程序数据验证；没有解析 Celeste 地图、扫描 Mod 目录、加载 DLL/Lua/脚本，也没有承诺现有 Mod 兼容。</li>
               <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>
@@ -1851,6 +1863,43 @@ static DemoPlayer RunPlayerOnce()
         new PlayerInput(1, 0, jumpPressed: false, jumpHeld: true),
         cornerWorld);
 
+    var oneWayWorld = new SimulationWorld();
+    var oneWayActor = new Actor("one-way-player", 0, 0, 8, 11);
+    oneWayWorld.Add(oneWayActor);
+    oneWayWorld.Add(new OneWayPlatform("one-way-upper", -20, 11, 40, 2));
+    oneWayWorld.Add(new OneWayPlatform("one-way-lower", -20, 30, 40, 2));
+    var oneWayController = new PlayerNormalController(oneWayActor);
+    _ = oneWayController.Step(new PlayerInput(0, 0, false, false), oneWayWorld);
+    var oneWaySnapshots = new List<PlayerNormalSnapshot>
+    {
+        oneWayController.Step(
+            new PlayerInput(0, 0, false, false, dropThroughPressed: true),
+            oneWayWorld)
+    };
+    while (oneWaySnapshots[^1].GroundedOneWayPlatformId != "one-way-lower" &&
+           oneWaySnapshots.Count < 30)
+    {
+        oneWaySnapshots.Add(oneWayController.Step(
+            new PlayerInput(0, 0, false, false),
+            oneWayWorld));
+    }
+    var oneWayLanded = oneWaySnapshots[^1];
+    var oneWayRearmed = oneWayController.Step(
+        new PlayerInput(0, 0, false, false, dropThroughPressed: true),
+        oneWayWorld);
+
+    var passWorld = new SimulationWorld();
+    var passActor = new Actor("one-way-pass-player", 0, 20, 8, 11);
+    passWorld.Add(passActor);
+    passWorld.Add(new OneWayPlatform("one-way-pass", -20, 11, 40, 2));
+    var passController = new PlayerNormalController(
+        passActor,
+        initialSpeed: new SimVector(0m, -240m));
+    for (var tick = 0; tick < 8 && passActor.Bounds.Bottom > 11; tick++)
+    {
+        _ = passController.Step(new PlayerInput(0, 0, false, true), passWorld);
+    }
+
     return new DemoPlayer(
         rows.AsReadOnly(),
         rows.Any(row => row.SpeedX == NormalJumpTuning.ReferencePartial.MaxRun),
@@ -1871,6 +1920,15 @@ static DemoPlayer RunPlayerOnce()
         cornerSnapshot.Position.Y,
         cornerSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.UpwardCornerCorrected),
         cornerSnapshot.Speed.Y < 0m,
+        passActor.Bounds.Bottom <= 11,
+        0,
+        oneWayLanded.Position.Y,
+        oneWayLanded.GroundedOneWayPlatformId,
+        oneWaySnapshots.Sum(snapshot => snapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughStarted)),
+        oneWaySnapshots.Sum(snapshot => snapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughCompleted)),
+        oneWaySnapshots.Sum(snapshot => snapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.OneWayPlatformLanded)),
+        oneWayRearmed.DropThroughPlatformId == "one-way-lower" &&
+            oneWayRearmed.Events.Any(item => item.Kind == PlayerNormalEventKind.OneWayDropThroughStarted),
         false);
 }
 
@@ -2026,6 +2084,14 @@ internal sealed record DemoPlayer(
     int CornerFinalY,
     int CornerCorrectionEventCount,
     bool CornerVerticalSpeedPreserved,
+    bool OneWayPassedUpward,
+    int OneWayDropStartY,
+    int OneWayLandingY,
+    string? OneWayLandedPlatformId,
+    int OneWayDropStartedCount,
+    int OneWayDropCompletedCount,
+    int OneWayLandingCount,
+    bool OneWayDropRearmed,
     bool DeterministicReplay);
 
 internal sealed record DemoPlayerRow(
