@@ -6,7 +6,7 @@
 - ✅ CDR-070 精确验收提交 `946a8ee` 已上传并回读到 `codex/cdr-070-local-behavior-reference`；远程 `main` 未改变，本地参考内容没有上传。
 - ✅ CDR-071 精确验收提交 `9f5594a` 已上传并回读到 `codex/cdr-071-player-lift-inheritance`；远程 `main` 仍为 `d237277`，Player 总体仍为 `partial`。
 - ✅ 开发者已验收 CDR-072：角色横向撞墙时保留速度 4 tick；墙面及时离开则恢复，反向输入、普通跳跃或外部弹射会取消，超时明确过期。固定提交 `cc77d1d` 新鲜复验为 Player 45/45、总回归 878/878，出站审计五项为 0。
-- ⚠️ CDR-072 首次精确上传因 GitHub TCP 443 超时失败；没有远程回读，不能称为已上传。恢复连接后只允许重试 `cc77d1d` 到 `codex/cdr-072-player-wall-speed-retention`。
+- ⚠️ CDR-072 两次精确上传均因 GitHub TCP 443 超时失败；没有远程回读，不能称为已上传。恢复连接后只允许重试 `cc77d1d` 到 `codex/cdr-072-player-wall-speed-retention`。
 - 🟡 CDR-073 已完成并待验收：角色向上擦到平台边角时，会在最多 4 像素内优先沿当前横向运动方向精确避让，再继续剩余上升；向下碰撞不修正。Simulation.Core 34/34、Player 50/50、总回归 884/884；演示为 `(0,4) → (1,2)`、修正 `+1`、事件 1 次、上升速度保留。本版本未上传。
 
 ## 已完成
