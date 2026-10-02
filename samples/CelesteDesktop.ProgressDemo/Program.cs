@@ -125,7 +125,8 @@ var manifest = new
         "CDR-047 ran generated Seeker patrol alert chase windup dash hit wall-stun recovery and isolation behavior at fixed tick",
         "CDR-050 orchestrated lifecycle, one simulation step per App tick, effect routing and presentation isolation offline",
         "CDR-051 scheduled the App at fixed 60 Hz with bounded catch-up, generated input and graceful stop",
-        "CDR-060 exchanged bounded generated assets and immutable room descriptions through data-only provider contracts"
+        "CDR-060 exchanged bounded generated assets and immutable room descriptions through data-only provider contracts",
+        "CDR-071 applied bounded moving-Solid lift velocity to an ordinary generated Player jump"
     },
     independentValidation = new
     {
@@ -191,6 +192,9 @@ var manifest = new
         player.MaxRunReached,
         player.JumpEventCount,
         player.MinimumY,
+        player.AppliedLiftX,
+        player.AppliedLiftY,
+        player.LiftEventCount,
         deterministicReplay = player.DeterministicReplay,
         rows = player.Rows
     },
@@ -939,6 +943,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-051</b>无界面宿主固定 60 Hz 调度、有限追赶、取消与可靠退出</div>
             <div class="stage"><b>CDR-060</b>纯数据素材提供器与不可变世界内容提供器合同</div>
             <div class="stage"><b>CDR-070</b>本地行为参考建立器；反编译内容只留在 Git 忽略缓存，不进入本演示或产品运行时</div>
+            <div class="stage"><b>CDR-071</b>移动 Solid 起跳时的有界水平/向上速度继承与诊断</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -958,7 +963,7 @@ static string BuildHtml(
           <p>程序生成一个 Actor、一个移动平台和一面静态墙，连续运行 {{simulation.Rows.Count}} 个固定 tick。平台累计移动到 x={{simulation.FinalPlatformX}}，Actor 在平台携带与自身亚像素移动后到 x={{simulation.FinalActorX}}；重复运行结果 <span class="ok">{{(simulation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Actor x,y</th><th>Solid x,y</th><th>Actor X 余量</th><th>事件</th></tr></thead><tbody>{{simulationRows}}</tbody></table>
           <h2>CDR-021 Normal / Jump 轨迹</h2>
-          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。</p>
           <table><thead><tr><th>Tick</th><th>Player x,y</th><th>Speed x,y</th><th>Grounded</th><th>Coyote/Buffer/Variable</th><th>事件</th></tr></thead><tbody>{{playerRows}}</tbody></table>
           <h2>CDR-022 Dash / Wall / Climb 轨迹</h2>
           <p>合成角色先贴右墙下滑并蹬墙，随后向右冲刺撞墙，再抓墙向上攀爬。DashStarted={{traversal.DashStartedCount}}，WallSlideStarted={{traversal.WallSlideStartedCount}}，WallJumped={{traversal.WallJumpedCount}}，ClimbStarted={{traversal.ClimbStartedCount}}；重复运行：<span class="ok">{{(traversal.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
@@ -1792,11 +1797,25 @@ static DemoPlayer RunPlayerOnce()
             string.Join(", ", snapshot.Events.Select(item => item.Kind.ToString()))));
     }
 
+    var liftWorld = new SimulationWorld();
+    var liftFloor = new Solid("lift-floor", -32, 11, 160, 4);
+    var liftActor = new Actor("lift-player", 0, 0, 8, 11);
+    liftWorld.Add(liftFloor);
+    liftWorld.Add(liftActor);
+    var liftController = new PlayerNormalController(liftActor);
+    var liftSnapshot = liftController.Step(
+        new PlayerInput(0, 0, jumpPressed: true, jumpHeld: true),
+        liftWorld,
+        world => liftFloor.Move(5m, -3m, world));
+
     return new DemoPlayer(
         rows.AsReadOnly(),
         rows.Any(row => row.SpeedX == NormalJumpTuning.ReferencePartial.MaxRun),
         rows.Count(row => row.Events.Contains(nameof(PlayerNormalEventKind.Jumped), StringComparison.Ordinal)),
         rows.Min(row => row.Y),
+        liftSnapshot.AppliedLiftSpeed.X,
+        liftSnapshot.AppliedLiftSpeed.Y,
+        liftSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.LiftVelocityApplied),
         false);
 }
 
@@ -1937,6 +1956,9 @@ internal sealed record DemoPlayer(
     bool MaxRunReached,
     int JumpEventCount,
     int MinimumY,
+    decimal AppliedLiftX,
+    decimal AppliedLiftY,
+    int LiftEventCount,
     bool DeterministicReplay);
 
 internal sealed record DemoPlayerRow(

@@ -19,6 +19,6 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "CDR-060 baseline verification failed: $LASTEXITCODE." }
     & dotnet run --project tests/CelesteDesktop.LocalReference.Tests/CelesteDesktop.LocalReference.Tests.csproj --configuration Release --no-build --no-restore
     if ($LASTEXITCODE -ne 0) { throw "CDR-070 focused verification failed: $LASTEXITCODE." }
-    Write-Host 'CDR-070 OFFLINE VERIFICATION PASSED: 10/10 focused safety cases and 866/866 total regressions; no real installation, game, GUI, decompiler download or commercial reference was used by this gate.'
+    Write-Host 'CDR-070 BASELINE VERIFICATION PASSED IN CURRENT TREE: 10/10 focused reference-safety cases and 871 current total regressions passed, including later CDR-071 Player cases; no real installation, game, GUI, decompiler download or commercial reference was used by this gate.'
 }
 finally { Pop-Location }

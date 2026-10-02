@@ -13,6 +13,7 @@ public sealed class PlayerNormalSnapshot
         bool grounded,
         decimal maxFall,
         decimal appliedMaximumFallSpeed,
+        SimVector appliedLiftSpeed,
         int coyoteTicks,
         int jumpBufferTicks,
         int variableJumpTicks,
@@ -25,6 +26,7 @@ public sealed class PlayerNormalSnapshot
         Grounded = grounded;
         MaxFall = maxFall;
         AppliedMaximumFallSpeed = appliedMaximumFallSpeed;
+        AppliedLiftSpeed = appliedLiftSpeed;
         CoyoteTicks = coyoteTicks;
         JumpBufferTicks = jumpBufferTicks;
         VariableJumpTicks = variableJumpTicks;
@@ -38,6 +40,7 @@ public sealed class PlayerNormalSnapshot
     public bool Grounded { get; }
     public decimal MaxFall { get; }
     public decimal AppliedMaximumFallSpeed { get; }
+    public SimVector AppliedLiftSpeed { get; }
     public int CoyoteTicks { get; }
     public int JumpBufferTicks { get; }
     public int VariableJumpTicks { get; }

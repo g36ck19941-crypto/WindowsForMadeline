@@ -5,6 +5,7 @@ public enum PlayerNormalEventKind
     LeftGround,
     Landed,
     Jumped,
+    LiftVelocityApplied,
     HorizontalBlocked,
     VerticalBlocked,
     ExternalFallSpeedLimited,

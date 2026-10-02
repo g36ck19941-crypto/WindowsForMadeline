@@ -88,6 +88,6 @@ try {
         throw 'CDR-060 demo report omitted required provider or limitation evidence.'
     }
 
-    Write-Host 'CDR-060 OFFLINE VERIFICATION PASSED: data-only asset and immutable world provider contracts, bounded synthetic reads, room budgets, surface isolation and deterministic replay passed; 856/856 total regressions, no real map, Mod directory, executable code, installation access, visible GUI or commercial bytes.'
+    Write-Host 'CDR-060 BASELINE VERIFICATION PASSED IN CURRENT TREE: provider contracts remain valid; 861 current non-reference regressions passed, including later CDR-071 Player cases; no real map, Mod directory, executable code, installation access, visible GUI or commercial bytes.'
 }
 finally { Pop-Location }

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-02 — CDR-071 Player lift inheritance ready for acceptance
+
+- Added bounded moving-Solid lift inheritance to ordinary Player jumps: horizontal `[-250,250]`, upward at most `-130`, with downward lift rejected.
+- Added immutable applied-lift evidence, stable `LiftVelocityApplied` diagnostics and five generated behavior cases; Player focused tests pass 38/38.
+- Updated the cumulative generated demo and root double-click entries; the full Release gate passes 871/871 with 0 warnings/errors.
+- Kept Player fidelity `partial`; no game, GUI, live input, installation access or tracked local reference content was used. CDR-071 is not uploaded pending developer acceptance.
+
+## 2026-10-02 — CDR-070 published; CDR-071 calibration started
+
+- Published and read back accepted CDR-070 exact commit `946a8ee` at `codex/cdr-070-local-behavior-reference`; remote `main` remained unchanged and no local reference content was uploaded.
+- Started CDR-071 as a separate behavior-calibration task because CDR-060/CDR-061 remains gated.
+- Bounded CDR-071 to ordinary-jump moving-Solid lift inheritance, immutable evidence and generated tests; Player fidelity remains `partial`.
+
 ## 2026-10-02 — CDR-070 local behavior reference authorized
 
 - The developer visually confirmed the corrected launcher and accepted CDR-070; independent-branch publication is authorized after a fresh gate and outbound audit.

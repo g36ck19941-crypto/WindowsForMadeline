@@ -23,6 +23,11 @@ var tests = new (string Name, Action Body)[]
     ("fast fall target returns toward normal", FastFallTargetRecovers),
     ("ground jump sets reference speed and timer", GroundJumpStarts),
     ("jump applies horizontal input boost", JumpAppliesHorizontalBoost),
+    ("ordinary jump without platform lift reports zero inheritance", JumpWithoutLiftReportsZero),
+    ("jump inherits horizontal platform velocity", JumpInheritsHorizontalLift),
+    ("jump clamps excessive horizontal platform velocity", JumpClampsHorizontalLift),
+    ("jump clamps upward platform velocity", JumpClampsUpwardLift),
+    ("jump rejects downward platform velocity", JumpRejectsDownwardLift),
     ("coyote jump works on the sixth airborne tick", CoyoteJumpWorksAtBoundary),
     ("coyote jump expires after six airborne ticks", CoyoteJumpExpires),
     ("air press remains buffered for five ticks", JumpBufferWorksAtBoundary),
@@ -73,6 +78,8 @@ static void ReferenceConstantsMatch()
     Equal(300m, tuning.FastFallAcceleration);
     Equal(-105m, tuning.JumpSpeed);
     Equal(40m, tuning.JumpHorizontalBoost);
+    Equal(250m, tuning.MaximumHorizontalLiftSpeed);
+    Equal(130m, tuning.MaximumUpwardLiftSpeed);
     Equal(6, tuning.CoyoteTicks);
     Equal(5, tuning.JumpBufferTicks);
     Equal(12, tuning.VariableJumpTicks);
@@ -216,6 +223,59 @@ static void GroundJumpStarts()
     Equal(11, snapshot.VariableJumpTicks);
     Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.Jumped), "Jump event missing.");
     Assert(!snapshot.Grounded, "Jump snapshot remained grounded.");
+}
+
+static void JumpWithoutLiftReportsZero()
+{
+    var fixture = Grounded();
+    var snapshot = fixture.Controller.Step(Input(jumpPressed: true, jumpHeld: true), fixture.World);
+    Equal(SimVector.Zero, snapshot.AppliedLiftSpeed);
+    Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.LiftVelocityApplied), "A zero lift emitted an application event.");
+}
+
+static void JumpInheritsHorizontalLift()
+{
+    var fixture = Grounded();
+    var snapshot = fixture.Controller.Step(
+        Input(jumpPressed: true, jumpHeld: true),
+        fixture.World,
+        world => fixture.Floor!.Move(2m, 0m, world));
+    Equal(new SimVector(120m, 0m), snapshot.AppliedLiftSpeed);
+    Equal(120m, snapshot.Speed.X);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.LiftVelocityApplied), "Horizontal lift event was missing.");
+}
+
+static void JumpClampsHorizontalLift()
+{
+    var fixture = Grounded();
+    var snapshot = fixture.Controller.Step(
+        Input(jumpPressed: true, jumpHeld: true),
+        fixture.World,
+        world => fixture.Floor!.Move(5m, 0m, world));
+    Equal(new SimVector(250m, 0m), snapshot.AppliedLiftSpeed);
+    Equal(250m, snapshot.Speed.X);
+}
+
+static void JumpClampsUpwardLift()
+{
+    var fixture = Grounded();
+    var snapshot = fixture.Controller.Step(
+        Input(jumpPressed: true, jumpHeld: true),
+        fixture.World,
+        world => fixture.Floor!.Move(0m, -3m, world));
+    Equal(new SimVector(0m, -130m), snapshot.AppliedLiftSpeed);
+    Equal(-235m, snapshot.Speed.Y);
+}
+
+static void JumpRejectsDownwardLift()
+{
+    var fixture = Grounded();
+    var snapshot = fixture.Controller.Step(
+        Input(jumpPressed: true, jumpHeld: true),
+        fixture.World,
+        world => fixture.Floor!.Move(0m, 2m, world));
+    Equal(SimVector.Zero, snapshot.AppliedLiftSpeed);
+    Equal(-105m, snapshot.Speed.Y);
 }
 
 static void JumpAppliesHorizontalBoost()

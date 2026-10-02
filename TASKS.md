@@ -13,6 +13,15 @@
 - Purpose: strengthen later behavior calibration without making the product depend on the game or distributing protected material
 - Gate: one real local generation, no tracked/leaked reference content, focused plus full regression verification, bilingual acceptance handoff; no upload before acceptance
 
+### CDR-071 — Player moving-platform jump inheritance calibration
+
+- Owner: Primary
+- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- Scope: bounded horizontal/upward lift inheritance on ordinary jump, downward rejection, immutable applied-lift evidence, stable diagnostic and generated moving-Solid tests
+- Fidelity: `partial`; this is one Normal/Jump rule, not complete Player parity
+- Forbidden: reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
+- Evidence: Release 0 warnings/errors; Player 38/38; total 871/871; generated demo applies `(250,-130)` lift once and replays deterministically
+
 ## P0 — Foundation
 
 ### CDR-001 — Architecture and diagnostics foundation

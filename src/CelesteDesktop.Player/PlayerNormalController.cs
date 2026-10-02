@@ -110,7 +110,7 @@ public sealed class PlayerNormalController
         UpdateJumpBuffer(input);
         UpdateHorizontal(input, groundedAtStart);
         var appliedMaximumFallSpeed = UpdateVertical(input, effects, groundedAtStart, world.Tick);
-        TryJump(input, world.Tick);
+        var appliedLiftSpeed = TryJump(input, world.Tick);
         ApplyExternalVelocity(effects.Velocity, world.Tick);
         Move(world);
 
@@ -131,6 +131,7 @@ public sealed class PlayerNormalController
             groundedAtEnd,
             MaxFall,
             appliedMaximumFallSpeed,
+            appliedLiftSpeed,
             CoyoteTicksRemaining,
             JumpBufferTicksRemaining,
             VariableJumpTicksRemaining,
@@ -227,11 +228,11 @@ public sealed class PlayerNormalController
             : MaxFall;
     }
 
-    private void TryJump(PlayerInput input, long tick)
+    private SimVector TryJump(PlayerInput input, long tick)
     {
         if (JumpBufferTicksRemaining <= 0 || CoyoteTicksRemaining <= 0)
         {
-            return;
+            return SimVector.Zero;
         }
 
         JumpBufferTicksRemaining = 0;
@@ -239,10 +240,28 @@ public sealed class PlayerNormalController
         VariableJumpTicksRemaining = Tuning.VariableJumpTicks;
         SpeedX += Tuning.JumpHorizontalBoost * input.MoveX;
         SpeedY = Tuning.JumpSpeed;
+        var lift = BoundedLiftSpeed();
+        SpeedX += lift.X;
+        SpeedY += lift.Y;
         _variableJumpSpeed = SpeedY;
         _wasGrounded = false;
         _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.Jumped, null));
+        if (lift != SimVector.Zero)
+        {
+            _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.LiftVelocityApplied, null));
+        }
+        return lift;
     }
+
+    private SimVector BoundedLiftSpeed() => new(
+        Math.Clamp(
+            Actor.LiftSpeed.X,
+            -Tuning.MaximumHorizontalLiftSpeed,
+            Tuning.MaximumHorizontalLiftSpeed),
+        Math.Clamp(
+            Actor.LiftSpeed.Y,
+            -Tuning.MaximumUpwardLiftSpeed,
+            0m));
 
     private void ApplyExternalVelocity(ExternalVelocityEffect? effect, long tick)
     {
@@ -319,6 +338,7 @@ public sealed class PlayerNormalController
             tuning.Gravity <= 0m || tuning.HalfGravityThreshold <= 0m ||
             tuning.NormalMaxFall <= 0m || tuning.FastMaxFall < tuning.NormalMaxFall ||
             tuning.FastFallAcceleration <= 0m || tuning.JumpSpeed >= 0m ||
+            tuning.MaximumHorizontalLiftSpeed <= 0m || tuning.MaximumUpwardLiftSpeed <= 0m ||
             tuning.CoyoteTicks <= 0 || tuning.JumpBufferTicks <= 0 ||
             tuning.VariableJumpTicks <= 0)
         {

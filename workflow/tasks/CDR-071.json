@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-071",
+  "title": "Player Normal/Jump moving-platform lift inheritance calibration",
+  "owner": "Primary agent",
+  "state": "ready_for_acceptance",
+  "authorizationDate": "2026-10-02",
+  "scope": [
+    "project-owned behavior specification from local static evidence",
+    "bounded horizontal and upward lift velocity inheritance on normal jump",
+    "downward lift rejection",
+    "immutable applied-lift snapshot and stable diagnostic event",
+    "generated moving-Solid tests and cumulative demo update"
+  ],
+  "forbidden": [
+    "decompiled source IL excerpts identifiers paths or commercial content in Git",
+    "line-by-line translation or decompiled source compilation",
+    "game or Everest launch",
+    "installation writes",
+    "visible GUI live input or real desktop access",
+    "claims of complete Player parity"
+  ],
+  "fidelity": "partial-static-evidence-for-one-normal-jump-rule",
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "focusedPlayerTests": 38,
+    "totalRegressionTests": 871,
+    "maximumAppliedLiftX": 250,
+    "maximumAppliedUpwardLiftY": -130,
+    "liftEventCount": 1,
+    "deterministicReplay": true,
+    "gameOrGuiLaunched": false,
+    "installationAccesses": 0,
+    "commercialReferenceTracked": false
+  },
+  "gate": "Ready for developer acceptance. Do not upload before explicit acceptance; keep all other Player gaps explicit and do not start CDR-061 while CDR-060 remains pending."
+}
