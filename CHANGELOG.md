@@ -5,7 +5,7 @@
 - Added a fixed four-tick Player horizontal wall-speed retention window, restoration when the wall clears, reverse-input cancellation and explicit expiration.
 - Added immutable retained-speed/timer evidence and stable retained/restored/cancelled/expired events.
 - Added seven generated Player cases, including stale-retention cancellation on jump and external launch, plus cumulative demo evidence: speed `90` is retained for 4 ticks and restored as `90`; Player passes 45/45 and the full Release gate passes 878/878.
-- CDR-071 publication is still pending after two GitHub TCP 443 timeouts; its exact audited commit remains `9f5594a`.
+- CDR-071 publication is still pending after three GitHub TCP 443 timeouts; the third retry pinned exact audited commit `9f5594a`, excluding CDR-072.
 
 ## 2026-10-02 — CDR-071 accepted
 
