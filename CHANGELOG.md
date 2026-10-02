@@ -2,6 +2,7 @@
 
 ## 2026-10-02 — CDR-070 local behavior reference authorized
 
+- Repaired the developer launcher for Windows CMD/PowerShell 5 by normalizing its CRLF line endings and keeping the internal script diagnostics ASCII-only; the full launcher path now exits 0 with readable Chinese output.
 - Added the task without replacing the existing roadmap or changing CDR-060 acceptance state.
 - Added an explicit-path builder, pinned repository-local ILSpy manifest, hash-addressed ignored cache, summary-only manifest and synthetic safety tests.
 - Added a plain-Chinese launcher that requests consent before first-use tool restore and explains what the evidence can and cannot prove.

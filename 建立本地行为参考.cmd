@@ -31,18 +31,22 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Build-LocalBehav
 if errorlevel 1 goto :failed
 echo.
 echo 成功：本机参考已建立，且不会被 Git 跟踪。
+if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause
 exit /b 0
 :invalid
 echo 未提供安装文件夹，未执行任何操作。
+if /i "%CDR_NO_PAUSE%"=="1" exit /b 2
 pause
 exit /b 2
 :cancelled
 echo 已取消；未下载工具，也未读取安装。
+if /i "%CDR_NO_PAUSE%"=="1" exit /b 2
 pause
 exit /b 2
 :failed
 echo.
 echo 失败：请保留上方第一个 LOCAL_REFERENCE_ 错误码和错误文字。
+if /i "%CDR_NO_PAUSE%"=="1" exit /b 1
 pause
 exit /b 1
