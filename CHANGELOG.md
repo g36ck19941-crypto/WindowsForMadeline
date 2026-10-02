@@ -6,7 +6,7 @@
 - Added `Actor.MoveXExact` so a correction is not erased by midpoint rounding and preserves the existing horizontal subpixel remainder.
 - Added one Simulation.Core case and five Player cases for left/right correction, direction preference, four-pixel bound and downward exclusion; Simulation.Core passes 34/34, Player 50/50 and the full Release gate 884/884.
 - Extended the cumulative generated demo with `(0,4) -> (1,2)`, correction `+1`, one `UpwardCornerCorrected` event, preserved upward speed and identical replay. CDR-073 remains `partial`, local and unuploaded pending acceptance.
-- Recorded developer acceptance of CDR-072. Exact commit `cc77d1d` passed its fresh 878/878 acceptance gate and clean outbound audit, but two independent-branch pushes failed on GitHub TCP 443 and publication remains pending.
+- Recorded developer acceptance of CDR-072. Exact commit `cc77d1d` passed its fresh 878/878 acceptance gate and clean outbound audit; after two GitHub TCP 443 timeouts, the third exact push succeeded and was read back at `codex/cdr-072-player-wall-speed-retention`. Remote `main` remains unchanged and CDR-073 was not included.
 - Corrected the CDR-071 publication record: exact commit `9f5594a` is now published and read back at `codex/cdr-071-player-lift-inheritance`; remote `main` remains unchanged.
 
 ## 2026-10-02 — CDR-072 wall-speed retention ready for acceptance
