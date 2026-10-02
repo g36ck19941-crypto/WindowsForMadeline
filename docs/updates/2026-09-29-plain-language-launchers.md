@@ -1,6 +1,6 @@
 # Plain-language developer launchers
 
-Date: 2026-09-29  
+Date: 2026-09-29
 Type: launcher and documentation UX; no runtime feature change
 
 ## What changed
