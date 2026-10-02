@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-072",
+  "title": "Player horizontal wall-speed retention calibration",
+  "owner": "Primary agent",
+  "state": "ready_for_acceptance",
+  "authorizationDate": "2026-10-02",
+  "scope": [
+    "project-owned behavior specification from local static evidence",
+    "fixed four-tick horizontal wall-speed retention after collision",
+    "restore when the blocking wall clears",
+    "reverse-input jump and external-velocity cancellation plus explicit expiration",
+    "immutable retained-speed snapshot and stable diagnostic events",
+    "generated collision tests and cumulative demo update"
+  ],
+  "forbidden": [
+    "decompiled source IL excerpts identifiers paths or commercial content in Git",
+    "line-by-line translation or decompiled source compilation",
+    "game or Everest launch",
+    "installation reads or writes",
+    "visible GUI live input or real desktop access",
+    "claims of complete Player parity"
+  ],
+  "fidelity": "partial-static-evidence-for-one-horizontal-collision-rule",
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "focusedPlayerTests": 45,
+    "totalRegressionTests": 878,
+    "retainedWallSpeed": 90,
+    "retentionTicks": 4,
+    "restoredWallSpeed": 90,
+    "retainedEventCount": 1,
+    "restoredEventCount": 1,
+    "deterministicReplay": true,
+    "gameOrGuiLaunched": false,
+    "installationAccesses": 0,
+    "commercialReferenceTracked": false
+  },
+  "gate": "Ready for developer acceptance. Do not upload before explicit acceptance; keep all other Player gaps explicit and do not start CDR-061 while CDR-060 remains pending."
+}

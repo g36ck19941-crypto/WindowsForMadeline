@@ -195,6 +195,11 @@ var manifest = new
         player.AppliedLiftX,
         player.AppliedLiftY,
         player.LiftEventCount,
+        player.RetainedWallSpeed,
+        player.InitialWallRetentionTicks,
+        player.RestoredWallSpeed,
+        player.WallRetainedEventCount,
+        player.WallRestoredEventCount,
         deterministicReplay = player.DeterministicReplay,
         rows = player.Rows
     },
@@ -944,6 +949,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-060</b>纯数据素材提供器与不可变世界内容提供器合同</div>
             <div class="stage"><b>CDR-070</b>本地行为参考建立器；反编译内容只留在 Git 忽略缓存，不进入本演示或产品运行时</div>
             <div class="stage"><b>CDR-071</b>移动 Solid 起跳时的有界水平/向上速度继承与诊断</div>
+            <div class="stage"><b>CDR-072</b>横向撞墙速度的 4 tick 保留、恢复、取消与过期</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -963,7 +969,7 @@ static string BuildHtml(
           <p>程序生成一个 Actor、一个移动平台和一面静态墙，连续运行 {{simulation.Rows.Count}} 个固定 tick。平台累计移动到 x={{simulation.FinalPlatformX}}，Actor 在平台携带与自身亚像素移动后到 x={{simulation.FinalActorX}}；重复运行结果 <span class="ok">{{(simulation.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>Actor x,y</th><th>Solid x,y</th><th>Actor X 余量</th><th>事件</th></tr></thead><tbody>{{simulationRows}}</tbody></table>
           <h2>CDR-021 Normal / Jump 轨迹</h2>
-          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。</p>
+          <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。CDR-072 再让角色以 {{player.RetainedWallSpeed}} 的速度撞墙，保留窗口={{player.InitialWallRetentionTicks}} tick；墙移开后恢复速度={{player.RestoredWallSpeed}}，WallSpeedRetained/Restored={{player.WallRetainedEventCount}}/{{player.WallRestoredEventCount}}。</p>
           <table><thead><tr><th>Tick</th><th>Player x,y</th><th>Speed x,y</th><th>Grounded</th><th>Coyote/Buffer/Variable</th><th>事件</th></tr></thead><tbody>{{playerRows}}</tbody></table>
           <h2>CDR-022 Dash / Wall / Climb 轨迹</h2>
           <p>合成角色先贴右墙下滑并蹬墙，随后向右冲刺撞墙，再抓墙向上攀爬。DashStarted={{traversal.DashStartedCount}}，WallSlideStarted={{traversal.WallSlideStartedCount}}，WallJumped={{traversal.WallJumpedCount}}，ClimbStarted={{traversal.ClimbStartedCount}}；重复运行：<span class="ok">{{(traversal.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
@@ -1808,6 +1814,18 @@ static DemoPlayer RunPlayerOnce()
         liftWorld,
         world => liftFloor.Move(5m, -3m, world));
 
+    var wallWorld = new SimulationWorld();
+    var wallActor = new Actor("wall-speed-player", 0, 0, 8, 11);
+    var wall = new Solid("wall-speed-wall", 9, -20, 4, 40);
+    wallWorld.Add(wallActor);
+    wallWorld.Add(wall);
+    var wallController = new PlayerNormalController(wallActor, initialSpeed: new SimVector(90m, 0m));
+    var retainedSnapshot = wallController.Step(new PlayerInput(1, 0, false, false), wallWorld);
+    var restoredSnapshot = wallController.Step(
+        new PlayerInput(1, 0, false, false),
+        wallWorld,
+        current => wall.Move(20m, 0m, current));
+
     return new DemoPlayer(
         rows.AsReadOnly(),
         rows.Any(row => row.SpeedX == NormalJumpTuning.ReferencePartial.MaxRun),
@@ -1816,6 +1834,11 @@ static DemoPlayer RunPlayerOnce()
         liftSnapshot.AppliedLiftSpeed.X,
         liftSnapshot.AppliedLiftSpeed.Y,
         liftSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.LiftVelocityApplied),
+        retainedSnapshot.WallSpeedRetained,
+        retainedSnapshot.WallSpeedRetentionTicks,
+        restoredSnapshot.Speed.X,
+        retainedSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.WallSpeedRetained),
+        restoredSnapshot.Events.Count(item => item.Kind == PlayerNormalEventKind.WallSpeedRestored),
         false);
 }
 
@@ -1959,6 +1982,11 @@ internal sealed record DemoPlayer(
     decimal AppliedLiftX,
     decimal AppliedLiftY,
     int LiftEventCount,
+    decimal RetainedWallSpeed,
+    int InitialWallRetentionTicks,
+    decimal RestoredWallSpeed,
+    int WallRetainedEventCount,
+    int WallRestoredEventCount,
     bool DeterministicReplay);
 
 internal sealed record DemoPlayerRow(

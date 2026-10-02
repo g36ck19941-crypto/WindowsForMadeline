@@ -30,3 +30,7 @@ It does not yet implement dash, wall slide, wall jump, climb, stamina, holding, 
 ## Next gate
 
 CDR-021 was accepted on 2026-09-29 and may be published to its independent branch. CDR-022 subsequently added Dash/Wall/Climb through generated snapshots and geometry.
+
+## Later bounded calibrations
+
+CDR-071 later added bounded moving-Solid lift inheritance on ordinary jump. CDR-072 adds a four-tick horizontal wall-speed retention window with explicit restore, reverse/jump/external-launch cancellation and expiration facts. The current Player suite is 45 generated cases, while the original CDR-021 acceptance evidence above remains historical.

@@ -35,6 +35,13 @@ var tests = new (string Name, Action Body)[]
     ("held variable jump preserves upward speed", HeldVariableJumpPreservesSpeed),
     ("released jump cancels variable hold", ReleasedJumpCancelsVariableHold),
     ("horizontal collision zeros horizontal speed", HorizontalCollisionZerosSpeed),
+    ("horizontal collision retains incoming wall speed", HorizontalCollisionRetainsSpeed),
+    ("active wall retention is not overwritten", ActiveWallRetentionIsStable),
+    ("wall speed restores when the wall clears", WallSpeedRestoresWhenClear),
+    ("reverse input cancels wall speed retention", ReverseInputCancelsWallRetention),
+    ("jump cancels wall speed retention", JumpCancelsWallRetention),
+    ("external velocity cancels wall speed retention", ExternalVelocityCancelsWallRetention),
+    ("wall speed retention expires after four ticks", WallSpeedRetentionExpires),
     ("floor collision zeros vertical speed", FloorCollisionZerosSpeed),
     ("ceiling collision cancels variable jump", CeilingCollisionCancelsVariableJump),
     ("landing and left-ground events are explicit", GroundTransitionEventsAreExplicit),
@@ -80,6 +87,7 @@ static void ReferenceConstantsMatch()
     Equal(40m, tuning.JumpHorizontalBoost);
     Equal(250m, tuning.MaximumHorizontalLiftSpeed);
     Equal(130m, tuning.MaximumUpwardLiftSpeed);
+    Equal(4, tuning.WallSpeedRetentionTicks);
     Equal(6, tuning.CoyoteTicks);
     Equal(5, tuning.JumpBufferTicks);
     Equal(12, tuning.VariableJumpTicks);
@@ -367,6 +375,90 @@ static void HorizontalCollisionZerosSpeed()
     Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.HorizontalBlocked && item.SolidId == "wall"), "Horizontal block event missing.");
 }
 
+static void HorizontalCollisionRetainsSpeed()
+{
+    var fixture = WallCollision();
+    var snapshot = fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    Equal(0m, snapshot.Speed.X);
+    Equal(90m, snapshot.WallSpeedRetained);
+    Equal(4, snapshot.WallSpeedRetentionTicks);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRetained && item.SolidId == "wall"), "Wall speed retention event missing.");
+}
+
+static void ActiveWallRetentionIsStable()
+{
+    var fixture = WallCollision();
+    fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    var snapshot = fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    Equal(90m, snapshot.WallSpeedRetained);
+    Equal(3, snapshot.WallSpeedRetentionTicks);
+    Assert(snapshot.Events.All(item => item.Kind != PlayerNormalEventKind.WallSpeedRetained), "Active retention was overwritten by a second collision.");
+}
+
+static void WallSpeedRestoresWhenClear()
+{
+    var fixture = WallCollision();
+    fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    var snapshot = fixture.Controller.Step(
+        Input(moveX: 1),
+        fixture.World,
+        world => fixture.Wall.Move(20m, 0m, world));
+    Equal(90m, snapshot.Speed.X);
+    Equal(0m, snapshot.WallSpeedRetained);
+    Equal(0, snapshot.WallSpeedRetentionTicks);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRestored), "Wall speed restore event missing.");
+}
+
+static void ReverseInputCancelsWallRetention()
+{
+    var fixture = WallCollision();
+    fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    var snapshot = fixture.Controller.Step(Input(moveX: -1), fixture.World);
+    Assert(snapshot.Speed.X < 0m, "Reverse input did not take control.");
+    Equal(0m, snapshot.WallSpeedRetained);
+    Equal(0, snapshot.WallSpeedRetentionTicks);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRetentionCancelled), "Wall speed cancellation event missing.");
+}
+
+static void JumpCancelsWallRetention()
+{
+    var fixture = WallCollision();
+    fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    var snapshot = fixture.Controller.Step(Input(jumpPressed: true, jumpHeld: true), fixture.World);
+    Equal(0m, snapshot.WallSpeedRetained);
+    Equal(0, snapshot.WallSpeedRetentionTicks);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.Jumped), "Jump event missing.");
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRetentionCancelled), "Jump did not cancel wall retention.");
+}
+
+static void ExternalVelocityCancelsWallRetention()
+{
+    var fixture = WallCollision();
+    fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    var effects = new PlayerExternalEffects(null, new ExternalVelocityEffect(-120m, -80m));
+    var snapshot = fixture.Controller.Step(Input(), effects, fixture.World);
+    Equal(0m, snapshot.WallSpeedRetained);
+    Equal(0, snapshot.WallSpeedRetentionTicks);
+    Equal(-120m, snapshot.Speed.X);
+    Equal(-80m, snapshot.Speed.Y);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRetentionCancelled), "External velocity did not cancel wall retention.");
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.ExternalVelocityApplied), "External velocity event missing.");
+}
+
+static void WallSpeedRetentionExpires()
+{
+    var fixture = WallCollision();
+    fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    PlayerNormalSnapshot? snapshot = null;
+    for (var tick = 0; tick < 4; tick++)
+    {
+        snapshot = fixture.Controller.Step(Input(moveX: 1), fixture.World);
+    }
+    Equal(0m, snapshot!.WallSpeedRetained);
+    Equal(0, snapshot.WallSpeedRetentionTicks);
+    Assert(snapshot.Events.Any(item => item.Kind == PlayerNormalEventKind.WallSpeedRetentionExpired), "Wall speed expiration event missing.");
+}
+
 static void FloorCollisionZerosSpeed()
 {
     var world = new SimulationWorld();
@@ -466,7 +558,7 @@ static string RunReplay()
     return string.Join('|', inputs.Select(input =>
     {
         var snapshot = fixture.Controller.Step(input, fixture.World);
-        return $"{snapshot.Tick}:{snapshot.Position.X},{snapshot.Position.Y}:{snapshot.Speed.X},{snapshot.Speed.Y}:{snapshot.CoyoteTicks},{snapshot.JumpBufferTicks},{snapshot.VariableJumpTicks}:{string.Join(',', snapshot.Events.Select(item => item.Kind))}";
+        return $"{snapshot.Tick}:{snapshot.Position.X},{snapshot.Position.Y}:{snapshot.Speed.X},{snapshot.Speed.Y}:{snapshot.WallSpeedRetained},{snapshot.WallSpeedRetentionTicks}:{snapshot.CoyoteTicks},{snapshot.JumpBufferTicks},{snapshot.VariableJumpTicks}:{string.Join(',', snapshot.Events.Select(item => item.Kind))}";
     }));
 }
 
@@ -514,6 +606,22 @@ static Fixture FallingTowardFloor()
     return new Fixture(world, actor, floor, new PlayerNormalController(actor, initialSpeed: new SimVector(0m, 60m)));
 }
 
+static WallFixture WallCollision()
+{
+    var world = new SimulationWorld();
+    var actor = new Actor("player", 0, 0, 8, 11);
+    var wall = new Solid("wall", 9, -20, 4, 40);
+    var floor = new Solid("floor", -20, 11, 40, 4);
+    world.Add(actor);
+    world.Add(wall);
+    world.Add(floor);
+    return new WallFixture(
+        world,
+        actor,
+        wall,
+        new PlayerNormalController(actor, initialSpeed: new SimVector(90m, 0m)));
+}
+
 static void Throws<T>(Action action) where T : Exception
 {
     try
@@ -547,4 +655,10 @@ internal sealed record Fixture(
     SimulationWorld World,
     Actor Actor,
     Solid? Floor,
+    PlayerNormalController Controller);
+
+internal sealed record WallFixture(
+    SimulationWorld World,
+    Actor Actor,
+    Solid Wall,
     PlayerNormalController Controller);

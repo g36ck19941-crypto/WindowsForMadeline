@@ -12,14 +12,14 @@ echo  这个入口是用来回答：现有代码有没有按任务要求稳定�
 echo.
 echo  它会做这些事：
 echo  1. 使用 Release 配置重新构建整个项目。
-echo  2. 运行当前全部 871 项回归，其中 Player 38 项、本地参考安全 10 项。
+echo  2. 运行当前全部 878 项回归，其中 Player 45 项、本地参考安全 10 项。
 echo  3. 检查素材解析、模拟、实体、App、扩展合同和本地参考隔离规则是否仍然正确。
 echo  4. 核对累计演示的清单，避免只有测试通过却没有可观察结果。
 echo.
 echo  验证成功时，你应该看到：
 echo  - 构建为 0 个警告、0 个错误。
-echo  - 每组测试全部通过，总计 871/871。
-echo  - 最后显示 CDR-071 OFFLINE VERIFICATION PASSED。
+echo  - 每组测试全部通过，总计 878/878。
+echo  - 最后显示 CDR-072 OFFLINE VERIFICATION PASSED。
 echo.
 echo  成功表示代码和离线演示通过检查，但不表示：
 echo  - 原版角色已经显示在真实桌面；
@@ -31,7 +31,7 @@ echo.
 echo  本入口不会读取真实游戏安装或桌面内容，也不会打开可见 GUI。
 echo.
 
-powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\Verify-CDR071.ps1"
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\Verify-CDR072.ps1"
 set "verify_exit=%ERRORLEVEL%"
 
 echo.

@@ -8,6 +8,9 @@ public sealed class PlayerNormalController
     private bool _initialized;
     private bool _wasGrounded;
     private decimal _variableJumpSpeed;
+    private decimal _wallSpeedRetained;
+    private int _wallSpeedRetentionTicks;
+    private bool _wallRetentionHandledThisTick;
     private long _lastUpdatedTick = -1;
 
     public PlayerNormalController(
@@ -103,12 +106,14 @@ public sealed class PlayerNormalController
         }
         _lastUpdatedTick = world.Tick;
         _events.Clear();
+        _wallRetentionHandledThisTick = false;
 
         var groundedAtStart = SpeedY >= 0m && world.IsGrounded(Actor);
         RecordGroundTransition(world.Tick, groundedAtStart);
         UpdateCoyote(groundedAtStart);
         UpdateJumpBuffer(input);
         UpdateHorizontal(input, groundedAtStart);
+        UpdateWallSpeedRetention(input, world, world.Tick);
         var appliedMaximumFallSpeed = UpdateVertical(input, effects, groundedAtStart, world.Tick);
         var appliedLiftSpeed = TryJump(input, world.Tick);
         ApplyExternalVelocity(effects.Velocity, world.Tick);
@@ -132,6 +137,8 @@ public sealed class PlayerNormalController
             MaxFall,
             appliedMaximumFallSpeed,
             appliedLiftSpeed,
+            _wallSpeedRetained,
+            _wallSpeedRetentionTicks,
             CoyoteTicksRemaining,
             JumpBufferTicksRemaining,
             VariableJumpTicksRemaining,
@@ -228,6 +235,44 @@ public sealed class PlayerNormalController
             : MaxFall;
     }
 
+    private void UpdateWallSpeedRetention(PlayerInput input, SimulationWorld world, long tick)
+    {
+        if (_wallSpeedRetentionTicks <= 0)
+        {
+            return;
+        }
+
+        _wallRetentionHandledThisTick = true;
+        var retainedDirection = Math.Sign(_wallSpeedRetained);
+        if (input.MoveX != 0 && input.MoveX == -retainedDirection)
+        {
+            ClearWallSpeedRetention();
+            _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.WallSpeedRetentionCancelled, null));
+            return;
+        }
+
+        if (world.FirstSolidAt(Actor, retainedDirection, 0) is null)
+        {
+            SpeedX = _wallSpeedRetained;
+            ClearWallSpeedRetention();
+            _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.WallSpeedRestored, null));
+            return;
+        }
+
+        _wallSpeedRetentionTicks--;
+        if (_wallSpeedRetentionTicks == 0)
+        {
+            _wallSpeedRetained = 0m;
+            _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.WallSpeedRetentionExpired, null));
+        }
+    }
+
+    private void ClearWallSpeedRetention()
+    {
+        _wallSpeedRetained = 0m;
+        _wallSpeedRetentionTicks = 0;
+    }
+
     private SimVector TryJump(PlayerInput input, long tick)
     {
         if (JumpBufferTicksRemaining <= 0 || CoyoteTicksRemaining <= 0)
@@ -238,6 +283,7 @@ public sealed class PlayerNormalController
         JumpBufferTicksRemaining = 0;
         CoyoteTicksRemaining = 0;
         VariableJumpTicksRemaining = Tuning.VariableJumpTicks;
+        CancelWallSpeedRetention(tick);
         SpeedX += Tuning.JumpHorizontalBoost * input.MoveX;
         SpeedY = Tuning.JumpSpeed;
         var lift = BoundedLiftSpeed();
@@ -270,6 +316,7 @@ public sealed class PlayerNormalController
             return;
         }
 
+        CancelWallSpeedRetention(tick);
         var next = velocity.Apply(new SimVector(SpeedX, SpeedY));
         SpeedX = next.X;
         SpeedY = next.Y;
@@ -278,11 +325,32 @@ public sealed class PlayerNormalController
         _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.ExternalVelocityApplied, null));
     }
 
+    private void CancelWallSpeedRetention(long tick)
+    {
+        if (_wallSpeedRetentionTicks <= 0)
+        {
+            return;
+        }
+
+        ClearWallSpeedRetention();
+        _events.Add(new PlayerNormalEvent(tick, PlayerNormalEventKind.WallSpeedRetentionCancelled, null));
+    }
+
     private void Move(SimulationWorld world)
     {
+        var incomingSpeedX = SpeedX;
         var horizontal = Actor.MoveX(SpeedX / SimulationConstants.TicksPerSecond, world);
         if (horizontal.Blocked)
         {
+            if (_wallSpeedRetentionTicks == 0 && !_wallRetentionHandledThisTick && incomingSpeedX != 0m)
+            {
+                _wallSpeedRetained = incomingSpeedX;
+                _wallSpeedRetentionTicks = Tuning.WallSpeedRetentionTicks;
+                _events.Add(new PlayerNormalEvent(
+                    world.Tick,
+                    PlayerNormalEventKind.WallSpeedRetained,
+                    horizontal.BlockingSolidId));
+            }
             SpeedX = 0m;
             _events.Add(new PlayerNormalEvent(
                 world.Tick,
@@ -339,6 +407,7 @@ public sealed class PlayerNormalController
             tuning.NormalMaxFall <= 0m || tuning.FastMaxFall < tuning.NormalMaxFall ||
             tuning.FastFallAcceleration <= 0m || tuning.JumpSpeed >= 0m ||
             tuning.MaximumHorizontalLiftSpeed <= 0m || tuning.MaximumUpwardLiftSpeed <= 0m ||
+            tuning.WallSpeedRetentionTicks <= 0 ||
             tuning.CoyoteTicks <= 0 || tuning.JumpBufferTicks <= 0 ||
             tuning.VariableJumpTicks <= 0)
         {

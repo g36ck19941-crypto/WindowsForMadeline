@@ -16,4 +16,4 @@ This specification records behavioral facts only. Decompiled source, IL, origina
 
 ## Limits
 
-This task does not calibrate ducking, holding modifiers, low-friction/core/space variants, wall-speed retention, jump-throughs, special jumps, audio, animation or human feel. Player fidelity remains `partial`.
+This task does not calibrate ducking, holding modifiers, low-friction/core/space variants, jump-throughs, special jumps, audio, animation or human feel. CDR-072 separately adds one bounded wall-speed-retention rule. Player fidelity remains `partial`.

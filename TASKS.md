@@ -22,6 +22,15 @@
 - Forbidden: reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
 - Evidence: Release 0 warnings/errors; Player 38/38; total 871/871; generated demo applies `(250,-130)` lift once and replays deterministically
 
+### CDR-072 — Player horizontal wall-speed retention calibration
+
+- Owner: Primary
+- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- Scope: fixed 4-tick horizontal collision retention, restoration when the wall clears, reverse-input cancellation, expiration, immutable snapshot evidence and stable events
+- Fidelity: `partial`; this is one collision-feel rule, not complete Player parity
+- Evidence: Release 0 warnings/errors; Player 45/45; total 878/878; generated demo retains speed `90` for 4 ticks and restores `90` with one retain/restore event each; jump and external velocity cancel stale retention
+- Forbidden: reference source/IL/path persistence, line copying, game/GUI/live-input/install access, CDR-061 work and upload before acceptance
+
 ## P0 — Foundation
 
 ### CDR-001 — Architecture and diagnostics foundation

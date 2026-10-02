@@ -14,6 +14,8 @@ public sealed class PlayerNormalSnapshot
         decimal maxFall,
         decimal appliedMaximumFallSpeed,
         SimVector appliedLiftSpeed,
+        decimal wallSpeedRetained,
+        int wallSpeedRetentionTicks,
         int coyoteTicks,
         int jumpBufferTicks,
         int variableJumpTicks,
@@ -27,6 +29,8 @@ public sealed class PlayerNormalSnapshot
         MaxFall = maxFall;
         AppliedMaximumFallSpeed = appliedMaximumFallSpeed;
         AppliedLiftSpeed = appliedLiftSpeed;
+        WallSpeedRetained = wallSpeedRetained;
+        WallSpeedRetentionTicks = wallSpeedRetentionTicks;
         CoyoteTicks = coyoteTicks;
         JumpBufferTicks = jumpBufferTicks;
         VariableJumpTicks = variableJumpTicks;
@@ -41,6 +45,8 @@ public sealed class PlayerNormalSnapshot
     public decimal MaxFall { get; }
     public decimal AppliedMaximumFallSpeed { get; }
     public SimVector AppliedLiftSpeed { get; }
+    public decimal WallSpeedRetained { get; }
+    public int WallSpeedRetentionTicks { get; }
     public int CoyoteTicks { get; }
     public int JumpBufferTicks { get; }
     public int VariableJumpTicks { get; }
