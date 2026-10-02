@@ -1,6 +1,6 @@
 # Current Handoff
 
-Updated: 2026-10-01
+Updated: 2026-10-02
 
 ## Current state
 
@@ -80,13 +80,17 @@ GitHub connectivity was separately verified and confirmed effective by the devel
 
 Legacy `C:\supermadeline\DesktopSummit` was verified clean at branch `feature/ds015h-hidden-runtime-poc`, HEAD `12d21321acc37ca366d2c449155fd4bfb78a7d92`, and was not modified.
 
+On 2026-10-02 the developer accepted CDR-051, authorized its publication and authorized the next sequential target. Exact commit `6c60fee08e829147cc76a81d5b082f27e31a5d2d` passed a fresh 826/826 Release gate with 0 warnings/errors and a clean outgoing audit, then was published and read back at `codex/cdr-051-headless-app-host`. Remote `main` remained `d237277e10af090cf60ec015c22174565e6cdc0a`.
+
+CDR-060 is locally implementation-complete and acceptance-pending. It compiles the conceptual extension seams into data-only `IAssetSourceProvider` and immutable `IWorldContentProvider` contracts with explicit statuses and caller budgets. Public contracts expose no filesystem path, stream, handle, delegate, assembly, script or executable resource kind. Thirty focused tests and all 856 regressions pass with 0 Release warnings/errors. The cumulative generated demo returns 4 asset bytes and one world/room with 2 Solids, 1 spawn and 3 supported entities; it rejects both over-budget requests and replays identically. Both root `.cmd` entries pass under no-open/no-pause switches. No real map, Mod directory, installation, GUI, live input or commercial byte was used. CDR-060 is not uploaded; CDR-061 is not authorized.
+
 ## First next action
 
-Present CDR-051 for developer acceptance; do not upload it or begin a later target without authorization.
+Present CDR-060 for developer acceptance; do not upload it or begin CDR-061 without explicit authorization.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-051 acceptance handoff
-- Forbidden: Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install access/write, raw commercial data
+- Scope: CDR-060 acceptance handoff
+- Forbidden: CDR-060 upload before acceptance, CDR-061 implementation, Legacy changes, game or visible GUI launch, titles/content/screenshots/input, identity-bearing metadata, native handles in contracts/evidence, any real-install/map/Mod access or write, executable Mod content, raw commercial data

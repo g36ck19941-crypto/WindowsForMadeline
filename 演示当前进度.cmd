@@ -25,7 +25,8 @@ echo  3. 运行角色移动、冲刺、攀爬和桌面几何等累计离线演�
  echo 12. 运行 Seeker 的巡逻、发现、追逐、蓄力、冲刺、命中、撞墙眩晕和恢复轨迹。
  echo 13. 把以上模块交给 App 统一启动和逐 tick 调度，并演示暂停、恢复、停止和呈现故障隔离。
  echo 14. 用无界面宿主按固定 60 Hz 持续驱动 App；模拟电脑卡顿时限制补算并明确丢弃过期时间片。
- echo 15. 生成一份本地 HTML 报告，方便直接查看结果。
+ echo 15. 用程序生成提供器演示未来素材与地图接口，并验证读取/房间预算保护。
+ echo 16. 生成一份本地 HTML 报告，方便直接查看结果。
 echo.
 echo  你应该看到：
 echo  - 各阶段完成了什么，以及每个阶段的输入和输出。
@@ -40,17 +41,19 @@ echo  - CDR-032 的 8 个时间点、8 次呈现和 3 次像素变化。
  echo  - CDR-047 的 30 个时间点，以及 Seeker 三次发现、两次冲刺、一次目标命中、一次撞墙、两次眩晕恢复和一次目标丢失。
  echo  - CDR-050 的 4 个 App 时间点：World 也恰好推进 4 次；效果被路由，暂停后可恢复，呈现故障后模拟仍继续并正常停止。
  echo  - CDR-051 正常节拍运行 6 tick、丢弃 0；积压保护只追赶 4 tick，并明确丢弃 4 个过期时间片，最终正常停止。
+ echo  - CDR-060 的 4 字节程序素材、1 个世界/房间、2 个 Solid、1 个出生点和 3 个实体；两种超预算请求都被拒绝。
 echo  - 重复运行结果一致，并标明商业素材字节为 0。
 echo.
 echo  请注意：
 echo  - 报告里的图片全部由程序生成，不是 Celeste 原版角色素材。
 echo  - 这能证明离线模块已由 App 按顺序统一运行，并能被固定节拍宿主安全驱动；不能证明角色已显示在真实桌面。
+echo  - CDR-060 只证明未来接口可安全交换有限数据，不代表已经能读取原版地图或 Mod。
 echo  - 这个入口不会启动 Celeste、Everest，也不会读取或写入游戏安装目录。
 echo.
 
-set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-051-demo-runtime\dotnet-home"
-set "APPDATA=%CD%\artifacts\cdr-051-demo-runtime\appdata"
-set "NUGET_PACKAGES=%CD%\artifacts\cdr-051-demo-runtime\nuget-packages"
+set "DOTNET_CLI_HOME=%CD%\artifacts\cdr-060-demo-runtime\dotnet-home"
+set "APPDATA=%CD%\artifacts\cdr-060-demo-runtime\appdata"
+set "NUGET_PACKAGES=%CD%\artifacts\cdr-060-demo-runtime\nuget-packages"
 set "DOTNET_CLI_TELEMETRY_OPTOUT=1"
 set "DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1"
 set "DOTNET_NOLOGO=1"
@@ -59,7 +62,7 @@ set "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=0"
 dotnet restore "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configfile "%CD%\NuGet.Offline.Config"
 if errorlevel 1 goto demo_failed
 
-dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-051-demo"
+dotnet run --project "samples\CelesteDesktop.ProgressDemo\CelesteDesktop.ProgressDemo.csproj" --configuration Release --no-restore -- --output "artifacts\cdr-060-demo"
 if errorlevel 1 (
     goto demo_failed
 )
@@ -67,16 +70,16 @@ if errorlevel 1 (
 echo.
 echo 演示报告已经生成。
 if /i "%CDR_DEMO_NO_OPEN%"=="1" goto report_ready
-start "" "%CD%\artifacts\cdr-051-demo\index.html"
+start "" "%CD%\artifacts\cdr-060-demo\index.html"
 if errorlevel 1 (
     echo 无法自动打开报告，请手动打开下面的文件：
-    echo %CD%\artifacts\cdr-051-demo\index.html
+    echo %CD%\artifacts\cdr-060-demo\index.html
 )
 
 :report_ready
 echo.
-echo 报告位置：%CD%\artifacts\cdr-051-demo\index.html
-echo 验收时请重点查看 CDR-051：正常节拍 6 tick/0 丢弃、积压保护 4 tick/4 丢弃、两次均正常停止，以及页面底部限制说明。
+echo 报告位置：%CD%\artifacts\cdr-060-demo\index.html
+echo 验收时请重点查看 CDR-060：4 字节程序素材、1 个世界/房间、2 个 Solid、1 个出生点、3 个实体、两种预算拒绝，以及页面底部限制说明。
 echo.
 if /i "%CDR_NO_PAUSE%"=="1" exit /b 0
 pause

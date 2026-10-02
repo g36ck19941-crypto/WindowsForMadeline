@@ -38,7 +38,7 @@ No row may jump from `unstarted` to `human_accepted`; each applicable evidence l
 | Seeker | unstarted | partial | partial | unstarted | CDR-047 generated patrol/detection/chase/windup/dash/hit/wall-stun/recovery matrix passes; original navigation, obstacle avoidance, damage/bounce behavior, numeric parity, formal App routing, assets/audio and visible integration are not established |
 | Offline App orchestration | n/a | partial | exact_offline | unstarted | CDR-050 lifecycle, one-step-per-tick ordering, effect routing and failure isolation pass with generated inputs; visible host, live input, real assets and human visibility are not established |
 | Headless App host | n/a | exact_offline | exact_offline | unstarted | CDR-051 fixed 60 Hz scheduling, bounded catch-up, generated input, cancellation and disposal pass; visible GUI, live input, desktop observation, real assets and human visibility are not established |
-| Levels/maps | deferred | deferred | deferred | deferred | Future `IWorldContentProvider`; no current parser |
-| Data-only Mod assets | deferred | n/a | deferred | deferred | Future `IAssetSourceProvider`; no current directory access |
+| Levels/maps | deferred | contracted | deferred | deferred | CDR-060 compiled immutable `IWorldContentProvider`; synthetic provider only, no map parser |
+| Data-only Mod assets | contracted | n/a | deferred | deferred | CDR-060 compiled bounded `IAssetSourceProvider`; synthetic provider only, no directory access |
 | Story/cutscenes | unsupported | unsupported | unsupported | unsupported | Outside current product goal |
 | Executable Everest Mod behavior | unsupported | unsupported | unsupported | unsupported | No DLL/script/runtime-hook execution |

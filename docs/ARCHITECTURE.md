@@ -99,9 +99,9 @@ CDR-046 adds `CelesteDesktop.Entity.Puffer` as an isolated swim/explosion state 
 
 ## 6. Reserved extension seams
 
-`docs/EXTENSIONS.md` reserves conceptual `IAssetSourceProvider` and `IWorldContentProvider` boundaries. They allow future read-only Mod asset sources and normalized level/map descriptions without coupling those formats to Simulation or App.
+CDR-060 compiles `IAssetSourceProvider` and `IWorldContentProvider` as data-only contracts in `CelesteDesktop.Contracts`. They allow future read-only asset sources and normalized level/map descriptions without coupling those formats to Simulation or App. Asset content is copied and budgeted; rooms contain only bounded immutable geometry, spawns and supported entity placements. Public contracts expose no paths, streams, handles, callbacks, assemblies or executable resource kinds.
 
-These are architecture contracts only. No provider interface, plugin loader, map parser or Mod reader is implemented in the current phase.
+These are provider contracts only. No real provider, plugin loader, map parser or Mod reader is implemented in the current phase.
 
 ## 7. Current non-goals
 

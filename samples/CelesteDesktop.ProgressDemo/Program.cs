@@ -77,6 +77,7 @@ var puffer = RunSyntheticPuffer();
 var seeker = RunSyntheticSeeker();
 var app = Cdr050Demo.Run();
 var host = Cdr051Demo.Run();
+var extensionContracts = Cdr060Demo.Run();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -98,7 +99,7 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-051",
+    demoId = "CDR-060",
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -123,7 +124,8 @@ var manifest = new
         "CDR-046 ran generated Puffer bounded swim warning explosion launch respawn fallback and isolation behavior at fixed tick",
         "CDR-047 ran generated Seeker patrol alert chase windup dash hit wall-stun recovery and isolation behavior at fixed tick",
         "CDR-050 orchestrated lifecycle, one simulation step per App tick, effect routing and presentation isolation offline",
-        "CDR-051 scheduled the App at fixed 60 Hz with bounded catch-up, generated input and graceful stop"
+        "CDR-051 scheduled the App at fixed 60 Hz with bounded catch-up, generated input and graceful stop",
+        "CDR-060 exchanged bounded generated assets and immutable room descriptions through data-only provider contracts"
     },
     independentValidation = new
     {
@@ -392,6 +394,25 @@ var manifest = new
         backlogEventIds = host.BacklogCadence.EventIds,
         host.DeterministicReplay
     },
+    extensionContracts = new
+    {
+        source = "synthetic-providers-only",
+        fidelity = "contract-only",
+        extensionContracts.AssetProviderId,
+        extensionContracts.AssetSourceKind,
+        extensionContracts.AssetResolutionStatus,
+        extensionContracts.AssetBytes,
+        extensionContracts.AssetBudgetRejected,
+        extensionContracts.WorldProviderId,
+        extensionContracts.WorldCount,
+        extensionContracts.RoomCount,
+        extensionContracts.SolidCount,
+        extensionContracts.SpawnCount,
+        extensionContracts.EntityCount,
+        extensionContracts.EntityKinds,
+        extensionContracts.WorldBudgetRejected,
+        extensionContracts.DeterministicReplay
+    },
     entries = page.Entries.Select(entry => new
     {
         entry.Id,
@@ -411,11 +432,11 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host, extensionContracts),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-051 cumulative offline Headless App Host pipeline");
-Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} player_ticks={player.Rows.Count} traversal_ticks={traversal.Rows.Count} animation_ticks={animationPresentation.Rows.Count} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_component_disabled={app.ComponentDisabledCount} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} host_normal_ticks={host.NormalCadence.ExecutedTicks} host_normal_dropped={host.NormalCadence.DroppedIntervals} host_backlog_ticks={host.BacklogCadence.ExecutedTicks} host_backlog_dropped={host.BacklogCadence.DroppedIntervals} host_backlog_event={host.BacklogCadence.EventIds.Contains("APP_HOST_BACKLOG_DROPPED", StringComparison.Ordinal).ToString().ToLowerInvariant()} host_stopped={(host.NormalCadence.FinalLifecycle == "Stopped" && host.BacklogCadence.FinalLifecycle == "Stopped").ToString().ToLowerInvariant()} host_replay={host.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
+Console.WriteLine("DEMO CDR-060 cumulative offline provider-contract pipeline");
+Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} player_ticks={player.Rows.Count} traversal_ticks={traversal.Rows.Count} animation_ticks={animationPresentation.Rows.Count} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_component_disabled={app.ComponentDisabledCount} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} host_normal_ticks={host.NormalCadence.ExecutedTicks} host_normal_dropped={host.NormalCadence.DroppedIntervals} host_backlog_ticks={host.BacklogCadence.ExecutedTicks} host_backlog_dropped={host.BacklogCadence.DroppedIntervals} host_backlog_event={host.BacklogCadence.EventIds.Contains("APP_HOST_BACKLOG_DROPPED", StringComparison.Ordinal).ToString().ToLowerInvariant()} host_stopped={(host.NormalCadence.FinalLifecycle == "Stopped" && host.BacklogCadence.FinalLifecycle == "Stopped").ToString().ToLowerInvariant()} host_replay={host.DeterministicReplay.ToString().ToLowerInvariant()} provider_asset_bytes={extensionContracts.AssetBytes} provider_asset_budget_rejected={extensionContracts.AssetBudgetRejected.ToString().ToLowerInvariant()} provider_worlds={extensionContracts.WorldCount} provider_rooms={extensionContracts.RoomCount} provider_solids={extensionContracts.SolidCount} provider_spawns={extensionContracts.SpawnCount} provider_entities={extensionContracts.EntityCount} provider_world_budget_rejected={extensionContracts.WorldBudgetRejected.ToString().ToLowerInvariant()} provider_replay={extensionContracts.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
 Console.WriteLine($"CATALOG_SHA256 {catalog.CatalogSha256}");
@@ -427,7 +448,7 @@ static string ResolveOutputDirectory(string[] arguments)
 {
     if (arguments.Length == 0)
     {
-        return Path.GetFullPath(Path.Combine("artifacts", "cdr-051-demo"));
+        return Path.GetFullPath(Path.Combine("artifacts", "cdr-060-demo"));
     }
 
     if (arguments.Length == 2 &&
@@ -613,7 +634,8 @@ static string BuildHtml(
     DemoPuffer puffer,
     DemoSeeker seeker,
     DemoApp app,
-    DemoHeadlessHost host)
+    DemoHeadlessHost host,
+    DemoExtensionContracts extensionContracts)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -869,7 +891,7 @@ static string BuildHtml(
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-051 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-060 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -888,7 +910,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-051 累计项目进度演示</h1>
+          <h1>CDR-060 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -915,6 +937,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-047</b>Seeker 巡逻、发现、追逐、冲刺、撞墙眩晕与恢复</div>
             <div class="stage"><b>CDR-050</b>App 统一启动、逐 tick 编排、效果路由、暂停恢复与故障隔离</div>
             <div class="stage"><b>CDR-051</b>无界面宿主固定 60 Hz 调度、有限追赶、取消与可靠退出</div>
+            <div class="stage"><b>CDR-060</b>纯数据素材提供器与不可变世界内容提供器合同</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -990,6 +1013,9 @@ static string BuildHtml(
           <p>正常节奏运行 {{host.NormalCadence.ExecutedTicks}} tick，等待 {{host.NormalCadence.DelayCalls}} 次，丢弃积压 {{host.NormalCadence.DroppedIntervals}}；模拟“电脑短暂卡住”的积压节奏时，只追赶 {{host.BacklogCadence.ExecutedTicks}} tick，并明确丢弃 {{host.BacklogCadence.DroppedIntervals}} 个过期时间片，避免一次卡顿后无限追赶。两次都正常停止，重复运行：<span class="ok">{{(host.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <p>积压保护日志：<code>APP_HOST_BACKLOG_DROPPED</code>。它表示宿主明确丢弃了过期时间片，不表示这些时间片被悄悄执行。</p>
           <table><thead><tr><th>场景</th><th>实际执行 tick</th><th>丢弃过期时间片</th><th>等待次数</th><th>最终状态</th></tr></thead><tbody><tr><td>正常 60 Hz</td><td>{{host.NormalCadence.ExecutedTicks}}</td><td>{{host.NormalCadence.DroppedIntervals}}</td><td>{{host.NormalCadence.DelayCalls}}</td><td>{{host.NormalCadence.FinalLifecycle}}</td></tr><tr><td>积压保护</td><td>{{host.BacklogCadence.ExecutedTicks}}</td><td>{{host.BacklogCadence.DroppedIntervals}}</td><td>{{host.BacklogCadence.DelayCalls}}</td><td>{{host.BacklogCadence.FinalLifecycle}}</td></tr></tbody></table>
+          <h2 id="extension-provider-contracts">CDR-060 未来素材与地图扩展接口（程序生成）</h2>
+          <p>这里没有读取游戏或 Mod 文件。演示只让两个程序生成提供器通过正式合同交出一份 4 字节测试素材，以及一个含 {{extensionContracts.SolidCount}} 个 Solid、{{extensionContracts.SpawnCount}} 个出生点、{{extensionContracts.EntityCount}} 个受支持实体的不可变房间描述。超出读取/房间预算时均被明确拒绝；重复运行：<span class="ok">{{(extensionContracts.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
+          <table><thead><tr><th>提供器</th><th>类型</th><th>成功结果</th><th>预算保护</th></tr></thead><tbody><tr><td>{{extensionContracts.AssetProviderId}}</td><td>{{extensionContracts.AssetSourceKind}}</td><td>{{extensionContracts.AssetBytes}} 字节 / {{extensionContracts.AssetResolutionStatus}}</td><td id="asset-budget-result">{{(extensionContracts.AssetBudgetRejected ? "已拒绝超预算读取" : "未拒绝")}}</td></tr><tr><td>{{extensionContracts.WorldProviderId}}</td><td>不可变世界内容</td><td>{{extensionContracts.WorldCount}} 世界 / {{extensionContracts.RoomCount}} 房间 / {{extensionContracts.EntityKinds}}</td><td id="world-budget-result">{{(extensionContracts.WorldBudgetRejected ? "已拒绝超预算房间" : "未拒绝")}}</td></tr></tbody></table>
           <div class="limits" id="plain-language-proof">
             <h2>这证明了什么</h2>
             <p class="plain"><strong>简单说：</strong>项目现在已经能把“解析出来的多张角色图片”按照规定的时间顺序连续播放，并把每一张准备好的画面交给渲染模块。</p>
@@ -1008,6 +1034,7 @@ static string BuildHtml(
               <li><strong>Seeker 已有独立追逐状态机：</strong>上面的轨迹真实运行了巡逻、发现目标、预警、追逐、蓄力、定向冲刺、目标命中、撞墙眩晕、恢复和丢失目标；另一个 Seeker 始终独立运行。</li>
               <li><strong>App 已能统一组织离线模块：</strong>一次 App tick 只推进一次模拟，再按明确顺序把实体效果交给 Player/Theo/Glider，最后才把不可变动画帧交给呈现层；暂停、恢复、停止和呈现故障都有可追踪事件。</li>
               <li><strong>App 已有无界面运行节奏：</strong>宿主按固定 60 Hz 请求下一 tick，短暂卡顿时最多有限追赶，过期积压会留下明确记录；取消或达到演示上限后会停止并释放会话。</li>
+              <li><strong>未来扩展已有安全插口：</strong>素材来源只能返回有长度和哈希的纯数据，房间只能描述矩形 Solid、出生点和项目支持的实体；路径、文件流、回调、程序集和任意脚本不会进入公共合同。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -1019,6 +1046,7 @@ static string BuildHtml(
               <li><strong>Present 不等于肉眼可见：</strong>它只说明渲染后端接收并提交了画面；当前走的是隐藏、离线验证路径，没有把角色窗口显示到真实桌面。</li>
               <li><strong>还没有可见桌面宿主：</strong>CDR-050 已完成纯离线 App 统一编排，但没有打开窗口、接入实时键盘、读取真实桌面或验证人眼可见。</li>
               <li><strong>CDR-051 仍是 Headless：</strong>它只证明后台时钟和退出流程，不是可双击运行的正式桌面角色程序，也没有读取真实键盘、桌面或正版安装。</li>
+              <li><strong>CDR-060 不是地图或 Mod 读取器：</strong>它只建立未来接口并用程序数据验证；没有解析 Celeste 地图、扫描 Mod 目录、加载 DLL/Lua/脚本，也没有承诺现有 Mod 兼容。</li>
               <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>
               <li><strong>CDR-016 只证明格式兼容：</strong>它说明指定正版安装中的素材能被只读解析，不等于这些原版素材已经在本次演示里被连接和显示。</li>
               <li><strong>Theo 手感仍是 partial：</strong>官方公开仓库没有 TheoCrystal 实体源码，因此当前数值是独立设计并由逐 tick 测试固定的离线基线，不宣称与商业发行版逐项完全一致。</li>

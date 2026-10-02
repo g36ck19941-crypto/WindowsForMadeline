@@ -2,7 +2,7 @@
 
 ## Current status
 
-Level/map restoration and read-only Mod asset access are deferred capabilities, not rejected capabilities. This document reserves stable architectural seams only. It does not add runtime implementation, scan a Mod directory, parse a map, execute Mod code or expand the current authorization.
+Level/map restoration and read-only Mod asset access remain deferred capabilities, not rejected capabilities. CDR-060 now compiles the data-only seams described here; it still does not scan a Mod directory, parse a real map or execute Mod code.
 
 ## Asset source provider seam
 
@@ -43,7 +43,7 @@ The provider boundary lets a future module restore selected level/map structure 
 
 ## Explicitly not implemented now
 
-- no compiled provider interfaces or plugin loader;
+- no real asset or world provider and no plugin loader;
 - no Celeste map, room or story parser;
 - no Mod directory discovery or asset resolution;
 - no Everest DLL, Lua, script or arbitrary code execution;
@@ -52,4 +52,4 @@ The provider boundary lets a future module restore selected level/map structure 
 
 ## Future gates
 
-The compiled contracts may be introduced only in the later CDR-060 task after core asset and simulation contracts stabilize. Concrete level/map and Mod asset providers are separate tasks with synthetic fixtures first, explicit security review and fresh authorization before any real installation or Mod directory is read.
+CDR-060 introduces only the compiled contracts and synthetic providers used by tests/demo. Concrete level/map and Mod asset providers remain separate tasks with synthetic fixtures first, explicit security review and fresh authorization before any real installation or Mod directory is read.

@@ -3,7 +3,8 @@
   "taskId": "CDR-051",
   "title": "Pure-offline Headless App Host",
   "owner": "Primary agent",
-  "state": "ready_for_acceptance",
+  "state": "accepted_published",
+  "acceptedDate": "2026-10-02",
   "authorizationDate": "2026-10-01",
   "fidelity": "offline-host-only-visible-runtime-unestablished",
   "scope": [
@@ -47,5 +48,12 @@
     "installationAccesses": 0,
     "commercialBytes": 0
   },
-  "nextAction": "Developer acceptance. Do not upload CDR-051 or begin a later task before explicit authorization."
+  "publication": {
+    "branch": "codex/cdr-051-headless-app-host",
+    "commit": "6c60fee08e829147cc76a81d5b082f27e31a5d2d",
+    "status": "published-and-read-back",
+    "remoteMainUnchanged": "d237277e10af090cf60ec015c22174565e6cdc0a"
+  },
+  "nextTask": "CDR-060",
+  "nextAction": "CDR-051 is complete. Implement the authorized synthetic-only CDR-060 provider contracts."
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-02 — CDR-051 published; CDR-060 provider contracts implemented
+
+- Published and read back accepted CDR-051 exact commit `6c60fee` at `codex/cdr-051-headless-app-host`; remote `main` remained unchanged.
+- Added data-only asset-source and immutable world-content provider contracts with explicit results and caller budgets.
+- Kept paths, streams, handles, delegates, assemblies, scripts and executable resource kinds out of the public surface.
+- Added 30 focused tests and a generated cumulative demonstration; the Release gate passes 856/856 with 0 warnings/errors and both root `.cmd` entries pass.
+- CDR-060 uses synthetic providers only and is acceptance-pending; it does not read a real map, Mod directory or installation and has not been uploaded.
+
 ## 2026-10-01 — CDR-051 pure-offline headless App host implemented
 
 - Added injected monotonic time, fixed 60 Hz App dispatch and consecutive immutable generated inputs.

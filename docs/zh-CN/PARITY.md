@@ -40,7 +40,7 @@
 | Seeker | unstarted | partial | partial | unstarted | CDR-047 程序生成的巡逻/发现/追逐/蓄力/冲刺/命中/撞墙眩晕/恢复矩阵通过；原版寻路、复杂地形避障、伤害/反弹、数值、正式 App、素材声音和可见集成尚未建立 |
 | 离线 App 编排 | n/a | partial | exact_offline | unstarted | CDR-050 的生命周期、每 tick 一次步进、效果路由和故障隔离已用生成输入通过；可见宿主、实时输入、真实素材和人眼可见尚未建立 |
 | 无界面 App 宿主 | n/a | exact_offline | exact_offline | unstarted | CDR-051 的固定 60 Hz 调度、有限补算、程序输入、取消与释放已通过；可见 GUI、实时输入、桌面观察、真实素材和人眼可见尚未建立 |
-| 关卡/地图 | deferred | deferred | deferred | deferred | 未来 `IWorldContentProvider`；当前无解析器 |
-| 纯数据 Mod 素材 | deferred | n/a | deferred | deferred | 未来 `IAssetSourceProvider`；当前不访问目录 |
+| 关卡/地图 | deferred | contracted | deferred | deferred | CDR-060 已编译不可变 `IWorldContentProvider`；只用程序提供器，没有地图解析器 |
+| 纯数据 Mod 素材 | contracted | n/a | deferred | deferred | CDR-060 已编译有界 `IAssetSourceProvider`；只用程序提供器，不访问目录 |
 | 剧情/过场 | unsupported | unsupported | unsupported | unsupported | 不属于当前产品目标 |
 | 可执行 Everest Mod 行为 | unsupported | unsupported | unsupported | unsupported | 不执行 DLL/脚本/运行时钩子 |

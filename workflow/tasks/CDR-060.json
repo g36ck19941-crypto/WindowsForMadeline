@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "taskId": "CDR-060",
+  "title": "Compiled data-only provider contracts",
+  "owner": "Primary agent",
+  "state": "ready_for_acceptance",
+  "authorizationDate": "2026-10-02",
+  "fidelity": "contract-only-real-map-and-mod-providers-unimplemented",
+  "scope": [
+    "src/CelesteDesktop.Contracts/Extensions/**",
+    "tests/CelesteDesktop.Contracts.Extensions.Tests/**",
+    "generated cumulative demo",
+    "verification launcher and project records"
+  ],
+  "features": [
+    "data-only asset source provider contract",
+    "immutable world content provider contract",
+    "bounded copied asset bytes",
+    "bounded room solids spawns and supported entity placements",
+    "explicit found not-found and rejected results",
+    "public contract surface isolation"
+  ],
+  "forbidden": [
+    "real map parsing",
+    "Mod directory discovery or reading",
+    "plugin DLL Lua or script execution",
+    "filesystem paths streams handles callbacks or assemblies in public contracts",
+    "game or installation access",
+    "visible GUI live input or desktop observation",
+    "commercial-byte persistence"
+  ],
+  "verification": {
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "focusedTests": 30,
+    "totalRegressionTests": 856,
+    "assetBytes": 4,
+    "worlds": 1,
+    "rooms": 1,
+    "solids": 2,
+    "spawns": 1,
+    "entities": 3,
+    "assetBudgetRejected": true,
+    "worldBudgetRejected": true,
+    "deterministicReplay": true,
+    "rootLaunchersPassed": 2,
+    "visibleGui": false,
+    "installationAccesses": 0,
+    "commercialBytes": 0
+  },
+  "nextTask": "CDR-061",
+  "nextAction": "Present CDR-060 for developer acceptance. Do not upload CDR-060 or start CDR-061 before explicit authorization."
+}
