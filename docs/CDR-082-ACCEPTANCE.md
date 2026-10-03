@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Current result supersedes all earlier failures below: 795 original sources with 8 verified references emitted a Library successfully, zero compiler errors. No recovered execution or Steam API calls. Gate: 317 retained, 26 probe, 13 closure, 4 summary checks. Acceptance and upload pending; minimal isolation/runtime unproven. See [current acceptance details](CDR-082-COMPILE-PASS.md). Earlier stage notes are historical.
+
 Latest authorized XNA/net472 original-source closure attempt selects795/918 files with7 refs; fails18 Steamworks-related errors, no original execution/edits/stubs. Current gate includes10 closure checks plus317 retained/26 probe/4 summary; see CDR-082-CLOSURE-COMPILE.md for manual entry and next Steamworks reference permission. Earlier stages below are historical.
 
 Follow-up: authorized existing-reference inspection found three XNA and four v4.7.2 reference identities; no compile retry. Current retained cases317 after four added metadata tests (39 focused). The 313 figures below are prior gate evidence. See CDR-082-REFERENCE-CHECK.md.

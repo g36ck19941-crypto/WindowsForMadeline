@@ -1,5 +1,7 @@
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -18,16 +20,17 @@ try
     Contained(cache, referencesFile);
     var references = JsonSerializer.Deserialize<ReferenceInput[]>(File.ReadAllText(referencesFile))
         ?? throw new InvalidDataException("REFERENCES_EMPTY");
-    if (references.Length != 7) throw new InvalidDataException("SEVEN_AUTHORIZED_REFERENCES_REQUIRED");
+    if (references.Length != 8) throw new InvalidDataException("EIGHT_AUTHORIZED_REFERENCES_REQUIRED");
     var names = new HashSet<string>(StringComparer.Ordinal);
     foreach (var reference in references)
     {
         if (!names.Add(reference.Name) || reference.Name is not ("mscorlib" or "System" or "System.Core" or "System.Xml" or
-            "Microsoft.Xna.Framework" or "Microsoft.Xna.Framework.Game" or "Microsoft.Xna.Framework.Graphics"))
+            "Microsoft.Xna.Framework" or "Microsoft.Xna.Framework.Game" or "Microsoft.Xna.Framework.Graphics" or "Steamworks.NET"))
             throw new InvalidDataException("REFERENCE_NOT_AUTHORIZED");
         NoLinks(reference.Path);
         if (new FileInfo(reference.Path).Length > 32 * 1024 * 1024 || Hash(reference.Path) != reference.Sha256)
             throw new InvalidDataException("REFERENCE_IDENTITY_CHANGED");
+        if (reference.Name == "Steamworks.NET") ValidateSteamworks(reference);
     }
     var trees = new Dictionary<string, SyntaxTree>(StringComparer.OrdinalIgnoreCase);
     var pendingDirectories = new Stack<string>(); pendingDirectories.Push(source);
@@ -55,6 +58,10 @@ try
     var assembly = Path.Combine(output, "OriginalCoreCompileProbe.dll");
     Microsoft.CodeAnalysis.Emit.EmitResult result;
     using (var stream = File.Create(assembly)) result = compilation.Emit(stream);
+    foreach (var reference in references)
+        if (Hash(reference.Path) != reference.Sha256) throw new InvalidDataException("REFERENCE_CHANGED_DURING_EMIT");
+    if (AppDomain.CurrentDomain.GetAssemblies().Any(loaded => loaded.GetName().Name is "Steamworks.NET" or "Celeste" or "OriginalCoreCompileProbe"))
+        throw new InvalidDataException("UNEXPECTED_RUNTIME_ASSEMBLY_LOAD");
     if (!result.Success) File.Delete(assembly); // Only this exact, tool-created failed output in the contained run directory.
     var counts = result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error)
         .GroupBy(d => d.Id).OrderBy(g => g.Key).ToDictionary(g => g.Key, g => g.Count());
@@ -67,6 +74,25 @@ try
     File.WriteAllText(Path.Combine(output, "diagnostic-locations-local-only.json"), JsonSerializer.Serialize(privateDiagnostics,
         new JsonSerializerOptions { WriteIndented = true }));
     var steamworksErrors = privateDiagnostics.Count(d => d.message.Contains("Steam", StringComparison.Ordinal));
+    var outputTypes = new HashSet<string>(StringComparer.Ordinal);
+    var outputReferenceCount = 0;
+    var embeddedResourceCount = 0;
+    string? outputHash = null;
+    if (result.Success)
+    {
+        outputHash = Hash(assembly);
+        using var stream = File.OpenRead(assembly); using var pe = new PEReader(stream);
+        var reader = pe.GetMetadataReader();
+        outputReferenceCount = reader.AssemblyReferences.Count;
+        embeddedResourceCount = reader.ManifestResources.Count;
+        foreach (var handle in reader.TypeDefinitions)
+        {
+            var definition = reader.GetTypeDefinition(handle);
+            outputTypes.Add(reader.GetString(definition.Namespace) + "." + reader.GetString(definition.Name));
+        }
+        if (!outputTypes.Contains("Celeste.Player") || !outputTypes.Contains("Celeste.Actor") || !outputTypes.Contains("Celeste.Solid"))
+            throw new InvalidDataException("EMITTED_CORE_TYPES_MISSING");
+    }
     // Identifier-only source/catalogue evidence stays ignored, never in public logs.
     File.WriteAllText(Path.Combine(output, "selected-files.json"), JsonSerializer.Serialize(selected.Order().ToArray()));
     var sourceDigest = Convert.ToHexString(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(string.Join("\n",
@@ -75,9 +101,14 @@ try
         taskId = "CDR-082", stage = "xna-net472-original-closure", availableSourceFiles = trees.Count,
         selectedSourceFiles = selected.Count, seedFiles = 3, seedIncludesPlayer = true,
         sourceClosureMethod = "conservative-identifier-closure-not-minimality-proof", selectedSourceDigest = sourceDigest,
-        referenceCount = references.Length, framework = "net472-references-experimental-from-net45", platform = "x86",
+        referenceCount = references.Length, steamworksMetadataOnly = true, steamworksApiCalled = false,
+        steamworksOrOriginalAssemblyRuntimeLoaded = false,
+        framework = "net472-references-experimental-from-net45", platform = "x86",
         sourceEdited = false, inventedStubs = false, generatedProjectExecuted = false, analyzersRun = false,
-        emitSucceeded = result.Success, errorCounts = counts, steamworksDiagnosticCount = steamworksErrors, recoveredCodeExecuted = false,
+        emitSucceeded = result.Success, errorCounts = counts, steamworksDiagnosticCount = steamworksErrors,
+        outputSha256 = outputHash, outputTypeCount = outputTypes.Count, outputReferenceCount, embeddedResourceCount,
+        emittedCoreTypesPresent = result.Success, runtimeDependencyClosureEstablished = false,
+        minimalIsolatedCoreEstablished = false, recoveredCodeExecuted = false,
         guiOpened = false, gameLaunched = false, installationWrites = 0, dependencyDownloads = 0,
         commercialMaterialLocalOnly = true, runtimeIntegrated = false
     };
@@ -94,6 +125,16 @@ catch (Exception ex)
 }
 
 static string Hash(string path) { using var stream = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(stream)); }
+static void ValidateSteamworks(ReferenceInput reference)
+{
+    if (reference.Sha256 != "6C6B307E907294003014DA3ED4610E362A9B6EE4093A20E514B0E23454DA3085")
+        throw new InvalidDataException("STEAMWORKS_BASELINE_CHANGED");
+    using var stream = File.OpenRead(reference.Path); using var pe = new PEReader(stream);
+    var reader = pe.GetMetadataReader(); var definition = reader.GetAssemblyDefinition();
+    if (reader.GetString(definition.Name) != "Steamworks.NET" || definition.Version.ToString() != "10.0.0.0" ||
+        !definition.PublicKey.IsNil || reader.GetString(definition.Culture) != "")
+        throw new InvalidDataException("STEAMWORKS_IDENTITY_CHANGED");
+}
 static void Contained(string root, string path)
 {
     if (!path.StartsWith(Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
@@ -146,6 +187,13 @@ static int SyntheticChecks()
     Check(badResult.Diagnostics.Any(d => d.Id == "CS0246"));
     var rejected = false; try { Contained(Path.GetFullPath("local-cache"), Path.GetFullPath("artifacts/out")); } catch (InvalidDataException) { rejected = true; }
     Check(rejected);
+    rejected = false;
+    try { ValidateSteamworks(new ReferenceInput("Steamworks.NET", "not-read", new string('0', 64))); }
+    catch (InvalidDataException) { rejected = true; }
+    Check(rejected);
+    var trap = compilation.RemoveAllSyntaxTrees().AddSyntaxTrees(CSharpSyntaxTree.ParseText("public class Generated { static Generated() { throw new System.Exception(); } }"));
+    using var trapBuffer = new MemoryStream(); Check(trap.Emit(trapBuffer).Success);
+    Check(!AppDomain.CurrentDomain.GetAssemblies().Any(assembly => assembly.GetName().Name == "Generated"));
     Console.WriteLine($"CLOSURE_SYNTHETIC_CHECKS passed={passed} failed=0 codeExecuted=false");
     return 0;
 }

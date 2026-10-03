@@ -1,5 +1,13 @@
 # Current Handoff
 
+## Current override — Steamworks compiler permission; emission SUCCESS, no execution
+
+Developer explicitly authorized previously inspected orig/Steamworks.NET.dll only as readonly compiler metadata, no Steam API/download/install/execution. Wrapper now requires explicit selected installation root; reads only orig Steamworks file with hash6C6B307E907294003014DA3ED4610E362A9B6EE4093A20E514B0E23454DA3085, PE identity10.0.0.0/neutral/unsigned. Eight refs total, same795 source closure, Library/x86 emission succeeds zero errors. PE static audit:1614 types/corePlayerActorSolid present/8 refs/0 resources; output hash4954B40E17DD4886DEEBFB42CE1EB9723DC5E3C329C7D08605069AF06F980467 stable measured. No Steamworks/original output loaded into AppDomain, no recovered execution or GUI/native Steam call. Refs hashed before/after emit; original source unedited. Commercial DLL/cache/private diagnostics ignored only.
+
+Current verifier:317 retained/26 probe/13 closure/4 summary, no windows. Compile cmd prompts installation; emitted-success exit0, cancel0, setup mismatch3. Wrapper ordinary tests do not read real install. Progress labels first15-file failure historical and current full closure emission separately. Bilingual authoritative result docs/CDR-082-COMPILE-PASS.md supersedes failed closure notes below.
+
+Next: CDR-082 developer acceptance/upload still pending; minimal isolated behavior core/runtime dependency closure UNPROVEN despite library emission. Static CDR-083 boundary preflight can be planned; actual recovered execution/offscreen stepping/resources/native initialization needs separate authorization. No game entrypoint/GUI/input/install writes/downloads. Earlier Steamworks permission blockers below are resolved/history only. Goal not complete.
+
 ## Latest override: authorized XNA/net472 compile continuation
 
 Developer explicitly allowed found XNA/net472 references and original source dependency completion in ignored cache, no downloads/install/execution. Own tools/CelesteDesktop.CompileClosure uses installed SDK Roslyn (no packages), conservative identifier closure from Player/Actor/Solid:795 of918 sources, seven hash-validated refs, Library/x86, no source edits/stubs/generated-project execution/analyzers. Two attempts same digest89EF35562F630A23B2663E15C96678F1326521AD43B0A2D23156029E1A5FFC51. Emit fails:CS0103=13/CS0246=5;16 Steam-named plus2 AppId_t diagnostics. No game installation read/Steamworks ref added. Local summary artifacts/cdr-082-closure-real/summary.json; source lists and detailed diagnostics under ignored local-cache/cdr-082-closure. No successful original DLL/runtime.

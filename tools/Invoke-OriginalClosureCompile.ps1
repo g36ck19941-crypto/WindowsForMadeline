@@ -1,9 +1,20 @@
 [CmdletBinding()]
-param()
+param([string]$InstallRoot)
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
 Push-Location $repo
 try {
+    if(-not $InstallRoot -or $InstallRoot -notmatch '^[A-Za-z]:[\\/]') { throw 'CLOSURE_INSTALL_ROOT_REQUIRED' }
+    $steamPath=Join-Path ([IO.Path]::GetFullPath($InstallRoot)) 'orig/Steamworks.NET.dll'
+    for($cursor=$steamPath; $cursor; $cursor=[IO.Path]::GetDirectoryName($cursor)) {
+        if((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'CLOSURE_REPARSE_POINT' }
+    }
+    $steamHash='6C6B307E907294003014DA3ED4610E362A9B6EE4093A20E514B0E23454DA3085'
+    $steamStream=[IO.File]::OpenRead($steamPath)
+    $steamHasher=[Security.Cryptography.SHA256]::Create()
+    try { $actualSteamHash=[BitConverter]::ToString($steamHasher.ComputeHash($steamStream)).Replace('-','') }
+    finally { $steamStream.Dispose(); $steamHasher.Dispose() }
+    if($actualSteamHash -ne $steamHash) { throw 'CLOSURE_STEAMWORKS_CHANGED' }
     $expectedHash='1A1E117ADD967C0F26AD470A49D4FF442435209265BF1FDDA623821D797E80B5'
     $candidates=@(Get-ChildItem -LiteralPath (Join-Path $repo 'local-cache/cdr-082') -Directory | Where-Object {
         $manifest=Join-Path $_.FullName 'summary.json'
@@ -36,6 +47,7 @@ try {
         $refs += [ordered]@{Name=$name;Path=$path;Sha256=$row[0].sha256}
     }
     $refsFile=Join-Path $work 'references.json'
+    $refs += [ordered]@{Name='Steamworks.NET';Path=$steamPath;Sha256=$steamHash}
     [IO.File]::WriteAllText($refsFile, ($refs|ConvertTo-Json -Depth 5))
     $env:DOTNET_CLI_HOME=Join-Path $repo 'artifacts/cdr-081-verification/dotnet-home'
     $env:APPDATA=Join-Path $repo 'artifacts/cdr-081-verification/appdata'

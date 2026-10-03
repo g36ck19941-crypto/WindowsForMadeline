@@ -222,12 +222,15 @@ static int Run(string[] args)
             report.GetProperty("recoveredCodeExecuted").GetBoolean() || report.GetProperty("guiOpened").GetBoolean() ||
             report.GetProperty("gameLaunched").GetBoolean() || report.GetProperty("sourceEdited").GetBoolean() ||
             report.GetProperty("inventedStubs").GetBoolean() || report.GetProperty("runtimeIntegrated").GetBoolean() ||
+            report.GetProperty("steamworksApiCalled").GetBoolean() || !report.GetProperty("steamworksMetadataOnly").GetBoolean() ||
             report.GetProperty("dependencyDownloads").GetInt32() != 0 || report.GetProperty("installationWrites").GetInt32() != 0 ||
             !report.GetProperty("commercialMaterialLocalOnly").GetBoolean()) throw new InvalidDataException("Closure summary safety contract failed.");
         var selected = report.GetProperty("selectedSourceFiles").GetInt32();
         if (selected is < 3 or > 10000) throw new InvalidDataException("Closure count invalid.");
         var errorCount = report.GetProperty("errorCounts").EnumerateObject().Sum(property => property.Value.GetInt32());
-        closureExplanation = $"已经使用找到的 3 个 XNA 和 4 个旧框架引用，把 Player/Actor/Solid 相关依赖扩展到 {selected} 个原版文件。" +
+        if (errorCount < 0 || (report.GetProperty("emitSucceeded").GetBoolean() && errorCount != 0))
+            throw new InvalidDataException("Closure emission outcome inconsistent.");
+        closureExplanation = $"已经使用找到的 XNA 和旧框架引用，并在额外授权后加入 Steamworks.NET 编译元数据，把 Player/Actor/Solid 相关依赖扩展到 {selected} 个原版文件。" +
             (report.GetProperty("emitSucceeded").GetBoolean() ? "本次只编译生成成功，代码未运行。" : $"本次仍有 {errorCount} 条编译错误，没有生成成功的程序集。") +
             "不会自写替身来凑通过，没有改原版源码或执行反编译工程。文件数量来自保守依赖扫描，不保证最小；编译仍是旧框架兼容性实验。";
     }
@@ -235,20 +238,20 @@ static int Run(string[] args)
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
     var html = $$"""
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>CDR-081 当前进度</title>
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>CDR-082 当前进度</title>
 <style>body{background:#111827;color:#e5e7eb;font:20px/1.7 system-ui;max-width:1000px;margin:50px auto;padding:20px}
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
 <section><h2>使用找到的零件，拼装到哪一步？</h2>{{closureExplanation}}</section>
 <section><h2>编译零件找到了吗？</h2>{{referenceExplanation}}</section>
-<section data-compile-status="{{compileStatus}}"><h2>CDR-082：恢复之后，能编译吗？</h2>{{compileExplanation}}
+<section data-compile-status="{{compileStatus}}"><h2>历史：第一次少量文件编译探针</h2>{{compileExplanation}}
 <p>简单说：已拿到拼装说明和零件清单，但还缺引擎零件，尚未拼成能工作的角色。
 程序只编译、不运行；此页面不输出源码，不会再次读取安装。商业源码和派生构建永不上传。</p></section>
 <section><h2>这次做了什么</h2>已删除自主实现的角色、八种交互实体、碰撞运动核及旧玩法编排。
 旧的移动演示不再运行。保留资源读取、反编译工具、动画呈现、渲染与匿名桌面几何工具。
 新增了只读程序集检查器，用来辨别“拿到的是哪个版本、需要哪些依赖”，不会运行游戏代码。</section>
-<section><h2>原版还是 Mod：当前检查结果</h2>{{identitySummary}}
+<section><h2>CDR-081 历史：原版还是 Mod 的检查结果</h2>{{identitySummary}}
 <table><thead><tr><th>检查位置</th><th>底层框架</th><th>说明</th></tr></thead><tbody>{{identityRows}}</tbody></table>
 <p>{{dependencyExplanation}}</p>
 <p>没有报告时表格为空，这是未检查，不是失败或成功。无 Mod 标记不等于官方认证的纯原版。

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-03 — CDR-082 original-source library emission succeeds
+
+- Explicit readonly original Steamworks metadata/hash/identity permission resolves remaining compile errors.795 original sources/eight refs emit Library/x86;1614 types/core present/8 refs/0 embedded resources. No original edits/runtime/Steam API/native loading or public commercial binary.
+- Added baseline/initializer/no-runtime-load checks(closure13), metadata-only output audit, prompting opt-in cmd and bilingual compile-pass records. Minimal isolated/runtime core unproven; acceptance/upload/CDR083 execution separate.
+
 ## 2026-10-03 — CDR-082 original-source closure compilation
 
 - Explicitly authorized existing XNA/net472 probe includes795/918 original sources via conservative identifier closure and emits Library/x86 only; fails with18 unresolved Steamworks-related name/type errors. No edits/stubs/execute or successful original DLL.

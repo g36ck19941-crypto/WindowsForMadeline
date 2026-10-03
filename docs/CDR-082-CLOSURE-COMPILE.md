@@ -1,5 +1,7 @@
 # CDR-082 — Existing XNA/net472 original-source compilation
 
+Historical pre-Steamworks attempt only. Its 18 errors were resolved by the subsequent authorized metadata reference. See [current successful compile](CDR-082-COMPILE-PASS.md); runtime and isolation remain unproven.
+
 2026-10-03. Primary. Explicit developer authorization: already-found XNA and .NET Framework 4.7.2 references, local ignored original-source dependency completion and compilation only; no downloads/install/execution. Tooling verified, original-core compilation still partial. No acceptance/upload.
 
 ## Role and observed outcome

@@ -2,7 +2,11 @@
 chcp 65001 >nul
 cd /d "%~dp0"
 type docs\zh-CN\CLOSURE-ENTRY.txt
-powershell -NoProfile -ExecutionPolicy Bypass -File tools\Invoke-OriginalClosureCompile.ps1
+set "CDR_SELECTED_ROOT="
+set /p "CDR_SELECTED_ROOT=> "
+if not defined CDR_SELECTED_ROOT goto cancelled
+set "CDR_SELECTED_ROOT=%CDR_SELECTED_ROOT:"=%"
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\Invoke-OriginalClosureCompile.ps1 -InstallRoot "%CDR_SELECTED_ROOT%"
 if errorlevel 3 goto failed
 if errorlevel 2 goto blocked
 echo COMPILE_EMIT_SUCCEEDED codeExecuted=false
@@ -16,3 +20,7 @@ exit /b 2
 echo FAILED
 if not "%CDR_NO_PAUSE%"=="1" pause
 exit /b 3
+:cancelled
+echo CANCELLED
+if not "%CDR_NO_PAUSE%"=="1" pause
+exit /b 0
