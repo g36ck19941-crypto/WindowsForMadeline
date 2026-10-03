@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-03 — CDR-082 original-source closure compilation
+
+- Explicitly authorized existing XNA/net472 probe includes795/918 original sources via conservative identifier closure and emits Library/x86 only; fails with18 unresolved Steamworks-related name/type errors. No edits/stubs/execute or successful original DLL.
+- Added existing-SDK Roslyn tool,10 generated checks, local-only detailed diagnostic locations, opt-in cmd/wrapper and progress panel. Next requires original Steamworks.NET metadata reference permission; no downloads/game-install access/GUI or upload.
+
 ## 2026-10-03 — CDR-082 existing-reference inspection
 
 - Authorized fixed-scope read-only search found three exact XNA assembly identities in modern GAC_32 and four matching v4.7.2 BCL reference identities; v4.0/v4.5 core slots missing. No compile retry or runtime compatibility claim.

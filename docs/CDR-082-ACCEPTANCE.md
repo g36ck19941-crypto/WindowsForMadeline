@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Latest authorized XNA/net472 original-source closure attempt selects795/918 files with7 refs; fails18 Steamworks-related errors, no original execution/edits/stubs. Current gate includes10 closure checks plus317 retained/26 probe/4 summary; see CDR-082-CLOSURE-COMPILE.md for manual entry and next Steamworks reference permission. Earlier stages below are historical.
+
 Follow-up: authorized existing-reference inspection found three XNA and four v4.7.2 reference identities; no compile retry. Current retained cases317 after four added metadata tests (39 focused). The 313 figures below are prior gate evidence. See CDR-082-REFERENCE-CHECK.md.
 
 2026-10-03, Primary. Tooling/offline verified, developer acceptance pending; original-core compilation partial/blocked. Local branch codex/cdr-082-local-compile-probe. Not uploaded.

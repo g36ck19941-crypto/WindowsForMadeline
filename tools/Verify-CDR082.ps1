@@ -1,4 +1,10 @@
 $ErrorActionPreference = 'Stop'
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$env:DOTNET_CLI_HOME = Join-Path $projectRoot 'artifacts/cdr-081-verification/dotnet-home'
+$env:APPDATA = Join-Path $projectRoot 'artifacts/cdr-081-verification/appdata'
+$env:NUGET_PACKAGES = Join-Path $projectRoot 'artifacts/cdr-081-verification/nuget-packages'
+$env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
+$env:DOTNET_NOLOGO = '1'
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Invoke-OriginalCompileProbe.ps1') -SelfTest
 if ($LASTEXITCODE -ne 0) { throw 'CDR082 synthetic probe tests failed.' }
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-CDR081.ps1')
@@ -6,6 +12,12 @@ if ($LASTEXITCODE -ne 0) { throw 'Retained-tool regression gate failed.' }
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Push-Location $projectRoot
 try {
+    & dotnet restore tools/CelesteDesktop.CompileClosure --configfile NuGet.Offline.Config
+    if ($LASTEXITCODE -ne 0) { throw 'Closure tool offline restore failed.' }
+    & dotnet build tools/CelesteDesktop.CompileClosure -c Release --no-restore
+    if ($LASTEXITCODE -ne 0) { throw 'Closure tool build failed.' }
+    & dotnet tools/CelesteDesktop.CompileClosure/bin/Release/net10.0/CelesteDesktop.CompileClosure.dll --self-test
+    if ($LASTEXITCODE -ne 0) { throw 'Generated closure/emit checks failed.' }
     $fixture = Join-Path $projectRoot ('artifacts/cdr-082-verification/report-' + [guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Path $fixture -Force | Out-Null
     $inputReport = Join-Path $fixture 'summary.json'
@@ -33,5 +45,5 @@ try {
         if ($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED') { throw 'Unsafe/inconsistent compile report accepted.' }
     }
 } finally { Pop-Location }
-Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 compileReportChecks=4 windowProbesExecuted=0 originalCompilePassNotClaimed=true'
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=10 compileReportChecks=4 windowProbesExecuted=0 originalCompilePassNotClaimed=true'
 exit 0

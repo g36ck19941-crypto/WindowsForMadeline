@@ -208,7 +208,28 @@ static int Run(string[] args)
             row.GetProperty("exactOriginalReferenceMatch").GetBoolean());
         referenceExplanation = $"后续授权只读检查发现：32 位程序集缓存中 {xnaMatches} 个 XNA 组件身份匹配；" +
             $"旧框架 v4.7.2 中 {frameworkMatches} 个核心引用身份匹配。v4.0/v4.5 所查核心 DLL 未找到。" +
-            "之前“安装目录内缺少”仍是当时正确的范围结论，不代表本机缺少。版本身份匹配不证明 API 或运行兼容；尚未重新编译，更没有运行角色。";
+            "之前“安装目录内缺少”仍是当时正确的范围结论，不代表本机缺少。版本身份匹配不证明 API 或运行兼容；那次只读检查没有重新编译，后续编译另列在本页上方，角色没有运行。";
+    }
+    var closureExplanation = "尚未读取使用已有引用的本地编译摘要。";
+    var closureSummaryPath = Path.Combine(root, "artifacts", "cdr-082-closure-real", "summary.json");
+    if (File.Exists(closureSummaryPath))
+    {
+        RejectLinks(root, closureSummaryPath);
+        if (new FileInfo(closureSummaryPath).Length > 65536) throw new InvalidDataException("Closure summary limit exceeded.");
+        using var closureDocument = JsonDocument.Parse(File.ReadAllText(closureSummaryPath));
+        var report = closureDocument.RootElement;
+        if (report.GetProperty("taskId").GetString() != "CDR-082" || report.GetProperty("stage").GetString() != "xna-net472-original-closure" ||
+            report.GetProperty("recoveredCodeExecuted").GetBoolean() || report.GetProperty("guiOpened").GetBoolean() ||
+            report.GetProperty("gameLaunched").GetBoolean() || report.GetProperty("sourceEdited").GetBoolean() ||
+            report.GetProperty("inventedStubs").GetBoolean() || report.GetProperty("runtimeIntegrated").GetBoolean() ||
+            report.GetProperty("dependencyDownloads").GetInt32() != 0 || report.GetProperty("installationWrites").GetInt32() != 0 ||
+            !report.GetProperty("commercialMaterialLocalOnly").GetBoolean()) throw new InvalidDataException("Closure summary safety contract failed.");
+        var selected = report.GetProperty("selectedSourceFiles").GetInt32();
+        if (selected is < 3 or > 10000) throw new InvalidDataException("Closure count invalid.");
+        var errorCount = report.GetProperty("errorCounts").EnumerateObject().Sum(property => property.Value.GetInt32());
+        closureExplanation = $"已经使用找到的 3 个 XNA 和 4 个旧框架引用，把 Player/Actor/Solid 相关依赖扩展到 {selected} 个原版文件。" +
+            (report.GetProperty("emitSucceeded").GetBoolean() ? "本次只编译生成成功，代码未运行。" : $"本次仍有 {errorCount} 条编译错误，没有生成成功的程序集。") +
+            "不会自写替身来凑通过，没有改原版源码或执行反编译工程。文件数量来自保守依赖扫描，不保证最小；编译仍是旧框架兼容性实验。";
     }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
@@ -219,6 +240,7 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section><h2>使用找到的零件，拼装到哪一步？</h2>{{closureExplanation}}</section>
 <section><h2>编译零件找到了吗？</h2>{{referenceExplanation}}</section>
 <section data-compile-status="{{compileStatus}}"><h2>CDR-082：恢复之后，能编译吗？</h2>{{compileExplanation}}
 <p>简单说：已拿到拼装说明和零件清单，但还缺引擎零件，尚未拼成能工作的角色。
