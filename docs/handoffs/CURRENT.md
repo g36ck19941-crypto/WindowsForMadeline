@@ -2,6 +2,8 @@
 
 Updated: 2026-10-03. Owner: Primary.
 
+Developer requested replacing the project goal. Canonical new objective: docs/GOAL.md; Chinese mirror: docs/zh-CN/GOAL.md. Available goal tools cannot rewrite or clear an unfinished goal, so thread goal still contains the blocked old objective until the developer replaces it using the supported goal command surface. Do not mark it complete merely to enable replacement.
+
 CDR-080 user explicitly authorized deleting old self-designed logic and focusing on decompilation/recomposition. Player, Simulation.Core, eight Entity modules, App and their tests/dependent demos/verifiers were deleted; 24 projects removed. Earlier preserve-in-working-tree assessment is superseded. Recoverable local branch archive/self-designed-logic-before-removal-20261003 points to e0ba567529dfc014bdeb15c5b46cbb306f045fd7. Git history retained.
 
 Current retained-tool verification: Release zero warnings/errors, 12 suites 298/298. New status report inventories ignored cache names only: one cache, 1369 C# files, 256 Mod/Everest/MonoModRules-named paths. Pristine vanilla identity, original dependency closure, compilation and original runtime execution are NOT established. No runnable character remains. Root cmd entries target CDR-080, not retired CDR-075 gameplay.
