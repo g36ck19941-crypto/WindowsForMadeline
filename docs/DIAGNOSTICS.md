@@ -1,5 +1,12 @@
 # Diagnostics Contract
 
+## CDR-082 managed isolation adapter
+
+- ISOLATION_CONTEXT_ADVANCED: adapter tick, fixed delta, injected directions/button edges, originalBound=false and recoveredCodeExecuted=false. Never SIMULATION_TICK_ADVANCED or ENTITY_SPAWNED: no original actor has run.
+- ISOLATION_SERVICE_DENIED: named boundary service, allowed=false, outcome=denied. No silent successful no-op; requests cannot activate native/input/file services.
+- ISOLATION_VERIFICATION_FAILED: stage, exception type/message/HResult/stack/inner, recoverable=false. Synthetic own-code failures only, no commercial resource payloads.
+- ISOLATION_VERIFIED: 45 generated assertions, no original binding/runtime proof. Service policy is cooperative and not an OS/process security sandbox.
+
 ## CDR-081 identity inspection
 
 - ASSEMBLY_INVENTORY_COMPLETED: candidate and graph-node counts, assemblyExecuted=false; completion means inspection finished, not playable runtime.

@@ -1,5 +1,9 @@
 # Current Handoff
 
+## Authorized managed isolation adapter continuation
+
+Developer authorized design/implementation, no recovered execution/new assets/original behavior source edits. Primary added src/CelesteDesktop.RuntimeIsolation and console synthetic tests:45 assertions, context-only fixed60Hz/generated input edges/copy/replay/invalid/exhausted/disposed handling;8 service requests deny, no allow switch/native/input/file/runtime callbacks. net8 own module only, original binding false, NOT an OS sandbox or original-framework bridge. Dedicated 验证本地隔离适配.cmd outputs5 contexts/8 denials, ordinary Verify-CDR082 runs reviewed managed suite and4 new progress-summary probes. Source-free summary artifacts/cdr-082-isolation/summary.json; bilingual docs/CDR-082-ISOLATION.md. No original source/asset/install reads or changes during implementation. Acceptance/upload pending. Next define actual static-service/scene/resource bridge and explicit execution/resource/transformation gates; do not mistake own context replay for original steps.
+
 ## Static boundary preflight after successful compile
 
 Cached-source read-only inspection recorded in docs/CDR-082-STATIC-BOUNDARIES.md and Chinese mirror. Player construction already needs input/sprite-bank/atlas initialization; Added needs original Level bounds; updates depend on time/assist/input/audio/scene. Engine constructor configures Window/graphics, game entry invokes Steam paths, audio creates native FMOD. Source observations only, not exhaustive call graph/runtime proof. No recovered execution, transformation, fresh installation reads or CDR-083 implementation. Next requires precise boundary design and separate execution/resource permission. Acceptance/upload pending.

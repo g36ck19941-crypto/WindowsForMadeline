@@ -5,6 +5,8 @@ $env:APPDATA = Join-Path $projectRoot 'artifacts/cdr-081-verification/appdata'
 $env:NUGET_PACKAGES = Join-Path $projectRoot 'artifacts/cdr-081-verification/nuget-packages'
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 $env:DOTNET_NOLOGO = '1'
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-RuntimeIsolation.ps1')
+if ($LASTEXITCODE -ne 0) { throw 'Reviewed managed isolation suite failed.' }
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Invoke-OriginalCompileProbe.ps1') -SelfTest
 if ($LASTEXITCODE -ne 0) { throw 'CDR082 synthetic probe tests failed.' }
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-CDR081.ps1')
@@ -44,6 +46,26 @@ try {
         finally { $ErrorActionPreference = 'Stop' }
         if ($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED') { throw 'Unsafe/inconsistent compile report accepted.' }
     }
+    $isolationInput=Join-Path $fixture 'isolation.json'
+    $isolationReport=Get-Content (Join-Path $projectRoot 'artifacts/cdr-082-isolation/summary.json') -Raw | ConvertFrom-Json
+    $isolationReport | ConvertTo-Json | Set-Content -LiteralPath $isolationInput -Encoding UTF8
+    & dotnet $demoDll --output (Join-Path $fixture 'isolation-valid') --isolation-report $isolationInput
+    if($LASTEXITCODE -ne 0) { throw 'Isolation summary valid case failed.' }
+    $isolationHtml=Get-Content (Join-Path $fixture 'isolation-valid/index.html') -Raw -Encoding UTF8
+    if($isolationHtml -notmatch 'data-isolation-status="managed-only-original-unbound"') { throw 'Isolation limits hidden.' }
+    & dotnet $demoDll --output (Join-Path $fixture 'isolation-missing') --isolation-report (Join-Path $fixture 'absent-isolation.json')
+    if($LASTEXITCODE -ne 0) { throw 'Missing isolation summary failed.' }
+    $isolationHtml=Get-Content (Join-Path $fixture 'isolation-missing/index.html') -Raw -Encoding UTF8
+    if($isolationHtml -notmatch 'data-isolation-status="not-inspected"') { throw 'Missing isolation summary called verified.' }
+    foreach($kind in @('original-bound','wrong-count')) {
+        $isolationReport.originalBound=($kind -eq 'original-bound')
+        $isolationReport.checksPassed=if($kind -eq 'wrong-count'){0}else{45}
+        $isolationReport | ConvertTo-Json | Set-Content -LiteralPath $isolationInput -Encoding UTF8
+        $ErrorActionPreference='Continue'
+        try { $lines=@(& dotnet $demoDll --output (Join-Path $fixture $kind) --isolation-report $isolationInput 2>&1); $code=$LASTEXITCODE }
+        finally { $ErrorActionPreference='Stop' }
+        if($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED') { throw 'False isolation proof accepted.' }
+    }
 } finally { Pop-Location }
-Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
 exit 0

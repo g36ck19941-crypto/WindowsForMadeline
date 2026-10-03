@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — CDR-082 managed isolation adapters
+
+Own fixed-time/injected-input context, copied sequence and input edges, fail-closed service decisions,45 synthetic checks and4 summary probes; dedicated Chinese-explained cmd and progress panel. No gameplay/original binding/runtime/new assets/source edits. Not accepted/uploaded, not a security sandbox.
+
 ## 2026-10-03 — CDR-082 original-source library emission succeeds
 
 - Explicit readonly original Steamworks metadata/hash/identity permission resolves remaining compile errors.795 original sources/eight refs emit Library/x86;1614 types/core present/8 refs/0 embedded resources. No original edits/runtime/Steam API/native loading or public commercial binary.

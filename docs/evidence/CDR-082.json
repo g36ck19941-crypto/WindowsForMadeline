@@ -50,5 +50,20 @@
   "gameLaunched": false,
   "installationWrites": 0,
   "dependencyDownloads": 0,
-  "runtimeIntegrated": false
+  "runtimeIntegrated": false,
+  "isolationAdapter": {
+    "stage": "managed-isolation-adapter",
+    "checksPassed": 45,
+    "summaryChecks": 4,
+    "fixedHz": 60,
+    "deniedServiceCount": 8,
+    "originalBound": false,
+    "recoveredCodeExecuted": false,
+    "newAssetsRead": false,
+    "originalSourceModified": false,
+    "processSandboxEstablished": false,
+    "originalFrameworkBridgeEstablished": false,
+    "dedicatedCmdExitCode": 0,
+    "noOpenProgressExitCode": 0
+  }
 }

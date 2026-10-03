@@ -15,14 +15,16 @@ static int Run(string[] args)
     var output = Path.GetFullPath("artifacts/current-progress-demo");
     var identityReportPath = Path.GetFullPath("artifacts/cdr-081-real/inventory.json");
     var compileReportPath = Path.GetFullPath("artifacts/cdr-082-real/summary.json");
+    var isolationSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
+        else if (key == "--isolation-report") isolationSummaryPath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -234,6 +236,31 @@ static int Run(string[] args)
             (report.GetProperty("emitSucceeded").GetBoolean() ? "本次只编译生成成功，代码未运行。" : $"本次仍有 {errorCount} 条编译错误，没有生成成功的程序集。") +
             "不会自写替身来凑通过，没有改原版源码或执行反编译工程。文件数量来自保守依赖扫描，不保证最小；编译仍是旧框架兼容性实验。";
     }
+    var isolationExplanation = "尚未生成隔离适配的测试摘要；这不是通过或失败。";
+    var isolationStatus = "not-inspected";
+    if (!isolationSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Isolation summary must be under repository artifacts.");
+    if (File.Exists(isolationSummaryPath))
+    {
+        if (new FileInfo(isolationSummaryPath).Length > 16384) throw new InvalidDataException("Isolation summary budget exceeded.");
+        using var isolationDocument = JsonDocument.Parse(File.ReadAllText(isolationSummaryPath));
+        var isolation = isolationDocument.RootElement;
+        if (isolation.GetProperty("schemaVersion").GetInt32() != 1 ||
+            isolation.GetProperty("taskId").GetString() != "CDR-082" ||
+            isolation.GetProperty("stage").GetString() != "managed-isolation-adapter" ||
+            isolation.GetProperty("checksPassed").GetInt32() != 45 || isolation.GetProperty("checksFailed").GetInt32() != 0 ||
+            isolation.GetProperty("fixedHz").GetInt32() != 60 || isolation.GetProperty("deniedServiceCount").GetInt32() != 8 ||
+            isolation.GetProperty("demoFrames").GetInt32() != 5 || isolation.GetProperty("installationWrites").GetInt32() != 0)
+            throw new InvalidDataException("Isolation summary result invalid.");
+        foreach (var flag in new[] { "originalBound", "recoveredCodeExecuted", "originalSourceModified", "newAssetsRead",
+            "guiOpened", "steamApiCalled", "gameLaunched", "processSandboxEstablished", "originalFrameworkBridgeEstablished" })
+            if (isolation.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Isolation summary scope invalid.");
+        isolationExplanation = "我们新写的外围适配已通过45项合成检查：每一步固定1/60秒，只吃程序预设输入，能区分按下、持续和松开。" +
+            "Steam、音频、窗口、绘图设备、真实输入、素材读取、文件写入和原版执行这8类请求全部明确拒绝。" +
+            "双击“验证本地隔离适配.cmd”可看到5步输入时间记录及拒绝结果，不会打开窗口或读取安装。" +
+            "它还没有接入原版静态时间/输入/场景，不是角色动画，不是系统安全沙箱；net8工具通过也不证明原版旧框架桥接通过。";
+        isolationStatus = "managed-only-original-unbound";
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -243,6 +270,7 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section data-isolation-status="{{isolationStatus}}"><h2>运行之前，隔离准备做到哪一步？</h2>{{isolationExplanation}}</section>
 <section><h2>使用找到的零件，拼装到哪一步？</h2>{{closureExplanation}}</section>
 <section><h2>编译零件找到了吗？</h2>{{referenceExplanation}}</section>
 <section data-compile-status="{{compileStatus}}"><h2>历史：第一次少量文件编译探针</h2>{{compileExplanation}}
