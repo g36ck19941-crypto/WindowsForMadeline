@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-03 — CDR-082 existing-reference inspection
+
+- Authorized fixed-scope read-only search found three exact XNA assembly identities in modern GAC_32 and four matching v4.7.2 BCL reference identities; v4.0/v4.5 core slots missing. No compile retry or runtime compatibility claim.
+- Added bounded fixed-name PEReader reference mode, four generated tests (39 metadata/317 retained), local-summary progress explanation and bilingual records. No commercial payload uploaded or system DLL executed.
+
 ## 2026-10-03 — CDR-082 no-window verification repair
 
 - Developer-authorized reviewed pure-offline whitelist excludes entire 20-case native rendering suite and real desktop probes. No-window gate passed 313 retained cases, 26 synthetic probe checks, four compile-summary checks and ancillary path/report/entry checks; original-core compile still blocked.

@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Follow-up: authorized existing-reference inspection found three XNA and four v4.7.2 reference identities; no compile retry. Current retained cases317 after four added metadata tests (39 focused). The 313 figures below are prior gate evidence. See CDR-082-REFERENCE-CHECK.md.
+
 2026-10-03, Primary. Tooling/offline verified, developer acceptance pending; original-core compilation partial/blocked. Local branch codex/cdr-082-local-compile-probe. Not uploaded.
 
 ## Role and outcome

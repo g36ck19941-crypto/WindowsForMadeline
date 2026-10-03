@@ -2,6 +2,7 @@
 
 ## CDR-082 — Local original-source recovery and minimal compile probe
 
+- Dependency follow-up authorized: in response to the read-only XNA/framework question, developer requested the next step. Primary may inspect fixed installed reference-assembly/SDK/GAC slots and metadata only. Scope adds AssemblyInventory reference-file mode/synthetic tests, safe summary and project records; no system-wide drive scan, downloads, assembly execution, installation writes, new compile/reference substitution or acceptance/upload.
 - Additional authorization: developer approved no-window gate repair and pure-offline revalidation. Scope includes verification scripts, developer cmd entries and corresponding records; excludes all window/native rendering and real desktop probes. Do not expand installation/reference reads.
 - State: local recovery/compile-probe tooling verified, developer acceptance pending; actual original-core compilation remains partial/blocked (918 recovered files, 15 seed files, CS0234=11/CS0246=355). No-window gate repair complete: 313 retained cases, 26 probe checks, four compile-summary checks, two junction/three identity-summary probes and four cmd entry checks passed. Entire 20-case native-rendering suite excluded, not counted as passed. No CDR-082 upload; see docs/zh-CN/CDR-082-ACCEPTANCE.md.
 - Owner: Primary; developer accepted CDR-081 and authorized CDR-082 on 2026-10-03.

@@ -33,5 +33,5 @@ try {
         if ($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED') { throw 'Unsafe/inconsistent compile report accepted.' }
     }
 } finally { Pop-Location }
-Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=313 compileReportChecks=4 windowProbesExecuted=0 originalCompilePassNotClaimed=true'
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 compileReportChecks=4 windowProbesExecuted=0 originalCompilePassNotClaimed=true'
 exit 0

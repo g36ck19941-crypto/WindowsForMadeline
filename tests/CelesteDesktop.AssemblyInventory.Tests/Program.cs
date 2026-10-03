@@ -42,7 +42,24 @@ var tests = new (string, Action)[]
     ("read inspection leaves synthetic installation identical", ReadOnly),
     ("fixed candidate slots immutable", () => Check(InventoryRunner.CandidateSlots.Count == 4 && ((IList<string>)InventoryRunner.CandidateSlots).IsReadOnly)),
     ("assembly names reject traversal separators and devices", SafeNames),
-    ("fresh runner invocation resets inventory", Reset)
+    ("fresh runner invocation resets inventory", Reset),
+    ("reference metadata uses fixed file only", () => With(f => {
+        f.Write("Microsoft.Xna.Framework.dll", "Microsoft.Xna.Framework");
+        f.Write("Celeste.dll", "DoNotInspectGame");
+        var fact = new InventoryRunner().InspectReference(f.Root, "Microsoft.Xna.Framework");
+        Check(fact.Identity == Id("Microsoft.Xna.Framework") && fact.Classification == "reference-candidate-not-runtime-validated");
+        Check(!JsonSerializer.Serialize(fact).Contains(f.Root));
+    })),
+    ("reference name rejects traversal and game", () => With(f => {
+        foreach (var name in new[] { "../System", "Celeste", "System.dll" })
+            Expect("REFERENCE_NAME_NOT_ALLOWLISTED", () => new InventoryRunner().InspectReference(f.Root, name));
+    })),
+    ("reference missing is not inspected pass", () => With(f => Check(new InventoryRunner().InspectReference(f.Root, "System").Status == "missing"))),
+    ("reference inspection does not load assembly", () => With(f => {
+        f.Write("System.dll", "GeneratedNotLoaded");
+        var fact = new InventoryRunner().InspectReference(f.Root, "System");
+        Check(fact.Identity?.Name == "GeneratedNotLoaded" && !AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "GeneratedNotLoaded"));
+    }))
 };
 var failures = 0;
 foreach (var (name, run) in tests)

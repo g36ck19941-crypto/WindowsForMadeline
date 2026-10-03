@@ -105,7 +105,7 @@ try {
         $probeExit = $LASTEXITCODE
     } finally { $ErrorActionPreference = 'Stop' }
     if ($probeExit -eq 0 -or ($rejection -join '') -notmatch 'safety contract failed') { throw 'Unsafe report was accepted.' }
-    if ($total -ne 313) { throw 'Reviewed pure-offline case count changed; inspect before updating gate.' }
+    if ($total -ne 317) { throw 'Reviewed pure-offline case count changed; inspect before updating gate.' }
     Write-Output "CDR081_OFFLINE_VERIFIED suites=$($suites.Count) passed=$total junctionChecks=2 reportChecks=3 windowProbesExecuted=0"
 } finally { Pop-Location }
 exit 0

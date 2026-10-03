@@ -187,6 +187,29 @@ static int Run(string[] args)
         compileReportAvailable = compileAvailable,
         compileStatus
     };
+    var referenceExplanation = "尚无系统编译引用的只读检查摘要。";
+    var referenceSummaryPath = Path.Combine(root, "artifacts", "cdr-082-reference-search", "summary.json");
+    if (File.Exists(referenceSummaryPath))
+    {
+        RejectLinks(root, referenceSummaryPath);
+        if (new FileInfo(referenceSummaryPath).Length > 65536) throw new InvalidDataException("Reference summary limit exceeded.");
+        using var referenceDocument = JsonDocument.Parse(File.ReadAllText(referenceSummaryPath));
+        var report = referenceDocument.RootElement;
+        if (report.GetProperty("taskId").GetString() != "CDR-082" ||
+            report.GetProperty("assemblyExecuted").GetBoolean() || report.GetProperty("gameLaunched").GetBoolean() ||
+            report.GetProperty("guiOpened").GetBoolean() || report.GetProperty("installationWrites").GetInt32() != 0 ||
+            report.GetProperty("dependencyDownloads").GetInt32() != 0 || report.GetProperty("compilationRetried").GetBoolean())
+            throw new InvalidDataException("Reference summary safety contract failed.");
+        var rows = report.GetProperty("referenceRows");
+        if (rows.GetArrayLength() > 64) throw new InvalidDataException("Reference summary row limit exceeded.");
+        var xnaMatches = rows.EnumerateArray().Count(row => row.GetProperty("scope").GetString() == "gac32-xna" &&
+            row.GetProperty("exactOriginalReferenceMatch").GetBoolean());
+        var frameworkMatches = rows.EnumerateArray().Count(row => row.GetProperty("scope").GetString() == "reference-framework-v4.7.2" &&
+            row.GetProperty("exactOriginalReferenceMatch").GetBoolean());
+        referenceExplanation = $"后续授权只读检查发现：32 位程序集缓存中 {xnaMatches} 个 XNA 组件身份匹配；" +
+            $"旧框架 v4.7.2 中 {frameworkMatches} 个核心引用身份匹配。v4.0/v4.5 所查核心 DLL 未找到。" +
+            "之前“安装目录内缺少”仍是当时正确的范围结论，不代表本机缺少。版本身份匹配不证明 API 或运行兼容；尚未重新编译，更没有运行角色。";
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -196,6 +219,7 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section><h2>编译零件找到了吗？</h2>{{referenceExplanation}}</section>
 <section data-compile-status="{{compileStatus}}"><h2>CDR-082：恢复之后，能编译吗？</h2>{{compileExplanation}}
 <p>简单说：已拿到拼装说明和零件清单，但还缺引擎零件，尚未拼成能工作的角色。
 程序只编译、不运行；此页面不输出源码，不会再次读取安装。商业源码和派生构建永不上传。</p></section>

@@ -13,6 +13,17 @@ public static class Program
     {
         try
         {
+            if (args.Length == 6 && args[0] == "--reference-root" && args[2] == "--name" && args[4] == "--output")
+            {
+                if (!Path.IsPathFullyQualified(args[1]) || !Path.IsPathFullyQualified(args[5]))
+                    throw new InventoryException("arguments", "EXPLICIT_PATHS_REQUIRED");
+                OutputGuard.Validate(args[1], args[5]);
+                var fact = new InventoryRunner().InspectReference(args[1], args[3]);
+                Directory.CreateDirectory(Path.GetDirectoryName(args[5])!);
+                File.WriteAllText(args[5], JsonSerializer.Serialize(fact, JsonOptions));
+                Console.WriteLine($"REFERENCE_METADATA_COMPLETED name={fact.Slot} status={fact.Status} assemblyExecuted=false");
+                return fact.Status == "managed-assembly" ? 0 : 2;
+            }
             var options = InventoryOptions.Parse(args);
             var report = new InventoryRunner().Inspect(options.Root);
             OutputGuard.Validate(options.Root, options.Output);
@@ -137,6 +148,19 @@ public sealed class InventoryRunner
     private readonly Dictionary<string, AssemblyFact> files = new(StringComparer.OrdinalIgnoreCase);
     private long totalBytes;
     private string root = "";
+
+    public AssemblyFact InspectReference(string explicitRoot, string name)
+    {
+        if (!Path.IsPathFullyQualified(explicitRoot)) throw new InventoryException("arguments", "EXPLICIT_ROOT_REQUIRED");
+        if (name is not ("Microsoft.Xna.Framework" or "Microsoft.Xna.Framework.Game" or "Microsoft.Xna.Framework.Graphics" or
+            "mscorlib" or "System" or "System.Core" or "System.Xml"))
+            throw new InventoryException("reference", "REFERENCE_NAME_NOT_ALLOWLISTED");
+        root = Path.GetFullPath(explicitRoot);
+        EnsureSafePath(root);
+        files.Clear();
+        totalBytes = 0;
+        return ReadSlot(name + ".dll") with { Classification = "reference-candidate-not-runtime-validated" };
+    }
 
     public InventoryReport Inspect(string explicitRoot)
     {
