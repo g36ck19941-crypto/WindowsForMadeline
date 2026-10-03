@@ -1,0 +1,11 @@
+本入口演示测试进程监控：启动8个自有小程序情景，不加载Celeste或XNA，不创建角色。
+不会显示子进程控制台或GUI，不访问游戏/素材，不使用真实输入、Steam或音频。
+Complete是正常完成；EarlyExit是中途退出；MissingComplete是退出了却没报告完成。
+Malformed和WrongRunId是消息错误；FloodStdout/FloodStderr是输出过多；Hang是故意等待超时。
+你会看到每项的outcome（结果）、lastStage（最后阶段）、exitCode（退出码）和childExited（已结束）。
+context-ready只是小测试的合成阶段，不表示原版输入已初始化或角色已生成。
+超时情景会在3秒后只结束本工具启动的那个进程，不影响其他程序。
+这些失败情景被正确识别也算测试通过；应出现passed=8、failed=0、allOwnedChildrenExited=true。
+成功仅证明监控工具能识别自有合成情景，不代表原版代码已经运行，更不代表角色生成或原版行为安全。
+它不是安全沙箱，仍不能替代原生初始化审查；不会自动继续加载原版。
+失败时提供最后PROCESS_GUARD_FAILED或FAILED信息，不发送商业源码、DLL或素材。

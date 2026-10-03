@@ -1,5 +1,11 @@
 # Diagnostics Contract
 
+## CDR-082 own process guard
+
+- PROCESS_GUARD_CASE: runId/scenario/ownedPid/outcome/exitCode/durationMs/lastStage/eventCount/terminationRequested/childExited/retained characters and overflow. Generated own phases only, not original actor health.
+- PROCESS_GUARD_VERIFIED:8generated outcomes+phases/exits/budgets verified, allOwnedChildrenExited=true, originalCodeExecuted=false/processSandboxEstablished=false/originalRuntimeMonitorEstablished=false. Not native containment.
+- PROCESS_GUARD_FAILED: timestamp/stage/type/message/HResult/stack/bounded inner, local paths redacted. No raw child text/source/pixels. Only own-created child may be terminated.
+
 ## CDR-082 cached XNA metadata preflight
 
 - XNA_PRIVATE_CACHE_COMPLETED:3 approved fixed-hash files privately copied, source/destination identity stable; no target execution.

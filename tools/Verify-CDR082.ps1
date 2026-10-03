@@ -7,6 +7,8 @@ $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 $env:DOTNET_NOLOGO = '1'
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-XnaPreflight.ps1')
 if($LASTEXITCODE -ne 0){throw 'Owned metadata preflight suite failed.'}
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-ProcessGuard.ps1')
+if($LASTEXITCODE -ne 0){throw 'Reviewed own process guard suite failed.'}
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-RuntimeIsolation.ps1')
 if ($LASTEXITCODE -ne 0) { throw 'Reviewed managed isolation suite failed.' }
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Invoke-OriginalCompileProbe.ps1') -SelfTest
@@ -89,5 +91,5 @@ try {
         if($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED'){throw 'False framework claim accepted.'}
     }
 } finally { Pop-Location }
-Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 adapterAuditChecks=3 frameworkReportChecks=4 xnaOwnedMetadataChecks=13 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 adapterAuditChecks=3 frameworkReportChecks=4 xnaOwnedMetadataChecks=13 processGuardScenarios=8 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
 exit 0

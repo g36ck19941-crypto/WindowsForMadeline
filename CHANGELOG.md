@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Own synthetic process monitoring
+
+Fixed self-only console children, strict generated phase/run protocol, bounded/drained pipes,3s timeout/owned cleanup and detailed aggregate exit/stage/duration diagnostics.8expected cases passed, all children exited; no-window full gate included after boundary review. Not sandbox/original bridge/native containment or gameplay functionality. No original/XNA/assets/game access; pending acceptance/upload.
+
 ## 2026-10-03 — Cached native entry prefixes and import thunks
 
 Installed MSVC offline disassembly12bounded windows private-only; own PE32 prefix/import-slot classifier identifies4declared-import thunks+2unclassified bodies per mixedmodule. No complete function/control-flow/runtime safety claim. Four generated fixtures bring owned checks13; cmd adds aggregate native forms. No target execution/download/game/assets; pending acceptance/upload.
