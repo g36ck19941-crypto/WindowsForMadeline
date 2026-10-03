@@ -2,6 +2,8 @@
 
 ## CDR-082 — Local original-source recovery and minimal compile probe
 
+- Original input/time smoke now explicitly authorized: cache/generated input only; no Player/game/GUI/live input/Steam/audio/install/new assets/original source edits; stop on dependency/side-effect doubt. Primary preflight found cached core outputs but no project-cached3XNA runtime libraries. Earlier system GAC XNA permission metadata-only; no silent runtime load/copy. Execution not attempted. Dependency source/runtime scope needs confirmation; bilingual CDR-082-INPUT-PREFLIGHT records. No acceptance/upload.
+
 - Actual bridge plan: cached-source-only inspection mapped input-memory states and private time/init/virtual-update seams, preserving original button behavior. Proposed next original input/time-only test requires explicit recovered-execution permission; not implemented/verified. NoPlayer/new assets/game/GUI/device polling/audio/Steam/install/source edits. Primary records docs/CDR-082-BRIDGE-PLAN.md; execution and full initialization-callgraph safety remain unproven.
 
 - Isolation framework continuation: Primary owns own module compatibility marker/usings/helper adjustments, static audit tests, tools/Compile-IsolationFramework.ps1, opt-in cmd, progress-summary probes and records. Only previously approved4 framework refs/no game or new assets. Own net472 compilation succeeds, output1 mscorlib ref/0 resources/PInvoke, never executed.45 existing +3 audit/4 framework-summary probes; actual original bridge/runtime still unproven. See bilingual CDR-082-ISOLATION-FRAMEWORK.md; acceptance/upload pending.

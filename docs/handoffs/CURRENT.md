@@ -1,5 +1,9 @@
 # Current Handoff
 
+## Latest permission and new dependency preflight stop
+
+Human now authorized limited original input/time test, cache+generated input only, noPlayer/game/GUI/live input/Steam/audio/install/new assets/source edits, stop on dependency/side-effect doubt. This resolves prior original-input execution permission gate but not cache/runtime dependency sourcing. Project cache DLL inventory found5originalcore outputs/no3XNA runtime DLLs; previous XNA only systemGAC metadata references. No original load/initialization/time setter/input update attempted, no system-XNA copy/read or install/assets access. Need precise permission for already-found system XNA readonly private caching/static initialization audit and limited managed runtime dependency use, or designated existing approved cache. Do not rely silently onGAC/defaultCLR resolution/FNA/reference-only runtime substitutes. docs/CDR-082-INPUT-PREFLIGHT.md bilingual is current. Original binding/test evidence still absent; acceptance/upload pending.
+
 ## Actual original input/time bridge proposal — execution gate
 
 Cached-source inspection identified stored MInput keyboard states, private Engine time setters, nonpublic initialization/virtual-input update, public Input controls and original Binding/VirtualButton buffering. VirtualIntegerAxis is binding-backed, not an injectable-node interface; device polling must be excluded. Settings initialization required; Engine.Scene requires Instance/Level context. docs/CDR-082-BRIDGE-PLAN.md and Chinese mirror propose input/time-only original smoke in isolated process, noPlayer/resources/normal engine/device polling/Steam/audio/GUI/install. This is NOT implemented/verified. Current permission forbids recovered execution, so new explicit permission required before original initializer or virtual updates; unresolved callgraph/side-effects stop before invocation. No original source/installation/assets touched this turn, no acceptance/upload.

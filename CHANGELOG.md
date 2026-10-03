@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Original input/time authorization and dependency preflight
+
+Recorded new limited runtime permission. Cache inventory lacks required XNA runtime files; system-GAC compile metadata permission not silently expanded. Stopped before original loading/execution, no runtime feature/test pass claimed. Bilingual dependency gate/handoff updated.
+
 ## 2026-10-03 — Concrete original input/time bridge proposal
 
 Cached-source-derived endpoint/initializer and forbidden-device-path design; no runnable update or original test pass. New execution permission required for proposed bounded original input/time smoke, no Player/resources/GUI. Bilingual plan and handoff updated.
