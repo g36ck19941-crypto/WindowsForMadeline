@@ -2,6 +2,9 @@
 
 ## CDR-082 — Local original-source recovery and minimal compile probe
 
+- XNA cache/audit follow-up explicitly confirmed by developer: Primary owns fixed3hash Cache-ApprovedXna.ps1 and local ignored metadata/decompilation audit outputs plus aggregate records. Readonly fixed GAC3 previously matched candidates, private copy/hash/PE audit only. No native/input/audio/window/game/install/asset calls, downloads or acceptance/upload. Runtime test must stop for unreviewed initialization/dependencies; cache creation itself is not original execution proof.
+- XNA audit owner/scope adds tools/CelesteDesktop.XnaPreflight, Verify-XnaPreflight.ps1, dedicated cmd/Chinese explanation and ordinary managed-only3check gate. Actualcopied3 hash/identity verified;2mixed-mode modules haveinitializers/unreviewednativeimports and extra managed dependencies. No target loading/test invocation; clarify readonlyclosure scope. Current delivery docs/CDR-082-XNA-AUDIT.md bilingual.
+
 - Original input/time smoke now explicitly authorized: cache/generated input only; no Player/game/GUI/live input/Steam/audio/install/new assets/original source edits; stop on dependency/side-effect doubt. Primary preflight found cached core outputs but no project-cached3XNA runtime libraries. Earlier system GAC XNA permission metadata-only; no silent runtime load/copy. Execution not attempted. Dependency source/runtime scope needs confirmation; bilingual CDR-082-INPUT-PREFLIGHT records. No acceptance/upload.
 
 - Actual bridge plan: cached-source-only inspection mapped input-memory states and private time/init/virtual-update seams, preserving original button behavior. Proposed next original input/time-only test requires explicit recovered-execution permission; not implemented/verified. NoPlayer/new assets/game/GUI/device polling/audio/Steam/install/source edits. Primary records docs/CDR-082-BRIDGE-PLAN.md; execution and full initialization-callgraph safety remain unproven.

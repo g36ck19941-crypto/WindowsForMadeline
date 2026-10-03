@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Approved XNA private cache and mixed-mode static audit
+
+Fixed3readonly copies/hash/identity checks, PE-only initialization/native/import/dependency facts, own3check auditor suite and cmd. Mixed-mode/unreviewed dependency safety gate prevents target load. No original runtime feature, extra dependencies, assets or source edits; pending acceptance/upload.
+
 ## 2026-10-03 — Original input/time authorization and dependency preflight
 
 Recorded new limited runtime permission. Cache inventory lacks required XNA runtime files; system-GAC compile metadata permission not silently expanded. Stopped before original loading/execution, no runtime feature/test pass claimed. Bilingual dependency gate/handoff updated.

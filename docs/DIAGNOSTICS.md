@@ -1,5 +1,12 @@
 # Diagnostics Contract
 
+## CDR-082 cached XNA metadata preflight
+
+- XNA_PRIVATE_CACHE_COMPLETED:3 approved fixed-hash files privately copied, source/destination identity stable; no target execution.
+- XNA_STATIC_AUDIT_COMPLETED: cache metadata inspection completed, runtimeSafetyEstablished=false/originalTestExecuted=false. Mixed-mode/native/module-initializer declarations are risks requiring further review, not actual invocation evidence.
+- XNA_PREFLIGHT_FAILED: JSON run/stage/type/message/HResult/stack/bounded inner with private path redaction. No commercial byte/source payload.
+- XNA_PREFLIGHT_TESTS:3 own-tool metadata/scope/load absence checks. Not actual original input/runtime acceptance.
+
 ## CDR-082 managed isolation adapter
 
 - ISOLATION_NET472_COMPILED: own adapter emitted using approved4 framework refs, static target/identity/import/resource audit only, originalBound=false/outputExecuted=false.

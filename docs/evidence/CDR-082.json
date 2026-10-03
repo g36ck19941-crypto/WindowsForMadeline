@@ -51,6 +51,23 @@
   "installationWrites": 0,
   "dependencyDownloads": 0,
   "runtimeIntegrated": false,
+  "xnaCacheAudit": {
+    "copiedApprovedFiles": 3,
+    "sourceAndDestinationHashesMatched": true,
+    "identitiesMatched": true,
+    "mixedModeModules": 2,
+    "moduleInitializersPresent": 2,
+    "frameworkNativeMethods": 102,
+    "frameworkPInvokeMethods": 122,
+    "gamePInvokeMethods": 11,
+    "graphicsNativeMethods": 36,
+    "graphicsPInvokeMethods": 39,
+    "ownMetadataChecks": 3,
+    "targetExecuted": false,
+    "originalTestExecuted": false,
+    "runtimeSafetyEstablished": false,
+    "newDependenciesRead": false
+  },
   "isolationFramework": {
     "compileSucceeded": true,
     "targetFramework": ".NETFramework,Version=v4.7.2",

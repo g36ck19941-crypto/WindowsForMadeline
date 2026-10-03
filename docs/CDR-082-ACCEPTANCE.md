@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Current authorized XNA caching/static audit delivery: [mixed-mode initialization/dependency findings](CDR-082-XNA-AUDIT.md).3 copies verified, target/original test not executed, no runtime-safety claim; pendingacceptance/upload.
+
 Additional framework preparation: [own-adapter net472 compile acceptance](CDR-082-ISOLATION-FRAMEWORK.md), compile/static only, no original binding/run. All current CDR-082 deliveries still pending acceptance/upload.
 
 Latest additional authorized isolation delivery: own fixed-time/injected-input/service-denial adapter,45 synthetic assertions and4 summary probes. No original binding/runtime/assets/source edits; see [isolation acceptance and next gate](CDR-082-ISOLATION.md). Both original-library compilation and managed adaptation remain pending developer acceptance/upload.
