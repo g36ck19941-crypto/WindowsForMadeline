@@ -2,7 +2,19 @@
 
 2026-10-03. Primary. Developer confirmed readonly private caching/audit of3 previously inspected system XNA assemblies. No original/target assembly execution, game/GUI/real input/audio/Steam, installation/assets access or downloads. Acceptance/upload pending.
 
-Later explicit readonly system-dependency grant resolves the inspection-scope gate below; [system findings](CDR-082-SYSTEM-DEPENDENCIES.md). Current cached-boundary classification adds a ninth own check group. Older4/8-check results are historical. Runtime safety remains unproven.
+Later explicit readonly system-dependency grant resolves the inspection-scope gate below; [system findings](CDR-082-SYSTEM-DEPENDENCIES.md). Current native-entry check suite has13 own groups. Older4/8/9-check results below are historical. Runtime safety remains unproven.
+
+## Latest native-entry static check
+
+Installed MSVC dumpbin was found in its fixed Visual Studio tools directory and used on12 cached native-entry windows (512bytes maximum each). No download, target loading/execution or game-directory access; raw disassembly stays only in ignored cache. A bounded window does NOT establish full function boundaries/control flow. Initial range argument rejected by the tool was corrected to explicit0x VA syntax; this was a tool setup error, not a target-runtime attempt.
+
+Own PE32 prefix classifier now recognizes absolute import-slot jumps, relative jumps and exact constant-return prefixes, and rejects truncated fixtures. Import-slot matching reads only the same cached image's declared import table. Four own generated fixture groups bring total checks13; ordinary verification reads no target/cache/system files.
+
+Measured each mixed library:6 native entries include4 declared-import thunks and2 body-unclassified entries. Three thunks map to MSVCR100, one to kernel32. Declared export names are __FrameUnwindFilter, _cexit, _amsg_exit and Sleep; their presence is not proof these paths execute. The two bodies and11 managed calli targets remain unresolved. Exception/exit/wait-related declarations strengthen the need for a separate parent process with bounded timeout and termination diagnostics before any permitted runtime test; own managed exception handling alone must not be assumed to catch native termination. No runtime containment is established here.
+
+Acceptance: double-click 审查缓存XNA依赖.cmd and expect XNA_NATIVE_ENTRY_FORMS rows: declared-import-thunk4/body-unclassified2 for Framework/Graphics, Gameempty/no module root. No actual input or character demonstration. Native safety gate remains; don't automatically initialize mixed modules based on thunk classification. No permission expansion, source edits or upload.
+
+Measured latest cache/full cmds exit0;13owned groups,317retained and existing probe26/closure13/compile-report4/isolation45/isolation-report4/adapter-audit3/framework-report4 all pass, window probes0. Next bounded preparation is own parent/child timeout/termination diagnostics without original execution, under the existing isolation-adapter design scope; this will not itself resolve the native behavior gate.
 
 ## Latest cached-only boundary classification
 

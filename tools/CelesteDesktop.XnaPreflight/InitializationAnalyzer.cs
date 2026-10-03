@@ -21,6 +21,7 @@ internal static class InitializationAnalyzer
         var managed = 0; var native = 0; var pinvoke = 0; var memberBoundaries = 0; var indirect = 0; var unknownBodies = 0;
         var nativeRvaImports = 0; var emptyModuleImports = 0;
         var memberScopes = new Dictionary<string, int>();
+        var nativeEntryForms = new Dictionary<string, int>();
         while (pending.Count != 0)
         {
             var handle = pending.Pop(); if (!visited.Add(handle)) continue;
@@ -31,10 +32,16 @@ internal static class InitializationAnalyzer
                 var import = method.GetImport();
                 var moduleName = import.Module.IsNil ? "" : reader.GetString(reader.GetModuleReference(import.Module).Name);
                 if (moduleName.Length == 0) emptyModuleImports++;
-                if ((method.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native && method.RelativeVirtualAddress != 0) nativeRvaImports++;
+                object? entryFact = null;
+                if ((method.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native && method.RelativeVirtualAddress != 0) {
+                    nativeRvaImports++;
+                    var classified = (NativeEntryFact)NativeEntryClassifier.Classify(pe, method.RelativeVirtualAddress);
+                    nativeEntryForms[classified.form] = nativeEntryForms.GetValueOrDefault(classified.form) + 1;
+                    entryFact = classified;
+                }
                 privateDetails?.Add(new { kind = "pinvoke-boundary", token = MetadataTokens.GetToken(handle),
                     name = reader.GetString(method.Name), importName = reader.GetString(import.Name), moduleName,
-                    implementation = method.ImplAttributes.ToString(), rva = method.RelativeVirtualAddress });
+                    implementation = method.ImplAttributes.ToString(), rva = method.RelativeVirtualAddress, entryFact });
                 continue;
             }
             if ((method.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native) { native++; continue; }
@@ -83,7 +90,7 @@ internal static class InitializationAnalyzer
             }
         }
         return new InitializationFact(rootList.Length, managed, native, pinvoke, memberBoundaries, indirect, unknownBodies,
-            "conservative-local-method-graph", false, nativeRvaImports, emptyModuleImports, memberScopes);
+            "conservative-local-method-graph", false, nativeRvaImports, emptyModuleImports, memberScopes, nativeEntryForms);
     }
 
     private static string MemberScope(MetadataReader reader, EntityHandle parent)
@@ -101,7 +108,7 @@ internal static class InitializationAnalyzer
 internal sealed record InitializationFact(int rootCount, int visitedManagedMethods, int nativeMethodBoundaries,
     int pinvokeBoundaries, int memberReferenceBoundaries, int indirectCalls, int unresolvedBodies,
     string method, bool runtimeSafetyEstablished, int pinvokeWithNativeRva, int pinvokeEmptyModuleNames,
-    Dictionary<string, int> memberReferenceScopes);
+    Dictionary<string, int> memberReferenceScopes, Dictionary<string, int> nativeEntryForms);
 
 internal static class AuditTrap
 {

@@ -32,7 +32,8 @@ try
         try { ValidatePrivateOutputPath("local-cache/cdr-082-xna/fixture/runtime", "artifacts/escaped.json"); }
         catch (ArgumentException) { rejected = true; }
         if (!rejected) throw new InvalidDataException("PRIVATE_OUTPUT_SCOPE_NEGATIVE_FAILED");
-        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=9 failed=0 targetExecuted=false");
+        NativeEntryClassifier.SelfTest();
+        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=13 failed=0 targetExecuted=false");
         return 0;
     }
     if (args is ["--system-dependencies"])

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Cached native entry prefixes and import thunks
+
+Installed MSVC offline disassembly12bounded windows private-only; own PE32 prefix/import-slot classifier identifies4declared-import thunks+2unclassified bodies per mixedmodule. No complete function/control-flow/runtime safety claim. Four generated fixtures bring owned checks13; cmd adds aggregate native forms. No target execution/download/game/assets; pending acceptance/upload.
+
 ## 2026-10-03 — Cached initializer boundary classification
 
 73member occurrences scoped to mscorlib;9PInvoke includes6Native/localRVA overlaps per mixed module. Clarified exclusive native0 category is not no-native safety. Raw details ignored-only/fresh scoped output; ninth own negative check/aggregate cmd logs. Cache/full gate passed, no target execution/new dependencies/runtime feature. Pending acceptance/upload.

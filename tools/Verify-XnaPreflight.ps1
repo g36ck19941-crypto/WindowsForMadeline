@@ -33,6 +33,7 @@ try {
             Write-Output ("XNA_METADATA name="+$row.name+" ilOnly="+$row.ilOnly+" moduleInitializer="+$row.moduleInitializerPresent+" nativeMethods="+$row.nativeMethodCount+" pinvokeMethods="+$row.pinvokeMethods)
             Write-Output ("XNA_INITIALIZER_GRAPH name="+$row.name+" managedMethods="+$row.initialization.visitedManagedMethods+" pinvokeBoundaries="+$row.initialization.pinvokeBoundaries+" memberBoundaries="+$row.initialization.memberReferenceBoundaries+" indirectCalls="+$row.initialization.indirectCalls+" actualInvocationProven=false")
             Write-Output ("XNA_BOUNDARY_CLASSIFICATION name="+$row.name+" pinvokeWithNativeRva="+$row.initialization.pinvokeWithNativeRva+" emptyModuleNames="+$row.initialization.pinvokeEmptyModuleNames+" memberScopes="+($row.initialization.memberReferenceScopes | ConvertTo-Json -Compress)+" runtimeSafetyEstablished=false")
+            Write-Output ("XNA_NATIVE_ENTRY_FORMS name="+$row.name+" forms="+($row.initialization.nativeEntryForms | ConvertTo-Json -Compress)+" targetExecuted=false")
         }
         Write-Output 'XNA_STATIC_AUDIT_COMPLETED runtimeSafetyEstablished=false originalTestExecuted=false'
     }

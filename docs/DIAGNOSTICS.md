@@ -5,7 +5,8 @@
 - XNA_PRIVATE_CACHE_COMPLETED:3 approved fixed-hash files privately copied, source/destination identity stable; no target execution.
 - XNA_STATIC_AUDIT_COMPLETED: cache metadata inspection completed, runtimeSafetyEstablished=false/originalTestExecuted=false. Mixed-mode/native/module-initializer declarations are risks requiring further review, not actual invocation evidence.
 - XNA_PREFLIGHT_FAILED: JSON run/stage/type/message/HResult/stack/bounded inner with private path redaction. No commercial byte/source payload.
-- XNA_PREFLIGHT_TESTS:9 own-tool check groups: prior8 plus private-output scope rejection. Ordinary self-tests do not read system/cache files. Not actual original input/runtime acceptance.
+- XNA_PREFLIGHT_TESTS:13 own-tool check groups: prior9 plus4 generated native-prefix fixtures/rejections. Ordinary self-tests do not read system/cache files. Not actual original input/runtime acceptance.
+- XNA_NATIVE_ENTRY_FORMS: cached PE32 prefix/import-slot aggregate, declared-import-thunk/body-unclassified and targetExecuted=false. Not general native disassembly/control-flow/safety proof. Raw entry symbols/bytes/disassembly remain ignored-only.
 - XNA_BOUNDARY_CLASSIFICATION: pinvokeWithNativeRva/emptyModuleNames/memberScopes aggregate classification only; runtimeSafetyEstablished=false. Native RVA overlaps PInvoke count, not a new actual invocation. Raw method names/tokens/import details remain ignored cache only.
 - SYSTEM_DEPENDENCY: fixed-slot name/status/machine/moduleInitializer/pinvokeMethods only. No raw bytes/source or recursive resolution.
 - SYSTEM_DEPENDENCY_AUDIT_COMPLETED: readonly PE/CLR/import declarations collected, targetExecuted=false/runtimeSafetyEstablished=false. Found files are not execution-safety proof.

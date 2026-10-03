@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Current cached native-entry diagnostics: [13owned-check gate,4thunks/2unknown bodies per mixed module](CDR-082-XNA-AUDIT.md). No original/native execution, GUI or runtime pass. Older8/9 counts below are prior-stage results; all CDR-082 deliveries remain pending acceptance/upload.
+
 Latest readonly system-dependency delivery: [scope, measured availability and acceptance](CDR-082-SYSTEM-DEPENDENCIES.md).12 fixed slots inspected/hashstable, no copies/execution;8 owned-tool checks. Scoped search permission resolved, initialization safety and original runtime still unproven; pending acceptance/upload.
 
 Current authorized XNA caching/static audit delivery: [mixed-mode initialization/dependency findings](CDR-082-XNA-AUDIT.md).3 copies verified, target/original test not executed, no runtime-safety claim; pendingacceptance/upload.

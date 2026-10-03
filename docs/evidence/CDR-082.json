@@ -82,7 +82,7 @@
     "gamePInvokeMethods": 11,
     "graphicsNativeMethods": 36,
     "graphicsPInvokeMethods": 39,
-    "ownMetadataChecks": 9,
+    "ownMetadataChecks": 13,
     "initializerTraversal": {
       "method": "conservative-local-method-graph",
       "frameworkAndGraphicsEach": {
@@ -93,6 +93,8 @@
         "pinvokeWithNativeRva": 6,
         "pinvokeEmptyModuleNames": 6,
         "memberReferenceScopes": { "mscorlib": 73 },
+        "nativeEntryForms": { "declared-import-thunk": 4, "body-unclassified": 2 },
+        "declaredThunkImportModules": { "MSVCR100.dll": 3, "KERNEL32.dll": 1 },
         "memberReferenceBoundaries": 73,
         "indirectCalls": 11,
         "unresolvedBodies": 0
@@ -100,6 +102,15 @@
       "gameRootCount": 0,
       "actualInvocationProven": false,
       "externalTargetsResolved": false
+    },
+    "boundedNativeInspection": {
+      "existingTool": "MSVC dumpbin",
+      "entryWindows": 12,
+      "maximumBytesPerWindow": 512,
+      "rawDisassemblyIgnoredOnly": true,
+      "completeFunctionBoundsEstablished": false,
+      "nativeControlFlowEstablished": false,
+      "targetExecuted": false
     },
     "targetExecuted": false,
     "originalTestExecuted": false,

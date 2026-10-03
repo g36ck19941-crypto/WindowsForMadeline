@@ -1,5 +1,9 @@
 # Current Handoff
 
+## Latest native entry static follow-up
+
+Existing MSVC dumpbin fixed VS2022Preview14.39.33218 Hostx64/x86 found; /headers and /disasm:nobytes /range:0xVA,0xVA bounded512bytes for12native entries, outputs local-cache/cdr-082-xna/<cache>/native-inspection-<guid> only. Initial range lacking0x rejected1147, corrected; no targetexecution. NativeEntryClassifier.cs ownPE32 prefix/importslot matching:4thunks (3MSVCR100/1kernel32)+2bodyunclassified per mixedlibrary. Exportdeclarations exception/exit/wait-related, not actual invocation. Native body2/calli11 effects remain unknown; parentprocess timeout/termination diagnostics needed before runtime, not established here. Four generated prefixcheckgroups=>13total. Dedicatedcachecmd logs XNA_NATIVE_ENTRY_FORMS aggregate only; private method/import/rawasm stays ignored. No systemdependencyreread/download/game/assets/originalcodeexecution. Native safety gate persists; don't infer own exception catch covers native termination. Bilingual XNA-AUDIT current; pending acceptance/upload.
+
 ## Latest cached initializer boundary classification
 
 Framework/Graphics53managed/9PInvoke/73member/11indirect unchanged; member scopes allmscorlib. PInvoke overlap6Native/nonzeroRVA/emptyModule;3kernel32/MSVCR100 declarations. Prior native0 excludes PInvoke-first category, not no-native claim. Native bodies/indirect targets unknown; no safety/invocation proof. Analyzer public aggregate/private details; Program --private-boundaries fresh JSON approved cache parent/no links/no overwrite, wrapperAuditCache only. Raw names/tokens ignored-only, never public/Git. Own lexical output negative =>9groups, ordinarycache/system-free. Cache/fullcmdpass retained317/window0/no new dependencyreads/original/targetexecution. Bilingual XNA-AUDIT current. Next native/indirect initialization behavior gate; don't repeat resolved dependency searches or silently run original. Pending acceptance/upload.
