@@ -1,5 +1,9 @@
 # Current Handoff
 
+## Actual original input/time bridge proposal — execution gate
+
+Cached-source inspection identified stored MInput keyboard states, private Engine time setters, nonpublic initialization/virtual-input update, public Input controls and original Binding/VirtualButton buffering. VirtualIntegerAxis is binding-backed, not an injectable-node interface; device polling must be excluded. Settings initialization required; Engine.Scene requires Instance/Level context. docs/CDR-082-BRIDGE-PLAN.md and Chinese mirror propose input/time-only original smoke in isolated process, noPlayer/resources/normal engine/device polling/Steam/audio/GUI/install. This is NOT implemented/verified. Current permission forbids recovered execution, so new explicit permission required before original initializer or virtual updates; unresolved callgraph/side-effects stop before invocation. No original source/installation/assets touched this turn, no acceptance/upload.
+
 ## Own isolation adapter net472 compilation milestone
 
 Within existing local isolation and4-reference permissions, own2-file module now compiles against4 net472 refs via direct installed SDK csc, explicit nostdlib/deterministic/library. No packages/analyzers/recovered source/project/installation/assets. Hash checks before/after refs and own source. Static PE verifies actual framework attribute4.7.2/1mscorlib ref exact identity/core context types/0 resources/PInvoke/no output load. Own output SHA47E4D0D68DE4D5CFD84F3B643382B883DF269D444F5F4AD5B8FE1B836B24D81B repeated; not executed.45 existing isolation assertions,3 audit-negative tests and4 framework-summary probes; ordinary gate never repeats real system-ref compile. Opt-in 检查隔离适配旧框架编译.cmd; source-free artifacts summary and bilingual CDR-082-ISOLATION-FRAMEWORK docs/progress. Original binding and runtime remain false; no acceptance/upload. Next actual original static-service/scene bridge cannot be inferred from own compile success.

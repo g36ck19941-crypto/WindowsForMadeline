@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Concrete original input/time bridge proposal
+
+Cached-source-derived endpoint/initializer and forbidden-device-path design; no runnable update or original test pass. New execution permission required for proposed bounded original input/time smoke, no Player/resources/GUI. Bilingual plan and handoff updated.
+
 ## 2026-10-03 — Own isolation module old-framework compile preparation
 
 Own module emits net472 library using already-authorized references; static identity/target/import/resource audit plus3 negative and4 progress-summary probes. New opt-in cmd; no old-target execution, original bridge, new assets or original source edits. No upload before acceptance.
