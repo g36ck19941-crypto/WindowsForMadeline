@@ -14,14 +14,16 @@ static int Run(string[] args)
     // This report reads names only, never exports cached source or commercial assets.
     var output = Path.GetFullPath("artifacts/current-progress-demo");
     var identityReportPath = Path.GetFullPath("artifacts/cdr-081-real/inventory.json");
+    var compileReportPath = Path.GetFullPath("artifacts/cdr-082-real/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report") || ++i >= args.Length)
-            throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>]");
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report") || ++i >= args.Length)
+            throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
-        else identityReportPath = Path.GetFullPath(args[i]);
+        else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
+        else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
     if (!File.Exists(Path.Combine(root, "CelesteDesktopRuntime.sln")))
@@ -31,6 +33,8 @@ static int Run(string[] args)
         throw new ArgumentException("Report output must be under repository artifacts.");
     if (!identityReportPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
         throw new ArgumentException("Identity report must be under repository artifacts.");
+    if (!compileReportPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Compile report must be under repository artifacts.");
     RejectLinks(root, output);
     var cacheRoot = Path.Combine(root, "local-cache", "celeste-reference");
     var sourceCount = 0;
@@ -132,6 +136,37 @@ static int Run(string[] args)
                 : "这份报告没有列出原版候选的 XNA 缺项，但依赖闭合和编译仍未证明，不能因此称为可以运行。";
         }
     }
+    var compileExplanation = "尚无 CDR-082 本地恢复/编译摘要；不会自动恢复或编译。";
+    var compileAvailable = false;
+    var compileStatus = "uninspected";
+    if (File.Exists(compileReportPath))
+    {
+        RejectLinks(root, compileReportPath);
+        if (new FileInfo(compileReportPath).Length > 65536) throw new InvalidDataException("Compile summary limit exceeded.");
+        using var compileDocument = JsonDocument.Parse(File.ReadAllText(compileReportPath));
+        var probe = compileDocument.RootElement;
+        if (probe.GetProperty("schemaVersion").GetInt32() != 1 || probe.GetProperty("taskId").GetString() != "CDR-082" ||
+            probe.GetProperty("candidate").GetString() != "orig/Celeste.exe" ||
+            probe.GetProperty("recoveredCodeExecuted").GetBoolean() || probe.GetProperty("gameLaunched").GetBoolean() ||
+            probe.GetProperty("guiOpened").GetBoolean() || probe.GetProperty("installationWrites").GetInt32() != 0 ||
+            probe.GetProperty("dependencyDownloads").GetInt32() != 0 || !probe.GetProperty("commercialMaterialLocalOnly").GetBoolean() ||
+            probe.GetProperty("runtimeIntegrated").GetBoolean()) throw new InvalidDataException("Compile summary safety contract failed.");
+        var recovered = probe.GetProperty("recoveredSourceFiles").GetInt32();
+        var selected = probe.GetProperty("selectedCoreFiles").GetInt32();
+        if (recovered is < 1 or > 10000 || selected is < 1 or > 10000 || selected > recovered)
+            throw new InvalidDataException("Compile summary count invalid.");
+        var compiled = probe.GetProperty("compileEstablished").GetBoolean();
+        var attempted = probe.GetProperty("compileAttempted").GetBoolean();
+        if (compiled && (!attempted || probe.GetProperty("compileExitCode").GetInt32() != 0))
+            throw new InvalidDataException("Compile outcome inconsistent.");
+        compileAvailable = true;
+        compileStatus = compiled ? "compiled-not-executed" : attempted ? "compile-blocked" : "not-attempted";
+        compileExplanation = $"CDR-082 已把选定的 orig/Celeste.exe 恢复成 {recovered} 个源码文件，全部仅存在本机忽略目录。" +
+            $"编译探针只选取了含 Player 的 {selected} 个核心文件，没有运行反编译生成的工程。" +
+            (compiled ? "本次编译通过，但没有运行，也不证明角色可以显示或移动。" :
+             attempted ? "编译实际未通过：缺少依赖/相关类型。源码已恢复，不等于已拼成可运行角色。" : "尚未进入编译，前置离线准备失败。") +
+            "旧的 .NET Framework 4.5 代码被试编译为 .NET 8，这是实验，不是已验证兼容；没有用 FNA 悄悄替代 XNA。";
+    }
     var manifest = new
     {
         demoId = "CDR-081",
@@ -148,7 +183,9 @@ static int Run(string[] args)
         persistedCommercialBytes = 0,
         identityReportAvailable = identityAvailable,
         identityInspectedUtc = inspectedUtc,
-        originalMissingXnaCount
+        originalMissingXnaCount,
+        compileReportAvailable = compileAvailable,
+        compileStatus
     };
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
@@ -159,6 +196,9 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section data-compile-status="{{compileStatus}}"><h2>CDR-082：恢复之后，能编译吗？</h2>{{compileExplanation}}
+<p>简单说：已拿到拼装说明和零件清单，但还缺引擎零件，尚未拼成能工作的角色。
+程序只编译、不运行；此页面不输出源码，不会再次读取安装。商业源码和派生构建永不上传。</p></section>
 <section><h2>这次做了什么</h2>已删除自主实现的角色、八种交互实体、碰撞运动核及旧玩法编排。
 旧的移动演示不再运行。保留资源读取、反编译工具、动画呈现、渲染与匿名桌面几何工具。
 新增了只读程序集检查器，用来辨别“拿到的是哪个版本、需要哪些依赖”，不会运行游戏代码。</section>
@@ -170,7 +210,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 <section><h2>本机现在有什么</h2>找到 {{cacheCount}} 份缓存，共 {{sourceCount}} 个 C# 文件。
 其中 {{modNames}} 个文件名或目录带 Mod/Everest 标记。这是文件目录清点，不是运行或编译验证；
 不能据此认定它们是纯原版。没有缓存时这里为零，报告仍然可以生成。</section>
-<section><h2>这证明了什么</h2>旧行为已退役，工具层可以独立验证；本报告仅输出统计和说明，
+<section><h2>这证明了什么</h2>旧行为已退役，工具层可以独立验证；新增探针能区分“源码恢复成功”与“编译通过”，不会把编译失败报成成功。本报告仅输出统计和说明，
 不输出反编译源码、商业图片或安装路径。此前 CDR-016 的安装一致性验证是历史证据，未在这里重跑。</section>
 <section><h2>仍未证明什么</h2>目前没有可运行的角色。原版依赖是否齐全、能否独立编译、
 动画能否连接、角色是否能在桌面移动都尚未建立。反编译成功不等于游戏已经重组完成。</section>

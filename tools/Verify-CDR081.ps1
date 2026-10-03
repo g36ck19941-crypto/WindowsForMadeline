@@ -24,8 +24,18 @@ try {
         throw 'Analyzer contains forbidden execution/IL APIs.'
     }
     $total = 0
-    $suites = @(Get-ChildItem tests -Recurse -Filter '*.csproj')
-    if ($suites.Count -ne 13) { throw 'Expected 13 test suites.' }
+    # Reviewed pure-offline allowlist. Do not auto-run new suites or native/window probes.
+    # Rendering.Tests combines synthetic cases with an unconditional hidden HWND test;
+    # exclude the whole suite rather than calling a skipped native test a pass.
+    $allowedSuites = @('Animation','AssemblyInventory','AssetWorker','AssetWorker.Catalog',
+        'AssetWorker.Data','AssetWorker.Meta','AssetWorker.SpriteXml','Contracts.Extensions',
+        'Desktop','Install','LocalReference','RealInstallConformance')
+    $suites = @($allowedSuites | ForEach-Object {
+        $path = "tests/CelesteDesktop.$_.Tests/CelesteDesktop.$_.Tests.csproj"
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw 'Reviewed offline suite missing.' }
+        Get-Item -LiteralPath $path
+    })
+    Write-Output 'OFFLINE_BOUNDARY windowsProbes=excluded realDesktop=excluded renderingSuiteCasesExcluded=20'
     foreach ($suite in $suites) {
         $lines = @(& dotnet run --project $suite.FullName -c Release --no-build --no-restore)
         if ($LASTEXITCODE -ne 0) { throw "Test failed: $($suite.Name)" }
@@ -95,6 +105,7 @@ try {
         $probeExit = $LASTEXITCODE
     } finally { $ErrorActionPreference = 'Stop' }
     if ($probeExit -eq 0 -or ($rejection -join '') -notmatch 'safety contract failed') { throw 'Unsafe report was accepted.' }
-    Write-Output "CDR081_VERIFIED suites=$($suites.Count) passed=$total junctionChecks=2 reportChecks=3"
+    if ($total -ne 313) { throw 'Reviewed pure-offline case count changed; inspect before updating gate.' }
+    Write-Output "CDR081_OFFLINE_VERIFIED suites=$($suites.Count) passed=$total junctionChecks=2 reportChecks=3 windowProbesExecuted=0"
 } finally { Pop-Location }
 exit 0

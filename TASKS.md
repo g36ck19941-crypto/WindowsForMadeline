@@ -1,15 +1,26 @@
 # Tasks
 
+## CDR-082 — Local original-source recovery and minimal compile probe
+
+- Additional authorization: developer approved no-window gate repair and pure-offline revalidation. Scope includes verification scripts, developer cmd entries and corresponding records; excludes all window/native rendering and real desktop probes. Do not expand installation/reference reads.
+- State: local recovery/compile-probe tooling verified, developer acceptance pending; actual original-core compilation remains partial/blocked (918 recovered files, 15 seed files, CS0234=11/CS0246=355). No-window gate repair complete: 313 retained cases, 26 probe checks, four compile-summary checks, two junction/three identity-summary probes and four cmd entry checks passed. Entire 20-case native-rendering suite excluded, not counted as passed. No CDR-082 upload; see docs/zh-CN/CDR-082-ACCEPTANCE.md.
+- Owner: Primary; developer accepted CDR-081 and authorized CDR-082 on 2026-10-03.
+- Chosen source: previously inspected orig/Celeste.exe candidate; require SHA-256 1A1E117ADD967C0F26AD470A49D4FF442435209265BF1FDDA623821D797E80B5. Never silently choose modded Celeste.dll.
+- Scope: self-authored local recovery/probe tooling and synthetic tests, local ignored source/build workspace, current progress and project records.
+- Permission: only local ignored decompilation/recovery and minimum compile attempts; do not execute recovered code, launch game/GUI, write installation, download dependencies or publish commercial source/IL/assets/derived binaries.
+- Probe: self-authored compile-only project with explicit selected source files, no imported generated project/targets/resources/build events, no package sources, no analyzers/source generators and no installation writes. Return categorized diagnostics without source excerpts or real paths in tracked reports.
+- Gate: source identity fixed, existing pinned tool only, recovery outcome/file count and minimum original-core compile outcome honestly reported; compilation failure is not a runnable pass. Next dependency/source scope changes require developer direction.
+
 ## CDR-081 — Read-only assembly identity and dependency inventory
 
 - Owner: Primary; authorized by developer on 2026-10-03 after CDR-080 acceptance.
 - Scope: tools/CelesteDesktop.AssemblyInventory, its synthetic tests, solution entries, tools/Verify-CDR081.ps1, developer inventory cmd/internal wrapper, current summary demo and project records.
 - Input: explicit previously selected legitimate installation. Candidate slots limited to root Celeste.dll/Celeste.exe and orig/Celeste.dll/Celeste.exe; direct DLL metadata in root/orig only for reference resolution. Never traverse Content, Saves, Mods, logs or links.
 - Action: bounded read-only PE/CLR metadata plus hash; no Assembly.Load, game execution, decompilation, source copying, installation writes, GUI or input.
-- State: implementation/offline verified; developer acceptance pending, unuploaded.
+- State: developer accepted 2026-10-03; published/read back at 35015d8b50632483ea24ee75908cce5ecaac69ee on codex/cdr-081-assembly-identity; remote main unchanged.
 - Acceptance: identity/hash, vanilla-vs-mod indicators without unsupported pristine claim, exact assembly-reference identity matching and unresolved/native distinction, bounded negative tests, aggregate-only bilingual report and offline gate. Measured: 35/35 focused, 333/333 full, two junction probes and three report probes.
 - Next gate: source candidate choice and explicitly authorized CDR-082 local-only recovery/compile probe. CDR-081 does not execute or compile original code. orig/Celeste.exe is the non-Mod-marker .NET Framework 4.5 candidate, not officially authenticated; three XNA references unresolved in root/orig.
-- Publication: CDR-080 accepted; CDR-081 itself is not accepted and must not be uploaded.
+- Publication: CDR-081 accepted and published independently; CDR-082 unaccepted/unuploaded.
 
 ## Current priority override — CDR-080
 

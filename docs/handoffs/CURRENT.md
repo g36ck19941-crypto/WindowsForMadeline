@@ -1,27 +1,23 @@
 # Current Handoff
 
-Updated: 2026-10-03. Owner: Primary. Local branch: codex/cdr-081-assembly-identity.
+2026-10-03. Primary. Branch codex/cdr-082-local-compile-probe. Base/accepted CDR-081 35015d8b50632483ea24ee75908cce5ecaac69ee; local CDR-082 delivery commit is the branch tip after final verification/audit. CDR-082 not accepted/uploaded. Do not update main.
 
-## Objective and verified publication
+## Current outcome
 
-Thread goal is active and follows docs/GOAL.md. Original-code-led local reconstruction replaces the retired self-designed gameplay route. Player, Simulation.Core, eight Entity modules and App were deleted; Git history remains recoverable at local archive/self-designed-logic-before-removal-20261003 / e0ba567529dfc014bdeb15c5b46cbb306f045fd7.
+CDR-081 accepted/published/read back at 35015d8 on codex/cdr-081-assembly-identity; main d237277e10af090cf60ec015c22174565e6cdc0a unchanged. Old gameplay retired/history-only. Objective still docs/GOAL.md; not complete.
 
-Developer accepted CDR-080 and explicitly authorized CDR-081 read-only identity/dependency inspection of the previously selected legitimate installation. Accepted CDR-080 passed a fresh 298/298 gate and outbound path audit, then was published/read back as f804168ff2655c043d60b19749151ecc6181dc03 at codex/cdr-080-original-recomposition. Remote main remains d237277e10af090cf60ec015c22174565e6cdc0a. Current CDR-081 is not accepted or uploaded.
+Authorized chosen orig/Celeste.exe recovery produced 918 C# files under ignored local-cache/cdr-082/<guid>/source via already-installed ILSpy 11.1.0.9782. Selected source SHA 1A1E117ADD967C0F26AD470A49D4FF442435209265BF1FDDA623821D797E80B5 checked before/after. Sandbox UserProfile differs; explicit -IlSpyDll cached path or CDR_ILSPY_DLL can be necessary. No tool restore/download.
 
-## CDR-081 measured state
+Own net8 Library uses 15 explicit original Player/Actor/Solid/Monocle seeds, no recovered project execution/resources/build events/analyzers, directory imports disabled, no external references/packages. Restore 0, compile 1, deduplicated CS0234=11/CS0246=355. net45 retargeting experimental; no XNA supplied/FNA substitution. Original dependency-closed core remains partial/unrunnable. Safe summary artifacts/cdr-082-real/summary.json and tracked aggregate evidence docs/evidence/CDR-082.json. Never export source/IL/assets/derived binaries.
 
-Self-authored tools/CelesteDesktop.AssemblyInventory statically reads PE/CLR metadata/hashes from fixed root/orig slots and validated direct DLL reference names. No Assembly.Load, original IL extraction/execution, native loading, game/GUI/input or installation writes. Reports hold identities/counts/fixed type presence/dependency facts only, not commercial bytes or real installation paths.
+## Repaired no-window gate
 
-Root Celeste.dll matches the old cached SHA and is mod-bearing/.NET 8 (263 Mod-type indicators). orig/Celeste.exe is a no-tested-Mod-marker/.NET Framework 4.5 candidate, hash 1A1E117ADD967C0F26AD470A49D4FF442435209265BF1FDDA623821D797E80B5; no official baseline authenticates it. Relevant qualified types are present; Actor is Celeste.Actor. Three XNA references are unresolved within checked root/orig, not asserted missing system-wide. Combined graph: 24 nodes, 230 reference edges; all 24 managed hashes stable on repeated read. Framework/global locations and native ABI readiness are uninspected.
+Initial legacy gate executed hidden-window test; disclosed and paused. Developer explicitly authorized exclusion of all window tests and pure-offline continuation. Verify-CDR081 now runs a reviewed 12-suite whitelist: 313 cases. Entire Rendering.Tests suite (20 cases) excluded/not passes. Never select Desktop --real-readonly. Builds Windows projects but does not run them.
 
-35 focused synthetic cases, 333 total cases across 13 suites, two generated junction rejection probes and three report probes pass; Release has zero warnings/errors. Root progress/verification cmd entries passed with no-open/no-pause; inspection cmd passed cancel and authorized real input, including Windows PowerShell 5. No real GUI was opened. Initial sandbox DLL denial was resolved using narrowly authorized read-only metadata escalation, not game execution.
+Verify-CDR082/root verify cmd passed: 26 synthetic checks, 313 retained cases, four compile-summary checks; two junction/three identity probes. Root verification, no-open progress, recovery cancel and generated missing-candidate checks pass. Release zero warnings/errors. New cmds ASCII/CRLF load UTF8 Chinese explanations; PS5 path API fixed. No installation reread/recovery rerun, GUI/game/live input/recovered execution/install writes/downloads in repair.
 
-Current progress report is summary-only and does not re-read installation. It consumes a dated local report if available; absent reports are uninspected. No runnable original character exists. docs/evidence/CDR-081.json is a commercial-payload-free summary; raw reports and old recovered source stay ignored. See docs/ASSEMBLY_IDENTITY.md and bilingual CDR-081 acceptance/update records.
+## Next gate
 
-## Next gate and constraints
+Await CDR-082 tooling/report acceptance; actual core compile still blocked. Do not infer acceptance or upload. Need agreed read-only existing-XNA/framework search scope or explicit existing-FNA experiment before wider dependency reads. No system/GAC search/downloads/recovered execution/CDR-083 stepping yet. Current user only authorized no-window gate repair, not wider dependency access.
 
-Await developer acceptance of CDR-081 and source choice/explicit CDR-082 permission to recover/decompile the inspected original candidate and attempt a minimal local compile. Do not perform that under the narrower identity-read authorization. Do not choose modded source silently or replace missing engine/gameplay logic with guessed controllers. Recovered source/IL/assemblies/assets and commercial-derived builds stay ignored/local; never GitHub or public packages.
-
-No full-game boot, original code execution, GUI/live input, install writes, new dependency download or unapproved external reference search. CDR-075 remains unaccepted/unuploaded and retired; CDR-060 historical acceptance pending and CDR-061 unauthorized, not active gameplay continuations. Do not self-accept or update remote main.
-
-Offline gate: tools/Verify-CDR081.ps1 or 验证当前版本.cmd; CDR_DEMO_NO_OPEN=1 and CDR_NO_PAUSE=1 for automatic entry checks. Inspection is opt-in via 检查原版来源与依赖.cmd; no installation path is stored. Context coherent; if coherence degrades stop and create a full next-window prompt.
+Ordinary offline: 验证当前版本.cmd / tools/Verify-CDR082.ps1. For progress set CDR_DEMO_NO_OPEN=1/CDR_NO_PAUSE=1; default cmd opens a browser page, prohibited for agents now. Recovery cmd opt-in only, not ordinary verification; respect exact source hash and local-ignore output. Keep legacy DesktopSummit read-only and Git main unchanged. See bilingual CDR-082 acceptance/update docs. Context intact; no goal completion/resume claim.

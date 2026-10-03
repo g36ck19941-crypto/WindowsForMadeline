@@ -1,0 +1,37 @@
+$ErrorActionPreference = 'Stop'
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Invoke-OriginalCompileProbe.ps1') -SelfTest
+if ($LASTEXITCODE -ne 0) { throw 'CDR082 synthetic probe tests failed.' }
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Verify-CDR081.ps1')
+if ($LASTEXITCODE -ne 0) { throw 'Retained-tool regression gate failed.' }
+$projectRoot = Split-Path -Parent $PSScriptRoot
+Push-Location $projectRoot
+try {
+    $fixture = Join-Path $projectRoot ('artifacts/cdr-082-verification/report-' + [guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Path $fixture -Force | Out-Null
+    $inputReport = Join-Path $fixture 'summary.json'
+    $demoDll = 'samples/CelesteDesktop.ProgressDemo/bin/Release/net8.0/CelesteDesktop.ProgressDemo.dll'
+    $report = [ordered]@{schemaVersion=1;taskId='CDR-082';candidate='orig/Celeste.exe';recoveredSourceFiles=15;selectedCoreFiles=15;recoveredCodeExecuted=$false;gameLaunched=$false;guiOpened=$false;installationWrites=0;dependencyDownloads=0;commercialMaterialLocalOnly=$true;runtimeIntegrated=$false;compileEstablished=$false;compileAttempted=$true;compileExitCode=1}
+    $report | ConvertTo-Json | Set-Content -LiteralPath $inputReport -Encoding UTF8
+    $demoOutput = Join-Path $fixture 'demo'
+    & dotnet $demoDll --output $demoOutput --compile-report $inputReport
+    if ($LASTEXITCODE -ne 0) { throw 'Generated blocked compile report failed.' }
+    $manifest = Get-Content (Join-Path $demoOutput 'manifest.json') -Raw | ConvertFrom-Json
+    if (-not $manifest.compileReportAvailable -or $manifest.runtimeIntegrated) { throw 'Compile summary availability failed.' }
+    $html = Get-Content (Join-Path $demoOutput 'index.html') -Raw -Encoding UTF8
+    if ($manifest.compileStatus -ne 'compile-blocked' -or $html -notmatch 'data-compile-status="compile-blocked"' -or $html -notmatch 'CDR-082') { throw 'Blocked compilation hidden.' }
+    & dotnet $demoDll --output (Join-Path $fixture 'missing-demo') --compile-report (Join-Path $fixture 'missing.json')
+    if ($LASTEXITCODE -ne 0) { throw 'Missing compile report failed.' }
+    $manifest = Get-Content (Join-Path $fixture 'missing-demo/manifest.json') -Raw | ConvertFrom-Json
+    if ($manifest.compileReportAvailable) { throw 'Missing compile report called available.' }
+    foreach ($kind in @('executed','false-pass')) {
+        $report.recoveredCodeExecuted = ($kind -eq 'executed')
+        $report.compileEstablished = ($kind -eq 'false-pass')
+        $report | ConvertTo-Json | Set-Content -LiteralPath $inputReport -Encoding UTF8
+        $ErrorActionPreference = 'Continue'
+        try { $lines = @(& dotnet $demoDll --output (Join-Path $fixture $kind) --compile-report $inputReport 2>&1); $code = $LASTEXITCODE }
+        finally { $ErrorActionPreference = 'Stop' }
+        if ($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED') { throw 'Unsafe/inconsistent compile report accepted.' }
+    }
+} finally { Pop-Location }
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=313 compileReportChecks=4 windowProbesExecuted=0 originalCompilePassNotClaimed=true'
+exit 0

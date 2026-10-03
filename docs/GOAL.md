@@ -9,8 +9,8 @@ In C:/supermadeline/CelesteDesktopRuntime, reconstruct a local original-code-led
 ## Ordered near-term work
 
 1. CDR-080: developer accepted old-gameplay retirement/tooling preparation on 2026-10-03; published f804168ff2655c043d60b19749151ecc6181dc03 on its independent branch.
-2. CDR-081: authorized read-only identity/dependency inspection completed; original-backup candidate found, but clean provenance and dependency closure remain unproven. Its XNA references are unresolved within inspected root/orig. Developer acceptance pending before the next recovery/compile stage.
-3. CDR-082: build a minimal dependency-closed original behavior core in a Git-ignored local workspace. Verify compilation feasibility and report compatibility failures; do not execute the full game entrypoint.
+2. CDR-081: accepted and published independently at 35015d8. Original-backup candidate chosen by developer, but clean provenance/dependency closure remain unproven; three XNA references unresolved in inspected root/orig.
+3. CDR-082: build a minimal dependency-closed original behavior core in a Git-ignored local workspace. Authorized recovery/probe produced 918 sources; 15-file net8 seed compilation failed. Tooling and repaired no-window offline gate verified, acceptance pending; actual core remains partial. Resolve dependency/framework direction before progressing; do not execute recovered code or the full game entrypoint.
 4. CDR-083: bind original animation/resource names to local resource readers and verify controlled offline stepping and offscreen frames. Keep behavior, asset resolution and rendering evidence separate.
 5. CDR-084: implement thin desktop environment adapters for time, injected inputs, geometry and presentation without replacing original behavior with invented rules.
 

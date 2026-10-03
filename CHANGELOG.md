@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-03 — CDR-082 no-window verification repair
+
+- Developer-authorized reviewed pure-offline whitelist excludes entire 20-case native rendering suite and real desktop probes. No-window gate passed 313 retained cases, 26 synthetic probe checks, four compile-summary checks and ancillary path/report/entry checks; original-core compile still blocked.
+- Fixed Windows PowerShell path API compatibility and Chinese batch parsing by ASCII commands plus UTF8 explanation files. Updated progress/acceptance evidence; no new playable feature or expanded installation access. CDR-082 unaccepted/unuploaded.
+
+## 2026-10-03 — CDR-082 partial recovery / blocked compile probe
+
+- CDR-081 accepted/published independently at 35015d8; main unchanged.
+- Added local-only fixed-hash recovery and compile-only tooling: 918 recovered original-candidate files, 15 original core seeds; compile fails with 366 deduplicated missing-namespace/type diagnostics. No dependency downloads, FNA substitution, recovered-code execution or installation writes.
+- Added Chinese probe entry and summary panel distinguishing recovery from compilation. Delivery paused: retained regression executed a hidden-window test under a no-GUI permission. Further execution stopped; latest changes uncommitted/unuploaded pending direction.
+
 ## 2026-10-03 — CDR-081 original identity/dependency tooling
 
 - CDR-080 accepted and published/read back independently at f804168; main untouched.
