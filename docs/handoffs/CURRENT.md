@@ -2,7 +2,9 @@
 
 Updated: 2026-10-03. Owner: Primary.
 
-Developer requested replacing the project goal. Canonical new objective: docs/GOAL.md; Chinese mirror: docs/zh-CN/GOAL.md. Available goal tools cannot rewrite or clear an unfinished goal, so thread goal still contains the blocked old objective until the developer replaces it using the supported goal command surface. Do not mark it complete merely to enable replacement.
+New thread goal confirmed active: follow docs/GOAL.md with its ordering, completion evidence and authorization boundaries. Chinese mirror: docs/zh-CN/GOAL.md. Old blocked objective has been replaced by the developer; do not revive the self-designed gameplay lane.
+
+Goal continuation preflight inspected existing ignored cache manifest, generated project metadata and filenames only. See docs/reviews/CDR-081-PREFLIGHT.md. All 19 listed core/entity filenames exist, but dependency closure and vanilla identity remain unproven. Generated project targets net8.0 and has 17 reference entries (15 unique), including FNA, NETCoreifier and MonoMod components. No commercial code excerpts, source copying, assembly execution or installation access occurred. CDR-080 developer acceptance remains the first ordered gate. Before deeper reconstruction, request a bounded read-only identity/dependency inspection of the previously selected legitimate installation and a source decision if no clean original candidate is found. Do not assume current Mod cache is pristine vanilla.
 
 CDR-080 user explicitly authorized deleting old self-designed logic and focusing on decompilation/recomposition. Player, Simulation.Core, eight Entity modules, App and their tests/dependent demos/verifiers were deleted; 24 projects removed. Earlier preserve-in-working-tree assessment is superseded. Recoverable local branch archive/self-designed-logic-before-removal-20261003 points to e0ba567529dfc014bdeb15c5b46cbb306f045fd7. Git history retained.
 

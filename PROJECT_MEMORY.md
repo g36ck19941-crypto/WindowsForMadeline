@@ -1,5 +1,7 @@
 # Project Memory
 
+2026-10-03 goal continuation: thread goal now actively follows docs/GOAL.md; prior pending-replacement state is obsolete. Metadata/name-only cache preflight confirms 19 queried core/entity filenames and 17 project references (15 unique); source identity and actual dependency availability remain unproven. CDR-080 acceptance and bounded installation identity authorization are the next gates; no source integration or new gameplay implementation.
+
 Current decision, 2026-10-03: explicit developer authorization supersedes the earlier preserve-in-working-tree direction. Self-designed Player, eight Entity modules, Simulation.Core and App plus dependent tests/demos are removed. Git history and local archive/self-designed-logic-before-removal-20261003 at e0ba567529dfc014bdeb15c5b46cbb306f045fd7 retain recoverability. Cached code contains Everest/Mod markers; pristine vanilla and independent runtime are not established. Retain tooling, not the competing gameplay baseline. Older entries below are historical.
 
 Last verified: 2026-10-03
