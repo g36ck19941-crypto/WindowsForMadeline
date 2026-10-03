@@ -17,7 +17,17 @@ try
         if (!rejected) throw new InvalidDataException("SCOPE_NEGATIVE_FAILED");
         if (AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name?.StartsWith("Microsoft.Xna.Framework", StringComparison.Ordinal) == true))
             throw new InvalidDataException("XNA_UNEXPECTED_LOAD");
-        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=3 failed=0 targetExecuted=false");
+        using (var stream = File.OpenRead(typeof(Program).Assembly.Location))
+        using (var pe = new PEReader(stream))
+        {
+            var reader = pe.GetMetadataReader();
+            var trap = reader.TypeDefinitions.First(h => reader.GetString(reader.GetTypeDefinition(h).Name) == "AuditTrap");
+            var constructor = reader.GetTypeDefinition(trap).GetMethods().First(h => reader.GetString(reader.GetMethodDefinition(h).Name) == ".cctor");
+            var analysis = InitializationAnalyzer.Analyze(pe, reader, new[] { constructor });
+            if (analysis.visitedManagedMethods != 1 || analysis.memberReferenceBoundaries < 1 || analysis.runtimeSafetyEstablished)
+                throw new InvalidDataException("INITIALIZER_TRAP_AUDIT_FAILED");
+        }
+        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=4 failed=0 targetExecuted=false");
         return 0;
     }
     if (args is not ["--cached-root", var root]) throw new ArgumentException("XNA_PREFLIGHT_ARGS");
@@ -83,18 +93,21 @@ static MetadataFact Inspect(string path)
     if (metadata.MethodDefinitions.Count > 50000 || metadata.TypeDefinitions.Count > 10000 || metadata.AssemblyReferences.Count > 256)
         throw new InvalidDataException("XNA_PREFLIGHT_ROWS");
     var globalInitializer = false;
+    var roots = new List<MethodDefinitionHandle>();
     foreach (var handle in metadata.TypeDefinitions)
     {
         var type = metadata.GetTypeDefinition(handle);
         if (metadata.GetString(type.Name) == "<Module>")
-            globalInitializer |= type.GetMethods().Any(m => metadata.GetString(metadata.GetMethodDefinition(m).Name) == ".cctor");
+            roots.AddRange(type.GetMethods().Where(m => metadata.GetString(metadata.GetMethodDefinition(m).Name) == ".cctor"));
     }
+    globalInitializer = roots.Count != 0;
     var methods = metadata.MethodDefinitions.Select(metadata.GetMethodDefinition).ToArray();
     return new MetadataFact(metadata.GetString(metadata.GetAssemblyDefinition().Name),
         (pe.PEHeaders.CorHeader!.Flags & CorFlags.ILOnly) != 0, globalInitializer,
         methods.Count(m => (m.Attributes & MethodAttributes.PinvokeImpl) != 0),
         methods.Count(m => (m.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native),
-        metadata.AssemblyReferences.Select(h => metadata.GetString(metadata.GetAssemblyReference(h).Name)).ToArray());
+        metadata.AssemblyReferences.Select(h => metadata.GetString(metadata.GetAssemblyReference(h).Name)).ToArray(),
+        InitializationAnalyzer.Analyze(pe, metadata, roots));
 }
 internal sealed record MetadataFact(string name, bool ilOnly, bool moduleInitializerPresent,
-    int pinvokeMethods, int nativeMethodCount, string[] referencedAssemblyNames);
+    int pinvokeMethods, int nativeMethodCount, string[] referencedAssemblyNames, InitializationFact initialization);

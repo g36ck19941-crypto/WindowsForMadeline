@@ -62,7 +62,22 @@
     "gamePInvokeMethods": 11,
     "graphicsNativeMethods": 36,
     "graphicsPInvokeMethods": 39,
-    "ownMetadataChecks": 3,
+    "ownMetadataChecks": 4,
+    "initializerTraversal": {
+      "method": "conservative-local-method-graph",
+      "frameworkAndGraphicsEach": {
+        "rootCount": 1,
+        "visitedManagedMethods": 53,
+        "nativeMethodBoundaries": 0,
+        "pinvokeBoundaries": 9,
+        "memberReferenceBoundaries": 73,
+        "indirectCalls": 11,
+        "unresolvedBodies": 0
+      },
+      "gameRootCount": 0,
+      "actualInvocationProven": false,
+      "externalTargetsResolved": false
+    },
     "targetExecuted": false,
     "originalTestExecuted": false,
     "runtimeSafetyEstablished": false,

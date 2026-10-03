@@ -28,7 +28,10 @@ try {
         }
         New-Item -ItemType Directory -Path $artifact -Force | Out-Null
         [IO.File]::WriteAllText((Join-Path $artifact 'audit.json'), $lines[0])
-        foreach($row in $report.rows){Write-Output ("XNA_METADATA name="+$row.name+" ilOnly="+$row.ilOnly+" moduleInitializer="+$row.moduleInitializerPresent+" nativeMethods="+$row.nativeMethodCount+" pinvokeMethods="+$row.pinvokeMethods)}
+        foreach($row in $report.rows){
+            Write-Output ("XNA_METADATA name="+$row.name+" ilOnly="+$row.ilOnly+" moduleInitializer="+$row.moduleInitializerPresent+" nativeMethods="+$row.nativeMethodCount+" pinvokeMethods="+$row.pinvokeMethods)
+            Write-Output ("XNA_INITIALIZER_GRAPH name="+$row.name+" managedMethods="+$row.initialization.visitedManagedMethods+" pinvokeBoundaries="+$row.initialization.pinvokeBoundaries+" memberBoundaries="+$row.initialization.memberReferenceBoundaries+" indirectCalls="+$row.initialization.indirectCalls+" actualInvocationProven=false")
+        }
         Write-Output 'XNA_STATIC_AUDIT_COMPLETED runtimeSafetyEstablished=false originalTestExecuted=false'
     }
 } finally {Pop-Location}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Cached initializer boundary tracing
+
+Own bounded PE/IL local-token traversal adds concrete initialization-boundary aggregates and fourth self-check without invoking a throwing initializer. Framework/Graphics each53 managed methods/9PInvoke boundaries/73member references/11indirect calls. Conservative static evidence only, no external dependency reads/resolution, original execution or runtime feature. Dedicated cmd explains the unresolved gate; ordinary verification remains no-window/cache-free. Pending acceptance/upload.
+
 ## 2026-10-03 — Approved XNA private cache and mixed-mode static audit
 
 Fixed3readonly copies/hash/identity checks, PE-only initialization/native/import/dependency facts, own3check auditor suite and cmd. Mixed-mode/unreviewed dependency safety gate prevents target load. No original runtime feature, extra dependencies, assets or source edits; pending acceptance/upload.

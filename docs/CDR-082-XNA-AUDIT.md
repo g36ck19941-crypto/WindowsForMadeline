@@ -18,12 +18,20 @@ Framework and Graphics are mixed managed/native modules, not purely managed valu
 
 Actual target loading/initializer/native side effects and dependency closure remain unreviewed. Under the human stop-on-doubt condition, original input/time smoke remains unexecuted. This is neither an original-input pass nor a failed runtime attempt.
 
+### Cached initialization graph follow-up
+
+Without additional dependency reads, the own auditor now conservatively traverses local IL method tokens from each module initializer. Framework and Graphics each have 1 root, 53 visited managed methods, 9 PInvoke method boundaries, 73 MemberReference occurrences and 11 indirect-call occurrences; native-method boundaries and unresolved bodies are 0. Game has no module-initializer root, so this traversal is empty, not a general safety claim.
+
+All branches and local function-pointer references are included without feasibility analysis. External MemberReferences and indirect/native targets are not resolved; implicit type initialization and native loader effects are not covered. Counts are potential boundaries, not observed invocations. In particular, zero native-method boundaries does NOT mean no native initialization: PInvoke and indirect boundaries remain. This narrows the gate to initialization-related targets but does not establish runtime safety.
+
 ## Tools and acceptance
 
-Cache-ApprovedXna.ps1 fixed3 file/hash/identity guard, own PE-only XnaPreflight auditor and dedicated 审查缓存XNA依赖.cmd. Auditor bounds file/metadata sizes, rejects cache escape/links, reads no referenced assembly, does not Assembly.Load/execute target. Three self checks use only own tool metadata/scope/load absence, not the original library. Ordinary verification runs these own checks only; no XNA cache/system reads without opt-in.
+Cache-ApprovedXna.ps1 fixed3 file/hash/identity guard, own PE-only XnaPreflight auditor and dedicated 审查缓存XNA依赖.cmd. Auditor bounds file/metadata/IL graph sizes, rejects cache escape/links, reads no referenced assembly, does not Assembly.Load/execute target. Four self checks use only own tool metadata/scope/load absence and a throwing initializer inspected without invocation, not the original library. Ordinary verification runs these own checks only; no XNA cache/system reads without opt-in.
 
-Double-click 审查缓存XNA依赖.cmd: expect3 metadata lines matching table, XNA_STATIC_AUDIT_COMPLETED runtimeSafetyEstablished=false originalTestExecuted=false, exit0. Static audit completed is NOT runtime verified. Safe aggregate artifacts/cdr-082-xna-cache/audit.json; private binaries and PE details remain ignored. 验证当前版本.cmd preserves prior gate plus3 owned metadata checks, window probes0. No character demo added.
+Double-click 审查缓存XNA依赖.cmd: expect3 metadata lines matching table and3 XNA_INITIALIZER_GRAPH lines matching the follow-up, XNA_STATIC_AUDIT_COMPLETED runtimeSafetyEstablished=false originalTestExecuted=false, exit0. Static audit completed is NOT runtime verified. Safe aggregate artifacts/cdr-082-xna-cache/audit.json; private binaries and PE details remain ignored. 验证当前版本.cmd preserves prior gate plus4 owned metadata checks, window probes0. No character demo added.
 
 ## Next boundary
+
+Measured after graph update: dedicated cached audit exit0, self-checks4/4; full no-window gate exit0, retained317/317, synthetic probe26, closure13, compile-report4, isolation45, isolation-report4, adapter-audit3, framework-report4, owned-XNA4, window probes0. No target execution or runtime pass. Only own code and source-free records are eligible for the local commit; cache/binaries remain ignored.
 
 Continue only after clarifying scope for readonly inspection of the relevant system dependency/native initialization closure, or an alternative explicit runtime plan. Do not load mixed-mode modules or copy/resolve additional dependencies silently. No new dependency install/download/FNA substitution, no source edits or full-game initialization. Additional static review must determine relevant module/load effects before the authorized original input/time test can run; approval to cache3 files is not blanket native or GUI permission.
