@@ -4,6 +4,17 @@
 
 ## Additive evidence tooling
 
+### CDR-080 — Local original-resource and behavior capability inventory
+
+- Owner: Primary
+- State: developer redirected priority on 2026-10-03; initial read-only tool/cache assessment completed
+- File scope: local reference-builder inspection, ignored-cache file presence and summary manifest, existing asset-conformance evidence, project records
+- Scope: prioritize evidence from original local resources and behavior; identify recovered types and missing runtime/dependency/asset integration before proposing replacement of self-designed behavior
+- Evidence: current ignored cache actually contains 1369 C# files, including Player, TheoCrystal, Glider, Spring, Refill, Puffer and Seeker; tool decompiles one selected assembly and does not compile or run the resulting project
+- Direction: stop extending independently invented gameplay baselines; existing behavior modules are retained as reversible history pending reference-backed replacement, not fidelity authorities
+- Forbidden: deleting/replacing modules as part of this assessment, copying reference code into tracked product, publishing source/IL/assets, game/GUI/live input, install writes
+- Next gate: capability report and a concrete original-reference-led replacement plan; CDR-076 proposal superseded by this direction, CDR-075 remains unaccepted and unuploaded
+
 ### CDR-070 — Development-only local behavior reference
 
 - Owner: Primary

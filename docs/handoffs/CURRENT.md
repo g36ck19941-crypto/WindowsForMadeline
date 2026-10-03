@@ -102,15 +102,17 @@ CDR-074 is locally implementation-complete and acceptance-pending. Simulation.Co
 
 ## First next action
 
+Priority superseded on 2026-10-03: the developer requested focusing on decompilation/original local resources and logic, abandoning self-designed gameplay as the future behavior basis, and first reporting present tool capability. CDR-080 initial read-only assessment confirms 1369 actual C# cache files including the target Player/entity types. The builder decompiles one chosen assembly using ILSpy; it does not establish dependency completeness, successful compilation, executable behavior or parity. CDR-016 separately proved 93 animations/706 resolved frames for five target definitions; that was asset parsing, not decompilation. Stop extending the self-designed behavior lane or proposing CDR-076 as the immediate next task. Preserve existing modules/commits for rollback; no removal or copying of cached code was performed. Propose an original-reference-led inventory/replacement plan before product changes; source and asset content stay local. CDR-075 remains unaccepted and unuploaded.
+
 The developer accepted CDR-074 on 2026-10-03 and authorized publication plus CDR-075. Exact commit `9e07d966e8398eb011536d87fa5af95e5f7e4ce3` passed a fresh 901/901 gate and an outgoing audit with zero forbidden paths, large blobs, real paths or whitespace findings. It was published and read back at `codex/cdr-074-player-one-way-platforms`; remote main remains `d237277e10af090cf60ec015c22174565e6cdc0a`.
 
 CDR-075 is locally implementation-complete and acceptance-pending. Registered-Actor transactional resizing preserves feet, width and subpixels and refuses Solid overlap. Normal owns explicit duck input, grounded friction, complete standing-clearance checking, blocked/complete rise facts and safe ordinary-jump ordering. Core 48/48, Player 72/72 and total 920/920 pass; the nine-tick generated demo has heights 6/11, feet y=11, blocked rise on ticks 7/8, standing on tick 9, event counts 1/2/1, no overlap and identical replay. Both root cmd launchers pass with no-open/no-pause settings. No game, visible GUI, live input, install/reference access or commercial bytes were used.
 
-Present `docs/zh-CN/reviews/CDR-075-ACCEPTANCE.md` for developer acceptance. Do not upload CDR-075 or implement the proposed CDR-076 Dash one-way-platform contact/landing task before explicit acceptance/authorization. CDR-060 remains separately pending and CDR-061 unauthorized.
+The earlier CDR-075 acceptance handoff is retained as historical work. Do not upload it or implement CDR-076. Follow the new CDR-080 reference-led priority above. CDR-060 remains separately pending and CDR-061 unauthorized.
 
 ## Current ownership
 
 - Owner: Primary agent
 - Context condition: coherent; no next-window prompt is currently required. If this changes, stop work and create `docs/handoffs/NEXT_WINDOW_PROMPT.md` before requesting a new window.
-- Scope: CDR-075 acceptance handoff while preserving published branches and the CDR-060/CDR-061 gate
+- Scope: CDR-080 read-only capability assessment and reference-led planning while preserving history, published branches and the CDR-060/CDR-061 gate
 - Forbidden: CDR-060 acceptance changes, CDR-061 implementation, CDR-075 upload before acceptance, later calibration implementation, moving/special platform or dash/climb duck variants, Legacy changes, game or visible GUI launch, live input, any install/local-reference/map/Mod access or write, raw commercial data

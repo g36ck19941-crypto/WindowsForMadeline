@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-03 — Original-reference-led priority
+
+- Developer redirected work from extending self-designed gameplay to original local resources/behavior inventory and replacement planning.
+- Read-only inspection confirmed 1369 cached C# files and the target Player/entity types. Existing tooling recovers readable assembly code, not a verified independent runtime; real asset parsing remains a separate evidence chain.
+- Recorded CDR-080 assessment scope. No runtime feature, commercial-code integration, module deletion or publication occurred. CDR-075 acceptance remains pending; the CDR-076 proposal is superseded.
+
 ## 2026-10-03 — CDR-074 published; CDR-075 ducking ready for acceptance
 
 - Accepted CDR-074 exact commit `9e07d966e8398eb011536d87fa5af95e5f7e4ce3` passed a fresh 901/901 gate and zero-finding outbound audit, then was published/read back at `codex/cdr-074-player-one-way-platforms`; remote main unchanged.
