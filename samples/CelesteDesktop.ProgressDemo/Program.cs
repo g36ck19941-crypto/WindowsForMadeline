@@ -70,6 +70,8 @@ static int Run(string[] args)
     }
     var identitySummary = "尚未读取授权的程序集检查摘要；不会自动访问安装目录。";
     var identityRows = "";
+    var dependencyExplanation = "尚无原版候选的依赖检查摘要；不能判断是否能编译或运行。";
+    var originalMissingXnaCount = 0;
     var identityAvailable = File.Exists(identityReportPath);
     string? inspectedUtc = null;
     if (identityAvailable)
@@ -96,13 +98,38 @@ static int Run(string[] args)
                 throw new InvalidDataException("Unexpected candidate slot.");
             var status = candidate.GetProperty("status").GetString();
             var classification = candidate.GetProperty("classification").GetString();
+            var frameworkMeaning = candidate.GetProperty("targetFramework").GetString() switch
+            {
+                ".NETCoreApp,Version=v8.0" => ".NET 8（当前 Mod 版本）",
+                ".NETFramework,Version=v4.5" => ".NET Framework 4.5（旧框架）",
+                null => "不适用或未建立",
+                _ => "其它框架，未校准"
+            };
             var mods = candidate.GetProperty("modTypeCount").GetInt32();
             if (mods is < 0 or > 100000) throw new InvalidDataException("Invalid metadata count.");
             var meaning = status == "missing" ? "没有这个文件" : status == "native-pe" ? "启动外壳，不是托管角色代码" :
                 classification == "mod-bearing" ? $"发现 Mod 标记（{mods} 个类型）；不是纯原版来源" :
                 classification == "unmodified-candidate-not-authenticated" ? "未发现所检查的 Mod 标记；原版候选，尚无官方哈希认证" :
                 "未建立身份，请查看检查错误";
-            identityRows += $"<tr><td>{WebUtility.HtmlEncode(slot)}</td><td>{WebUtility.HtmlEncode(meaning)}</td></tr>";
+            identityRows += $"<tr><td>{WebUtility.HtmlEncode(slot)}</td><td>{frameworkMeaning}</td><td>{WebUtility.HtmlEncode(meaning)}</td></tr>";
+        }
+        foreach (var node in report.GetProperty("dependencies").EnumerateArray())
+        {
+            if (node.GetProperty("slot").GetString() != "orig/Celeste.exe") continue;
+            var missing = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var reference in node.GetProperty("references").EnumerateArray())
+            {
+                if (reference.GetProperty("status").GetString() != "missing-or-unreadable") continue;
+                var name = reference.GetProperty("identity").GetProperty("name").GetString();
+                if (name is "Microsoft.Xna.Framework" or "Microsoft.Xna.Framework.Graphics" or "Microsoft.Xna.Framework.Game")
+                    missing.Add(name);
+            }
+            originalMissingXnaCount = missing.Count;
+            dependencyExplanation = missing.Count > 0
+                ? $"原版候选需要的 XNA 基础/绘图/游戏组件，本次在允许检查的目录内有 {missing.Count} 项未找到：" +
+                  WebUtility.HtmlEncode(string.Join("、", missing.OrderBy(n => n))) +
+                  "。这不代表整台电脑没装，也不能把 FNA 当成已验证兼容的替代品；后续编译必须先处理这个问题。"
+                : "这份报告没有列出原版候选的 XNA 缺项，但依赖闭合和编译仍未证明，不能因此称为可以运行。";
         }
     }
     var manifest = new
@@ -120,7 +147,8 @@ static int Run(string[] args)
         installationWrites = 0,
         persistedCommercialBytes = 0,
         identityReportAvailable = identityAvailable,
-        identityInspectedUtc = inspectedUtc
+        identityInspectedUtc = inspectedUtc,
+        originalMissingXnaCount
     };
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
@@ -128,13 +156,15 @@ static int Run(string[] args)
     var html = $$"""
 <!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>CDR-081 当前进度</title>
 <style>body{background:#111827;color:#e5e7eb;font:20px/1.7 system-ui;max-width:1000px;margin:50px auto;padding:20px}
-section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}</style>
+section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{color:#67e8f9}
+table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
 <section><h2>这次做了什么</h2>已删除自主实现的角色、八种交互实体、碰撞运动核及旧玩法编排。
 旧的移动演示不再运行。保留资源读取、反编译工具、动画呈现、渲染与匿名桌面几何工具。
 新增了只读程序集检查器，用来辨别“拿到的是哪个版本、需要哪些依赖”，不会运行游戏代码。</section>
 <section><h2>原版还是 Mod：当前检查结果</h2>{{identitySummary}}
-<table><thead><tr><th>检查位置</th><th>说明</th></tr></thead><tbody>{{identityRows}}</tbody></table>
+<table><thead><tr><th>检查位置</th><th>底层框架</th><th>说明</th></tr></thead><tbody>{{identityRows}}</tbody></table>
+<p>{{dependencyExplanation}}</p>
 <p>没有报告时表格为空，这是未检查，不是失败或成功。无 Mod 标记不等于官方认证的纯原版。
 依赖报告会区分找到匹配版本、版本不符、缺少依赖和未检查的系统框架；不会把“文件在”当作“能运行”。</p></section>
 <section><h2>本机现在有什么</h2>找到 {{cacheCount}} 份缓存，共 {{sourceCount}} 个 C# 文件。

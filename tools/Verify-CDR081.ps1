@@ -70,6 +70,8 @@ try {
     $manifest = Get-Content (Join-Path $demoOutput 'manifest.json') -Raw | ConvertFrom-Json
     if ($manifest.demoId -ne 'CDR-081' -or $manifest.runtimeIntegrated -ne $false -or
         $manifest.persistedCommercialBytes -ne 0 -or $manifest.gameLaunched -ne $false) { throw 'Report boundary failed.' }
+    $reportHtml = Get-Content (Join-Path $demoOutput 'index.html') -Raw -Encoding UTF8
+    if ($reportHtml -notmatch 'XNA' -or $reportHtml -notmatch 'CDR-081') { throw 'Progress omits dependency/identity explanations.' }
     $syntheticReport = Join-Path $fixture 'synthetic.json'
     & dotnet tools/CelesteDesktop.AssemblyInventory/bin/Release/net8.0/CelesteDesktop.AssemblyInventory.dll --root $install --output $syntheticReport
     if ($LASTEXITCODE -ne 0) { throw 'Synthetic report failed.' }
