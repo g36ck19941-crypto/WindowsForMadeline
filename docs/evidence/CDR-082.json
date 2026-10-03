@@ -51,6 +51,26 @@
   "installationWrites": 0,
   "dependencyDownloads": 0,
   "runtimeIntegrated": false,
+  "systemDependencyAudit": {
+    "fixedSlots": 12,
+    "inspectedPresent": 12,
+    "hashesStable": true,
+    "managedFiles": 8,
+    "managedModuleInitializers": 0,
+    "x86NativeFiles": 4,
+    "nativeEntryPointsPresent": 4,
+    "nativeTlsDeclarations": 0,
+    "nativeFilesWithDelayImports": 2,
+    "gamerServicesPInvokeDeclarations": 7,
+    "windowsFormsPInvokeDeclarations": 625,
+    "drawingPInvokeDeclarations": 692,
+    "ownToolChecks": 8,
+    "dependenciesCopied": false,
+    "targetExecuted": false,
+    "gameDirectoryAccessed": false,
+    "downstreamDependenciesRead": false,
+    "runtimeSafetyEstablished": false
+  },
   "xnaCacheAudit": {
     "copiedApprovedFiles": 3,
     "sourceAndDestinationHashesMatched": true,
@@ -62,7 +82,7 @@
     "gamePInvokeMethods": 11,
     "graphicsNativeMethods": 36,
     "graphicsPInvokeMethods": 39,
-    "ownMetadataChecks": 4,
+    "ownMetadataChecks": 8,
     "initializerTraversal": {
       "method": "conservative-local-method-graph",
       "frameworkAndGraphicsEach": {

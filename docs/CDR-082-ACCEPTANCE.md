@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Latest readonly system-dependency delivery: [scope, measured availability and acceptance](CDR-082-SYSTEM-DEPENDENCIES.md).12 fixed slots inspected/hashstable, no copies/execution;8 owned-tool checks. Scoped search permission resolved, initialization safety and original runtime still unproven; pending acceptance/upload.
+
 Current authorized XNA caching/static audit delivery: [mixed-mode initialization/dependency findings](CDR-082-XNA-AUDIT.md).3 copies verified, target/original test not executed, no runtime-safety claim; pendingacceptance/upload.
 
 Additional framework preparation: [own-adapter net472 compile acceptance](CDR-082-ISOLATION-FRAMEWORK.md), compile/static only, no original binding/run. All current CDR-082 deliveries still pending acceptance/upload.

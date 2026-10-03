@@ -5,7 +5,9 @@
 - XNA_PRIVATE_CACHE_COMPLETED:3 approved fixed-hash files privately copied, source/destination identity stable; no target execution.
 - XNA_STATIC_AUDIT_COMPLETED: cache metadata inspection completed, runtimeSafetyEstablished=false/originalTestExecuted=false. Mixed-mode/native/module-initializer declarations are risks requiring further review, not actual invocation evidence.
 - XNA_PREFLIGHT_FAILED: JSON run/stage/type/message/HResult/stack/bounded inner with private path redaction. No commercial byte/source payload.
-- XNA_PREFLIGHT_TESTS:4 own-tool metadata/scope/load absence/non-invoked initializer checks. Not actual original input/runtime acceptance.
+- XNA_PREFLIGHT_TESTS:8 own-tool checks: metadata/scope/load absence/non-invoked initializer plus normal+delay import fixtures/rejections, fixed-system-slot rejection and own PE parsing. Ordinary self-tests do not read system files. Not actual original input/runtime acceptance.
+- SYSTEM_DEPENDENCY: fixed-slot name/status/machine/moduleInitializer/pinvokeMethods only. No raw bytes/source or recursive resolution.
+- SYSTEM_DEPENDENCY_AUDIT_COMPLETED: readonly PE/CLR/import declarations collected, targetExecuted=false/runtimeSafetyEstablished=false. Found files are not execution-safety proof.
 - XNA_INITIALIZER_GRAPH: conservative local method-token traversal aggregates; managedMethods/pinvokeBoundaries/memberBoundaries/indirectCalls, actualInvocationProven=false. No referenced-file resolution, native execution or complete initialization safety claim.
 
 ## CDR-082 managed isolation adapter

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Authorized readonly system dependency audit
+
+Fixed8managedGAC+4x86SysWOW64 slots allpresent/hashstable; identities/imports/delayimports/entrypoint/TLS declarations inspected without copies/loading/execution/game access. Own bounded normal/delay PE import parser adds4check groups (8total), opt-in 检查XNA系统依赖.cmd and bilingual records. Availability question resolved, native/indirect initialization safety not established. No runtime/Player feature; pending acceptance/upload.
+
 ## 2026-10-03 — Cached initializer boundary tracing
 
 Own bounded PE/IL local-token traversal adds concrete initialization-boundary aggregates and fourth self-check without invoking a throwing initializer. Framework/Graphics each53 managed methods/9PInvoke boundaries/73member references/11indirect calls. Conservative static evidence only, no external dependency reads/resolution, original execution or runtime feature. Dedicated cmd explains the unresolved gate; ordinary verification remains no-window/cache-free. Pending acceptance/upload.

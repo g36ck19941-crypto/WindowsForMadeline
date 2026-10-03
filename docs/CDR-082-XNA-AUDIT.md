@@ -2,6 +2,8 @@
 
 2026-10-03. Primary. Developer confirmed readonly private caching/audit of3 previously inspected system XNA assemblies. No original/target assembly execution, game/GUI/real input/audio/Steam, installation/assets access or downloads. Acceptance/upload pending.
 
+Later explicit readonly system-dependency grant resolves the inspection-scope gate below; [current findings](CDR-082-SYSTEM-DEPENDENCIES.md). The current owned-tool suite has8 check groups. Older4-check results below are historical cached-graph measurements, not the current gate. Runtime safety remains unproven.
+
 ## Role and actual evidence
 
 Fixed GAC3 candidates copied into Git-ignored local-cache/cdr-082-xna, original hash checked before/after source and destination, PE identity version4.0.0.0/token842cf8be1de50553 matched. No other runtime dependency copied/read. Public scripts/tools/report contain no original code or DLL bytes.
@@ -22,7 +24,7 @@ Actual target loading/initializer/native side effects and dependency closure rem
 
 Without additional dependency reads, the own auditor now conservatively traverses local IL method tokens from each module initializer. Framework and Graphics each have 1 root, 53 visited managed methods, 9 PInvoke method boundaries, 73 MemberReference occurrences and 11 indirect-call occurrences; native-method boundaries and unresolved bodies are 0. Game has no module-initializer root, so this traversal is empty, not a general safety claim.
 
-All branches and local function-pointer references are included without feasibility analysis. External MemberReferences and indirect/native targets are not resolved; implicit type initialization and native loader effects are not covered. Counts are potential boundaries, not observed invocations. In particular, zero native-method boundaries does NOT mean no native initialization: PInvoke and indirect boundaries remain. This narrows the gate to initialization-related targets but does not establish runtime safety.
+All branches and local function-pointer references are included without feasibility analysis. MemberReference tokens and indirect/native targets are not resolved; the73 occurrences are not necessarily73 distinct external methods. Implicit type initialization and native loader effects are not covered. Counts are potential boundaries, not observed invocations. In particular, zero native-method boundaries does NOT mean no native initialization: PInvoke and indirect boundaries remain. This narrows the gate to initialization-related targets but does not establish runtime safety.
 
 ## Tools and acceptance
 

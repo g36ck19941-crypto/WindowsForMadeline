@@ -89,5 +89,5 @@ try {
         if($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED'){throw 'False framework claim accepted.'}
     }
 } finally { Pop-Location }
-Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 adapterAuditChecks=3 frameworkReportChecks=4 xnaOwnedMetadataChecks=4 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 adapterAuditChecks=3 frameworkReportChecks=4 xnaOwnedMetadataChecks=8 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
 exit 0

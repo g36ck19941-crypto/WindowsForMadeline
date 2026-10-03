@@ -27,7 +27,13 @@ try
             if (analysis.visitedManagedMethods != 1 || analysis.memberReferenceBoundaries < 1 || analysis.runtimeSafetyEstablished)
                 throw new InvalidDataException("INITIALIZER_TRAP_AUDIT_FAILED");
         }
-        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=4 failed=0 targetExecuted=false");
+        SystemDependencyAudit.SelfTest();
+        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=8 failed=0 targetExecuted=false");
+        return 0;
+    }
+    if (args is ["--system-dependencies"])
+    {
+        Console.WriteLine(JsonSerializer.Serialize(SystemDependencyAudit.Run()));
         return 0;
     }
     if (args is not ["--cached-root", var root]) throw new ArgumentException("XNA_PREFLIGHT_ARGS");

@@ -1,5 +1,7 @@
 # Tasks
 
+- CDR-082 system-dependency audit: Primary owns tools/CelesteDesktop.XnaPreflight/SystemDependencyAudit.cs and CLI/self-check integration, opt-in wrapper/cmd/bilingual records. Human allows readonly XNA-related system dependencies, not execution/download/install/game access. Fixed8 managed slots +4 SysWOW64 native slots, bounded/hash-stable PE facts only; no recursive new dependency reads/copies/loading. Acceptance: own parser/scope tests, exact system rows, no-window regression, no runtime safety claim. Next gate determined from measured initialization/dependency evidence.
+
 ## CDR-082 — Local original-source recovery and minimal compile probe
 
 - XNA cache/audit follow-up explicitly confirmed by developer: Primary owns fixed3hash Cache-ApprovedXna.ps1 and local ignored metadata/decompilation audit outputs plus aggregate records. Readonly fixed GAC3 previously matched candidates, private copy/hash/PE audit only. No native/input/audio/window/game/install/asset calls, downloads or acceptance/upload. Runtime test must stop for unreviewed initialization/dependencies; cache creation itself is not original execution proof.

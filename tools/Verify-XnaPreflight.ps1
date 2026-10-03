@@ -1,4 +1,4 @@
-param([switch]$AuditCache)
+param([switch]$AuditCache,[switch]$AuditSystemDependencies)
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
 $env:DOTNET_CLI_HOME=Join-Path $repo 'artifacts/cdr-081-verification/dotnet-home'
@@ -33,6 +33,20 @@ try {
             Write-Output ("XNA_INITIALIZER_GRAPH name="+$row.name+" managedMethods="+$row.initialization.visitedManagedMethods+" pinvokeBoundaries="+$row.initialization.pinvokeBoundaries+" memberBoundaries="+$row.initialization.memberReferenceBoundaries+" indirectCalls="+$row.initialization.indirectCalls+" actualInvocationProven=false")
         }
         Write-Output 'XNA_STATIC_AUDIT_COMPLETED runtimeSafetyEstablished=false originalTestExecuted=false'
+    }
+    if($AuditSystemDependencies) {
+        $lines=@(& dotnet tools/CelesteDesktop.XnaPreflight/bin/Release/net8.0/CelesteDesktop.XnaPreflight.dll --system-dependencies)
+        if($LASTEXITCODE -ne 0 -or $lines.Count -ne 1){throw 'SYSTEM_DEPENDENCY_AUDIT_FAILED'}
+        $report=$lines[0] | ConvertFrom-Json
+        if($report.targetExecuted -or $report.dependenciesCopied -or $report.recursivelyResolved -or $report.runtimeSafetyEstablished -or $report.gameDirectoryAccessed){throw 'SYSTEM_DEPENDENCY_BOUNDARY_FAILED'}
+        $artifact=Join-Path $repo 'artifacts/cdr-082-system-dependencies'
+        for($cursor=$artifact; $cursor; $cursor=[IO.Path]::GetDirectoryName($cursor)) {
+            if((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'SYSTEM_DEPENDENCY_OUTPUT_LINK'}
+        }
+        New-Item -ItemType Directory -Path $artifact -Force | Out-Null
+        [IO.File]::WriteAllText((Join-Path $artifact 'summary.json'),$lines[0])
+        foreach($row in $report.rows){Write-Output ("SYSTEM_DEPENDENCY name="+$row.name+" status="+$row.status+" machine="+$row.fact.machine+" moduleInitializer="+$row.fact.moduleInitializer+" pinvokeMethods="+$row.fact.pinvokeMethods)}
+        Write-Output 'SYSTEM_DEPENDENCY_AUDIT_COMPLETED targetExecuted=false runtimeSafetyEstablished=false'
     }
 } finally {Pop-Location}
 exit 0
