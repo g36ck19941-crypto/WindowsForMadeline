@@ -1,6 +1,8 @@
 # CDR-074 Acceptance
 
-State: implementation complete and ready for developer acceptance; not uploaded.
+Developer accepted this task on 2026-10-03. Exact commit `9e07d966e8398eb011536d87fa5af95e5f7e4ce3` passed fresh 901/901 verification and an outbound audit, then was published/read back at `codex/cdr-074-player-one-way-platforms`; remote main unchanged. Counts below describe this historical milestone; current launchers verify later CDR-075 as well.
+
+State: accepted and published; the following implementation evidence describes the accepted historical milestone.
 
 ## Delivered
 

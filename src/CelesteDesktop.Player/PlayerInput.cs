@@ -9,7 +9,8 @@ public readonly record struct PlayerInput
         bool jumpHeld,
         bool dashPressed = false,
         bool grabHeld = false,
-        bool dropThroughPressed = false)
+        bool dropThroughPressed = false,
+        bool duckHeld = false)
     {
         if (moveX is < -1 or > 1)
         {
@@ -27,6 +28,7 @@ public readonly record struct PlayerInput
         DashPressed = dashPressed;
         GrabHeld = grabHeld;
         DropThroughPressed = dropThroughPressed;
+        DuckHeld = duckHeld;
     }
 
     public int MoveX { get; }
@@ -36,4 +38,5 @@ public readonly record struct PlayerInput
     public bool DashPressed { get; }
     public bool GrabHeld { get; }
     public bool DropThroughPressed { get; }
+    public bool DuckHeld { get; }
 }

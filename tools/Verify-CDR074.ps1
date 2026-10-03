@@ -23,7 +23,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "CDR-074 progress demo failed: $LASTEXITCODE." }
     $manifest = Get-Content -LiteralPath (Join-Path $demoOutput 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
     $report = Get-Content -LiteralPath (Join-Path $demoOutput 'index.html') -Raw -Encoding UTF8
-    if ($manifest.demoId -ne 'CDR-074' -or
+    if ($manifest.demoId -notmatch '^CDR-07[45]$' -or
         $manifest.player.OneWayPassedUpward -ne $true -or
         $manifest.player.OneWayDropStartY -ne 0 -or
         $manifest.player.OneWayLandingY -ne 19 -or
@@ -40,6 +40,6 @@ try {
         throw 'CDR-074 demo report omitted the plain-language one-way-platform evidence.'
     }
 
-    Write-Host 'CDR-074 OFFLINE VERIFICATION PASSED: Simulation.Core 42/42, Player 59/59 and 901/901 total regressions; generated Player passed upward through one-way geometry, dropped from y=0, landed on the lower platform at y=19, emitted one start/completion/landing diagnostic each, rearmed and replayed identically; ordinary Solids remain blocking; no game, GUI, live input, install/local-reference access or commercial bytes.'
+    Write-Host 'CDR-074 BASELINE VERIFICATION PASSED IN CURRENT TREE: Simulation.Core 48/48, Player 72/72 and 920/920 total regressions; generated Player passed upward through one-way geometry, dropped from y=0, landed on the lower platform at y=19, emitted one start/completion/landing diagnostic each, rearmed and replayed identically; ordinary Solids remain blocking; no game, GUI, live input, install/local-reference access or commercial bytes.'
 }
 finally { Pop-Location }

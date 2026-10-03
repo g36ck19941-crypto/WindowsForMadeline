@@ -78,6 +78,7 @@ var seeker = RunSyntheticSeeker();
 var app = Cdr050Demo.Run();
 var host = Cdr051Demo.Run();
 var extensionContracts = Cdr060Demo.Run();
+var ducking = Cdr075Demo.Run();
 
 if (!frame.CopyPixels().SequenceEqual(sourcePixels))
 {
@@ -99,7 +100,8 @@ var reportPath = Path.Combine(outputDirectory, "index.html");
 var manifest = new
 {
     schemaVersion = 1,
-    demoId = "CDR-074",
+    demoId = "CDR-075",
+    ducking,
     diagnosticPlaceholder = true,
     source = "program-generated",
     persistedCommercialBytes = 0,
@@ -460,10 +462,10 @@ File.WriteAllText(
 
 File.WriteAllText(
     reportPath,
-    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host, extensionContracts),
+    BuildHtml(frame, page, sprites, catalog, simulation, player, traversal, presentation, desktop, animationPresentation, theo, glider, spring, refill, water, bumper, puffer, seeker, app, host, extensionContracts, ducking),
     new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
 
-Console.WriteLine("DEMO CDR-074 cumulative offline project progress");
+Console.WriteLine("DEMO CDR-075 cumulative offline project progress");
 Console.WriteLine($"RESULT metadata_pages=1 metadata_entries=3 decoded_pixels=48 sprite_definitions=2 animations=2 catalog_entities=2 catalog_frames=3 decoded_pages=1 simulation_ticks={simulation.Rows.Count} player_ticks={player.Rows.Count} traversal_ticks={traversal.Rows.Count} animation_ticks={animationPresentation.Rows.Count} theo_ticks={theo.Rows.Count} glider_ticks={glider.Rows.Count} spring_ticks={spring.Rows.Count} refill_ticks={refill.Rows.Count} water_ticks={water.Rows.Count} bumper_ticks={bumper.Rows.Count} puffer_ticks={puffer.Rows.Count} seeker_ticks={seeker.Rows.Count} app_ticks={app.Rows.Count} app_simulation_completed={app.SimulationCompletedCount} app_effects_routed={app.EffectRoutedCount} app_component_disabled={app.ComponentDisabledCount} app_replay={app.DeterministicReplay.ToString().ToLowerInvariant()} host_normal_ticks={host.NormalCadence.ExecutedTicks} host_normal_dropped={host.NormalCadence.DroppedIntervals} host_backlog_ticks={host.BacklogCadence.ExecutedTicks} host_backlog_dropped={host.BacklogCadence.DroppedIntervals} host_backlog_event={host.BacklogCadence.EventIds.Contains("APP_HOST_BACKLOG_DROPPED", StringComparison.Ordinal).ToString().ToLowerInvariant()} host_stopped={(host.NormalCadence.FinalLifecycle == "Stopped" && host.BacklogCadence.FinalLifecycle == "Stopped").ToString().ToLowerInvariant()} host_replay={host.DeterministicReplay.ToString().ToLowerInvariant()} provider_asset_bytes={extensionContracts.AssetBytes} provider_asset_budget_rejected={extensionContracts.AssetBudgetRejected.ToString().ToLowerInvariant()} provider_worlds={extensionContracts.WorldCount} provider_rooms={extensionContracts.RoomCount} provider_solids={extensionContracts.SolidCount} provider_spawns={extensionContracts.SpawnCount} provider_entities={extensionContracts.EntityCount} provider_world_budget_rejected={extensionContracts.WorldBudgetRejected.ToString().ToLowerInvariant()} provider_replay={extensionContracts.DeterministicReplay.ToString().ToLowerInvariant()} human_visible=false commercial_bytes=0");
 Console.WriteLine($"FRAME width={frame.Width} height={frame.Height} stride={frame.Stride}");
 Console.WriteLine($"SHA256 {frame.ContentSha256}");
@@ -663,7 +665,8 @@ static string BuildHtml(
     DemoSeeker seeker,
     DemoApp app,
     DemoHeadlessHost host,
-    DemoExtensionContracts extensionContracts)
+    DemoExtensionContracts extensionContracts,
+    DuckingDemoResult ducking)
 {
     const int scale = 52;
     var pixels = frame.CopyPixels();
@@ -703,6 +706,20 @@ static string BuildHtml(
             .Append("</td><td>").Append(row.ActorX).Append(',').Append(row.ActorY)
             .Append("</td><td>").Append(row.PlatformX).Append(',').Append(row.PlatformY)
             .Append("</td><td>").Append(row.ActorXSubpixel)
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
+            .Append("</td></tr>");
+    }
+
+    var duckRows = new StringBuilder();
+    foreach (var row in ducking.Rows)
+    {
+        duckRows.Append("<tr><td>").Append(row.Tick)
+            .Append("</td><td>").Append(row.X).Append(',').Append(row.Y)
+            .Append("</td><td>").Append(row.Height)
+            .Append("</td><td>").Append(row.Bottom)
+            .Append("</td><td>").Append(row.Ducking)
+            .Append("</td><td>").Append(decimal.Round(row.SpeedX, 3))
+            .Append("</td><td>").Append(WebUtility.HtmlEncode(row.BlockingSolidId ?? "-"))
             .Append("</td><td>").Append(WebUtility.HtmlEncode(row.Events))
             .Append("</td></tr>");
     }
@@ -919,7 +936,7 @@ static string BuildHtml(
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>CelesteDesktopRuntime CDR-074 进度演示</title>
+          <title>CelesteDesktopRuntime CDR-075 进度演示</title>
           <style>
             :root{color-scheme:dark;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:#111827;color:#e5e7eb}
             body{margin:0;padding:32px;max-width:1100px;margin-inline:auto}
@@ -938,7 +955,7 @@ static string BuildHtml(
           </style>
         </head>
         <body>
-          <h1>CDR-074 累计项目进度演示</h1>
+          <h1>CDR-075 累计项目进度演示</h1>
           <div class="sub">程序生成素材目录、确定性角色/实体模拟、离线动画呈现与匿名桌面几何</div>
           <div class="warning"><b>diagnostic_placeholder=true</b>：图像完全由程序生成，不是 Celeste 素材。本演示自身不读取真实安装；真实格式兼容性已由独立的 CDR-016 只读验证完成。</div>
           <div class="pipeline">
@@ -971,6 +988,7 @@ static string BuildHtml(
             <div class="stage"><b>CDR-072</b>横向撞墙速度的 4 tick 保留、恢复、取消与过期</div>
             <div class="stage"><b>CDR-073</b>向上擦碰平台边角时，在 4 像素内做可诊断的横向修正</div>
             <div class="stage"><b>CDR-074</b>单向平台从下穿过、从上落地和明确的向下穿透状态</div>
+            <div class="stage"><b>CDR-075</b>角色下蹲滑进矮处，头顶没空间时保持蹲下，空间恢复后安全起身</div>
           </div>
           <div class="gap-note"><b>编号说明：</b>CDR-017、CDR-018、CDR-019 当前未分配，是阶段间保留编号，不代表任务或成果丢失。</div>
           <div class="layout">
@@ -992,6 +1010,12 @@ static string BuildHtml(
           <h2>CDR-021 Normal / Jump 轨迹</h2>
           <p>合成输入先向右加速 6 tick，再起跳并先长按后释放。最大跑速到达：<span class="ok">{{player.MaxRunReached}}</span>；Jumped 事件：{{player.JumpEventCount}}；重复运行：<span class="ok">{{(player.DeterministicReplay ? "完全一致" : "不一致")}}</span>。CDR-071 另用高速右移并上升的平台执行一次普通跳跃，实际继承速度为 ({{player.AppliedLiftX}}, {{player.AppliedLiftY}})，LiftVelocityApplied={{player.LiftEventCount}}。CDR-072 再让角色以 {{player.RetainedWallSpeed}} 的速度撞墙，保留窗口={{player.InitialWallRetentionTicks}} tick；墙移开后恢复速度={{player.RestoredWallSpeed}}，WallSpeedRetained/Restored={{player.WallRetainedEventCount}}/{{player.WallRestoredEventCount}}。CDR-073 用程序生成的平台边角阻挡上升路径；角色从 ({{player.CornerStartX}},{{player.CornerStartY}}) 自动横移 {{player.UpwardCornerCorrectionX}} 像素到 ({{player.CornerFinalX}},{{player.CornerFinalY}})，UpwardCornerCorrected={{player.CornerCorrectionEventCount}}，上升速度继续保留={{player.CornerVerticalSpeedPreserved}}。CDR-074 另用两层程序生成单向平台：从下方上升可穿过={{player.OneWayPassedUpward}}；角色从 y={{player.OneWayDropStartY}} 明确向下穿透上层，在 y={{player.OneWayLandingY}} 落到 {{player.OneWayLandedPlatformId}}；开始/完成/落地事件={{player.OneWayDropStartedCount}}/{{player.OneWayDropCompletedCount}}/{{player.OneWayLandingCount}}，到下一层后可再次穿透={{player.OneWayDropRearmed}}。</p>
           <table><thead><tr><th>Tick</th><th>Player x,y</th><th>Speed x,y</th><th>Grounded</th><th>Coyote/Buffer/Variable</th><th>事件</th></tr></thead><tbody>{{playerRows}}</tbody></table>
+          <section id="duck-clearance-demo">
+          <h2>CDR-075 蹲下进入矮处，确认头顶有空间再起身</h2>
+          <p>角色原本高 {{ducking.StandingHeight}} 像素，按住下蹲后变成 {{ducking.DuckHeight}} 像素，利用原有速度滑进矮通道。脚底始终停在 y=11：{{ducking.FeetPreserved}}。第 7、8 tick 松开下蹲，但头顶仍被 duck-low-ceiling 挡住，所以继续蹲着。第 9 tick 移开天花板，角色安全恢复站立：{{ducking.RestoredStanding}}。全程没有钻进障碍物：{{ducking.NeverOverlapped}}；开始下蹲/起身受阻/成功起身={{ducking.StartedCount}}/{{ducking.BlockedCount}}/{{ducking.CompletedCount}}；重复运行一致={{ducking.DeterministicReplay}}。</p>
+          <p>这为矮通道中的身体尺寸和安全起身提供基础；下蹲不是瞬移，也不会把脚底挪走。当前仍是程序生成碰撞几何，没有真人操作或角色动画，冲刺和攀爬中的下蹲联动尚未校准。</p>
+          <table><thead><tr><th>时间点 tick</th><th>左上角 x,y</th><th>身体高度</th><th>脚底 y</th><th>蹲着</th><th>横向速度</th><th>阻止起身的障碍</th><th>发生了什么</th></tr></thead><tbody>{{duckRows}}</tbody></table>
+          </section>
           <h2>CDR-022 Dash / Wall / Climb 轨迹</h2>
           <p>合成角色先贴右墙下滑并蹬墙，随后向右冲刺撞墙，再抓墙向上攀爬。DashStarted={{traversal.DashStartedCount}}，WallSlideStarted={{traversal.WallSlideStartedCount}}，WallJumped={{traversal.WallJumpedCount}}，ClimbStarted={{traversal.ClimbStartedCount}}；重复运行：<span class="ok">{{(traversal.DeterministicReplay ? "完全一致" : "不一致")}}</span>。</p>
           <table><thead><tr><th>Tick</th><th>State</th><th>Player x,y</th><th>Speed x,y</th><th>Dashes</th><th>Stamina</th><th>事件</th></tr></thead><tbody>{{traversalRows}}</tbody></table>
@@ -1069,6 +1093,7 @@ static string BuildHtml(
               <li><strong>App 已有无界面运行节奏：</strong>宿主按固定 60 Hz 请求下一 tick，短暂卡顿时最多有限追赶，过期积压会留下明确记录；取消或达到演示上限后会停止并释放会话。</li>
               <li><strong>未来扩展已有安全插口：</strong>素材来源只能返回有长度和哈希的纯数据，房间只能描述矩形 Solid、出生点和项目支持的实体；路径、文件流、回调、程序集和任意脚本不会进入公共合同。</li>
               <li><strong>单向平台已有确定性规则：</strong>角色可以从下方穿过、从上方落地并稳定站立，也可以进入有时限且有日志的向下穿透状态；普通 Solid 不会因此被穿透。</li>
+              <li><strong>角色已有安全下蹲和起身规则：</strong>身体会缩小但脚底不挪动；松开下蹲时，头顶仍有障碍就保持蹲着，障碍移开后才站起来。九步表格记录了开始、两次受阻和成功起身，全程没有进入障碍物。</li>
             </ul>
             <p class="plain"><strong>它在项目里的作用：</strong>以前项目只是“已经拿到安全的动画图片”，现在已经接通到“知道当前应该显示哪一张，并把它送去呈现”。这是以后让 Madeline 和交互物品真正动起来所必需的中间环节。</p>
           </div>
@@ -1079,7 +1104,8 @@ static string BuildHtml(
               <li><strong>这次使用的是程序生成测试图：</strong>不是 Celeste 的原版角色图片，也没有把任何商业素材保存进项目。</li>
               <li><strong>Present 不等于肉眼可见：</strong>它只说明渲染后端接收并提交了画面；当前走的是隐藏、离线验证路径，没有把角色窗口显示到真实桌面。</li>
               <li><strong>还没有可见桌面宿主：</strong>CDR-050 已完成纯离线 App 统一编排，但没有打开窗口、接入实时键盘、读取真实桌面或验证人眼可见。</li>
-              <li><strong>单向平台仍是 partial：</strong>当前只验证静态程序生成平台；移动平台、特殊变体、下蹲联动和原版完整数值仍未建立。</li>
+              <li><strong>单向平台仍是 partial：</strong>当前只验证静态程序生成平台，Normal 下蹲不会改变脚底接触；移动平台、特殊变体、冲刺接触联动和原版完整数值仍未建立。</li>
+              <li><strong>下蹲仍是部分校准：</strong>当前只检查 Normal 移动中的身体尺寸和起身空间；冲刺、攀爬中的下蹲联动、原版完整碰撞箱偏移和真人手感尚未验证。</li>
               <li><strong>CDR-051 仍是 Headless：</strong>它只证明后台时钟和退出流程，不是可双击运行的正式桌面角色程序，也没有读取真实键盘、桌面或正版安装。</li>
               <li><strong>CDR-060 不是地图或 Mod 读取器：</strong>它只建立未来接口并用程序数据验证；没有解析 Celeste 地图、扫描 Mod 目录、加载 DLL/Lua/脚本，也没有承诺现有 Mod 兼容。</li>
               <li><strong>还没有真实交互验收：</strong>没有实时键盘输入、真实桌面观察，也没有检查角色是否能在桌面上持续生成、移动和保持可见。</li>

@@ -38,6 +38,6 @@ try {
         throw 'CDR-073 demo report omitted the corner-correction explanation or diagnostic.'
     }
 
-    Write-Host 'CDR-073 BASELINE VERIFICATION PASSED IN CURRENT TREE: Simulation.Core 42/42, Player 59/59 and 901/901 current total regressions, including later CDR-074 cases; generated upward corner collision still shifts right by exactly one pixel, completes the remaining rise and emits one explicit correction diagnostic; no game, GUI, install/local-reference access or commercial content.'
+    Write-Host 'CDR-073 BASELINE VERIFICATION PASSED IN CURRENT TREE: Simulation.Core 48/48, Player 72/72 and 920/920 current total regressions, including later CDR-074 cases; generated upward corner collision still shifts right by exactly one pixel, completes the remaining rise and emits one explicit correction diagnostic; no game, GUI, install/local-reference access or commercial content.'
 }
 finally { Pop-Location }

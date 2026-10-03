@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-03 — CDR-074 published; CDR-075 ducking ready for acceptance
+
+- Accepted CDR-074 exact commit `9e07d966e8398eb011536d87fa5af95e5f7e4ce3` passed a fresh 901/901 gate and zero-finding outbound audit, then was published/read back at `codex/cdr-074-player-one-way-platforms`; remote main unchanged.
+- Added transactional registered-Actor height resizing, foot/subpixel preservation, grounded Normal duck friction, complete standing-clearance refusal/recovery and safe ordinary-jump ordering.
+- Added immutable duck/bounds/blocker evidence, three stable events, six Core and thirteen Player cases. Current focused totals are Core 48/48 and Player 72/72; the full gate is 920/920.
+- Added a dedicated nine-tick cumulative demo and bilingual acceptance handoff, and updated both double-click launchers. Heights are 6/11, feet y=11, entry/blocked/completion events 1/2/1 with no overlap and identical replay. CDR-075 remains partial and unuploaded pending acceptance.
+
 ## 2026-10-02 — CDR-074 one-way platforms ready for acceptance
 
 - Added immutable static one-way-platform geometry, deterministic registration order, upward/horizontal pass-through and downward top-contact blocking without changing ordinary Solid authority.

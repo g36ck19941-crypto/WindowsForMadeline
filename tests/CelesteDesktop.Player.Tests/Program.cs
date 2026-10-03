@@ -66,6 +66,8 @@ var tests = new (string Name, Action Body)[]
     ("controller surface accepts snapshots not live input devices", SurfaceHasNoLiveInputDependency)
 };
 
+tests = tests.Concat(DuckingCases.Tests).ToArray();
+
 var failed = 0;
 foreach (var test in tests)
 {

@@ -48,6 +48,8 @@ var tests = new (string Name, Action Body)[]
     ("public surface has no file GUI clock or input dependency", SurfaceIsPlatformIndependent)
 };
 
+tests = tests.Concat(HeightResizeCases.Tests).ToArray();
+
 var failed = 0;
 foreach (var test in tests)
 {

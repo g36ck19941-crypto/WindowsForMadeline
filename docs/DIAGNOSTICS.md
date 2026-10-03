@@ -68,6 +68,8 @@ Puffer emits `PUFFER_SWAM`, `PUFFER_TURNED`, `PUFFER_WARNING_STARTED`, `PUFFER_E
 
 Seeker emits `SEEKER_PATROLLED`, `SEEKER_TURNED`, `SEEKER_ALERTED`, `SEEKER_CHASE_STARTED`, `SEEKER_CHASED`, `SEEKER_TARGET_LOST`, `SEEKER_WINDUP_STARTED`, `SEEKER_DASH_STARTED`, `SEEKER_DASHED`, `SEEKER_TARGET_HIT`, `SEEKER_WALL_HIT`, `SEEKER_STUNNED`, `SEEKER_RECOVERED`, `SEEKER_CENTER_FALLBACK_USED`, `SEEKER_DISABLED`, `SEEKER_ENABLED` and `SEEKER_TARGET_IGNORED`. Events carry only bounded generated entity/target IDs, center and tick. A target-hit event proves that Seeker produced a target-addressed hit fact; it does not prove Player death or application. No Seeker event implies original navigation parity, assets, audio, rendering or human visibility.
 
+CDR-075 adds `DuckStarted`, `UnduckBlocked` and `UnduckCompleted`. Each records a fixed tick; blocked rise includes the ordinary Solid ID. Immutable Normal snapshots separately expose actual collision bounds and duck state. Each refused rise attempt is observable. These are generated simulation facts, not live input, animation or visibility evidence.
+
 ## 3. Error families
 
 - `INSTALL_*`: selection, containment, missing/unsupported files.

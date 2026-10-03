@@ -18,6 +18,7 @@ public sealed record NormalJumpTuning(
     int UpwardCornerCorrectionPixels,
     decimal OneWayDropThroughSpeed,
     int OneWayDropThroughTicks,
+    decimal DuckFriction,
     int CoyoteTicks,
     int JumpBufferTicks,
     int VariableJumpTicks)
@@ -40,6 +41,7 @@ public sealed record NormalJumpTuning(
         UpwardCornerCorrectionPixels: 4,
         OneWayDropThroughSpeed: 60m,
         OneWayDropThroughTicks: 12,
+        DuckFriction: 500m,
         CoyoteTicks: 6,
         JumpBufferTicks: 5,
         VariableJumpTicks: 12);

@@ -20,6 +20,9 @@ public sealed class PlayerNormalSnapshot
         string? groundedOneWayPlatformId,
         string? dropThroughPlatformId,
         int dropThroughTicksRemaining,
+        bool ducking,
+        SimRect collisionBounds,
+        string? unduckBlockingSolidId,
         int coyoteTicks,
         int jumpBufferTicks,
         int variableJumpTicks,
@@ -39,6 +42,9 @@ public sealed class PlayerNormalSnapshot
         GroundedOneWayPlatformId = groundedOneWayPlatformId;
         DropThroughPlatformId = dropThroughPlatformId;
         DropThroughTicksRemaining = dropThroughTicksRemaining;
+        Ducking = ducking;
+        CollisionBounds = collisionBounds;
+        UnduckBlockingSolidId = unduckBlockingSolidId;
         CoyoteTicks = coyoteTicks;
         JumpBufferTicks = jumpBufferTicks;
         VariableJumpTicks = variableJumpTicks;
@@ -59,6 +65,9 @@ public sealed class PlayerNormalSnapshot
     public string? GroundedOneWayPlatformId { get; }
     public string? DropThroughPlatformId { get; }
     public int DropThroughTicksRemaining { get; }
+    public bool Ducking { get; }
+    public SimRect CollisionBounds { get; }
+    public string? UnduckBlockingSolidId { get; }
     public int CoyoteTicks { get; }
     public int JumpBufferTicks { get; }
     public int VariableJumpTicks { get; }

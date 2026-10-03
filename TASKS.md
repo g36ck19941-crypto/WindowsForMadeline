@@ -44,14 +44,26 @@
 ### CDR-074 — Player one-way-platform calibration
 
 - Owner: Primary
-- State: implementation complete and ready for developer acceptance on 2026-10-02; not uploaded
+- State: accepted by the developer on 2026-10-03 and published at `codex/cdr-074-player-one-way-platforms` exact commit `9e07d966e8398eb011536d87fa5af95e5f7e4ce3`; remote main unchanged
 - File scope: one-way-platform geometry and filtered vertical collision in `CelesteDesktop.Simulation.Core`; Player Normal input/state/snapshot/events; their generated tests; cumulative demo, verifier and project records
 - Scope: pass upward through a generated one-way platform, land and remain grounded from above, enter an explicit bounded drop-through state, ignore the selected platform until the actor clears it, and preserve ordinary Solid collision
 - Fidelity: `partial`; this calibrates static one-way-platform contact only, not moving platforms, ducking, dash corner correction, special platform variants or complete Player parity
 - Acceptance: deterministic per-tick tests for upward pass-through, downward landing, stable standing, explicit drop-through/rearm, side exclusion, Solid non-regression, immutable evidence and stable diagnostics; cumulative generated demo and complete Release gate
 - Evidence: Release 0 warnings/errors; Simulation.Core 42/42; Player 59/59; total 901/901; generated demo passes upward, drops from y=0, lands on `one-way-lower` at y=19, records start/completion/landing `1/1/1`, rearms and replays identically
 - Forbidden: game/GUI/live input, installation or local-reference access, commercial bytes, CDR-061 work, moving/special one-way variants and upload before developer acceptance
-- Next gate: developer acceptance of CDR-074; no later calibration task begins automatically
+- Next gate: CDR-075 separately authorized on 2026-10-03
+
+### CDR-075 — Player ducking and safe unduck clearance calibration
+
+- Owner: Primary
+- State: implementation complete and acceptance-pending on 2026-10-03; not uploaded
+- File scope: minimal Actor height-resize/clearance support in Simulation.Core; Player Normal input/state/snapshot/events/tuning; generated Core/Player tests; cumulative demo, verifier, launchers and project records
+- Scope: explicit generated duck input, feet-anchored reduced collision height, grounded duck friction, collision-checked restoration of standing height, blocked-rise diagnostics, safe ordinary jump and immutable per-tick evidence
+- Fidelity: partial; project calibration, not complete commercial numeric parity or dash/climb duck interactions
+- Acceptance: low-ceiling refusal without overlap or foot/subpixel drift, clear-space recovery, ordinary Solid and one-way grounding, deterministic replay and full Release gate
+- Evidence: Core 48/48, Player 72/72, total 920/920; nine-tick generated trajectory, heights 6/11, feet y=11, entry/blocked/completion events 1/2/1, no overlap and identical replay; both no-open/no-pause launchers pass
+- Forbidden: game/GUI/live input, install or local-reference access, commercial bytes, CDR-061, dash/climb special interactions and upload before developer acceptance
+- Next gate: developer acceptance of CDR-075; later calibration tasks require authorization
 
 ## P0 — Foundation
 

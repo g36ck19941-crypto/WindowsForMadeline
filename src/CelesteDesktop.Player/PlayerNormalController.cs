@@ -13,16 +13,24 @@ public sealed class PlayerNormalController
     private bool _wallRetentionHandledThisTick;
     private string? _dropThroughPlatformId;
     private int _dropThroughTicksRemaining;
+    private string? _unduckBlockingSolidId;
     private long _lastUpdatedTick = -1;
 
     public PlayerNormalController(
         Actor actor,
         NormalJumpTuning? tuning = null,
-        SimVector initialSpeed = default)
+        SimVector initialSpeed = default,
+        int? duckHeight = null)
     {
         Actor = actor ?? throw new ArgumentNullException(nameof(actor));
         Tuning = tuning ?? NormalJumpTuning.ReferencePartial;
         ValidateTuning(Tuning);
+        StandingHeight = Actor.Height;
+        DuckHeight = duckHeight ?? Math.Min(6, Math.Max(1, StandingHeight - 1));
+        if (DuckHeight <= 0 || DuckHeight > StandingHeight)
+        {
+            throw new ArgumentOutOfRangeException(nameof(duckHeight));
+        }
         SpeedX = initialSpeed.X;
         SpeedY = initialSpeed.Y;
         MaxFall = Tuning.NormalMaxFall;
@@ -33,6 +41,9 @@ public sealed class PlayerNormalController
     public decimal SpeedX { get; private set; }
     public decimal SpeedY { get; private set; }
     public decimal MaxFall { get; private set; }
+    public int StandingHeight { get; }
+    public int DuckHeight { get; }
+    public bool Ducking { get; private set; }
     public int Facing { get; private set; } = 1;
     public int CoyoteTicksRemaining { get; private set; }
     public int JumpBufferTicksRemaining { get; private set; }
@@ -109,7 +120,9 @@ public sealed class PlayerNormalController
         _lastUpdatedTick = world.Tick;
         _events.Clear();
         _wallRetentionHandledThisTick = false;
+        _unduckBlockingSolidId = null;
 
+        UpdateDucking(input, world);
         RefreshDropThroughState(world, world.Tick);
         TryStartDropThrough(input, world, world.Tick);
         var groundedAtStart = SpeedY >= 0m && world.IsGrounded(Actor, _dropThroughPlatformId);
@@ -151,10 +164,48 @@ public sealed class PlayerNormalController
             groundedOneWayPlatformId,
             _dropThroughPlatformId,
             _dropThroughTicksRemaining,
+            Ducking,
+            Actor.Bounds,
+            _unduckBlockingSolidId,
             CoyoteTicksRemaining,
             JumpBufferTicksRemaining,
             VariableJumpTicksRemaining,
             _events);
+    }
+
+    private void UpdateDucking(PlayerInput input, SimulationWorld world)
+    {
+        if (!Ducking)
+        {
+            if (input.DuckHeld && !input.JumpPressed && SpeedY >= 0m &&
+                world.IsGrounded(Actor, _dropThroughPlatformId) && DuckHeight < StandingHeight)
+            {
+                var resize = Actor.TryResizeHeightKeepingBottom(DuckHeight, world);
+                if (resize.Applied)
+                {
+                    Ducking = true;
+                    CancelWallSpeedRetention(world.Tick);
+                    _events.Add(new PlayerNormalEvent(world.Tick, PlayerNormalEventKind.DuckStarted, null));
+                }
+            }
+            return;
+        }
+
+        if (input.DuckHeld && !input.JumpPressed)
+        {
+            return;
+        }
+        var restore = Actor.TryResizeHeightKeepingBottom(StandingHeight, world);
+        if (restore.Applied)
+        {
+            Ducking = false;
+            _events.Add(new PlayerNormalEvent(world.Tick, PlayerNormalEventKind.UnduckCompleted, null));
+        }
+        else
+        {
+            _unduckBlockingSolidId = restore.BlockingSolidId;
+            _events.Add(new PlayerNormalEvent(world.Tick, PlayerNormalEventKind.UnduckBlocked, restore.BlockingSolidId));
+        }
     }
 
     private void RecordGroundTransition(long tick, bool grounded)
@@ -186,6 +237,12 @@ public sealed class PlayerNormalController
         if (input.MoveX != 0)
         {
             Facing = input.MoveX;
+        }
+
+        if (Ducking && grounded)
+        {
+            SpeedX = Approach(SpeedX, 0m, Tuning.DuckFriction / SimulationConstants.TicksPerSecond);
+            return;
         }
 
         var multiplier = grounded ? 1m : Tuning.AirControlMultiplier;
@@ -255,6 +312,11 @@ public sealed class PlayerNormalController
         }
 
         _wallRetentionHandledThisTick = true;
+        if (Ducking)
+        {
+            CancelWallSpeedRetention(tick);
+            return;
+        }
         var retainedDirection = Math.Sign(_wallSpeedRetained);
         if (input.MoveX != 0 && input.MoveX == -retainedDirection)
         {
@@ -354,7 +416,7 @@ public sealed class PlayerNormalController
 
     private SimVector TryJump(PlayerInput input, long tick)
     {
-        if (JumpBufferTicksRemaining <= 0 || CoyoteTicksRemaining <= 0)
+        if (Ducking || JumpBufferTicksRemaining <= 0 || CoyoteTicksRemaining <= 0)
         {
             return SimVector.Zero;
         }
@@ -421,7 +483,7 @@ public sealed class PlayerNormalController
         var horizontal = Actor.MoveX(SpeedX / SimulationConstants.TicksPerSecond, world);
         if (horizontal.Blocked)
         {
-            if (_wallSpeedRetentionTicks == 0 && !_wallRetentionHandledThisTick && incomingSpeedX != 0m)
+            if (!Ducking && _wallSpeedRetentionTicks == 0 && !_wallRetentionHandledThisTick && incomingSpeedX != 0m)
             {
                 _wallSpeedRetained = incomingSpeedX;
                 _wallSpeedRetentionTicks = Tuning.WallSpeedRetentionTicks;
@@ -580,7 +642,7 @@ public sealed class PlayerNormalController
             tuning.FastFallAcceleration <= 0m || tuning.JumpSpeed >= 0m ||
             tuning.MaximumHorizontalLiftSpeed <= 0m || tuning.MaximumUpwardLiftSpeed <= 0m ||
             tuning.WallSpeedRetentionTicks <= 0 || tuning.UpwardCornerCorrectionPixels <= 0 ||
-            tuning.OneWayDropThroughSpeed <= 0m || tuning.OneWayDropThroughTicks <= 0 ||
+            tuning.OneWayDropThroughSpeed <= 0m || tuning.OneWayDropThroughTicks <= 0 || tuning.DuckFriction <= 0m ||
             tuning.CoyoteTicks <= 0 || tuning.JumpBufferTicks <= 0 ||
             tuning.VariableJumpTicks <= 0)
         {

@@ -18,7 +18,7 @@ CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 �
 ## 开发者双击入口
 
 - `演示当前进度.cmd`：生成程序化 Atlas/XML、Actor/Solid 场景、玩家输入、棋盘格、匿名桌面几何、实体交互、App 编排、固定 60 Hz 宿主和未来扩展接口示例，再打开本地 HTML 报告。
-- `验证当前版本.cmd`：执行 Release 构建和 CDR-010 至 CDR-060 的 856 项离线/隐藏回归；不读取真实安装、地图、Mod 或桌面内容，也不打开可见窗口。
+- `验证当前版本.cmd`：执行 Release 构建和累计至 CDR-075 的 920 项离线/隐藏回归，包括下蹲、矮处起身检查和九步演示；不读取真实安装、地图、Mod 或桌面内容，也不打开可见窗口。
 - `验证真实安装兼容性.cmd`：显式选择正版安装后执行 CDR-016 只读核验；不启动游戏或 GUI，证据写在项目目录。
 - `建立本地行为参考.cmd`：显式选择正版安装，在首次下载固定版本 ILSpy 前征求同意，并把反编译参考只保存在 Git 忽略的 `local-cache`；不启动游戏、不写安装目录。
 - `tools/*.ps1` 保留给代理和 CI，不再要求开发者手动输入。
@@ -55,3 +55,4 @@ CDR-016、CDR-020、CDR-021、CDR-022、CDR-030、CDR-031、CDR-032、CDR-040 �
 28. `docs/PLAYER_WALL_SPEED_RETENTION.md`
 29. `docs/PLAYER_UPWARD_CORNER_CORRECTION.md`
 30. `docs/PLAYER_ONE_WAY_PLATFORMS.md`
+31. `docs/PLAYER_DUCKING.md`

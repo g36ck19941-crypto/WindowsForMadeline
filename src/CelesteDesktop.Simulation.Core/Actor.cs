@@ -20,12 +20,38 @@ public sealed class Actor
     public int X { get; private set; }
     public int Y { get; private set; }
     public int Width { get; }
-    public int Height { get; }
+    public int Height { get; private set; }
     public decimal XSubpixel => _xRemainder.Remainder;
     public decimal YSubpixel => _yRemainder.Remainder;
     public SimVector LiftSpeed { get; internal set; }
     public bool IsSquished { get; internal set; }
     public SimRect Bounds => new(X, Y, Width, Height);
+
+    public ActorResizeResult TryResizeHeightKeepingBottom(int height, SimulationWorld world)
+    {
+        ArgumentNullException.ThrowIfNull(world);
+        world.RequireActiveStep();
+        if (!world.Actors.Contains(this))
+        {
+            throw new ArgumentException("Actor is not registered in this world.", nameof(world));
+        }
+
+        var nextY = checked(Bounds.Bottom - height);
+        var candidate = new SimRect(X, nextY, Width, height);
+        if (IsSquished)
+        {
+            return new ActorResizeResult(false, null);
+        }
+        var blocker = world.FirstCollision(candidate, ignoredSolid: null);
+        if (blocker is not null)
+        {
+            return new ActorResizeResult(false, blocker.Id);
+        }
+
+        Y = nextY;
+        Height = height;
+        return new ActorResizeResult(true, null);
+    }
 
     public ActorMoveResult MoveX(decimal displacement, SimulationWorld world)
     {
@@ -208,3 +234,5 @@ public sealed record ActorMoveResult(
     public bool Blocked => RequestedPixels != MovedPixels;
     public string? BlockingSurfaceId => BlockingSolidId ?? BlockingOneWayPlatformId;
 }
+
+public sealed record ActorResizeResult(bool Applied, string? BlockingSolidId);

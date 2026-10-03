@@ -33,6 +33,6 @@ try {
         throw 'CDR-071 demo report omitted the lift-inheritance explanation or diagnostic.'
     }
 
-    Write-Host 'CDR-071 BASELINE VERIFICATION PASSED IN CURRENT TREE: Player 59/59 and 901/901 current total regressions, including later CDR-072/CDR-073/CDR-074 cases; generated moving-Solid jump still applies bounded lift (250,-130) with one diagnostic and deterministic replay; no game, GUI, install/local-reference access or commercial content.'
+    Write-Host 'CDR-071 BASELINE VERIFICATION PASSED IN CURRENT TREE: Player 72/72 and 920/920 current total regressions, including later CDR-072/CDR-073/CDR-074 cases; generated moving-Solid jump still applies bounded lift (250,-130) with one diagnostic and deterministic replay; no game, GUI, install/local-reference access or commercial content.'
 }
 finally { Pop-Location }
