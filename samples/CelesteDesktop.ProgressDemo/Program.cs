@@ -70,7 +70,7 @@ static int Run(string[] args)
     }
     var identitySummary = "尚未读取授权的程序集检查摘要；不会自动访问安装目录。";
     var identityRows = "";
-    var dependencyExplanation = "尚无原版候选的依赖检查摘要；不能判断是否能编译或运行。";
+    var dependencyExplanation = "尚无原版候选的 XNA 等依赖检查摘要；不能判断是否能编译或运行。";
     var originalMissingXnaCount = 0;
     var identityAvailable = File.Exists(identityReportPath);
     string? inspectedUtc = null;
@@ -100,7 +100,7 @@ static int Run(string[] args)
             var classification = candidate.GetProperty("classification").GetString();
             var frameworkMeaning = candidate.GetProperty("targetFramework").GetString() switch
             {
-                ".NETCoreApp,Version=v8.0" => ".NET 8（当前 Mod 版本）",
+                ".NETCoreApp,Version=v8.0" => ".NET 8（新框架）",
                 ".NETFramework,Version=v4.5" => ".NET Framework 4.5（旧框架）",
                 null => "不适用或未建立",
                 _ => "其它框架，未校准"
