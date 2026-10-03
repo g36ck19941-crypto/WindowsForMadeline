@@ -1,5 +1,9 @@
 # Current Handoff
 
+## Static boundary preflight after successful compile
+
+Cached-source read-only inspection recorded in docs/CDR-082-STATIC-BOUNDARIES.md and Chinese mirror. Player construction already needs input/sprite-bank/atlas initialization; Added needs original Level bounds; updates depend on time/assist/input/audio/scene. Engine constructor configures Window/graphics, game entry invokes Steam paths, audio creates native FMOD. Source observations only, not exhaustive call graph/runtime proof. No recovered execution, transformation, fresh installation reads or CDR-083 implementation. Next requires precise boundary design and separate execution/resource permission. Acceptance/upload pending.
+
 ## Current override — Steamworks compiler permission; emission SUCCESS, no execution
 
 Developer explicitly authorized previously inspected orig/Steamworks.NET.dll only as readonly compiler metadata, no Steam API/download/install/execution. Wrapper now requires explicit selected installation root; reads only orig Steamworks file with hash6C6B307E907294003014DA3ED4610E362A9B6EE4093A20E514B0E23454DA3085, PE identity10.0.0.0/neutral/unsigned. Eight refs total, same795 source closure, Library/x86 emission succeeds zero errors. PE static audit:1614 types/corePlayerActorSolid present/8 refs/0 resources; output hash4954B40E17DD4886DEEBFB42CE1EB9723DC5E3C329C7D08605069AF06F980467 stable measured. No Steamworks/original output loaded into AppDomain, no recovered execution or GUI/native Steam call. Refs hashed before/after emit; original source unedited. Commercial DLL/cache/private diagnostics ignored only.
