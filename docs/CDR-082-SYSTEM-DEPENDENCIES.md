@@ -2,6 +2,8 @@
 
 2026-10-03. Primary. Explicit human permission: inspect XNA-initialization-related system dependencies readonly; no execution, downloads, installation or game-directory access. Own tools and source-free aggregate evidence only. Acceptance/upload pending.
 
+Later cached-only boundary classification brings current own-tool check groups to9;8-check measurements below are this system-inspection stage's historical results. No further system dependency read is implied. See [current initialization evidence](CDR-082-XNA-AUDIT.md).
+
 ## Role in the project
 
 Separates missing runtime components from unresolved initialization behavior. Finding the parts does not prove that loading them is safe or that original input/Player works. No new gameplay/runtime functionality is delivered.

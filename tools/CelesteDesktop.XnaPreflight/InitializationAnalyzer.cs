@@ -12,18 +12,31 @@ internal static class InitializationAnalyzer
         .Where(f => f.FieldType == typeof(OpCode)).Select(f => (OpCode)f.GetValue(null)!)
         .ToDictionary(c => unchecked((ushort)c.Value));
 
-    public static InitializationFact Analyze(PEReader pe, MetadataReader reader, IEnumerable<MethodDefinitionHandle> roots)
+    public static InitializationFact Analyze(PEReader pe, MetadataReader reader, IEnumerable<MethodDefinitionHandle> roots,
+        ICollection<object>? privateDetails = null)
     {
         var rootList = roots.ToArray();
         var pending = new Stack<MethodDefinitionHandle>(rootList);
         var visited = new HashSet<MethodDefinitionHandle>();
         var managed = 0; var native = 0; var pinvoke = 0; var memberBoundaries = 0; var indirect = 0; var unknownBodies = 0;
+        var nativeRvaImports = 0; var emptyModuleImports = 0;
+        var memberScopes = new Dictionary<string, int>();
         while (pending.Count != 0)
         {
             var handle = pending.Pop(); if (!visited.Add(handle)) continue;
             if (visited.Count > 4096) throw new InvalidDataException("XNA_INITIALIZER_GRAPH_BUDGET");
             var method = reader.GetMethodDefinition(handle);
-            if ((method.Attributes & MethodAttributes.PinvokeImpl) != 0) { pinvoke++; continue; }
+            if ((method.Attributes & MethodAttributes.PinvokeImpl) != 0) {
+                pinvoke++;
+                var import = method.GetImport();
+                var moduleName = import.Module.IsNil ? "" : reader.GetString(reader.GetModuleReference(import.Module).Name);
+                if (moduleName.Length == 0) emptyModuleImports++;
+                if ((method.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native && method.RelativeVirtualAddress != 0) nativeRvaImports++;
+                privateDetails?.Add(new { kind = "pinvoke-boundary", token = MetadataTokens.GetToken(handle),
+                    name = reader.GetString(method.Name), importName = reader.GetString(import.Name), moduleName,
+                    implementation = method.ImplAttributes.ToString(), rva = method.RelativeVirtualAddress });
+                continue;
+            }
             if ((method.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native) { native++; continue; }
             if (method.RelativeVirtualAddress == 0 || (method.ImplAttributes & MethodImplAttributes.CodeTypeMask) != MethodImplAttributes.IL)
             { unknownBodies++; continue; }
@@ -55,7 +68,14 @@ internal static class InitializationAnalyzer
                     var target = MetadataTokens.EntityHandle(BitConverter.ToInt32(bytes, position));
                     if (target.Kind == HandleKind.MethodSpecification) target = reader.GetMethodSpecification((MethodSpecificationHandle)target).Method;
                     if (target.Kind == HandleKind.MethodDefinition) pending.Push((MethodDefinitionHandle)target);
-                    else if (target.Kind == HandleKind.MemberReference) memberBoundaries++;
+                    else if (target.Kind == HandleKind.MemberReference) {
+                        memberBoundaries++;
+                        var reference = reader.GetMemberReference((MemberReferenceHandle)target);
+                        var scope = MemberScope(reader, reference.Parent);
+                        memberScopes[scope] = memberScopes.GetValueOrDefault(scope) + 1;
+                        privateDetails?.Add(new { kind = "member-boundary", token = MetadataTokens.GetToken(target),
+                            name = reader.GetString(reference.Name), parentKind = reference.Parent.Kind.ToString(), scope });
+                    }
                     else throw new InvalidDataException("XNA_INITIALIZER_TOKEN_KIND");
                 }
                 position += width;
@@ -63,12 +83,25 @@ internal static class InitializationAnalyzer
             }
         }
         return new InitializationFact(rootList.Length, managed, native, pinvoke, memberBoundaries, indirect, unknownBodies,
-            "conservative-local-method-graph", false);
+            "conservative-local-method-graph", false, nativeRvaImports, emptyModuleImports, memberScopes);
+    }
+
+    private static string MemberScope(MetadataReader reader, EntityHandle parent)
+    {
+        for (var depth = 0; depth < 32; depth++) {
+            if (parent.Kind == HandleKind.TypeReference) { parent = reader.GetTypeReference((TypeReferenceHandle)parent).ResolutionScope; continue; }
+            if (parent.Kind == HandleKind.AssemblyReference) return reader.GetString(reader.GetAssemblyReference((AssemblyReferenceHandle)parent).Name);
+            if (parent.Kind is HandleKind.ModuleDefinition or HandleKind.TypeDefinition or HandleKind.MethodDefinition) return "local-unresolved";
+            if (parent.Kind == HandleKind.ModuleReference) return "module-reference-unresolved";
+            return "unresolved-" + parent.Kind;
+        }
+        throw new InvalidDataException("XNA_MEMBER_SCOPE_BUDGET");
     }
 }
 internal sealed record InitializationFact(int rootCount, int visitedManagedMethods, int nativeMethodBoundaries,
     int pinvokeBoundaries, int memberReferenceBoundaries, int indirectCalls, int unresolvedBodies,
-    string method, bool runtimeSafetyEstablished);
+    string method, bool runtimeSafetyEstablished, int pinvokeWithNativeRva, int pinvokeEmptyModuleNames,
+    Dictionary<string, int> memberReferenceScopes);
 
 internal static class AuditTrap
 {

@@ -2,7 +2,17 @@
 
 2026-10-03. Primary. Developer confirmed readonly private caching/audit of3 previously inspected system XNA assemblies. No original/target assembly execution, game/GUI/real input/audio/Steam, installation/assets access or downloads. Acceptance/upload pending.
 
-Later explicit readonly system-dependency grant resolves the inspection-scope gate below; [current findings](CDR-082-SYSTEM-DEPENDENCIES.md). The current owned-tool suite has8 check groups. Older4-check results below are historical cached-graph measurements, not the current gate. Runtime safety remains unproven.
+Later explicit readonly system-dependency grant resolves the inspection-scope gate below; [system findings](CDR-082-SYSTEM-DEPENDENCIES.md). Current cached-boundary classification adds a ninth own check group. Older4/8-check results are historical. Runtime safety remains unproven.
+
+## Latest cached-only boundary classification
+
+Framework/Graphics each retain53managed/9PInvoke/73MemberReference/11indirect counts. All73 member occurrences have mscorlib metadata scope, not73 unknown external libraries. Six of9 PInvoke methods also have Native implementation flags/nonzero local code RVAs, with empty imported-module names. Remaining3 declared imports are kernel32/MSVCR100 pointer encode/decode and encoded-null functions. No target invoked; scope is not resolved behavior.
+
+Earlier nativeMethodBoundaries=0 excluded PInvoke-marked methods counted first. It is NOT no native code on the graph. New overlap counters expose6 native-RVA boundaries; native bodies and11 indirect targets remain unanalyzed. Startup-looking declarations are not device/GUI safety proof.
+
+Raw names/tokens/import details only go to fresh scoped JSON in Git-ignored cache, never stdout/public records. Escaped output, links and existing-file overwrite are rejected. Ninth own lexical-output negative check reads no cache. Double-click 审查缓存XNA依赖.cmd: new XNA_BOUNDARY_CLASSIFICATION rows show6nativeRva/6emptyModule/mscorlib73 for the mixed libraries, Game0/no root (not general safety).
+
+Measured cache cmd exit0/9own groups; full gate exit0, retained317/probe26/closure13/compile-report4/isolation45/isolation-report4/adapter-audit3/framework-report4/XNA9/window0. No system rereads/new dependencies/native or original execution/Player/assets. Diagnostics only, pending acceptance/upload. Next relevant gate: internal native/indirect initializer behavior, not repeating dependency searches.
 
 ## Role and actual evidence
 

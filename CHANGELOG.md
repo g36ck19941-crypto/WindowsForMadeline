@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Cached initializer boundary classification
+
+73member occurrences scoped to mscorlib;9PInvoke includes6Native/localRVA overlaps per mixed module. Clarified exclusive native0 category is not no-native safety. Raw details ignored-only/fresh scoped output; ninth own negative check/aggregate cmd logs. Cache/full gate passed, no target execution/new dependencies/runtime feature. Pending acceptance/upload.
+
 ## 2026-10-03 — Authorized readonly system dependency audit
 
 Fixed8managedGAC+4x86SysWOW64 slots allpresent/hashstable; identities/imports/delayimports/entrypoint/TLS declarations inspected without copies/loading/execution/game access. Own bounded normal/delay PE import parser adds4check groups (8total), opt-in 检查XNA系统依赖.cmd and bilingual records. Availability question resolved, native/indirect initialization safety not established. No runtime/Player feature; pending acceptance/upload.

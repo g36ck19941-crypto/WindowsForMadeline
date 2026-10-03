@@ -28,7 +28,11 @@ try
                 throw new InvalidDataException("INITIALIZER_TRAP_AUDIT_FAILED");
         }
         SystemDependencyAudit.SelfTest();
-        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=8 failed=0 targetExecuted=false");
+        rejected = false;
+        try { ValidatePrivateOutputPath("local-cache/cdr-082-xna/fixture/runtime", "artifacts/escaped.json"); }
+        catch (ArgumentException) { rejected = true; }
+        if (!rejected) throw new InvalidDataException("PRIVATE_OUTPUT_SCOPE_NEGATIVE_FAILED");
+        Console.WriteLine("XNA_PREFLIGHT_TESTS passed=9 failed=0 targetExecuted=false");
         return 0;
     }
     if (args is ["--system-dependencies"])
@@ -36,8 +40,18 @@ try
         Console.WriteLine(JsonSerializer.Serialize(SystemDependencyAudit.Run()));
         return 0;
     }
-    if (args is not ["--cached-root", var root]) throw new ArgumentException("XNA_PREFLIGHT_ARGS");
+    if (args.Length is not (2 or 4) || args[0] != "--cached-root" || (args.Length == 4 && args[2] != "--private-boundaries"))
+        throw new ArgumentException("XNA_PREFLIGHT_ARGS");
+    var root = args[1];
     Scope(root);
+    string? privateOutput = args.Length == 4 ? Path.GetFullPath(args[3]) : null;
+    if (privateOutput is not null) {
+        ValidatePrivateOutputPath(root, privateOutput);
+        if (File.Exists(privateOutput))
+            throw new ArgumentException("XNA_PRIVATE_OUTPUT_SCOPE");
+        NoLinks(privateOutput);
+    }
+    var privateRows = new List<object>();
     var hashes = new Dictionary<string, string> {
         ["Microsoft.Xna.Framework"] = "38E7093F52D7474BBC6256906519781A1210D7DA50A1C667B52716FCF49CA130",
         ["Microsoft.Xna.Framework.Game"] = "B5DFFDD8125ABEF2A4507BA4E1D2F11062143F0A63D48FE4F298B95AD746A1F0",
@@ -49,10 +63,13 @@ try
         if (new FileInfo(file).Length > 16 * 1024 * 1024) throw new InvalidDataException("XNA_PREFLIGHT_BUDGET");
         using (var input = File.OpenRead(file))
             if (Convert.ToHexString(SHA256.HashData(input)) != pair.Value) throw new InvalidDataException("XNA_BASELINE_CHANGED");
-        var row = Inspect(file);
+        var details = privateOutput is null ? null : new List<object>();
+        var row = Inspect(file, details);
+        if (details is not null) privateRows.Add(new { assembly = pair.Key, details });
         if (row.name != pair.Key) throw new InvalidDataException("XNA_IDENTITY_CHANGED");
         rows.Add(row);
     }
+    if (privateOutput is not null) File.WriteAllText(privateOutput, JsonSerializer.Serialize(privateRows));
     Console.WriteLine(JsonSerializer.Serialize(new { taskId = "CDR-082", stage = "cached-xna-static-initialization-preflight", rows,
         assemblyExecuted = false, runtimeSafetyEstablished = false, originalTestExecuted = false,
         gameLaunched = false, guiOpened = false, newDependenciesRead = false, installationWrites = 0 }));
@@ -90,7 +107,14 @@ static void Scope(string root)
         throw new ArgumentException("XNA_PREFLIGHT_SCOPE");
     NoLinks(path);
 }
-static MetadataFact Inspect(string path)
+static void ValidatePrivateOutputPath(string root, string output)
+{
+    var expectedParent = Path.GetFullPath(Path.Combine(root, ".."));
+    var normalized = Path.GetFullPath(output);
+    if (!string.Equals(Path.GetDirectoryName(normalized), expectedParent, StringComparison.OrdinalIgnoreCase) ||
+        Path.GetExtension(normalized) != ".json") throw new ArgumentException("XNA_PRIVATE_OUTPUT_SCOPE");
+}
+static MetadataFact Inspect(string path, ICollection<object>? privateDetails = null)
 {
     using var stream = File.OpenRead(path);
     if (stream.Length > 16 * 1024 * 1024) throw new InvalidDataException("XNA_PREFLIGHT_BUDGET");
@@ -113,7 +137,7 @@ static MetadataFact Inspect(string path)
         methods.Count(m => (m.Attributes & MethodAttributes.PinvokeImpl) != 0),
         methods.Count(m => (m.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Native),
         metadata.AssemblyReferences.Select(h => metadata.GetString(metadata.GetAssemblyReference(h).Name)).ToArray(),
-        InitializationAnalyzer.Analyze(pe, metadata, roots));
+        InitializationAnalyzer.Analyze(pe, metadata, roots, privateDetails));
 }
 internal sealed record MetadataFact(string name, bool ilOnly, bool moduleInitializerPresent,
     int pinvokeMethods, int nativeMethodCount, string[] referencedAssemblyNames, InitializationFact initialization);

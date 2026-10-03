@@ -18,7 +18,8 @@ try {
         if(((Get-Item -LiteralPath $cacheRoot -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'XNA_PREFLIGHT_CACHE_LINK'}
         $candidate=Get-ChildItem -LiteralPath $cacheRoot -Directory | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
         if(-not $candidate){throw 'XNA_PREFLIGHT_CACHE_MISSING'}
-        $lines=@(& dotnet tools/CelesteDesktop.XnaPreflight/bin/Release/net8.0/CelesteDesktop.XnaPreflight.dll --cached-root (Join-Path $candidate.FullName 'runtime'))
+        $privateOutput=Join-Path $candidate.FullName ('initializer-boundaries-'+[guid]::NewGuid().ToString('N')+'.json')
+        $lines=@(& dotnet tools/CelesteDesktop.XnaPreflight/bin/Release/net8.0/CelesteDesktop.XnaPreflight.dll --cached-root (Join-Path $candidate.FullName 'runtime') --private-boundaries $privateOutput)
         if($LASTEXITCODE -ne 0 -or $lines.Count -ne 1){throw 'XNA_PREFLIGHT_AUDIT_FAILED'}
         $report=$lines[0] | ConvertFrom-Json
         if($report.assemblyExecuted -or $report.runtimeSafetyEstablished -or $report.originalTestExecuted){throw 'XNA_PREFLIGHT_RUNTIME_CLAIM'}
@@ -31,6 +32,7 @@ try {
         foreach($row in $report.rows){
             Write-Output ("XNA_METADATA name="+$row.name+" ilOnly="+$row.ilOnly+" moduleInitializer="+$row.moduleInitializerPresent+" nativeMethods="+$row.nativeMethodCount+" pinvokeMethods="+$row.pinvokeMethods)
             Write-Output ("XNA_INITIALIZER_GRAPH name="+$row.name+" managedMethods="+$row.initialization.visitedManagedMethods+" pinvokeBoundaries="+$row.initialization.pinvokeBoundaries+" memberBoundaries="+$row.initialization.memberReferenceBoundaries+" indirectCalls="+$row.initialization.indirectCalls+" actualInvocationProven=false")
+            Write-Output ("XNA_BOUNDARY_CLASSIFICATION name="+$row.name+" pinvokeWithNativeRva="+$row.initialization.pinvokeWithNativeRva+" emptyModuleNames="+$row.initialization.pinvokeEmptyModuleNames+" memberScopes="+($row.initialization.memberReferenceScopes | ConvertTo-Json -Compress)+" runtimeSafetyEstablished=false")
         }
         Write-Output 'XNA_STATIC_AUDIT_COMPLETED runtimeSafetyEstablished=false originalTestExecuted=false'
     }

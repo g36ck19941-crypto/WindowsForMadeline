@@ -1,5 +1,7 @@
 # Tasks
 
+- CDR-082 cached boundary classification: Primary owns InitializationAnalyzer.cs/Program.cs, private ignored metadata trace and existing XNA wrapper/entry/records. Existing cache-only static scope; no target execution/system re-reads/new dependencies. Classify native-RVA/empty-module import overlap and member-reference assembly scopes; raw method details private only. Acceptance: output-scope negative/self-tests, cached hash-guard audit, no-window full gate; no native behavior/actual invocation claim.
+
 - CDR-082 system-dependency audit: Primary owns tools/CelesteDesktop.XnaPreflight/SystemDependencyAudit.cs and CLI/self-check integration, opt-in wrapper/cmd/bilingual records. Human allows readonly XNA-related system dependencies, not execution/download/install/game access. Fixed8 managed slots +4 SysWOW64 native slots, bounded/hash-stable PE facts only; no recursive new dependency reads/copies/loading. Acceptance: own parser/scope tests, exact system rows, no-window regression, no runtime safety claim. Next gate determined from measured initialization/dependency evidence.
 
 ## CDR-082 — Local original-source recovery and minimal compile probe

@@ -82,7 +82,7 @@
     "gamePInvokeMethods": 11,
     "graphicsNativeMethods": 36,
     "graphicsPInvokeMethods": 39,
-    "ownMetadataChecks": 8,
+    "ownMetadataChecks": 9,
     "initializerTraversal": {
       "method": "conservative-local-method-graph",
       "frameworkAndGraphicsEach": {
@@ -90,6 +90,9 @@
         "visitedManagedMethods": 53,
         "nativeMethodBoundaries": 0,
         "pinvokeBoundaries": 9,
+        "pinvokeWithNativeRva": 6,
+        "pinvokeEmptyModuleNames": 6,
+        "memberReferenceScopes": { "mscorlib": 73 },
         "memberReferenceBoundaries": 73,
         "indirectCalls": 11,
         "unresolvedBodies": 0
