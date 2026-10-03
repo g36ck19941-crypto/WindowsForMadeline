@@ -2,6 +2,8 @@
 
 ## CDR-082 — Local original-source recovery and minimal compile probe
 
+- Isolation framework continuation: Primary owns own module compatibility marker/usings/helper adjustments, static audit tests, tools/Compile-IsolationFramework.ps1, opt-in cmd, progress-summary probes and records. Only previously approved4 framework refs/no game or new assets. Own net472 compilation succeeds, output1 mscorlib ref/0 resources/PInvoke, never executed.45 existing +3 audit/4 framework-summary probes; actual original bridge/runtime still unproven. See bilingual CDR-082-ISOLATION-FRAMEWORK.md; acceptance/upload pending.
+
 - Isolation continuation: Primary owns src/CelesteDesktop.RuntimeIsolation, tests/CelesteDesktop.RuntimeIsolation.Tests, dedicated offline verification/demo entry, progress summary and corresponding records. Explicit authorization: design/implement local adapters only, no recovered execution/new assets/original behavior source edits. Acceptance: fixed60Hz context, copied generated input sequence/edges, lifecycle rejection, fail-closed external services and synthetic replay/negative tests. Original-static binding stays unsupported; no game/window/Steam/input/file APIs. Ordinary gate may run this reviewed managed synthetic suite only. Next: actual original integration compatibility and execution permission, not automatic upload.
 - Isolation gate measured:45 synthetic assertions and4 report probes pass, dedicated demo/no-open progress exit0, retained317/probe26/closure13/compile-summary4 still pass; no windows. Acceptance/upload pending. Actual original binding unimplemented, not a minimal-core runtime proof. See docs/zh-CN/CDR-082-ISOLATION.md.
 

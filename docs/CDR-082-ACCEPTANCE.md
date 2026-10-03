@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Additional framework preparation: [own-adapter net472 compile acceptance](CDR-082-ISOLATION-FRAMEWORK.md), compile/static only, no original binding/run. All current CDR-082 deliveries still pending acceptance/upload.
+
 Latest additional authorized isolation delivery: own fixed-time/injected-input/service-denial adapter,45 synthetic assertions and4 summary probes. No original binding/runtime/assets/source edits; see [isolation acceptance and next gate](CDR-082-ISOLATION.md). Both original-library compilation and managed adaptation remain pending developer acceptance/upload.
 
 Current result supersedes all earlier failures below: 795 original sources with 8 verified references emitted a Library successfully, zero compiler errors. No recovered execution or Steam API calls. Gate: 317 retained, 26 probe, 13 closure, 4 summary checks. Acceptance and upload pending; minimal isolation/runtime unproven. See [current acceptance details](CDR-082-COMPILE-PASS.md). Earlier stage notes are historical.

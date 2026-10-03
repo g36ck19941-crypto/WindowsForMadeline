@@ -51,6 +51,21 @@
   "installationWrites": 0,
   "dependencyDownloads": 0,
   "runtimeIntegrated": false,
+  "isolationFramework": {
+    "compileSucceeded": true,
+    "targetFramework": ".NETFramework,Version=v4.7.2",
+    "sourceFiles": 2,
+    "compilerReferences": 4,
+    "outputReferences": 1,
+    "embeddedResources": 0,
+    "pinvokeMethods": 0,
+    "outputSha256": "47E4D0D68DE4D5CFD84F3B643382B883DF269D444F5F4AD5B8FE1B836B24D81B",
+    "auditNegativeChecks": 3,
+    "summaryChecks": 4,
+    "outputExecuted": false,
+    "originalBound": false,
+    "runtimeCompatibilityEstablished": false
+  },
   "isolationAdapter": {
     "stage": "managed-isolation-adapter",
     "checksPassed": 45,

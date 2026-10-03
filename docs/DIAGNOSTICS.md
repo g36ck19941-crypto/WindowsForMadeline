@@ -2,6 +2,9 @@
 
 ## CDR-082 managed isolation adapter
 
+- ISOLATION_NET472_COMPILED: own adapter emitted using approved4 framework refs, static target/identity/import/resource audit only, originalBound=false/outputExecuted=false.
+- ISOLATION_AUDIT_TESTS:3 own generated negative fixtures, not original/runtime evidence. Static audit failure shares ISOLATION_VERIFICATION_FAILED; no output loading.
+
 - ISOLATION_CONTEXT_ADVANCED: adapter tick, fixed delta, injected directions/button edges, originalBound=false and recoveredCodeExecuted=false. Never SIMULATION_TICK_ADVANCED or ENTITY_SPAWNED: no original actor has run.
 - ISOLATION_SERVICE_DENIED: named boundary service, allowed=false, outcome=denied. No silent successful no-op; requests cannot activate native/input/file services.
 - ISOLATION_VERIFICATION_FAILED: stage, exception type/message/HResult/stack/inner, recoverable=false. Synthetic own-code failures only, no commercial resource payloads.

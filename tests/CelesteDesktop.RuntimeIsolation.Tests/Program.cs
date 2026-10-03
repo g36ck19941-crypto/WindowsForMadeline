@@ -1,5 +1,8 @@
 using System.Text.Json;
 using CelesteDesktop.RuntimeIsolation;
+using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 
 var checks = 0;
 var runId = Guid.NewGuid().ToString();
@@ -12,6 +15,20 @@ void Reject<T>(Action action) where T : Exception
 
 try
 {
+    if (args is ["--audit-net472", var binary]) return AuditFrameworkOutput(binary);
+    if (args is ["--audit-self-test"])
+    {
+        Reject<ArgumentException>(() => AuditFrameworkOutput("artifacts/outside/CelesteDesktop.RuntimeIsolation.Net472.dll"));
+        var fixture = Path.Combine("artifacts/cdr-082-isolation-framework", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(fixture);
+        var fixtureBinary = Path.Combine(fixture, "CelesteDesktop.RuntimeIsolation.Net472.dll");
+        File.Copy(typeof(IsolationSession).Assembly.Location, fixtureBinary);
+        Reject<InvalidDataException>(() => AuditFrameworkOutput(fixtureBinary));
+        File.WriteAllBytes(fixtureBinary, new byte[] { 1, 2, 3 });
+        Reject<BadImageFormatException>(() => AuditFrameworkOutput(fixtureBinary));
+        Console.WriteLine($"ISOLATION_AUDIT_TESTS passed={checks} failed=0 codeExecuted=false");
+        return 0;
+    }
     if (args.Length != 0 && args is not ["--demo"]) throw new ArgumentException("ISOLATION_ARGS_INVALID");
     var source = new[] { new InjectedInput(0, 0, Buttons.None), new InjectedInput(1, -1, Buttons.Jump),
         new InjectedInput(1, 0, Buttons.Jump | Buttons.Grab), new InjectedInput(-1, 1, Buttons.Dash),
@@ -79,6 +96,7 @@ try
     Console.WriteLine($"ISOLATION_VERIFIED passed={checks} failed=0 originalBound=false recoveredCodeExecuted=false");
     return 0;
 }
+
 catch (Exception exception)
 {
     Console.Error.WriteLine(JsonSerializer.Serialize(new { timestampUtc = DateTime.UtcNow, runId,
@@ -87,4 +105,61 @@ catch (Exception exception)
         message = exception.Message, hresult = exception.HResult, stack = exception.StackTrace,
         inner = exception.InnerException?.GetType().Name, recoverable = false }));
     return 1;
+}
+
+static int AuditFrameworkOutput(string binary)
+{
+    var allowed = Path.GetFullPath("artifacts/cdr-082-isolation-framework") + Path.DirectorySeparatorChar;
+    var path = Path.GetFullPath(binary);
+    if (!path.StartsWith(allowed, StringComparison.OrdinalIgnoreCase) || Path.GetFileName(path) != "CelesteDesktop.RuntimeIsolation.Net472.dll")
+        throw new ArgumentException("ISOLATION_FRAMEWORK_OUTPUT_SCOPE");
+    for (var cursor = path; cursor is not null; cursor = Path.GetDirectoryName(cursor))
+        if ((File.Exists(cursor) || Directory.Exists(cursor)) && (File.GetAttributes(cursor) & FileAttributes.ReparsePoint) != 0)
+            throw new InvalidDataException("ISOLATION_FRAMEWORK_OUTPUT_LINK");
+    using var stream = File.OpenRead(path);
+    if (stream.Length is < 128 or > 1048576) throw new BadImageFormatException("ISOLATION_FRAMEWORK_SIZE");
+    using var pe = new PEReader(stream);
+    var reader = pe.GetMetadataReader();
+    var definition = reader.GetAssemblyDefinition();
+    if (reader.GetString(definition.Name) != "CelesteDesktop.RuntimeIsolation.Net472")
+        throw new InvalidDataException("ISOLATION_FRAMEWORK_IDENTITY");
+    var names = reader.AssemblyReferences.Select(h => reader.GetString(reader.GetAssemblyReference(h).Name)).ToArray();
+    foreach (var handle in reader.AssemblyReferences)
+    {
+        var reference = reader.GetAssemblyReference(handle);
+        if (reference.Version.ToString() != "4.0.0.0" || reader.GetString(reference.Culture) != "" ||
+            Convert.ToHexString(reader.GetBlobBytes(reference.PublicKeyOrToken)) != "B77A5C561934E089")
+            throw new InvalidDataException("ISOLATION_FRAMEWORK_REFERENCE_IDENTITY");
+    }
+    if (!names.Contains("mscorlib") || names.Any(n => n is not ("mscorlib" or "System" or "System.Core" or "System.Xml")) ||
+        reader.ManifestResources.Count != 0 || reader.MethodDefinitions.Any(h =>
+            (reader.GetMethodDefinition(h).Attributes & MethodAttributes.PinvokeImpl) != 0))
+        throw new InvalidDataException("ISOLATION_FRAMEWORK_DEPENDENCIES");
+    var framework = "";
+    foreach (var handle in definition.GetCustomAttributes())
+    {
+        var attribute = reader.GetCustomAttribute(handle);
+        if (attribute.Constructor.Kind != HandleKind.MemberReference) continue;
+        var constructor = reader.GetMemberReference((MemberReferenceHandle)attribute.Constructor);
+        if (constructor.Parent.Kind != HandleKind.TypeReference) continue;
+        var type = reader.GetTypeReference((TypeReferenceHandle)constructor.Parent);
+        if (reader.GetString(type.Namespace) != "System.Runtime.Versioning" || reader.GetString(type.Name) != "TargetFrameworkAttribute") continue;
+        var blob = reader.GetBlobReader(attribute.Value);
+        if (blob.ReadUInt16() != 1) throw new InvalidDataException("ISOLATION_FRAMEWORK_ATTRIBUTE");
+        framework = blob.ReadSerializedString() ?? "";
+    }
+    if (framework != ".NETFramework,Version=v4.7.2") throw new InvalidDataException("ISOLATION_FRAMEWORK_TARGET");
+    if (AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "CelesteDesktop.RuntimeIsolation.Net472"))
+        throw new InvalidDataException("ISOLATION_FRAMEWORK_OUTPUT_LOADED");
+    var typeNames = reader.TypeDefinitions.Select(h => { var t = reader.GetTypeDefinition(h); return reader.GetString(t.Namespace) + "." + reader.GetString(t.Name); }).ToArray();
+    if (!typeNames.Contains("CelesteDesktop.RuntimeIsolation.IsolationSession") ||
+        !typeNames.Contains("CelesteDesktop.RuntimeIsolation.StepContext")) throw new InvalidDataException("ISOLATION_FRAMEWORK_TYPES");
+    var hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path)));
+    Console.WriteLine(JsonSerializer.Serialize(new { taskId = "CDR-082", stage = "own-adapter-net472-compile",
+        compileSucceeded = true, metadataAuditPassed = true, sourceFiles = 2, outputSha256 = hash,
+        assemblyReferenceCount = names.Length, embeddedResources = 0, pinvokeMethods = 0,
+        targetFramework = framework, originalBound = false, originalSourceModified = false,
+        recoveredCodeExecuted = false, net472OutputExecuted = false, newAssetsRead = false,
+        guiOpened = false, installationWrites = 0, downloads = 0, runtimeCompatibilityEstablished = false }));
+    return 0;
 }

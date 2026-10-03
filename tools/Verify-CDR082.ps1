@@ -66,6 +66,26 @@ try {
         finally { $ErrorActionPreference='Stop' }
         if($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED') { throw 'False isolation proof accepted.' }
     }
+    $frameworkInput=Join-Path $fixture 'framework.json'
+    $frameworkReport=[ordered]@{taskId='CDR-082';stage='own-adapter-net472-compile';compileSucceeded=$true;metadataAuditPassed=$true;targetFramework='.NETFramework,Version=v4.7.2';sourceFiles=2;assemblyReferenceCount=1;embeddedResources=0;pinvokeMethods=0;installationWrites=0;downloads=0;originalBound=$false;originalSourceModified=$false;recoveredCodeExecuted=$false;net472OutputExecuted=$false;newAssetsRead=$false;guiOpened=$false;runtimeCompatibilityEstablished=$false}
+    $frameworkReport | ConvertTo-Json | Set-Content -LiteralPath $frameworkInput -Encoding UTF8
+    & dotnet $demoDll --output (Join-Path $fixture 'framework-valid') --framework-report $frameworkInput
+    if($LASTEXITCODE -ne 0){throw 'Framework summary valid fixture failed.'}
+    $frameworkHtml=Get-Content (Join-Path $fixture 'framework-valid/index.html') -Raw -Encoding UTF8
+    if($frameworkHtml -notmatch 'data-framework-status="compiled-only-not-run"'){throw 'Framework compilation limitations hidden.'}
+    & dotnet $demoDll --output (Join-Path $fixture 'framework-missing') --framework-report (Join-Path $fixture 'absent-framework.json')
+    if($LASTEXITCODE -ne 0){throw 'Framework missing fixture failed.'}
+    $frameworkHtml=Get-Content (Join-Path $fixture 'framework-missing/index.html') -Raw -Encoding UTF8
+    if($frameworkHtml -notmatch 'data-framework-status="not-inspected"'){throw 'Absent framework summary called pass.'}
+    foreach($kind in @('runtime-claim','wrong-framework')) {
+        $frameworkReport.runtimeCompatibilityEstablished=($kind -eq 'runtime-claim')
+        $frameworkReport.targetFramework=if($kind -eq 'wrong-framework'){'net8.0'}else{'.NETFramework,Version=v4.7.2'}
+        $frameworkReport | ConvertTo-Json | Set-Content -LiteralPath $frameworkInput -Encoding UTF8
+        $ErrorActionPreference='Continue'
+        try {$lines=@(& dotnet $demoDll --output (Join-Path $fixture $kind) --framework-report $frameworkInput 2>&1); $code=$LASTEXITCODE}
+        finally {$ErrorActionPreference='Stop'}
+        if($code -eq 0 -or ($lines -join '') -notmatch 'PROGRESS_REPORT_FAILED'){throw 'False framework claim accepted.'}
+    }
 } finally { Pop-Location }
-Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
+Write-Output 'CDR082_VERIFIED syntheticProbeChecks=26 retainedCases=317 closureChecks=13 compileReportChecks=4 isolationChecks=45 isolationReportChecks=4 adapterAuditChecks=3 frameworkReportChecks=4 windowProbesExecuted=0 originalRuntimePassNotClaimed=true'
 exit 0

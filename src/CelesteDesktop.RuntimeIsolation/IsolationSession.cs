@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace CelesteDesktop.RuntimeIsolation;
 
 [Flags]
@@ -22,7 +25,7 @@ public sealed class IsolationSession : IDisposable
 
     public IsolationSession(IReadOnlyList<InjectedInput> generatedFrames)
     {
-        ArgumentNullException.ThrowIfNull(generatedFrames);
+        if (generatedFrames is null) throw new ArgumentNullException(nameof(generatedFrames));
         if (generatedFrames.Count is < 1 or > MaximumFrames)
             throw new ArgumentOutOfRangeException(nameof(generatedFrames), "ISOLATION_INPUT_COUNT_INVALID");
         frames = new InjectedInput[generatedFrames.Count];
@@ -56,7 +59,7 @@ public sealed class IsolationSession : IDisposable
     public ServiceDecision RequestService(ExternalService service)
     {
         RequireOpen();
-        if (!Enum.IsDefined(service)) throw new ArgumentOutOfRangeException(nameof(service), "ISOLATION_SERVICE_INVALID");
+        if (!Enum.IsDefined(typeof(ExternalService), service)) throw new ArgumentOutOfRangeException(nameof(service), "ISOLATION_SERVICE_INVALID");
         return new ServiceDecision(false, "ISOLATION_SERVICE_DENIED", service);
     }
 

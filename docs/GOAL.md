@@ -10,6 +10,8 @@ In C:/supermadeline/CelesteDesktopRuntime, reconstruct a local original-code-led
 
 CDR-082 isolation follow-up authorized: own managed context/service adapters implemented, original static-service/scene/resource bridge still unbound. Synthetic context replay is not original behavior execution; no new assets or original behavior source edits permitted. Keep the full original-runtime outcome unchanged.
 
+Own adapter now also compiles against existing net472 refs with static target/reference/native-import/resource audit; this removes an own-code compile preparation gap only. Original binding/runtime compatibility remain unproven, no original-code execution implied.
+
 1. CDR-080: developer accepted old-gameplay retirement/tooling preparation on 2026-10-03; published f804168ff2655c043d60b19749151ecc6181dc03 on its independent branch.
 2. CDR-081: accepted and published independently at 35015d8. Original-backup candidate chosen by developer, but clean provenance/dependency closure remain unproven; three XNA references unresolved in inspected root/orig.
 3. CDR-082: build a minimal dependency-closed original behavior core in a Git-ignored local workspace. Authorized original Steamworks metadata added to XNA/net472:795 original source files now emit Library/x86 with zero errors,1614 types/core presence/8 refs/0 resources. Source selection is not a minimal isolated-core proof; runtime/API/native/net45-net472 compatibility unproven. Local compilation/tooling verified, developer acceptance pending. No recovered execution; next isolate boundaries before separately authorized stepping.

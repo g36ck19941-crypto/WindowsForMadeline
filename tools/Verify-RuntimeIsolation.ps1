@@ -17,6 +17,8 @@ try {
     $lines | ForEach-Object { Write-Output $_ }
     $result=@($lines | Where-Object { $_ -match '^ISOLATION_VERIFIED passed=45 failed=0 originalBound=false recoveredCodeExecuted=false$' })
     if($result.Count -ne 1) { throw 'ISOLATION_RESULT_INVALID' }
+    & dotnet tests/CelesteDesktop.RuntimeIsolation.Tests/bin/Release/net8.0/CelesteDesktop.RuntimeIsolation.Tests.dll --audit-self-test
+    if($LASTEXITCODE -ne 0){throw 'ISOLATION_AUDIT_NEGATIVE_TEST_FAILED'}
     $summary=[ordered]@{schemaVersion=1;taskId='CDR-082';stage='managed-isolation-adapter';checksPassed=45;checksFailed=0;fixedHz=60;deniedServiceCount=8;demoFrames=5;originalBound=$false;recoveredCodeExecuted=$false;originalSourceModified=$false;newAssetsRead=$false;guiOpened=$false;steamApiCalled=$false;gameLaunched=$false;installationWrites=0;processSandboxEstablished=$false;originalFrameworkBridgeEstablished=$false}
     $artifact=Join-Path $repo 'artifacts/cdr-082-isolation'
     New-Item -ItemType Directory -Path $artifact -Force | Out-Null

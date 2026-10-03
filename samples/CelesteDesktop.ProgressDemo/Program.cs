@@ -16,15 +16,17 @@ static int Run(string[] args)
     var identityReportPath = Path.GetFullPath("artifacts/cdr-081-real/inventory.json");
     var compileReportPath = Path.GetFullPath("artifacts/cdr-082-real/summary.json");
     var isolationSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation/summary.json");
+    var frameworkSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation-framework/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
         else if (key == "--isolation-report") isolationSummaryPath = Path.GetFullPath(args[i]);
+        else if (key == "--framework-report") frameworkSummaryPath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -261,6 +263,28 @@ static int Run(string[] args)
             "它还没有接入原版静态时间/输入/场景，不是角色动画，不是系统安全沙箱；net8工具通过也不证明原版旧框架桥接通过。";
         isolationStatus = "managed-only-original-unbound";
     }
+    var frameworkExplanation = "尚未进行隔离模块的旧框架编译检查，不是兼容成功。";
+    var frameworkStatus = "not-inspected";
+    if (!frameworkSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Framework summary must be under repository artifacts.");
+    if (File.Exists(frameworkSummaryPath))
+    {
+        if (new FileInfo(frameworkSummaryPath).Length > 16384) throw new InvalidDataException("Framework summary budget exceeded.");
+        using var document = JsonDocument.Parse(File.ReadAllText(frameworkSummaryPath));
+        var report = document.RootElement;
+        if (report.GetProperty("taskId").GetString() != "CDR-082" || report.GetProperty("stage").GetString() != "own-adapter-net472-compile" ||
+            !report.GetProperty("compileSucceeded").GetBoolean() || !report.GetProperty("metadataAuditPassed").GetBoolean() ||
+            report.GetProperty("targetFramework").GetString() != ".NETFramework,Version=v4.7.2" || report.GetProperty("sourceFiles").GetInt32() != 2 ||
+            report.GetProperty("assemblyReferenceCount").GetInt32() != 1 || report.GetProperty("embeddedResources").GetInt32() != 0 ||
+            report.GetProperty("pinvokeMethods").GetInt32() != 0 || report.GetProperty("installationWrites").GetInt32() != 0 || report.GetProperty("downloads").GetInt32() != 0)
+            throw new InvalidDataException("Framework summary outcome invalid.");
+        foreach (var flag in new[] { "originalBound", "originalSourceModified", "recoveredCodeExecuted", "net472OutputExecuted", "newAssetsRead", "guiOpened", "runtimeCompatibilityEstablished" })
+            if (report.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Framework summary exceeds scope.");
+        frameworkStatus = "compiled-only-not-run";
+        frameworkExplanation = "我们的隔离模块现在也能编译成原版恢复库所用的4.7.2旧框架库。静态检查只有基础库引用，没有嵌入素材或原生调用导入。" +
+            "这解决的是编译接口兼容准备，不是运行兼容或原版接入。生成库没有运行，也没有修改原版源码。" +
+            "可用“检查隔离适配旧框架编译.cmd”复核，只读取已授权系统引用，不读取游戏安装。";
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -271,6 +295,7 @@ section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2{c
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
 <section data-isolation-status="{{isolationStatus}}"><h2>运行之前，隔离准备做到哪一步？</h2>{{isolationExplanation}}</section>
+<section data-framework-status="{{frameworkStatus}}"><h2>隔离模块能用原版恢复库采用的旧框架编译吗？</h2>{{frameworkExplanation}}</section>
 <section><h2>使用找到的零件，拼装到哪一步？</h2>{{closureExplanation}}</section>
 <section><h2>编译零件找到了吗？</h2>{{referenceExplanation}}</section>
 <section data-compile-status="{{compileStatus}}"><h2>历史：第一次少量文件编译探针</h2>{{compileExplanation}}

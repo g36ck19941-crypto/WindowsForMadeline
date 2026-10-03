@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Own isolation module old-framework compile preparation
+
+Own module emits net472 library using already-authorized references; static identity/target/import/resource audit plus3 negative and4 progress-summary probes. New opt-in cmd; no old-target execution, original bridge, new assets or original source edits. No upload before acceptance.
+
 ## 2026-10-03 — CDR-082 managed isolation adapters
 
 Own fixed-time/injected-input context, copied sequence and input edges, fail-closed service decisions,45 synthetic checks and4 summary probes; dedicated Chinese-explained cmd and progress panel. No gameplay/original binding/runtime/new assets/source edits. Not accepted/uploaded, not a security sandbox.

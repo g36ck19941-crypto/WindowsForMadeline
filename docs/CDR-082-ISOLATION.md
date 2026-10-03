@@ -1,5 +1,7 @@
 # CDR-082 — Local managed isolation adapter
 
+Subsequent own-adapter framework compilation is now established without execution; see [net472 preparation](CDR-082-ISOLATION-FRAMEWORK.md). Earlier net8-only compile scope below describes the initial delivery; actual original binding/runtime remain unproven.
+
 2026-10-03. Primary owner. Explicit developer permission: design and implement local isolation adapters, no recovered-code execution, new assets or original behavior-source changes. Local/offline implementation; acceptance and upload pending.
 
 ## Role and implementation
