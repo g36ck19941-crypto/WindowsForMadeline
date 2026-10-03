@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Seeker\CelesteDesktop.Entity.Seeker.csproj" />
-  </ItemGroup>
-</Project>

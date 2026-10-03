@@ -1,25 +1,3 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Meta\CelesteDesktop.AssetWorker.Meta.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Data\CelesteDesktop.AssetWorker.Data.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.SpriteXml\CelesteDesktop.AssetWorker.SpriteXml.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.AssetWorker.Catalog\CelesteDesktop.AssetWorker.Catalog.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Simulation.Core\CelesteDesktop.Simulation.Core.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Player\CelesteDesktop.Player.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Rendering\CelesteDesktop.Rendering.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Desktop\CelesteDesktop.Desktop.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Animation\CelesteDesktop.Animation.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Theo\CelesteDesktop.Entity.Theo.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Glider\CelesteDesktop.Entity.Glider.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Spring\CelesteDesktop.Entity.Spring.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Refill\CelesteDesktop.Entity.Refill.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Water\CelesteDesktop.Entity.Water.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Bumper\CelesteDesktop.Entity.Bumper.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Puffer\CelesteDesktop.Entity.Puffer.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Seeker\CelesteDesktop.Entity.Seeker.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.App\CelesteDesktop.App.csproj" />
-  </ItemGroup>
+  <PropertyGroup><OutputType>Exe</OutputType></PropertyGroup>
 </Project>

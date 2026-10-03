@@ -1,5 +1,7 @@
 # Celeste Desktop Runtime
 
+> Current architecture: self-designed gameplay has been deleted at developer request. The project currently provides tools, not a runnable character. Historical feature descriptions below are archived, not active functionality. Read [recomposition plan](docs/ORIGINAL_RECOMPOSITION.md); double-click the root Chinese progress/verification launchers for current evidence.
+
 一个面向 Windows 的独立桌面角色运行时：在不启动 Celeste 或 Everest 的前提下，只读解析用户正版 Celeste 安装中的角色与交互实体资源，并在桌面环境中运行独立、可验证的角色与实体模拟。
 
 ## 产品边界

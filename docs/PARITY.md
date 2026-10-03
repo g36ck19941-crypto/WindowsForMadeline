@@ -1,5 +1,7 @@
 # Fidelity and Parity Matrix
 
+> Superseded current-state notice (CDR-080): Player, Simulation.Core, all eight self-designed Entity modules and App have been removed. All corresponding rows below are historical, not current implementations or parity claims. Original local runtime integration is unstarted. Resource, animation and rendering tests remain tooling evidence only.
+
 ## Status vocabulary
 
 - `unstarted`: no implementation.

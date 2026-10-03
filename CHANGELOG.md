@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-03 — CDR-080 retire self-designed gameplay
+
+- Removed 24 gameplay/test projects and their source, dependent demo fragments and obsolete verification pipelines.
+- Retained parsing, local-reference safety tooling, rendering, generic animation and anonymous desktop geometry.
+- Replaced current developer entries with a summary-only progress report and a retained-tool verification gate.
+- Added original-code-led local recomposition plan. No original runtime implemented, game launched or commercial content published.
+
 ## 2026-10-03 — Original-reference-led priority
 
 - Developer redirected work from extending self-designed gameplay to original local resources/behavior inventory and replacement planning.

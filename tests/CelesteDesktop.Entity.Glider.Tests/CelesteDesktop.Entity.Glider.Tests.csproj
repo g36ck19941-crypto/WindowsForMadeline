@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup><OutputType>Exe</OutputType></PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Glider\CelesteDesktop.Entity.Glider.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Theo\CelesteDesktop.Entity.Theo.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Player\CelesteDesktop.Player.csproj" />
-  </ItemGroup>
-</Project>

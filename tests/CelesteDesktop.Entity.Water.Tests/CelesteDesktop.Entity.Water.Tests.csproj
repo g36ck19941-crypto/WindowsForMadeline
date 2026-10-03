@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup><OutputType>Exe</OutputType></PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Water\CelesteDesktop.Entity.Water.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Entity.Refill\CelesteDesktop.Entity.Refill.csproj" />
-    <ProjectReference Include="..\..\src\CelesteDesktop.Player\CelesteDesktop.Player.csproj" />
-  </ItemGroup>
-</Project>

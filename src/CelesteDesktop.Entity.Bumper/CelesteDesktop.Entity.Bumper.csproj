@@ -1,5 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\CelesteDesktop.Simulation.Core\CelesteDesktop.Simulation.Core.csproj" />
-  </ItemGroup>
-</Project>

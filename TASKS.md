@@ -1,5 +1,15 @@
 # Tasks
 
+## Current priority override — CDR-080
+
+- Owner: Primary; developer explicitly authorized deleting all self-designed gameplay and focusing on decompilation/recomposition on 2026-10-03.
+- Scope: Player, Simulation.Core, all eight Entity modules, App, their tests, dependent demo and verification scripts; retain independent tools and reversible Git history.
+- Acceptance: no retired solution/project references; retained offline tests and current cmd entries pass; bilingual recomposition/acceptance records; no commercial source/assets tracked or published.
+- Boundary: no game/Everest/visible GUI, real input or installation access/write this turn. Cached inventory reads names/summary only.
+- Direction: original local code-led reconstruction, not new invented gameplay. Source/IL/binaries/assets remain ignored and local; tracked repository holds original tools/adapters/records only.
+- Next: CDR-081 source identity and dependency inventory (proposed); then CDR-082 local minimal compile feasibility, CDR-083 original-resource binding and offscreen stepping, CDR-084 desktop adapter integration. Feasibility is not promised; no visible execution without authorization.
+- Historical sections below retain original specifications, including superseded prohibitions or preserve-in-tree wording; they do not authorize extending retired modules.
+
 任务顺序是强制依赖，不得跳过。Primary agent 为默认 owner；任何范围变化必须先更新本文件。
 
 ## Additive evidence tooling

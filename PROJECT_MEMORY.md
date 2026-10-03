@@ -1,5 +1,7 @@
 # Project Memory
 
+Current decision, 2026-10-03: explicit developer authorization supersedes the earlier preserve-in-working-tree direction. Self-designed Player, eight Entity modules, Simulation.Core and App plus dependent tests/demos are removed. Git history and local archive/self-designed-logic-before-removal-20261003 at e0ba567529dfc014bdeb15c5b46cbb306f045fd7 retain recoverability. Cached code contains Everest/Mod markers; pristine vanilla and independent runtime are not established. Retain tooling, not the competing gameplay baseline. Older entries below are historical.
+
 Last verified: 2026-10-03
 
 - 2026-10-03 用户改向：重点放在反编译获取原版本地资源与逻辑，之前自定逻辑不再作为后续行为基础。停止扩展该路线，CDR-076 建议被新方向替代；先评估现有工具能力。只读实查缓存确有 1369 个 C# 文件，包含 Player、TheoCrystal、Glider、Spring、Refill、Puffer、Seeker。当前工具仅反编译选定程序集，未验证可编译、依赖闭合或独立执行；素材解析是另一条已验证链（历史 CDR-016：93 动画、706 帧、五类定义）。现有自定模块和 Git 历史保留以便回退，未删除、未将参考源码接入产品、未上传。CDR-075 仍未验收。下一步应是原版参考主导的清点和替换计划，不再用自定规则的测试通过宣称原版一致。
