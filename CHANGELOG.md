@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-03 — CDR-081 original identity/dependency tooling
+
+- CDR-080 accepted and published/read back independently at f804168; main untouched.
+- Added read-only bounded PE/CLR inventory with source identity, strict reference matching, path guards and redacted exception detail.
+- Found mod-bearing .NET 8 root versus a .NET Framework 4.5 original-backup candidate, whose three XNA references remain unresolved in scoped directories.
+- Added Chinese inspection cmd and dated progress summary; 35 focused and 333 total tests, two junction and three report probes pass. No recovered code executed/compiled or commercial content published. CDR-081 acceptance pending.
+
 ## 2026-10-03 — CDR-080 retire self-designed gameplay
 
 - Removed 24 gameplay/test projects and their source, dependent demo fragments and obsolete verification pipelines.

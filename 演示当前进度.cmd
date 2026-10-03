@@ -7,6 +7,7 @@ set "NUGET_PACKAGES=%CD%\artifacts\cdr-080-verification\nuget-packages"
 set "DOTNET_CLI_TELEMETRY_OPTOUT=1"
 set "DOTNET_NOLOGO=1"
 echo 当前进度：旧玩法已删除，正在准备原版逻辑的本地重组。
+echo 新增来源与依赖检查摘要；没有报告时会如实标为尚未检查。
 echo 本入口生成中文状态页面，说明已有工具、缓存和缺少的功能。
 echo 它不是角色演示；不会启动游戏或读取安装目录，不会导出商业源码和图片。
 echo 若失败，请提供窗口最后的错误内容。

@@ -1,6 +1,6 @@
 # CDR-080 验收说明
 
-状态：离线验证通过，待开发者验收；未上传。
+状态：开发者已于 2026-10-03 验收；298/298 复验通过，已上传并核对独立分支 codex/cdr-080-original-recomposition，提交 f804168；main 未变。下文为当次验收内容和原始方案。
 两个根目录 cmd 入口也在不打开页面、不等待按键的自动验证模式下通过。退役目录里的 bin/obj 编译缓存已清理；历史源码可通过本地恢复分支 archive/self-designed-logic-before-removal-20261003 找回。
 更新：2026-10-03；英文规范见 ../ORIGINAL_RECOMPOSITION.md。
 

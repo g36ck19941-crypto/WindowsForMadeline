@@ -1,5 +1,7 @@
 # Celeste Desktop Runtime
 
+Current CDR-081: source/dependency inspector now distinguishes the .NET 8 Mod assembly from a .NET Framework 4.5 original-backup candidate. It does not run original behavior; see [Chinese acceptance](docs/zh-CN/CDR-081-ACCEPTANCE.md) and [canonical contract](docs/ASSEMBLY_IDENTITY.md). Use 检查原版来源与依赖.cmd only with an explicitly authorized installation. Current verification: 333 cases plus two junction/three report probes.
+
 > Current architecture: self-designed gameplay has been deleted at developer request. The project currently provides tools, not a runnable character. Historical feature descriptions below are archived, not active functionality. Read [recomposition plan](docs/ORIGINAL_RECOMPOSITION.md); double-click the root Chinese progress/verification launchers for current evidence.
 
 一个面向 Windows 的独立桌面角色运行时：在不启动 Celeste 或 Everest 的前提下，只读解析用户正版 Celeste 安装中的角色与交互实体资源，并在桌面环境中运行独立、可验证的角色与实体模拟。

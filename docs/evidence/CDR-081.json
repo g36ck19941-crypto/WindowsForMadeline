@@ -1,0 +1,52 @@
+{
+  "taskId": "CDR-081",
+  "inspectionDate": "2026-10-03",
+  "currentAssembly": {
+    "slot": "Celeste.dll",
+    "sha256": "54EB42784C99480D3C95DB5B2B9F18FDA3AE4460BE049DC245EF2FCD1D66916D",
+    "matchesExistingCacheIdentity": true,
+    "assemblyVersion": "1.0.0.0",
+    "targetFramework": ".NETCoreApp,Version=v8.0",
+    "typeDefinitionCount": 3011,
+    "modTypeCount": 263,
+    "assemblyReferenceCount": 60,
+    "classification": "mod-bearing"
+  },
+  "originalCandidate": {
+    "slot": "orig/Celeste.exe",
+    "sha256": "1A1E117ADD967C0F26AD470A49D4FF442435209265BF1FDDA623821D797E80B5",
+    "length": 2570752,
+    "assemblyVersion": "1.0.0.0",
+    "targetFramework": ".NETFramework,Version=v4.5",
+    "typeDefinitionCount": 1947,
+    "modTypeCount": 0,
+    "assemblyReferenceCount": 8,
+    "qualifiedTypeFactsPresent": 19,
+    "qualifiedTypeFactsQueried": 20,
+    "actorNamespace": "Celeste",
+    "classification": "unmodified-candidate-not-authenticated",
+    "xnaNotFoundWithinInspectedScope": ["Microsoft.Xna.Framework", "Microsoft.Xna.Framework.Graphics", "Microsoft.Xna.Framework.Game"],
+    "steamworksExactRelativeMatch": "orig/Steamworks.NET.dll",
+    "nativeModuleNames": ["fmod", "fmodstudio"]
+  },
+  "combinedGraph": {
+    "managedNodes": 24,
+    "referenceEdges": 230,
+    "exactMetadataMatches": 46,
+    "frameworkNotInspected": 176,
+    "identityMismatches": 1,
+    "missingOrUnreadable": 7
+  },
+  "readOnlyRepeat": {"stableManagedNodeHashes": 24},
+  "offlineValidation": {"suites": 13, "passed": 333, "failed": 0, "inventoryCases": 35, "junctionChecks": 2, "reportChecks": 3},
+  "assemblyExecuted": false,
+  "gameLaunched": false,
+  "visibleGuiOpened": false,
+  "installationWrites": 0,
+  "persistedCommercialBytes": 0,
+  "pristineVanillaEstablished": false,
+  "gameDisplayVersionEstablished": false,
+  "compilationEstablished": false,
+  "dependencyClosureEstablished": false,
+  "humanVisibilityEstablished": false
+}

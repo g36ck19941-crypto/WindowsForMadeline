@@ -1,5 +1,5 @@
 # CDR-080 Acceptance — retirement and local recomposition preparation
-Owner: Primary. State: offline verified, developer acceptance pending; not uploaded.
+Owner: Primary. State: developer accepted on 2026-10-03; freshly reverified 298/298 and published/read back as f804168ff2655c043d60b19749151ecc6181dc03 on codex/cdr-080-original-recomposition. Remote main unchanged.
 Removed 24 projects and dependent self-designed gameplay source/tests, demo fragments and obsolete verification scripts. Retained tools: install/asset safety, worker/parsers/catalog, animation/rendering, anonymous desktop geometry, extension data contracts and local-reference builder.
 Rollback: local branch archive/self-designed-logic-before-removal-20261003 at e0ba567529dfc014bdeb15c5b46cbb306f045fd7.
 Evidence: Release zero warnings/errors, 12 suites / 298 passes; current report cacheCount=1, sourceFiles=1369, modNamedFiles=256, runtimeIntegrated=false. No game, visible GUI, live input or installation access/write.

@@ -1,6 +1,19 @@
 # Tasks
 
+## CDR-081 — Read-only assembly identity and dependency inventory
+
+- Owner: Primary; authorized by developer on 2026-10-03 after CDR-080 acceptance.
+- Scope: tools/CelesteDesktop.AssemblyInventory, its synthetic tests, solution entries, tools/Verify-CDR081.ps1, developer inventory cmd/internal wrapper, current summary demo and project records.
+- Input: explicit previously selected legitimate installation. Candidate slots limited to root Celeste.dll/Celeste.exe and orig/Celeste.dll/Celeste.exe; direct DLL metadata in root/orig only for reference resolution. Never traverse Content, Saves, Mods, logs or links.
+- Action: bounded read-only PE/CLR metadata plus hash; no Assembly.Load, game execution, decompilation, source copying, installation writes, GUI or input.
+- State: implementation/offline verified; developer acceptance pending, unuploaded.
+- Acceptance: identity/hash, vanilla-vs-mod indicators without unsupported pristine claim, exact assembly-reference identity matching and unresolved/native distinction, bounded negative tests, aggregate-only bilingual report and offline gate. Measured: 35/35 focused, 333/333 full, two junction probes and three report probes.
+- Next gate: source candidate choice and explicitly authorized CDR-082 local-only recovery/compile probe. CDR-081 does not execute or compile original code. orig/Celeste.exe is the non-Mod-marker .NET Framework 4.5 candidate, not officially authenticated; three XNA references unresolved in root/orig.
+- Publication: CDR-080 accepted; CDR-081 itself is not accepted and must not be uploaded.
+
 ## Current priority override — CDR-080
+
+State: accepted and published at f804168ff2655c043d60b19749151ecc6181dc03; current work is CDR-081 above. Historical assessment below remains archived.
 
 - Owner: Primary; developer explicitly authorized deleting all self-designed gameplay and focusing on decompilation/recomposition on 2026-10-03.
 - Scope: Player, Simulation.Core, all eight Entity modules, App, their tests, dependent demo and verification scripts; retain independent tools and reversible Git history.

@@ -1,5 +1,7 @@
 # Fidelity and Parity Matrix
 
+CDR-081 source evidence: mod-bearing current assembly vs unauthenticated original-backup candidate. Presence of original type metadata is not executable behavior or parity. XNA/framework/native readiness and reconstruction remain unproven; see ASSEMBLY_IDENTITY.md.
+
 > Superseded current-state notice (CDR-080): Player, Simulation.Core, all eight self-designed Entity modules and App have been removed. All corresponding rows below are historical, not current implementations or parity claims. Original local runtime integration is unstarted. Resource, animation and rendering tests remain tooling evidence only.
 
 ## Status vocabulary

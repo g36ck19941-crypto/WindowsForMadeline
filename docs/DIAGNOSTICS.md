@@ -1,5 +1,12 @@
 # Diagnostics Contract
 
+## CDR-081 identity inspection
+
+- ASSEMBLY_INVENTORY_COMPLETED: candidate and graph-node counts, assemblyExecuted=false; completion means inspection finished, not playable runtime.
+- ASSEMBLY_INVENTORY_FAILED: phase/code and path-redacted exception type/message/HResult/stack/inner chain; candidate failures also retained in local summary.
+- PROGRESS_REPORT_FAILED: local summary phase/error without source/resource payload.
+- Reference statuses: exact-metadata-match, identity-mismatch, missing-or-unreadable, framework-not-inspected. These do not establish runtime binding or native ABI readiness.
+
 ## 1. Record shape
 
 Production diagnostics use one JSON object per line. Required fields:

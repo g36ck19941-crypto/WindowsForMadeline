@@ -1,4 +1,6 @@
 # Original-code-led local recomposition
+
+Current CDR-081 update: identity inspection found an unauthenticated original-backup candidate targeting .NET Framework 4.5, distinct from the modded .NET 8 cache source. Three XNA references are unresolved within authorized root/orig. Retained/new tool tests now total 333, with two junction and three report checks; the CDR-080 baseline figures below are historical. See ASSEMBLY_IDENTITY.md before choosing a recovery source.
 Updated: 2026-10-03. Canonical plan, CDR-080.
 
 ## Current measured state
