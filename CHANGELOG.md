@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-04 — Cumulative progress explanation repair
+
+Progress page now includes documented XNA/system/process/restricted-plan milestones, their project role, evidence source and unresolved gates. Expanded Chinese entry explanation and corrected stale compile limitation. Own report rendering only; no new character/sandbox capability or target/system/game execution, pending review/upload.
+
 ## 2026-10-04 — Restricted execution proposal only
 
 Bilingual restriction/proof matrix, candidate controls versus monitoring, pre-load lifecycle/logging, residual device/XNA gaps and separate feasibility/implementation/probe/original-execution gates. Microsoft references included. No executable code/config, runtime tests, GUI, target loading, system inventory or game-directory access; no new gameplay capability. Documentation checks only, pending review/upload.

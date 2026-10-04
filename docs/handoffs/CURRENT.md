@@ -1,5 +1,11 @@
 # Current Handoff
 
+## 2026-10-04 current user request — cumulative display repair
+
+Verification completed: root progress cmd no-open/no-pause exit0, ten required HTML markers/texts present, obsolete compile statement absent, plan link exists, diff whitespace clean. Generated artifacts/current-progress-demo/index.html ignored; no full/runtime/system gate rerun. Only self-authored summary generator compiled/executed, no target/GUI. Review pending.
+
+User asks detailed progress content. Primary changes own ProgressDemo and PROGRESS-ENTRY plus records; adds XNA/system/process/plan historical-document sections, project role/limits, current stage and future order, corrects stale compile-unproven generalization. Existing summary readers remain distinct. Own build/report generation/HTML checks only, no browser/GUI, original/XNA, system reinspection, process-monitor scenarios or game-directory access. Root cmd is unchanged launcher. Review by regenerating progress page, no runtime-character claim. No new isolation implementation authority; full GOAL and next separate readonly feasibility gate unchanged. Pending acceptance/upload. Supersedes preceding design-only scope only for display repair.
+
 ## 2026-10-04 latest human scope — design only
 
 Human requests restricted-execution environment proposal only, no original/GUI/game-directory access. Primary baseline branch codex/cdr-082-local-compile-probe HEAD4b531fd, clean. Delivered bilingual docs/CDR-082-RESTRICTED-EXECUTION-PLAN.md and mirror with official Microsoft references, restriction/proof matrix, pre-start enforcement, residual input/audio/XNA gaps and ordered separate-authority gates. AppContainer/Job/Win32k are candidates, not verified full containment. No plain-child fallback, no original behavior changes. No implementation/executable configs/runtime tests/OS inventory/dependency reads/installation access this round. Historical process guard is supervision only. Documentation checks only; acceptance/upload pending, GOAL unchanged. Next proposed gate: explicit bounded readonly Windows/process-security/CLR feasibility inventory, no feature enablement or target load; design acceptance alone grants none of this. Earlier Latest headings below are historical deliveries.

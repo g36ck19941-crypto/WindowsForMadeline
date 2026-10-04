@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Latest cumulative display repair: root `演示当前进度.cmd` regenerates the detailed page, showing four documented recent milestones, roles/limits and ordered gates. Verify `data-progress-revision=2026-10-04`, XNA/system/process document sections and design-only restricted plan. Historical outcomes must not appear as fresh execution or character/containment evidence. Agent checks generation without browser; developer may use the normal browser entry for review. No target/system/install tests or original runtime authority; acceptance/upload pending.
+
 2026-10-04 latest delivery is [restricted-execution design only](CDR-082-RESTRICTED-EXECUTION-PLAN.md). Review the matrix and gates directly; no command/runtime demo this round. No target/XNA, GUI, installation access or runtime tests; no containment/actor proof. CDR-082 acceptance unchanged, upload pending; previous test results below are historical. Next bounded read-only feasibility needs new authorization.
 
 Current own process guard: [8synthetic cases, bounded diagnostics and limits](CDR-082-PROCESS-GUARD.md). All owned children exited, no original/XNA/GUI execution; does not establish sandbox/actor health. Acceptance/upload pending.
