@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+2026-10-04 latest delivery is [restricted-execution design only](CDR-082-RESTRICTED-EXECUTION-PLAN.md). Review the matrix and gates directly; no command/runtime demo this round. No target/XNA, GUI, installation access or runtime tests; no containment/actor proof. CDR-082 acceptance unchanged, upload pending; previous test results below are historical. Next bounded read-only feasibility needs new authorization.
+
 Current own process guard: [8synthetic cases, bounded diagnostics and limits](CDR-082-PROCESS-GUARD.md). All owned children exited, no original/XNA/GUI execution; does not establish sandbox/actor health. Acceptance/upload pending.
 
 Current cached native-entry diagnostics: [13owned-check gate,4thunks/2unknown bodies per mixed module](CDR-082-XNA-AUDIT.md). No original/native execution, GUI or runtime pass. Older8/9 counts below are prior-stage results; all CDR-082 deliveries remain pending acceptance/upload.

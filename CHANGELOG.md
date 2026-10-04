@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-04 — Restricted execution proposal only
+
+Bilingual restriction/proof matrix, candidate controls versus monitoring, pre-load lifecycle/logging, residual device/XNA gaps and separate feasibility/implementation/probe/original-execution gates. Microsoft references included. No executable code/config, runtime tests, GUI, target loading, system inventory or game-directory access; no new gameplay capability. Documentation checks only, pending review/upload.
+
 ## 2026-10-03 — Own synthetic process monitoring
 
 Fixed self-only console children, strict generated phase/run protocol, bounded/drained pipes,3s timeout/owned cleanup and detailed aggregate exit/stage/duration diagnostics.8expected cases passed, all children exited; no-window full gate included after boundary review. Not sandbox/original bridge/native containment or gameplay functionality. No original/XNA/assets/game access; pending acceptance/upload.
