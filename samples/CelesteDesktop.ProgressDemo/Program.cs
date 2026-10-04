@@ -285,6 +285,37 @@ static int Run(string[] args)
             "这解决的是编译接口兼容准备，不是运行兼容或原版接入。生成库没有运行，也没有修改原版源码。" +
             "可用“检查隔离适配旧框架编译.cmd”复核，只读取已授权系统引用，不读取游戏安装。";
     }
+    var environmentStatus = "not-inspected";
+    var environmentExplanation = "尚无受限环境只读核对摘要；不能因此判断本机支持或不支持隔离。生成本页不会自动检查系统。";
+    var environmentSummaryPath = Path.Combine(root, "artifacts", "cdr-082-environment", "summary.json");
+    if (File.Exists(environmentSummaryPath))
+    {
+        RejectLinks(root, environmentSummaryPath);
+        if (new FileInfo(environmentSummaryPath).Length > 16384) throw new InvalidDataException("Environment summary budget exceeded.");
+        using var environmentDocument = JsonDocument.Parse(File.ReadAllText(environmentSummaryPath));
+        var report = environmentDocument.RootElement;
+        if (report.GetProperty("schemaVersion").GetInt32() != 1 || report.GetProperty("taskId").GetString() != "CDR-082" ||
+            report.GetProperty("stage").GetString() != "restricted-environment-readonly-inventory" ||
+            report.GetProperty("registryKeysInspected").GetInt32() != 3 || report.GetProperty("fileSlotsInspected").GetInt32() != 8 ||
+            report.GetProperty("fixedFiles").GetArrayLength() != 8 || report.GetProperty("framework").GetArrayLength() != 2 ||
+            report.GetProperty("downloads").GetInt32() != 0)
+            throw new InvalidDataException("Environment summary invalid.");
+        foreach (var flag in new[] { "targetLoaded", "xnaLoaded", "gameDirectoryAccessed", "guiOpened", "systemConfigurationChanged",
+            "isolationEstablished", "originalRuntimeCompatibilityEstablished" })
+            if (report.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Environment summary exceeds scope.");
+        var os = report.GetProperty("windows");
+        var build = os.GetProperty("build").GetInt32();
+        if (build is < 1 or > 1000000) throw new InvalidDataException("Environment build invalid.");
+        var present = report.GetProperty("fixedFiles").EnumerateArray().Count(row => row.GetProperty("present").GetBoolean());
+        var releases = report.GetProperty("framework").EnumerateArray().Select(row => row.GetProperty("release").GetInt32()).ToArray();
+        if (releases.Any(release => release is < 0 or > 10000000)) throw new InvalidDataException("Environment release invalid.");
+        environmentStatus = "inventory-only-enforcement-unknown";
+        environmentExplanation = $"已有只读核对记录：系统构建号{build}，系统为{(os.GetProperty("is64Bit").GetBoolean() ? "64" : "32")}位；" +
+            $"32/64位框架安装记录Release分别为{releases[0]}/{releases[1]}，8个固定文件位置中找到{present}个。" +
+            "这说明哪些基础文件和安装记录存在，不是限制已经生效的测试。未创建隔离身份、修改权限或启动受限子进程。" +
+            "文件、网络、GUI、真实输入、音频、Steam、子进程限制及混合原生XNA兼容性仍需分别验证；未知项不会自动放行。" +
+            "可用“检查受限环境可行性.cmd”重新生成只读摘要；本页只展示已有结果，不代替执行检查。";
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -294,6 +325,7 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2,a{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section data-environment-status="{{environmentStatus}}"><h2>最新：这台电脑具备哪些环境基础？</h2>{{environmentExplanation}}</section>
 <section data-progress-revision="2026-10-04"><h2>先看这里：项目现在走到哪里？</h2>
 <p>我们的目标是：不启动完整游戏，让本机恢复的原版角色逻辑在自己的桌面程序里工作，之后再逐个接入交互物品。
 旧的自写玩法已经退役，不会拿之前的模拟移动来冒充原版运行。</p>
@@ -332,7 +364,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 <p>目前没有验证完整的禁真实输入、禁音频配置，也没有证明旧版XNA能在这些限制下工作。
 任一必需限制无法落实就停止，不改用无限制进程偷偷重试，不修改原版行为来凑通过。</p>
 <p>它在项目中的作用：明确原版试运行前必须补齐哪些保护和证据。当前仅有设计文档，没有建立沙箱、修改系统权限或执行原版。
-下一步候选是另行授权的只读可行性核对，不是直接运行角色。</p>
+方案之后已新增限定的只读环境核对，结果见页面顶部；这仍不是直接运行角色的许可。</p>
 <p><a href="../../docs/zh-CN/CDR-082-RESTRICTED-EXECUTION-PLAN.md">查看中文方案、限制清单与授权门禁</a>。
 本页只提供文档链接，不自动打开工具或执行测试。</p></section>
 <section data-isolation-status="{{isolationStatus}}"><h2>运行之前，隔离准备做到哪一步？</h2>{{isolationExplanation}}</section>
@@ -360,7 +392,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 初始化安全、原版输入与时间连接、角色创建、原版动画输出以及桌面移动。</p>
 <p>本页没有角色画面不是显示失败：这阶段尚未生成角色，本页只展示进度和已有证据，不是角色演示。</p></section>
 <section><h2>后面按什么顺序推进？</h2>
-<ol><li>CDR-082当前门禁：另行授权只读核对隔离设施是否可用，逐项报告支持、未知或不支持；不启用系统功能。</li>
+<ol><li>CDR-082已完成限定的环境基础只读核对，具体本机摘要见顶部；实际访问限制仍未验证，不启用系统功能。</li>
 <li>另行授权实现限制并用自有测试验证，先证明越界请求会被阻止，失败后能清理。没有证据就不加载原版。</li>
 <li>再申请原版最小加载及预设输入/时间测试，先不创建角色、不读取新素材、不进行正常游戏启动。</li>
 <li>CDR-083：在前面通过后，连接原版角色依赖、动画与本地资源读取，验证逐步运行和离屏图像。范围及资源访问另行确认。</li>

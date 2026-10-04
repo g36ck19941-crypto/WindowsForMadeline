@@ -1,5 +1,11 @@
 # Current Handoff
 
+## 2026-10-04 current — readonly restricted environment feasibility
+
+Verified own8thresholds/cmd actualreadonly exit0/no-open progress exit0; JSONfixedscope+falseflags and HTMLunknownpolicy/533509bothviews checked; nativearch environmentAMD64. NewcmdASCII/CRLF. No full gate rerun, no original/runtime containment pass. Ignore artifacts/cdr-082-environment reports; never stage them.
+
+User next-step request after bounded inventory explained authorizes fixed Windows/architecture/CLR readonly inspection. Primary owns Inspect-RestrictedEnvironment.ps1, dedicatedcmd/UTF8text, ProgressDemo and records. Actual3registrykeyviews/8existence+versions slots:64bit/26200.9457/25H2/CoreCountrySpecific,NETRelease533509bothviews,8present/CLR4.8.9345.0. Eight own threshold checks pass. Fresh ignored perrun+latest summary artifacts/cdr-082-environment, page reads summary only. No original/XNA/GUI/game-directory/policy/devicecalls or systemchanges/download/install. Effective restriction rows unknown; version presence not compatibility/sandbox proof. Never auto-invoke host inspection ordinarygate. Bilingual ENVIRONMENT-FEASIBILITY defines role/acceptance/exactnext own-only prestartGUI+Job prototype scope; separate human authority needed, no profile/ACL/device/original expansion. Full GOAL unchanged, pending acceptance/upload. Earlier scope entries historical.
+
 ## 2026-10-04 current user request — cumulative display repair
 
 Verification completed: root progress cmd no-open/no-pause exit0, ten required HTML markers/texts present, obsolete compile statement absent, plan link exists, diff whitespace clean. Generated artifacts/current-progress-demo/index.html ignored; no full/runtime/system gate rerun. Only self-authored summary generator compiled/executed, no target/GUI. Review pending.

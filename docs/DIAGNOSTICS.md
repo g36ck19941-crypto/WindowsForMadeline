@@ -1,5 +1,10 @@
 # Diagnostics Contract
 
+## CDR-082 readonly environment inventory
+
+- ENVIRONMENT_SELF_CHECKS_OK:8 generated release-threshold checks; systemReads=0. Not isolation testing.
+- ENVIRONMENT_INVENTORY_COMPLETED:fixed OS build/frameworkRelease32/file-slot count/isolationEstablished=false; REPORT_PATH points to ignored source-free JSON. Fixed3registryviews/8files existence+version only, no personal/window/input/game data. Actual enforced policies and original compatibility remain unknown; no repairs/fallback on missing evidence.
+
 ## CDR-082 own process guard
 
 - PROCESS_GUARD_CASE: runId/scenario/ownedPid/outcome/exitCode/durationMs/lastStage/eventCount/terminationRequested/childExited/retained characters and overflow. Generated own phases only, not original actor health.

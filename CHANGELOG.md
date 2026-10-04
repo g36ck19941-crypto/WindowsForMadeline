@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-04 — Read-only restricted environment feasibility
+
+Fixed registry/file-version inspector,8 generated threshold checks, opt-in cmd and cumulative progress summary reader. Observed64-bit/build26200/.NETregistration533509bothviews/8filespresent; policy enforcement, mixed-mode compatibility and original runtime unknown. No GUI/game/target loading/system modifications/downloads; bilingual feasibility/acceptance report, pending review/upload.
+
 ## 2026-10-04 — Cumulative progress explanation repair
 
 Progress page now includes documented XNA/system/process/restricted-plan milestones, their project role, evidence source and unresolved gates. Expanded Chinese entry explanation and corrected stale compile limitation. Own report rendering only; no new character/sandbox capability or target/system/game execution, pending review/upload.
