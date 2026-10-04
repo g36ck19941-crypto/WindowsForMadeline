@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+Current [restricted-process prototype acceptance](CDR-082-RESTRICTED-PROCESS.md): native6 passed, ownnet8 startup blocked, explicit entry exit2/PARTIAL. Review two tracks/cleanup proof and no resource-stress/fullsandbox/original-compatibility claim. No automatic acceptance/upload; next own managed startup diagnosis, not original loading.
+
 Latest: [readonly environment inventory acceptance](CDR-082-ENVIRONMENT-FEASIBILITY.md), fixed registry/version evidence and opt-in developer entry, progress summary connected. No target loading/GUI/installation access or effective containment established. Next own-only prototype requires scope approval; no acceptance/upload inferred.
 
 Latest cumulative display repair: root `演示当前进度.cmd` regenerates the detailed page, showing four documented recent milestones, roles/limits and ordered gates. Verify `data-progress-revision=2026-10-04`, XNA/system/process document sections and design-only restricted plan. Historical outcomes must not appear as fresh execution or character/containment evidence. Agent checks generation without browser; developer may use the normal browser entry for review. No target/system/install tests or original runtime authority; acceptance/upload pending.

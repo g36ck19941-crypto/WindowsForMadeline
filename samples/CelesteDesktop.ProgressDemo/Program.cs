@@ -17,16 +17,18 @@ static int Run(string[] args)
     var compileReportPath = Path.GetFullPath("artifacts/cdr-082-real/summary.json");
     var isolationSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation/summary.json");
     var frameworkSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation-framework/summary.json");
+    var restrictedSummaryPath = Path.GetFullPath("artifacts/cdr-082-restricted-process/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
         else if (key == "--isolation-report") isolationSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--framework-report") frameworkSummaryPath = Path.GetFullPath(args[i]);
+        else if (key == "--restricted-report") restrictedSummaryPath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -316,6 +318,46 @@ static int Run(string[] args)
             "文件、网络、GUI、真实输入、音频、Steam、子进程限制及混合原生XNA兼容性仍需分别验证；未知项不会自动放行。" +
             "可用“检查受限环境可行性.cmd”重新生成只读摘要；本页只展示已有结果，不代替执行检查。";
     }
+    var restrictedStatus = "not-inspected";
+    var restrictedExplanation = "尚无自有受限进程原型摘要；不能认为启动限制或退出清理已经通过。生成本页不会启动测试进程。";
+    if (!restrictedSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
+        throw new ArgumentException("Restricted summary must be under repository artifacts.");
+    if (File.Exists(restrictedSummaryPath))
+    {
+        RejectLinks(root, restrictedSummaryPath);
+        if (new FileInfo(restrictedSummaryPath).Length > 16384) throw new InvalidDataException("Restricted summary budget exceeded.");
+        using var restrictedDocument = JsonDocument.Parse(File.ReadAllText(restrictedSummaryPath));
+        var report = restrictedDocument.RootElement;
+        if (report.GetProperty("schemaVersion").GetInt32() != 1 || report.GetProperty("taskId").GetString() != "CDR-082" ||
+            report.GetProperty("stage").GetString() != "own-restricted-process-prototype" ||
+            report.GetProperty("nativeControlPassed").GetInt32() != 6 || !report.GetProperty("allObservedOwnedChildrenExited").GetBoolean() ||
+            !report.GetProperty("guiPolicyQueriedBeforeResume").GetBoolean() || report.GetProperty("nativeImportModules").GetInt32() != 1 ||
+            report.GetProperty("nativeImportMethods").GetInt32() != 11 || report.GetProperty("activeProcessLimit").GetInt32() != 1 ||
+            report.GetProperty("commitMemoryLimitBytes").GetInt32() != 536870912 || report.GetProperty("cpuHardCapPercent").GetInt32() != 20)
+            throw new InvalidDataException("Restricted summary inconsistent.");
+        foreach (var flag in new[] { "fullSandboxEstablished", "appContainerEstablished", "originalLoaded", "xnaLoaded", "steamLoaded",
+            "realInputUsed", "audioUsed", "networkUsed", "guiOpened", "aclChanged", "systemConfigurationChanged", "gameDirectoryAccessed",
+            "originalCompatibilityEstablished", "memoryCpuStressTested", "guiCreationProbeAttempted" })
+            if (report.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Restricted summary exceeds scope.");
+        var status = report.GetProperty("status").GetString();
+        var managed = report.GetProperty("managedStartup").GetString();
+        var managedExit = report.GetProperty("managedProbeExitCode").GetInt32();
+        if (status == "partial-managed-startup-blocked" && managed == "own-net8-startup-blocked" && managedExit == 2)
+        {
+            restrictedStatus = "partial-managed-startup-blocked";
+            restrictedExplanation = "已实现自有进程启动前限制：创建时禁止Win32k GUI系统调用，主线程先挂起，确认Job归属和策略后才恢复。" +
+                "Job配置为单个进程、总提交内存512MiB、CPU硬上限20%；这些配置已向操作系统查询核对，但尚未做内存/CPU压力测试。" +
+                "只依赖必要Windows API的自有小探针6项通过：正常结束、提前退出、卡死超时、执行前中止、关闭Job、父侧异常清理。所有观察到的自有进程均已退出。" +
+                "但是，自有.NET 8进程在同一限制组合下，尚未发出就绪通知就异常退出。当前结果是部分完成，专用入口退出码2；不是原版失败，因为原版没有加载。" +
+                "它的作用是确认基本进程控制有效，并把.NET启动兼容问题单独暴露出来。小探针通过不能代替.NET或XNA兼容验证，也不是完整沙箱。";
+        }
+        else if (status == "own-controls-verified" && managed == "own-net8-verified" && managedExit == 0)
+        {
+            restrictedStatus = "own-controls-only-verified";
+            restrictedExplanation = "已有自有小探针及.NET 8受限控制检查通过摘要。它仅验证启动前策略、Job配置和退出清理；没有文件/网络/设备隔离或原版兼容证据。";
+        }
+        else throw new InvalidDataException("Restricted managed result inconsistent.");
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -325,6 +367,11 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2,a{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section data-restricted-status="{{restrictedStatus}}"><h2>最新：受限进程原型完成了哪些，卡在哪里？</h2><p>{{restrictedExplanation}}</p>
+<p>没有尝试创建GUI，没有调用真实输入、音频、网络或设备，没有改系统配置或ACL，也没有读取游戏目录。
+仍未建立AppContainer身份、文件或设备的完整访问限制；原版角色未生成。
+验收入口为“验证受限进程原型.cmd”，详细说明见<a href="../../docs/zh-CN/CDR-082-RESTRICTED-PROCESS.md">中文报告</a>。
+本页面只读报告，不自动运行该入口。</p></section>
 <section data-environment-status="{{environmentStatus}}"><h2>最新：这台电脑具备哪些环境基础？</h2>{{environmentExplanation}}</section>
 <section data-progress-revision="2026-10-04"><h2>先看这里：项目现在走到哪里？</h2>
 <p>我们的目标是：不启动完整游戏，让本机恢复的原版角色逻辑在自己的桌面程序里工作，之后再逐个接入交互物品。
@@ -393,7 +440,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 <p>本页没有角色画面不是显示失败：这阶段尚未生成角色，本页只展示进度和已有证据，不是角色演示。</p></section>
 <section><h2>后面按什么顺序推进？</h2>
 <ol><li>CDR-082已完成限定的环境基础只读核对，具体本机摘要见顶部；实际访问限制仍未验证，不启用系统功能。</li>
-<li>另行授权实现限制并用自有测试验证，先证明越界请求会被阻止，失败后能清理。没有证据就不加载原版。</li>
+<li>自有小探针已验证基础启动限制与清理；自有.NET 8启动仍失败。先定位这个独立问题，再补文件/网络/设备隔离证据，不放宽策略或拿小探针代替原版运行。</li>
 <li>再申请原版最小加载及预设输入/时间测试，先不创建角色、不读取新素材、不进行正常游戏启动。</li>
 <li>CDR-083：在前面通过后，连接原版角色依赖、动画与本地资源读取，验证逐步运行和离屏图像。范围及资源访问另行确认。</li>
 <li>CDR-084及后续：连接桌面环境，再逐个整合原版交互物品；可见桌面和实时输入验收需要单独授权。</li></ol>

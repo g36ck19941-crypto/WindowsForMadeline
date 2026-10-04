@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-04 — Own pre-start policy and Job prototype (partial)
+
+Suspended creation/Win32k mitigation, pre-resume Job+policy queries,512MiB/CPU20%/singleprocess/owned cleanup, bounded private handshake and own-only native exception metadata. CRT-free own Kernel32 probe6cases verified; ownnet8 startup fails C0000409/A before ready. Native pass does not replace managed failure; dedicated cmd exit2 and progress page truthful partial. No original/runtime/device/GUI/ACL/install expansion; pending acceptance/upload.
+
 ## 2026-10-04 — Read-only restricted environment feasibility
 
 Fixed registry/file-version inspector,8 generated threshold checks, opt-in cmd and cumulative progress summary reader. Observed64-bit/build26200/.NETregistration533509bothviews/8filespresent; policy enforcement, mixed-mode compatibility and original runtime unknown. No GUI/game/target loading/system modifications/downloads; bilingual feasibility/acceptance report, pending review/upload.

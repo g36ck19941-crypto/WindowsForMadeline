@@ -1,5 +1,11 @@
 # Diagnostics Contract
 
+## CDR-082 own restricted process prototype
+
+- RESTRICTED_PROCESS_CASE:own run/scenario/PID/phase/exit/duration, pre-resume GUI denial/Job/resource query, resumed/ready/exit/cleanup and optional native exception metadata. Job accounting after close=null (not measured zero). No live input/window/title/memory bytes/dumps.
+- RESTRICTED_PROCESS_FAILED:own phase/result, redacted full managed exception chain/HResult/native Win32 error; owned-child native exception code/parameter0/image names when observable. Failure code is not a root-cause claim.
+- RESTRICTED_PROCESS_SUMMARY:nativeControlsPassed separately from managedStartup, PARTIAL exit2 for managed startup failure; fullSandboxEstablished=false/originalCompatibilityEstablished=false. Six native own cases do not count as managed or original runtime passes. Resources configured/queried, not stress tested; no GUI creation negative probe.
+
 ## CDR-082 readonly environment inventory
 
 - ENVIRONMENT_SELF_CHECKS_OK:8 generated release-threshold checks; systemReads=0. Not isolation testing.
