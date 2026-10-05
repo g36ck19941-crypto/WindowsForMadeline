@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 
 try
 {
@@ -12,19 +14,21 @@ try
     if (args is ["--child", var scenario, var id] && Enum.TryParse<Mode>(scenario, out var mode) && Enum.IsDefined(mode) && Guid.TryParseExact(id, "N", out _))
         return Child(mode, id);
     RequireOwnOnly();
+    if (args is ["--audit-framework-child"]) return AuditFrameworkChild();
     if (args is ["--verify-startup-log"])
     {
         Console.WriteLine(JsonSerializer.Serialize(new { eventId = "RESTRICTED_STARTUP_LOG_VERIFIED", passed = StartupLog.Verify(), childStarted = false })); return 0;
     }
     if (args is ["--verify-phase-protocol"]) return VerifyPhaseProtocol();
     var nativeControls = args is ["--verify-native-controls"];
-    if (args is not ["--verify"] && !nativeControls) throw new ArgumentException("FIXED_SELF_PROBE_ONLY");
+    var frameworkControls = args is ["--verify-framework-controls"];
+    if (args is not ["--verify"] && !nativeControls && !frameworkControls) throw new ArgumentException("FIXED_SELF_PROBE_ONLY");
     if (Marshal.SizeOf<Native.StartupInfoEx>() != 112 || Marshal.SizeOf<Native.ExtendedLimits>() != 144 || Marshal.SizeOf<Native.Accounting>() != 48)
         throw new InvalidOperationException("NATIVE_STRUCT_LAYOUT_MISMATCH");
     var results = new List<Result>();
     foreach (var testMode in new[] { Mode.BeforeResumeAbort, Mode.Complete, Mode.EarlyExit, Mode.Hang, Mode.CloseJobAfterReady, Mode.ParentFailureAfterReady })
     {
-        var result = Observe(testMode, nativeControls);
+        var result = Observe(testMode, nativeControls, frameworkControls);
         var expectedExit = testMode switch { Mode.Complete => 0U, Mode.EarlyExit => 23U, _ => 99U };
         var expectedCleanup = testMode switch { Mode.Complete or Mode.EarlyExit => "normal-exit", Mode.Hang => "timeout",
             Mode.BeforeResumeAbort => "pre-resume-abort", Mode.CloseJobAfterReady => "last-job-handle-closed", _ => "synthetic-parent-failure" };
@@ -43,7 +47,7 @@ try
         audioUsed = false, networkUsed = false, guiOpened = false, systemConfigurationChanged = false, aclChanged = false,
         gameDirectoryAccessed = false, fullSandboxEstablished = false, originalCompatibilityEstablished = false,
         commitMemoryLimitBytes = 536870912, cpuHardCapPercent = 20, activeProcessLimit = 1, observationTimeoutMs = 3000,
-        memoryCpuStressTested = false, appContainerEstablished = false, childKind = nativeControls ? "own-kernel32-native" : "own-net8" }));
+        memoryCpuStressTested = false, appContainerEstablished = false, childKind = nativeControls ? "own-kernel32-native" : frameworkControls ? "own-net472-x86" : "own-net8" }));
     return 0;
 }
 catch (Exception ex)
@@ -74,7 +78,7 @@ static int Child(Mode mode, string id)
     return 0;
 }
 
-static Result Observe(Mode mode, bool nativeControls)
+static Result Observe(Mode mode, bool nativeControls, bool frameworkControls)
 {
     var debugTrace = new DebugTrace(); debugTrace.log.Add("parent-monitor", "configuration-started");
     var id = Guid.NewGuid().ToString("N"); var directory = RunDirectory(id);
@@ -101,12 +105,13 @@ static Result Observe(Mode mode, bool nativeControls)
         Marshal.WriteInt64(mitigation, (long)Native.GuiPolicy);
         Native.Check(Native.UpdateProcThreadAttribute(attributes, 0, 0x20007, mitigation, 8, 0, 0), "GUI_CREATION_POLICY_SET");
         var dll = typeof(Program).Assembly.Location;
-        var host = nativeControls ? Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "cdr-082-restricted-process", "native-child.exe") :
+        var fixedExecutable = nativeControls || frameworkControls;
+        var host = fixedExecutable ? Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "cdr-082-restricted-process", frameworkControls ? "framework-child.exe" : "native-child.exe") :
             Environment.ProcessPath ?? throw new InvalidOperationException("OWN_HOST_MISSING");
-        if (!nativeControls && !string.Equals(Path.GetFileName(host), "dotnet.exe", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("FIXED_DOTNET_HOST_REQUIRED");
+        if (!fixedExecutable && !string.Equals(Path.GetFileName(host), "dotnet.exe", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("FIXED_DOTNET_HOST_REQUIRED");
         RejectLinks(host); RejectLinks(dll);
         string? nativeHash = null;
-        if (nativeControls)
+        if (fixedExecutable)
         {
             var hashFile = host + ".sha256"; RejectLinks(hashFile);
             if (!File.Exists(hashFile) || new FileInfo(hashFile).Length > 128) throw new InvalidDataException("OWN_NATIVE_HASH_MISSING");
@@ -121,7 +126,7 @@ static Result Observe(Mode mode, bool nativeControls)
             ["CORECLR_ENABLE_PROFILING"] = "0", ["COR_ENABLE_PROFILING"] = "0", ["DOTNET_NOLOGO"] = "1" };
         environment = Marshal.StringToHGlobalUni(string.Join('\0', variables.Select(pair => pair.Key + "=" + pair.Value)) + "\0\0");
         var startup = new Native.StartupInfoEx { startup = new Native.StartupInfo { cb = (uint)Marshal.SizeOf<Native.StartupInfoEx>() }, attributes = attributes };
-        var command = new StringBuilder(Quote(host) + (nativeControls ? "" : " " + Quote(dll)) + " --child " + mode + " " + id);
+        var command = new StringBuilder(Quote(host) + (fixedExecutable ? "" : " " + Quote(dll)) + " --child " + mode + " " + id);
         Native.Check(Native.CreateProcessW(host, command, 0, 0, false, 0x08000000 | 0x00080000 | 0x00000400 | 0x4 | 0x2,
             environment, Directory.GetCurrentDirectory(), ref startup, out var child), "SELF_CREATE_SUSPENDED");
         process = new OwnedHandle(child.process); thread = new OwnedHandle(child.thread); ownedPid = child.pid;
@@ -344,6 +349,29 @@ static int VerifyPhaseProtocol()
         if (!rejected) throw new InvalidDataException("PHASE_NEGATIVE_NOT_REJECTED"); passed++;
     }
     Console.WriteLine(JsonSerializer.Serialize(new { eventId = "RESTRICTED_PHASE_PROTOCOL_VERIFIED", passed, childStarted = false }));
+    return 0;
+}
+static int AuditFrameworkChild()
+{
+    var path = Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "cdr-082-restricted-process", "framework-child.exe"); RejectLinks(path);
+    using var stream = File.OpenRead(path); using var pe = new PEReader(stream);
+    var metadata = pe.GetMetadataReader(); var refs = metadata.AssemblyReferences.Select(h => metadata.GetAssemblyReference(h)).ToArray();
+    var imports = metadata.MethodDefinitions.Select(h => metadata.GetMethodDefinition(h)).Where(m => (m.Attributes & System.Reflection.MethodAttributes.PinvokeImpl) != 0).Select(m => m.GetImport()).ToArray();
+    if (pe.PEHeaders.CoffHeader.Machine != Machine.I386 || pe.PEHeaders.CorHeader is null ||
+        (pe.PEHeaders.CorHeader.Flags & CorFlags.Requires32Bit) == 0 || pe.PEHeaders.CorHeader.EntryPointTokenOrRelativeVirtualAddress == 0 ||
+        metadata.GetString(metadata.GetAssemblyDefinition().Name) != "framework-child" || refs.Length != 1 ||
+        metadata.GetString(refs[0].Name) != "mscorlib" || refs[0].Version != new Version(4,0,0,0) || metadata.ManifestResources.Count != 0 ||
+        imports.Length != 3 || imports.Any(i => metadata.GetString(metadata.GetModuleReference(i.Module).Name) != "kernel32.dll") ||
+        !imports.Select(i => metadata.GetString(i.Name)).Order().SequenceEqual(new[] { "GetCurrentProcess", "GetProcessMitigationPolicy", "IsProcessInJob" }))
+        throw new InvalidDataException("OWN_FRAMEWORK_AUDIT");
+    var targets = metadata.GetAssemblyDefinition().GetCustomAttributes().Select(h => metadata.GetCustomAttribute(h)).Where(a => a.Constructor.Kind == HandleKind.MemberReference)
+        .Where(a => { var parent = metadata.GetMemberReference((MemberReferenceHandle)a.Constructor).Parent;
+            return parent.Kind == HandleKind.TypeReference && metadata.GetString(metadata.GetTypeReference((TypeReferenceHandle)parent).Name) == "TargetFrameworkAttribute"; }).ToArray();
+    if (targets.Length != 1) throw new InvalidDataException("OWN_FRAMEWORK_TARGET");
+    var blob = metadata.GetBlobReader(targets[0].Value);
+    if (blob.ReadUInt16() != 1 || blob.ReadSerializedString() != ".NETFramework,Version=v4.7.2" || blob.ReadUInt16() != 0 || blob.RemainingBytes != 0)
+        throw new InvalidDataException("OWN_FRAMEWORK_TARGET_VALUE");
+    Console.WriteLine(JsonSerializer.Serialize(new { eventId="OWN_FRAMEWORK_METADATA_VERIFIED", architecture="x86", framework="net472", references=1, imports=3, resources=0, executed=false }));
     return 0;
 }
 static void WriteReport<T>(string path, T report)

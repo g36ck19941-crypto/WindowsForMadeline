@@ -23,7 +23,7 @@ try {
     $html = [IO.File]::ReadAllText((Join-Path $fixture 'actual/index.html'))
     if($html -notmatch 'data-restricted-status="partial-managed-startup-blocked"'){throw 'MANAGED_FAILURE_HIDDEN'}
     if($html -notmatch 'data-startup-diagnostics="recorded"'){throw 'STARTUP_DIAGNOSTICS_HIDDEN'}
-    if($html -notmatch 'data-latest-update="startup-log-v1"'){throw 'LATEST_UPDATE_HIDDEN'}
+    if($html -notmatch 'data-latest-update="framework-probe-v1"'){throw 'LATEST_UPDATE_HIDDEN'}
     & dotnet $dll --output (Join-Path $fixture 'missing') --restricted-report (Join-Path $fixture 'absent.json')
     if($LASTEXITCODE -ne 0){throw 'ABSENT_REPORT_FAILED'}
     if([IO.File]::ReadAllText((Join-Path $fixture 'missing/index.html')) -notmatch 'data-restricted-status="not-inspected"'){throw 'ABSENT_REPORT_CALLED_PASS'}
@@ -47,5 +47,25 @@ try {
         finally { $ErrorActionPreference=$savedPreference }
         if($exitCode -ne 2){throw ('RESTRICTED_REPORT_NOT_REJECTED_'+$test)}
     }
-    Write-Output 'RESTRICTED_PROGRESS_CHECKS passed=12 failed=0 guiOpened=false'
+    $frameworkActual=Join-Path $repo 'artifacts/cdr-082-restricted-process/framework-summary.json'
+    & dotnet $dll --output (Join-Path $fixture 'framework-actual') --framework-probe-report $frameworkActual
+    if($LASTEXITCODE -ne 0){throw 'FRAMEWORK_PARTIAL_REPORT_FAILED'}
+    if([IO.File]::ReadAllText((Join-Path $fixture 'framework-actual/index.html')) -notmatch 'data-framework-probe-status="partial-own-net472-blocked"'){throw 'FRAMEWORK_FAILURE_HIDDEN'}
+    & dotnet $dll --output (Join-Path $fixture 'framework-missing') --framework-probe-report (Join-Path $fixture 'framework-absent.json')
+    if($LASTEXITCODE -ne 0 -or [IO.File]::ReadAllText((Join-Path $fixture 'framework-missing/index.html')) -notmatch 'data-framework-probe-status="not-inspected"'){throw 'FRAMEWORK_MISSING_CALLED_PASS'}
+    foreach($test in @('unsafe','false-pass','too-many','wrong-target','oversized','outside')){
+        $report=Get-Content -LiteralPath $frameworkActual -Raw|ConvertFrom-Json
+        if($test -eq 'unsafe'){$report.originalLoaded=$true}
+        if($test -eq 'false-pass'){$report.probeExitCode=0}
+        if($test -eq 'too-many'){$report.passed=7}
+        if($test -eq 'wrong-target'){$report.framework='net8'}
+        $content=$report|ConvertTo-Json -Depth 8
+        if($test -eq 'oversized'){$content+=(' '*20000)}
+        $path=Join-Path $fixture ('framework-'+$test+'.json');[IO.File]::WriteAllText($path,$content)
+        if($test -eq 'outside'){$path=Join-Path $repo 'docs/GOAL.md'}
+        $savedPreference=$ErrorActionPreference
+        try{$ErrorActionPreference='Continue';$rejection=@(& dotnet $dll --output (Join-Path $fixture ('framework-'+$test)) --framework-probe-report $path 2>&1);$code=$LASTEXITCODE}finally{$ErrorActionPreference=$savedPreference}
+        if($code -ne 2){throw ('FRAMEWORK_REPORT_NOT_REJECTED_'+$test)}
+    }
+    Write-Output 'RESTRICTED_PROGRESS_CHECKS passed=20 failed=0 guiOpened=false'
 } finally {Pop-Location}

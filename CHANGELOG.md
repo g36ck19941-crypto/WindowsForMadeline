@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — Own old-framework startup diagnostic (partial)
+
+Added self-authored net472/x86 child, approved-reference-only compiler wrapper, fixed metadata audit/parent mode, dedicated cmd, independent summary and latest progress explanation. Compile/audit pass, abort1pass; normal startup blocked beforeReady, rest not run, partial2/cleanup confirmed; no policy bypass/original execution. Accepted1935 uploaded independent branch; new changes pending review. Delivery now supplies precise next-step approval text.
+
 ## 2026-10-05 — Startup monitoring log update
 
 Added bounded observed timeline, ordered image-load events/unavailable-name reasons, parent/child source and monitor/native exception separation; own log8 checks. Latest-only progress section plus developer explanation/report. Actual startup still fails; no policy/runtime change or new character feature. Pending acceptance, no upload.

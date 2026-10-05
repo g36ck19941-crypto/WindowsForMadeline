@@ -18,17 +18,19 @@ static int Run(string[] args)
     var isolationSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation/summary.json");
     var frameworkSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation-framework/summary.json");
     var restrictedSummaryPath = Path.GetFullPath("artifacts/cdr-082-restricted-process/summary.json");
+    var frameworkProbePath = Path.GetFullPath("artifacts/cdr-082-restricted-process/framework-summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
         else if (key == "--isolation-report") isolationSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--framework-report") frameworkSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--restricted-report") restrictedSummaryPath = Path.GetFullPath(args[i]);
+        else if (key == "--framework-probe-report") frameworkProbePath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -402,6 +404,34 @@ static int Run(string[] args)
                 "<p>验收：双击“验证受限进程原型.cmd”，查看带编号、毫秒和来源的STARTUP_TRACE，以及分开的监控器/子进程异常来源；本页只展示已有摘要。<a href=\"../../docs/zh-CN/CDR-082-STARTUP-LOG.md\">本轮中文报告</a></p></section>";
         }
     }
+    latestUpdate = "<section data-latest-update=\"framework-probe-v1\" data-framework-probe-status=\"not-inspected\"><h2>本次更新：旧框架受限启动检查</h2><p>模块：启动环境检查。新增我们自己编写的32位旧框架测试程序，用来检查靠近原版所需框架的启动路线；不是角色程序。尚无本机验证摘要，不能认为它已经启动成功。生成页面不会执行探针。</p></section>";
+    if (!frameworkProbePath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Framework probe report must be under repository artifacts.");
+    if (File.Exists(frameworkProbePath))
+    {
+        RejectLinks(root, frameworkProbePath);
+        if (new FileInfo(frameworkProbePath).Length > 16384) throw new InvalidDataException("Framework probe summary budget exceeded.");
+        using var document = JsonDocument.Parse(File.ReadAllText(frameworkProbePath));
+        var report = document.RootElement;
+        foreach (var flag in new[] { "fullSandboxEstablished", "originalCompatibilityEstablished", "originalLoaded", "xnaLoaded", "steamLoaded", "guiOpened", "realInputUsed", "audioUsed", "networkUsed", "deviceUsed", "gameDirectoryAccessed", "systemConfigurationChanged", "aclChanged", "net8FailureReplaced" })
+            if (report.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Framework probe safety contract failed.");
+        var status = report.GetProperty("status").GetString();
+        var passed = report.GetProperty("passed").GetInt32();
+        var exit = report.GetProperty("probeExitCode").GetInt32();
+        if (report.GetProperty("schemaVersion").GetInt32() != 1 || report.GetProperty("taskId").GetString() != "CDR-082" ||
+            report.GetProperty("stage").GetString() != "own-restricted-framework-prototype" || report.GetProperty("framework").GetString() != "net472" ||
+            report.GetProperty("architecture").GetString() != "x86" || report.GetProperty("metadataReferences").GetInt32() != 1 || report.GetProperty("metadataImports").GetInt32() != 3 ||
+            !report.GetProperty("allObservedOwnedChildrenExited").GetBoolean() || !report.GetProperty("guiPolicyQueriedBeforeResume").GetBoolean() ||
+            report.GetProperty("commitMemoryLimitBytes").GetInt64() != 536870912 || report.GetProperty("cpuHardCapPercent").GetInt32() != 20 || report.GetProperty("activeProcessLimit").GetInt32() != 1 ||
+            !DateTimeOffset.TryParse(report.GetProperty("inspectedUtc").GetString(), out _) ||
+            !(status == "own-net472-controls-verified" && exit == 0 && passed == 6 || status == "partial-own-net472-blocked" && exit == 2 && passed is >= 0 and < 6))
+            throw new InvalidDataException("Framework probe outcome inconsistent.");
+        latestUpdate = "<section data-latest-update=\"framework-probe-v1\" data-framework-probe-status=\"" + status + "\"><h2>本次更新：旧框架受限启动检查</h2>" +
+            "<p>改了哪个模块：启动环境检查。新增什么：用已有引用编译我们自己写的32位旧框架小程序，在原有的启动前窗口限制、资源上限和退出清理规则下检查启动。不加载游戏代码，也不替换此前.NET 8失败记录。</p>" +
+            "<p>什么时候有用：在接入原版之前，先用简单自有程序检查这条启动路线，避免把运行环境的错误误判成角色逻辑或素材错误。</p>" +
+            "<p>推进到哪一步：自有程序编译和静态身份检查已通过；六项控制情景通过" + passed + "项。" +
+            (exit == 2 ? "实际仍未通过：启动在发出就绪通知前停止，后续情景未完成；观察到的自有进程均已退出。编译成功不是启动成功，异常根因尚未定位。" : "自有启动控制检查通过；仍不能证明原版或XNA能运行。") +
+            "窗口限制未放宽，原版角色尚未生成。</p><p>验收：双击“验证旧框架受限启动.cmd”，查看OWN_FRAMEWORK_SUMMARY。详细结果见<a href=\"../../docs/zh-CN/CDR-082-RESTRICTED-FRAMEWORK.md\">本轮中文报告</a>。本页仅展示已有摘要，不重跑检查。</p></section>";
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -485,7 +515,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 <p>本页没有角色画面不是显示失败：这阶段尚未生成角色，本页只展示进度和已有证据，不是角色演示。</p></section>
 <section><h2>后面按什么顺序推进？</h2>
 <ol><li>CDR-082已完成限定的环境基础只读核对，具体本机摘要见顶部；实际访问限制仍未验证，不启用系统功能。</li>
-<li>自有小探针已验证基础启动限制与清理；自有.NET 8启动仍失败。先定位这个独立问题，再补文件/网络/设备隔离证据，不放宽策略或拿小探针代替原版运行。</li>
+<li>自有小探针已验证基础启动限制与清理；.NET 8仍失败，新增旧框架检查的实际结果见本次更新。先定位自有启动问题，再补文件/网络/设备隔离证据，不放宽策略或拿小探针代替原版运行。</li>
 <li>再申请原版最小加载及预设输入/时间测试，先不创建角色、不读取新素材、不进行正常游戏启动。</li>
 <li>CDR-083：在前面通过后，连接原版角色依赖、动画与本地资源读取，验证逐步运行和离屏图像。范围及资源访问另行确认。</li>
 <li>CDR-084及后续：连接桌面环境，再逐个整合原版交互物品；可见桌面和实时输入验收需要单独授权。</li></ol>

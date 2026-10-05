@@ -1,5 +1,9 @@
 # Diagnostics Contract
 
+## Own framework startup diagnostic
+
+OWN_FRAMEWORK_METADATA_VERIFIED: static x86/net472, references1/imports3/resources0, executed=false; imports counts declared CLR P/Invokes, not implicit loader dependency closure. OWN_FRAMEWORK_CASE uses existing owned case protocol. OWN_FRAMEWORK_SUMMARY partial-own-net472-blocked/exit2 versus own-net472-controls-verified/exit0, case count separate from native/net8. Ignored framework-summary/cases only, prior failure preserved. Child OS exit and last observed debug exception are distinct fields, neither root-cause proof. No own phase does not prove no entry execution; no source/pixels/memory dumps emitted.
+
 ## Latest: CDR-082 startup log v1
 
 RESTRICTED_STARTUP_LOG_VERIFIED:8 own checks/no child started. RESTRICTED_STARTUP_LOG:checks/events/dropped/monitorFailureSource/childExceptionSource. STARTUP_TRACE:sequence/observedMs/source/event/detail; <=256 retained/dropped count, parent's monotonic observation clock, not child-internal method timing. Sources parent-monitor/child-report/owned-child-debug-event. Module events retain load order and bounded ASCII name or unavailable reason(error/handle/filter/budget), not addresses/paths. RESTRICTED_PROCESS_FAILED adds exceptionSource; its parent managed stack is never labeled native child crash stack, nativeChildStackCaptured=false. Existing last native code is complemented by event sequence; preceding event is not root-cause proof. Summary startupLogVersion1/startupLogChecks8/event count/loader event+unavailable counts/source checked by display; no hidden runtime fallback.
