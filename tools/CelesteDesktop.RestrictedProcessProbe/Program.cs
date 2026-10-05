@@ -12,6 +12,10 @@ try
     if (args is ["--child", var scenario, var id] && Enum.TryParse<Mode>(scenario, out var mode) && Enum.IsDefined(mode) && Guid.TryParseExact(id, "N", out _))
         return Child(mode, id);
     RequireOwnOnly();
+    if (args is ["--verify-startup-log"])
+    {
+        Console.WriteLine(JsonSerializer.Serialize(new { eventId = "RESTRICTED_STARTUP_LOG_VERIFIED", passed = StartupLog.Verify(), childStarted = false })); return 0;
+    }
     if (args is ["--verify-phase-protocol"]) return VerifyPhaseProtocol();
     var nativeControls = args is ["--verify-native-controls"];
     if (args is not ["--verify"] && !nativeControls) throw new ArgumentException("FIXED_SELF_PROBE_ONLY");
@@ -45,7 +49,9 @@ try
 catch (Exception ex)
 {
     Console.Error.WriteLine(JsonSerializer.Serialize(new { eventId = "RESTRICTED_PROCESS_FAILED", timestampUtc = DateTime.UtcNow,
-        stage = "own-restricted-prototype", result = (ex as ProbeEvidenceFailure)?.Evidence, exception = Describe(ex, 0), fullSandboxEstablished = false }));
+        stage = "own-restricted-prototype", result = (ex as ProbeEvidenceFailure)?.Evidence,
+        exceptionSource = args.FirstOrDefault() == "--child" ? "own-child-managed" : ex is ProbeEvidenceFailure ? "parent-evidence-check" : "parent-monitor",
+        exception = Describe(ex, 0), nativeChildStackCaptured = false, fullSandboxEstablished = false }));
     return ex is ProbeEvidenceFailure ? 2 : 1;
 }
 
@@ -70,6 +76,7 @@ static int Child(Mode mode, string id)
 
 static Result Observe(Mode mode, bool nativeControls)
 {
+    var debugTrace = new DebugTrace(); debugTrace.log.Add("parent-monitor", "configuration-started");
     var id = Guid.NewGuid().ToString("N"); var directory = RunDirectory(id);
     Directory.CreateDirectory(directory);
     using var job = new OwnedHandle(Native.CreateJobObjectW(0, null));
@@ -88,7 +95,6 @@ static Result Observe(Mode mode, bool nativeControls)
     nint environment = 0; var attributesInitialized = false;
     OwnedHandle? process = null; OwnedHandle? thread = null;
     var assigned = false; var resumed = false; var policyChecked = false; var cleanup = "none"; var phase = "policy-configuration"; uint ownedPid = 0;
-    var clock = Stopwatch.StartNew(); var debugTrace = new DebugTrace();
     try
     {
         Native.Check(Native.InitializeProcThreadAttributeList(attributes, 1, 0, ref attributeSize), "ATTRIBUTE_INIT"); attributesInitialized = true;
@@ -122,23 +128,27 @@ static Result Observe(Mode mode, bool nativeControls)
         if (nativeHash is not null && Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(host))) != nativeHash)
             throw new InvalidDataException("OWN_NATIVE_CHANGED_DURING_CREATION");
         phase = "suspended";
+        debugTrace.log.Add("parent-monitor", "created-suspended");
         Native.Check(Native.AssignProcessToJobObject(job, process), "JOB_ASSIGN_BEFORE_RESUME"); assigned = true;
         Native.Check(Native.IsProcessInJob(process.DangerousGetHandle(), job.DangerousGetHandle(), out var ownJob), "QUERY_OWN_JOB");
         if (!ownJob || Native.Query<Native.Accounting>(job, 1).activeProcesses != 1) throw new InvalidOperationException("JOB_ASSIGNMENT_UNVERIFIED");
         Native.Check(Native.GetProcessMitigationPolicy(process.DangerousGetHandle(), 4, out var flags, 4), "PRE_RESUME_GUI_QUERY");
         if ((flags & 1) == 0 || (flags & 2) != 0) throw new InvalidOperationException("GUI_DENIAL_NOT_ENFORCED");
         policyChecked = true; phase = "pre-resume-verified";
+        debugTrace.log.Add("parent-monitor", "restrictions-verified");
         if (mode == Mode.BeforeResumeAbort) { Native.Check(Native.TerminateJobObject(job, 99), "ABORT_SUSPENDED"); cleanup = "pre-resume-abort"; }
         else
         {
             if (Native.ResumeThread(thread) != 1) throw new Win32Exception(Marshal.GetLastWin32Error(), "RESUME_FAILED");
             resumed = true; phase = "resumed";
+            debugTrace.log.Add("parent-monitor", "resumed");
             var deadline = Stopwatch.StartNew();
             while (Native.Wait(process, 0) == Native.WaitTimeout)
             {
                 PumpDebug(process, ownedPid, debugTrace, 20);
                 if (ReadReport(directory, "ready.json", id, mode, "ready"))
                 {
+                    if (phase != "child-ready") debugTrace.log.Add("child-report", "ready-observed");
                     phase = "child-ready";
                     if (mode == Mode.CloseJobAfterReady) { job.Dispose(); cleanup = "last-job-handle-closed"; break; }
                     if (mode == Mode.ParentFailureAfterReady) throw new SyntheticParentFailure();
@@ -147,6 +157,7 @@ static Result Observe(Mode mode, bool nativeControls)
             }
         }
         WaitExited(process, ownedPid, debugTrace);
+        debugTrace.log.Add("parent-monitor", "exit-confirmed");
         Native.Check(Native.GetExitCodeProcess(process, out var exitCode), "EXIT_QUERY");
         var ready = ReadReport(directory, "ready.json", id, mode, "ready");
         var completed = ReadReport(directory, "complete.json", id, mode, "completed");
@@ -155,18 +166,25 @@ static Result Observe(Mode mode, bool nativeControls)
         uint? active = job.IsClosed ? null : WaitJobEmpty(job); // Closed handle cannot be queried; do not invent zero accounting.
         if (ready) phase = "child-ready";
         if (completed) phase = "completed";
-        return new Result(id, mode.ToString(), child.pid, phase, exitCode, clock.ElapsedMilliseconds, policyChecked, assigned, true, resumed,
+        if (completed) debugTrace.log.Add("child-report", "complete-observed");
+        debugTrace.log.Add("parent-monitor", "cleanup-confirmed", cleanup == "none" ? "normal-exit" : cleanup);
+        var ownPhase = nativeControls ? null : ReadPhase(directory, id, mode);
+        if (ownPhase is not null) debugTrace.log.Add("child-report", "phase-file-observed-after-exit", ownPhase);
+        return new Result(id, mode.ToString(), child.pid, phase, exitCode, debugTrace.log.ElapsedMs, policyChecked, assigned, true, resumed,
             ready, true, active, cleanup == "none" ? "normal-exit" : cleanup, debugTrace.exceptionCode, debugTrace.parameter0, debugTrace.exceptionImage, debugTrace.guardTargetImage,
-            nativeControls ? null : ReadPhase(directory, id, mode), LoadedImages(debugTrace));
+            ownPhase, LoadedImages(debugTrace), debugTrace.log.Snapshot(), debugTrace.log.dropped,
+            debugTrace.exceptionCode is null ? null : "owned-child-debug-event", debugTrace.imageLoadEvents);
     }
     catch (SyntheticParentFailure)
     {
         if (process is null || !assigned) throw;
         Native.Check(Native.TerminateJobObject(job, 99), "PARENT_FAILURE_CLEANUP"); WaitExited(process, ownedPid, debugTrace);
         Native.Check(Native.GetExitCodeProcess(process, out var exitCode), "FAILURE_EXIT_QUERY");
-        return new Result(id, mode.ToString(), ownedPid, phase, exitCode, clock.ElapsedMilliseconds, policyChecked, assigned, true, resumed,
+        debugTrace.log.Add("parent-monitor", "cleanup-confirmed", "synthetic-parent-failure");
+        return new Result(id, mode.ToString(), ownedPid, phase, exitCode, debugTrace.log.ElapsedMs, policyChecked, assigned, true, resumed,
             ReadReport(directory, "ready.json", id, mode, "ready"), true, WaitJobEmpty(job), "synthetic-parent-failure", debugTrace.exceptionCode, debugTrace.parameter0, debugTrace.exceptionImage, debugTrace.guardTargetImage,
-            nativeControls ? null : ReadPhase(directory, id, mode), LoadedImages(debugTrace));
+            nativeControls ? null : ReadPhase(directory, id, mode), LoadedImages(debugTrace), debugTrace.log.Snapshot(), debugTrace.log.dropped,
+            debugTrace.exceptionCode is null ? null : "owned-child-debug-event", debugTrace.imageLoadEvents);
     }
     finally
     {
@@ -211,35 +229,44 @@ static void PumpDebug(OwnedHandle process, uint ownedPid, DebugTrace trace, uint
     var status = 0x10002U;
     try
     {
-    if (debugEvent.code == 1)
-    {
-        if (debugEvent.exceptionCode != 0x80000003)
+        if (debugEvent.code == 1)
         {
-            trace.exceptionCode = debugEvent.exceptionCode.ToString("X8");
-            trace.parameter0 = debugEvent.parameterCount > 0 ? debugEvent.parameter0.ToString("X") : null;
-            trace.exceptionImage = ImageForAddress(process, trace, debugEvent.exceptionAddress);
-            trace.guardTargetImage = debugEvent.parameterCount > 1 && debugEvent.parameter0 == 10 ? ImageForAddress(process, trace, (nint)debugEvent.parameter1) : null;
-            status = 0x80010001;
-        }
-    }
-    if (debugEvent.code is 3 or 6 && debugEvent.fileHandle != 0)
-    {
-        try
-        {
-            var name = new StringBuilder(2048);
-            var length = Native.GetFinalPathNameByHandleW(debugEvent.fileHandle, name, (uint)name.Capacity, 0);
-            if (length > 0 && length < name.Capacity)
+            if (debugEvent.exceptionCode != 0x80000003)
             {
-                var filename = Path.GetFileName(name.ToString());
-                if (Regex.IsMatch(filename, "^[A-Za-z0-9_.-]{1,128}$"))
-                {
-                    if (trace.images.Count >= 128) throw new InvalidDataException("OWN_IMAGE_BUDGET");
-                    trace.images[debugEvent.code == 3 ? debugEvent.processImageBase : debugEvent.dllImageBase] = filename;
-                }
+                trace.exceptionCode = debugEvent.exceptionCode.ToString("X8");
+                trace.log.Add("owned-child-debug-event", "native-exception", trace.exceptionCode);
+                trace.parameter0 = debugEvent.parameterCount > 0 ? debugEvent.parameter0.ToString("X") : null;
+                trace.exceptionImage = ImageForAddress(process, trace, debugEvent.exceptionAddress);
+                trace.guardTargetImage = debugEvent.parameterCount > 1 && debugEvent.parameter0 == 10 ? ImageForAddress(process, trace, (nint)debugEvent.parameter1) : null;
+                status = 0x80010001;
             }
         }
-        finally { Native.Check(Native.CloseHandle(debugEvent.fileHandle), "DEBUG_FILE_HANDLE_CLOSE"); }
-    }
+        if (debugEvent.code is 3 or 6)
+        {
+            trace.imageLoadEvents++;
+            if (debugEvent.fileHandle == 0) trace.log.Add("owned-child-debug-event", "image-name-unavailable", "no-file-handle");
+            else
+            {
+                try
+                {
+                    var name = new StringBuilder(2048);
+                    var length = Native.GetFinalPathNameByHandleW(debugEvent.fileHandle, name, (uint)name.Capacity, 0);
+                    if (length > 0 && length < name.Capacity)
+                    {
+                        var filename = Path.GetFileName(name.ToString());
+                        if (Regex.IsMatch(filename, "^[A-Za-z0-9_.-]{1,128}$"))
+                        {
+                            if (trace.images.Count >= 128) throw new InvalidDataException("OWN_IMAGE_BUDGET");
+                            trace.images[debugEvent.code == 3 ? debugEvent.processImageBase : debugEvent.dllImageBase] = filename;
+                            trace.log.Add("owned-child-debug-event", "image-loaded", filename);
+                        }
+                        else trace.log.Add("owned-child-debug-event", "image-name-unavailable", "name-filtered");
+                    }
+                    else trace.log.Add("owned-child-debug-event", "image-name-unavailable", length == 0 ? "win32-" + Marshal.GetLastWin32Error() : "name-budget");
+                }
+                finally { Native.Check(Native.CloseHandle(debugEvent.fileHandle), "DEBUG_FILE_HANDLE_CLOSE"); }
+            }
+        }
     }
     finally
     {
@@ -260,7 +287,7 @@ static string? ImageForAddress(OwnedHandle process, DebugTrace trace, nint addre
 {
     // Query allocation metadata in this owned child only; never read bytes or collect a memory dump.
     if (address == 0 || Native.VirtualQueryEx(process, address, out var info, (nuint)Marshal.SizeOf<Native.MemoryInfo>()) == 0) return null;
-    return trace.images.TryGetValue(info.allocationBase, out var image) ? image : "unmapped-image-or-private-memory";
+    return trace.images.TryGetValue(info.allocationBase, out var image) ? image : "image-name-not-resolved";
 }
 static bool ReadReport(string directory, string name, string id, Mode mode, string stage)
 {
@@ -356,10 +383,10 @@ static object Describe(Exception ex, int depth)
 }
 enum Mode { Complete, EarlyExit, Hang, BeforeResumeAbort, CloseJobAfterReady, ParentFailureAfterReady }
 sealed class SyntheticParentFailure : Exception { }
-sealed class DebugTrace { public string? exceptionCode, parameter0, exceptionImage, guardTargetImage; public Dictionary<nint, string> images = new(); }
+sealed class DebugTrace { public string? exceptionCode, parameter0, exceptionImage, guardTargetImage; public Dictionary<nint, string> images = new(); public StartupLog log = new(); public int imageLoadEvents; }
 sealed class ProbeEvidenceFailure(Result evidence) : Exception("SELF_PROBE_DID_NOT_MEET_EXPECTED_OUTCOME") { public Result Evidence { get; } = evidence; }
 sealed record ChildReport(string runId, string scenario, string stage, bool guiDenied, bool inJob);
 sealed record Result(string runId, string scenario, uint ownedPid, string lastStage, uint exitCode, long durationMs,
     bool preResumeGuiDenied, bool jobAssignedBeforeResume, bool resourceSettingsVerified, bool resumed,
     bool childReportObserved, bool exited, uint? activeProcessesAfterCleanup, string cleanupReason, string? nativeExceptionCode, string? nativeExceptionParameter0, string? exceptionImage, string? guardTargetImage,
-    string? lastOwnPhase, string[] loadedImageNames);
+    string? lastOwnPhase, string[] loadedImageNames, StartupEvent[] startupTimeline, int timelineEventsDropped, string? nativeExceptionSource, int imageLoadEventCount);

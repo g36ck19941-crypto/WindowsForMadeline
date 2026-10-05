@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — Startup monitoring log update
+
+Added bounded observed timeline, ordered image-load events/unavailable-name reasons, parent/child source and monitor/native exception separation; own log8 checks. Latest-only progress section plus developer explanation/report. Actual startup still fails; no policy/runtime change or new character feature. Pending acceptance, no upload.
+
 ## 2026-10-04 — Own startup diagnostics, still partial
 
 Added bounded early phase records and loaded-image names, eight protocol checks, nine progress-summary checks. Reconfirmed native6 and own managed startup failure; no weaker policy, commercial code or GUI. Cumulative progress updated; no original runtime feature or upload.

@@ -1,5 +1,7 @@
 # CDR-082 — Local original recovery and compile feasibility
 
+2026-10-05 latest own startup log update: dedicated scope monitoring only; timeline8 checks/source+order+budget, phase8/native6 and progress12. Current entry2 with29observations/21load-name error5, C0000005 then C0000409/A; not managed startup success/root cause/native stack. Latest-only page section and bilingual docs/CDR-082-STARTUP-LOG.md define role/acceptance/next gate. No runtime replacement, target/GUI/install/system changes/upload; acceptance pending.
+
 2026-10-04 own startup diagnostics supplement: four bounded own phases, eight protocol checks, <=128 debug image basenames. Native6 reverified; managed Complete still C0000409/A, coreclr observed among21 images, no first marker, owned child exited/Job empty. Missing marker does not prove no Main execution; image load does not prove GUI use. Progress checks9; same dedicated entry remains PARTIAL/2. See RESTRICTED-PROCESS bilingual report. No original/GUI/install/system changes/upload. Proposed own legacy-framework host requires scope confirmation, not inferred acceptance/runtime substitution.
 
 Current [restricted-process prototype acceptance](CDR-082-RESTRICTED-PROCESS.md): native6 passed, ownnet8 startup blocked, explicit entry exit2/PARTIAL. Review two tracks/cleanup proof and no resource-stress/fullsandbox/original-compatibility claim. No automatic acceptance/upload; next own managed startup diagnosis, not original loading.

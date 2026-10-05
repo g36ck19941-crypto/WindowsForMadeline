@@ -320,6 +320,7 @@ static int Run(string[] args)
     }
     var restrictedStatus = "not-inspected";
     var startupDiagnosticsStatus = "not-recorded";
+    var latestUpdate = "<section data-latest-update=\"not-recorded\"><h2>本次更新：启动日志优化</h2><p>还没有本轮日志验证摘要；不能认为新记录已经验证。生成页面不会运行探针。</p></section>";
     var restrictedExplanation = "尚无自有受限进程原型摘要；不能认为启动限制或退出清理已经通过。生成本页不会启动测试进程。";
     if (!restrictedSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
         throw new ArgumentException("Restricted summary must be under repository artifacts.");
@@ -369,9 +370,36 @@ static int Run(string[] args)
             if (coreClrObserved && count == 0) throw new InvalidDataException("Restricted image count inconsistent.");
             startupDiagnosticsStatus = "recorded";
             restrictedExplanation += "最新启动诊断：记录到" + count + "个映像名称；" +
-                (coreClrObserved ? ".NET核心运行库已加载。" : "未观察到.NET核心运行库加载事件。") +
+                (coreClrObserved ? ".NET核心运行库已加载。" : "本轮没有获得.NET核心运行库的具名加载证据，不代表它没有加载。") +
                 (ownPhase is null ? "没有读到第一条自有阶段记录；这还不能证明入口完全没执行，因为第一条记录的文件操作也可能失败。" : "最后自有阶段为" + ownPhase + "。") +
                 "阶段记录的8项校验通过。加载系统绘图库不等于创建了窗口；这里只记录名称，不读取内存内容。异常根因仍未定位，没有放宽限制。";
+        }
+        if (report.TryGetProperty("startupLogVersion", out var logVersion))
+        {
+            var eventCount = report.GetProperty("startupEventCount").GetInt32();
+            var dropped = report.GetProperty("timelineEventsDropped").GetInt32();
+            var lastImage = report.GetProperty("lastObservedLoadedImage").GetString();
+            var monitorSource = report.GetProperty("monitorFailureSource").GetString();
+            var nativeSource = report.GetProperty("nativeChildExceptionSource").GetString();
+            var loadEvents = report.GetProperty("imageLoadEventCount").GetInt32();
+            var unavailable = report.GetProperty("imageNameUnavailableCount").GetInt32();
+            if (logVersion.GetInt32() != 1 || report.GetProperty("startupLogChecks").GetInt32() != 8 || eventCount is < 1 or > 256 || dropped < 0 ||
+                loadEvents < 0 || unavailable < 0 || unavailable > loadEvents ||
+                (lastImage is not null && !System.Text.RegularExpressions.Regex.IsMatch(lastImage, "^[A-Za-z0-9_.-]{1,128}$")) ||
+                (monitorSource is not null && monitorSource != "parent-evidence-check") ||
+                (nativeSource is not null && nativeSource != "owned-child-debug-event") ||
+                (managedExit == 2 && monitorSource != "parent-evidence-check") ||
+                ((report.GetProperty("nativeExceptionCode").GetString() is null) != (nativeSource is null)))
+                throw new InvalidDataException("Startup log summary inconsistent.");
+            latestUpdate = "<section data-latest-update=\"startup-log-v1\"><h2>本次更新：启动监控与日志</h2>" +
+                "<p>改了哪个模块：启动监控，不是角色、动作或素材。新增什么：按先后记录启动步骤和加载的组件，标明每条消息来自监控器、子进程报告还是操作系统的子进程事件。</p>" +
+                "<p>什么时候有用：程序刚启动就退出时，帮助看清最后发生的事情，避免把监控器的报错当作角色代码的崩溃堆栈。时间表示父进程观察到消息的时刻，不是子进程内部方法的执行时刻；未采集原生调用栈。</p>" +
+                "<p>推进到哪一步：本轮日志检查8项通过，失败测试留下" + eventCount + "条按序记录，超限未保留" + dropped + "条。" +
+                "其中有" + loadEvents + "条组件加载事件，" + unavailable + "条没取到名称，具体原因见本地时间线；取名失败不代表组件没加载。" +
+                (managedExit == 2 ? "是否达到预期：日志功能已验证，.NET启动仍未通过，专用入口仍为PARTIAL/2。" : "是否达到预期：自有检查通过，不代表原版启动通过。") +
+                "原版角色没有生成。最后观察到的组件不一定是出错组件。</p>" +
+                "<p>完整回归的执行范围和结果见本轮中文报告；生成本页不会重跑回归，专项日志检查不代替完整回归或启动验证。</p>" +
+                "<p>验收：双击“验证受限进程原型.cmd”，查看带编号、毫秒和来源的STARTUP_TRACE，以及分开的监控器/子进程异常来源；本页只展示已有摘要。<a href=\"../../docs/zh-CN/CDR-082-STARTUP-LOG.md\">本轮中文报告</a></p></section>";
         }
     }
     Directory.CreateDirectory(output);
@@ -383,6 +411,7 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2,a{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+{{latestUpdate}}
 <section data-restricted-status="{{restrictedStatus}}" data-startup-diagnostics="{{startupDiagnosticsStatus}}"><h2>最新：受限进程原型完成了哪些，卡在哪里？</h2><p>{{restrictedExplanation}}</p>
 <p>没有尝试创建GUI，没有调用真实输入、音频、网络或设备，没有改系统配置或ACL，也没有读取游戏目录。
 仍未建立AppContainer身份、文件或设备的完整访问限制；原版角色未生成。
@@ -421,7 +450,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 <p>它在项目中的作用：以后最小测试异常退出时，帮助区分“在哪一步停了”和“为什么结束”。
 它不能阻止文件、网络或设备访问，所以不是安全沙箱；进程活着也不能证明角色已经生成、正在动或已经显示。</p>
 <p>这8种情景不是本次重新运行的结果，也没有模拟真实原版原生崩溃。专用入口是“验证测试进程监控.cmd”，不由本页自动执行。</p></section>
-<section data-restricted-plan-status="design-only"><h2>最新完成：受限执行环境方案，尚未实施</h2>
+<section data-restricted-plan-status="design-only"><h2>历史方案：完整隔离尚未落实，基础进程原型已单独实施</h2>
 <p>这份方案要解决的是：在原版库开始加载以前，先限制它能访问什么；不能只等访问发生后再写日志。
 候选组合是AppContainer权限隔离、启动前限制以及Job进程管理，而不是把普通子进程称为沙箱。</p>
 <p>目前没有验证完整的禁真实输入、禁音频配置，也没有证明旧版XNA能在这些限制下工作。

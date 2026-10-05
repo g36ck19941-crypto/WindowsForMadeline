@@ -46,6 +46,10 @@ try {
     & dotnet build tools/CelesteDesktop.RestrictedProcessProbe -c Release --no-restore
     if($LASTEXITCODE -ne 0){throw 'OWN_PARENT_BUILD_FAILED'}
     $dll = 'tools/CelesteDesktop.RestrictedProcessProbe/bin/Release/net8.0/CelesteDesktop.RestrictedProcessProbe.dll'
+    $logLines = @(& dotnet $dll --verify-startup-log)
+    if($LASTEXITCODE -ne 0){throw 'OWN_STARTUP_LOG_FAILED'}
+    $logCheck = $logLines | ConvertFrom-Json
+    if($logCheck.eventId -ne 'RESTRICTED_STARTUP_LOG_VERIFIED' -or $logCheck.passed -ne 8 -or $logCheck.childStarted){throw 'OWN_STARTUP_LOG_SUMMARY_INVALID'}
     $phaseLines = @(& dotnet $dll --verify-phase-protocol)
     if($LASTEXITCODE -ne 0){throw 'OWN_PHASE_PROTOCOL_FAILED'}
     $phaseCheck = $phaseLines | ConvertFrom-Json
@@ -75,6 +79,16 @@ try {
     $startupResult = if($managedFailure.Count -eq 1){$managedFailure[0].result}else{
         @($managedEvents | Where-Object {$_.eventId -eq 'RESTRICTED_PROCESS_CASE' -and $_.result.scenario -eq 'Complete'})[0].result
     }
+    foreach($result in @($cases | ForEach-Object {$_.result}) + @($startupResult)) {
+        $sequence=0; $previousTime=0
+        if(@($result.startupTimeline).Count -eq 0 -or @($result.startupTimeline).Count -gt 256){throw 'OWN_TIMELINE_BUDGET'}
+        foreach($event in $result.startupTimeline) {
+            $sequence++
+            if($event.sequence -ne $sequence -or $event.observedElapsedMs -lt $previousTime -or $event.observedElapsedMs -gt $result.durationMs -or
+                $event.source -notin @('parent-monitor','child-report','owned-child-debug-event')){throw 'OWN_TIMELINE_PROTOCOL'}
+            $previousTime=$event.observedElapsedMs
+        }
+    }
     $summary = [ordered]@{schemaVersion=1;taskId='CDR-082';stage='own-restricted-process-prototype';inspectedUtc=[DateTime]::UtcNow.ToString('o')
         status=if($startup -eq 'own-net8-verified'){'own-controls-verified'}else{'partial-managed-startup-blocked'}
         nativeControlPassed=6;managedStartup=$startup;managedProbeExitCode=$managedExit;nativeExceptionCode=$failedCode;nativeExceptionParameter0=$failedSubcode
@@ -84,6 +98,13 @@ try {
         lastOwnPhase=$startupResult.lastOwnPhase
         observedCoreClrImage=('coreclr.dll' -in $startupResult.loadedImageNames)
         loadedImageCount=@($startupResult.loadedImageNames).Count
+        startupLogVersion=1;startupLogChecks=8;startupEventCount=@($startupResult.startupTimeline).Count
+        timelineEventsDropped=$startupResult.timelineEventsDropped
+        imageLoadEventCount=$startupResult.imageLoadEventCount
+        imageNameUnavailableCount=@($startupResult.startupTimeline | Where-Object {$_.name -eq 'image-name-unavailable'}).Count
+        lastObservedLoadedImage=(@($startupResult.startupTimeline | Where-Object {$_.name -eq 'image-loaded'}) | Select-Object -Last 1).detail
+        monitorFailureSource=if($managedFailure.Count -eq 1){$managedFailure[0].exceptionSource}else{$null}
+        nativeChildExceptionSource=$startupResult.nativeExceptionSource
         nativeProbeHash=$nativeHash;nativeImportModules=1;nativeImportMethods=$importNames.Count;allObservedOwnedChildrenExited=$true
         guiPolicyQueriedBeforeResume=$true;commitMemoryLimitBytes=536870912;cpuHardCapPercent=20;activeProcessLimit=1;observationTimeoutMs=3000
         memoryCpuStressTested=$false;guiCreationProbeAttempted=$false;fullSandboxEstablished=$false;appContainerEstablished=$false
@@ -95,6 +116,8 @@ try {
     foreach($case in $cases) { Write-Output ('RESTRICTED_PROCESS_CASE scenario='+$case.result.scenario+' lastStage='+$case.result.lastStage+' exitCode='+$case.result.exitCode+' cleanup='+$case.result.cleanupReason+' exited='+$case.result.exited) }
     Write-Output ('RESTRICTED_PROCESS_SUMMARY nativeControlsPassed=6 managedStartup='+$startup+' nativeException='+$failedCode+' parameter0='+$failedSubcode+' fullSandboxEstablished=false')
     Write-Output ('RESTRICTED_STARTUP_DIAGNOSTICS phaseProtocolPassed=8 lastOwnPhase='+$summary.lastOwnPhase+' coreClrImageObserved='+$summary.observedCoreClrImage+' loadedImageCount='+$summary.loadedImageCount)
+    Write-Output ('RESTRICTED_STARTUP_LOG checks=8 events='+$summary.startupEventCount+' dropped='+$summary.timelineEventsDropped+' monitorFailureSource='+$summary.monitorFailureSource+' childExceptionSource='+$summary.nativeChildExceptionSource)
+    foreach($event in $startupResult.startupTimeline){Write-Output ('STARTUP_TRACE sequence='+$event.sequence+' observedMs='+$event.observedElapsedMs+' source='+$event.source+' event='+$event.name+' detail='+$event.detail)}
 } finally { Pop-Location }
 if($startup -ne 'own-net8-verified'){exit 2}
 exit 0

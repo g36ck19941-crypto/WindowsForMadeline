@@ -1,5 +1,9 @@
 # Diagnostics Contract
 
+## Latest: CDR-082 startup log v1
+
+RESTRICTED_STARTUP_LOG_VERIFIED:8 own checks/no child started. RESTRICTED_STARTUP_LOG:checks/events/dropped/monitorFailureSource/childExceptionSource. STARTUP_TRACE:sequence/observedMs/source/event/detail; <=256 retained/dropped count, parent's monotonic observation clock, not child-internal method timing. Sources parent-monitor/child-report/owned-child-debug-event. Module events retain load order and bounded ASCII name or unavailable reason(error/handle/filter/budget), not addresses/paths. RESTRICTED_PROCESS_FAILED adds exceptionSource; its parent managed stack is never labeled native child crash stack, nativeChildStackCaptured=false. Existing last native code is complemented by event sequence; preceding event is not root-cause proof. Summary startupLogVersion1/startupLogChecks8/event count/loader event+unavailable counts/source checked by display; no hidden runtime fallback.
+
 ## Restricted startup diagnostics supplement
 
 RESTRICTED_PHASE_PROTOCOL_VERIFIED:8 own file-protocol cases, no child starts. RESTRICTED_STARTUP_DIAGNOSTICS:phaseProtocolPassed,lastOwnPhase,coreClrImageObserved,loadedImageCount. Result loadedImageNames contains <=128 ASCII basenames from already-owned debug events, never paths/addresses/memory bytes. Four ordered phase files <=512B:own-entry-file-written,own-assembly-check-completed,gui-policy-query-returned,job-query-verified. No first marker does not prove Main never ran; first file operation may fail. Image observation does not prove API use/GUI creation. Summary startupDiagnosticsVersion1 validates phase/count; legacy summary remains readable.

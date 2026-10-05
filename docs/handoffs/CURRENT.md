@@ -1,5 +1,11 @@
 # Current Handoff
 
+## 2026-10-05 current — latest startup log development
+
+Verification gate distinction: explicit root entry2, log8/phase8/native6 and progress12 passed; Full first sandboxed attempt1 at existing synthetic junction Access denied. Specifically approved same offline gate retry exit0:317retained/XNA13/process8/isolation45+audit3/probe26/closure13+existingreports,window0/Rendering20excluded. No ACL/test/policy/runtime change; no weaker-profile own-probe retry. Dedicated new startup still partial, Full regression not that pass. No live Full session remains. No-open page0, ASCII rootcmd/CRLF text and diff audit checked.
+
+Baseline9ca53dd clean; next-development authorizes previously proposed own logging four improvements only. Primary owns existing RestrictedProcessProbe/StartupLog.cs, wrappers/progress/entry text/bilingual STARTUP-LOG and records. Bounded256 timeline/observed parentclock/source; ordered debug load/unavailable reasons; distinguish monitor assertion exception from native child events/no native stack. Actual29events,21load events name lookup Win32error5, earlierC0000005 then finalC0000409/A, no ready, own exited/Job0. Name absence not no-load evidence; previous coreclr21named historical. Log8/phase8/native6, progress12; PARTIAL2 retained, no runtime/CFG/Win32k change/memory bytes/dumps/original/XNA/Steam/GUI/input/audio/network/device/install/systemACL/download. Latest-update section readable before historical cumulative content. Full objective unchanged, own legacy-host execution still requires scope confirmation. Await review/upload; never update accepted or remote main. Inspect actual tests below/latest report before proceeding.
+
 ## 2026-10-04 current — startup diagnostics supplement, still partial
 
 Final verification: dedicated own entry2; phase8/native6, all created children exited. Progress9 and no-open root entry0. Existing Verify-CDR082 exit0:317retained/XNA13/oldprocess8/isolation45/probe26/closure13+reports,window0; new partial prototype not counted as pass. During overlapping self builds a progress copy retry warning occurred; sequential no-open entry rerun separately to avoid shared binary contention. No commercial staging/remote actions. Same full GOAL active, not complete.
