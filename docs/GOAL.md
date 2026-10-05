@@ -4,6 +4,8 @@ Updated: 2026-10-03. Developer-authorized replacement for the former self-design
 
 ## Outcome
 
+2026-10-05 developer constraint: legacy .NET Framework is diagnostic-only. It may be used in separately authorized compatibility/control experiments, never in production feature modules or as a direct or indirect product runtime dependency (including a legacy helper hosting original behavior). Existing net472 compilation/probes remain historical experimental evidence, not the selected product route. Their success does not authorize feature integration. Preserve the full original-code-led outcome below; first assess a non-legacy-framework migration/adaptation route, without reviving invented gameplay or silently substituting XNA. No migration implementation, original-source changes/execution or new dependency access is authorized by this rule alone.
+
 In C:/supermadeline/CelesteDesktopRuntime, reconstruct a local original-code-led Madeline and supported interaction-entity runtime for Windows desktop without launching Celeste/Everest. Prioritize recovering and integrating original behavior dependencies instead of creating another approximate gameplay implementation. Preserve independently verified resource parsing, animation/rendering and anonymous desktop geometry tools. Old gameplay is retired and recoverable only through Git history.
 
 ## Ordered near-term work

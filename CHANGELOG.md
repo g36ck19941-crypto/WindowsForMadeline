@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — Legacy framework excluded from product
+
+Developer constraint recorded in contract/objective/handoff/memory: legacy .NET Framework permitted only in separately authorized diagnostics, never product modules or direct/indirect runtime dependencies. Existing experimental evidence retained; nonlegacy migration feasibility is a future design gate, not authorized implementation. Documentation only, no execution/tests/upload.
+
 ## 2026-10-05 — Own old-framework startup diagnostic (partial)
 
 Added self-authored net472/x86 child, approved-reference-only compiler wrapper, fixed metadata audit/parent mode, dedicated cmd, independent summary and latest progress explanation. Compile/audit pass, abort1pass; normal startup blocked beforeReady, rest not run, partial2/cleanup confirmed; no policy bypass/original execution. Accepted1935 uploaded independent branch; new changes pending review. Delivery now supplies precise next-step approval text.

@@ -1,5 +1,9 @@
 # Current Handoff
 
+## 2026-10-05 latest override — legacy framework diagnostic-only
+
+Human requires eliminating legacy .NET Framework from product functionality/runtime dependencies; independent tests allowed only under existing explicit execution boundaries. No legacy helper hosts original character/input/animation/rendering. Existing net472 compile/own probes retained experimental/history, not mandatory product route; prior test outcomes unchanged. This turn documentation-only, no runtime/system/game access, no upload/acceptance. Primary updated AGENTS/GOAL (additive constraint/full outcome retained)/memory/status/tasks/changelog and bilingual boundary note. Goal remains blocked, not resumed by this rule change. Next proposed bounded task: assess a nonlegacy original-logic migration route, not continuing legacy host integration. Original source changes/execution/new dependencies/GUI still require precise authorization. b8133b2 diagnostic delivery remains unaccepted/unuploaded; no retrospective rewrite of results.
+
 ## 2026-10-05 current — own net472/x86 startup diagnostic, partial
 
 Final evidence: framework root cmd2/partial1pass reproducible, own compilation+metadata0; display20 checks/no-open root0, own log8/phase8. Existing native control first recheck1 at ReadReport IO file access (not a proven cause/regression); unchanged-policy repeat0/sixcases verified, preserve intermittent failure for next diagnosis. Full first sandbox1 existing junction Access denied; specifically approved identical no-window gate retry0 with317retained/26probe/13closure/45isolation/audit3/XNA13/oldprocess8/summary checks,window0/Rendering20excluded. No ACL/policy/test relaxation; Full pass not dedicated runtime pass. No sessions pending. No new commit uploaded. New final reply must provide precise commit acceptance+upload+next existing-log/static-debug-classification text.
