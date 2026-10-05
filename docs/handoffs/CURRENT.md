@@ -1,5 +1,11 @@
 # Current Handoff
 
+## 2026-10-04 current — startup diagnostics supplement, still partial
+
+Final verification: dedicated own entry2; phase8/native6, all created children exited. Progress9 and no-open root entry0. Existing Verify-CDR082 exit0:317retained/XNA13/oldprocess8/isolation45/probe26/closure13+reports,window0; new partial prototype not counted as pass. During overlapping self builds a progress copy retry warning occurred; sequential no-open entry rerun separately to avoid shared binary contention. No commercial staging/remote actions. Same full GOAL active, not complete.
+
+Baseline c2496e2 clean, same branch. Primary only existing own RestrictedProcessProbe/Verify-RestrictedProcess/ProgressDemo/Verify-RestrictedProgress and records. Added four fixed ordered <=512B phase files;8 synthetic protocol cases; <=128 loaded image basenames from already-authorized own debug events. Actual Complete failure C0000409/A remains:21 images including coreclr.dll, lastOwnPhase=null, no Ready, job active0/owned child exited. Absence not Main-nonexecution proof; GUI library presence not window/API invocation proof. No memory contents/dumps/debug attachment/target/XNA/Steam/game/GUI/input/audio/network/device/system/ACL/download/install. Native6 reverified separately, display9; PARTIAL exit2 retained. Current scope cannot silently substitute runtime or weaken policies. Proposed next separate confirmation: own legacy-framework host compatibility under unchanged controls, no original/XNA. No claim this fixes startup. Full GOAL unchanged, acceptance/upload pending; no accepted promotion.
+
 ## 2026-10-04 current — authorized own restricted process prototype, partial
 
 Validation: native6/managed abort+startup failure actual root entry exit2, no-open progress exit0, six own restricted-report checks passed (partial/missing/unsafe/contradictory/budget/outside-artifacts). Existing no-window Full exit0 retained317/XNA13/oldprocess8/isolation45/probe26/closure13+reports; window0/Rendering20excluded. Newprototype never folded into ordinary gate/pass. Native own imports Kernel32only11/hash verified, rootcmdASCII/CRLF. Ownhandles observed exited, no live session remains.

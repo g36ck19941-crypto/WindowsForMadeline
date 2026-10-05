@@ -1,5 +1,15 @@
 # CDR-082 — Own restricted process prototype
 
+## 2026-10-04 startup diagnostic follow-up (baseline c2496e2)
+
+Same controls, no runtime substitution. Four fixed own phase files (512B bound, exact run/scenario/stage, contiguous sequence) record entry-file-written, assembly-check-completed, GUI-query-returned and Job-verified before ready. First marker avoids JSON/reflection/native calls, but still needs managed entry/path/file operations: absence does not prove Main never executed. Eight generated protocol checks cover absent, all four, first only, gap, wrong ID/mode/stage and over-budget.
+
+Existing own debug events now retain up to128 distinct ASCII module basenames, not paths/addresses/memory bytes. Actual failed Complete attempt:21 image names including coreclr.dll, no first marker; unchanged C0000409/A, no ready, owned process exited, Job active0. Loading user32/gdi32/win32u libraries is not proof of GUI creation or API invocation. We have narrowed observed startup state, not established the failing call or root cause.
+
+Reverified native6 and phase8; progress report checks now9 (adds invalid phase, image budget and contradictory image count). Root entry remains PARTIAL/exit2. New summary fields startupDiagnosticsVersion/phaseProtocolPassed/lastOwnPhase/observedCoreClrImage/loadedImageCount are validated before display. No original/XNA/Steam, GUI/device/input/audio/network calls added, no game/system configuration/ACL/download/install access.
+
+Acceptance: run the same dedicated entry and look for RESTRICTED_STARTUP_DIAGNOSTICS with phase8, empty lastOwnPhase and coreClrImageObserved=True; regenerate progress page to see this limitation. Do not treat the8/6/9 own check counts as a managed-runtime pass. Proposed next decision is whether to verify a separately scoped own legacy-framework host under unchanged controls; current evidence cannot justify silently changing runtime or relaxing policy. No original load or upload.
+
 2026-10-04. Primary owner. Baseline 0bf22bd, branch codex/cdr-082-local-compile-probe. **Partial: native control cases verified, own .NET 8 readiness blocked.** Developer authorization covers only own pre-start GUI policy, Job resources/lifetime and cleanup. No original/XNA/Steam, GUI creation, live input/audio/network/device calls, global configuration/ACL changes, installation access/download/install. Full GOAL unchanged.
 
 ## Role
@@ -29,5 +39,7 @@ Developer acceptance: run that cmd, see six named control cases plus managed sta
 Verification evidence: explicit prototype entry exit2 as expected, no-open progress exit0; six report checks passed (actual partial, absent report, unsafe original flag, contradictory outcome, oversized report, outside-artifacts input). Existing no-window gate exit0:317 retained cases, XNA own13, process-monitor8, isolation45, probe26, closure13 and summary/audit checks; Rendering20 excluded, not passed. Own native imports/hash/ASCII-CRLF entry and tracked scope checked. Regression does not establish that the new managed startup works.
 
 ## Next work / remaining gate
+
+Latest follow-up regression: Verify-CDR082 exit0 (317 retained, XNA own13, old process8, isolation45, synthetic probe26, closure13 and existing report checks; window0/Rendering20excluded). Dedicated new prototype exit2, phase8/native6, all created children exited; display9 and no-open entry0. One overlapping own build caused transient copy retries; sequential page generation repeated separately. Regression remains separate from failed managed startup.
 
 Continue diagnosing the own managed startup while retaining current controls; do not progress into original loading. Current native code/image attribution does not locate the failing call. Any additional dependency, runtime substitution, OS/ACL change, device or GUI attempt needs review/authority before action; no download or automatic weaker-profile fallback. A later own net472/native host must have separately recorded compatibility evidence, never inferred from the kernel32 control probe. Acceptance/upload pending; no remote changes.

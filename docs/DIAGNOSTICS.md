@@ -1,5 +1,9 @@
 # Diagnostics Contract
 
+## Restricted startup diagnostics supplement
+
+RESTRICTED_PHASE_PROTOCOL_VERIFIED:8 own file-protocol cases, no child starts. RESTRICTED_STARTUP_DIAGNOSTICS:phaseProtocolPassed,lastOwnPhase,coreClrImageObserved,loadedImageCount. Result loadedImageNames contains <=128 ASCII basenames from already-owned debug events, never paths/addresses/memory bytes. Four ordered phase files <=512B:own-entry-file-written,own-assembly-check-completed,gui-policy-query-returned,job-query-verified. No first marker does not prove Main never ran; first file operation may fail. Image observation does not prove API use/GUI creation. Summary startupDiagnosticsVersion1 validates phase/count; legacy summary remains readable.
+
 ## CDR-082 own restricted process prototype
 
 - RESTRICTED_PROCESS_CASE:own run/scenario/PID/phase/exit/duration, pre-resume GUI denial/Job/resource query, resumed/ready/exit/cleanup and optional native exception metadata. Job accounting after close=null (not measured zero). No live input/window/title/memory bytes/dumps.

@@ -22,13 +22,17 @@ try {
     if($LASTEXITCODE -ne 0){throw 'CURRENT_PARTIAL_REPORT_FAILED'}
     $html = [IO.File]::ReadAllText((Join-Path $fixture 'actual/index.html'))
     if($html -notmatch 'data-restricted-status="partial-managed-startup-blocked"'){throw 'MANAGED_FAILURE_HIDDEN'}
+    if($html -notmatch 'data-startup-diagnostics="recorded"'){throw 'STARTUP_DIAGNOSTICS_HIDDEN'}
     & dotnet $dll --output (Join-Path $fixture 'missing') --restricted-report (Join-Path $fixture 'absent.json')
     if($LASTEXITCODE -ne 0){throw 'ABSENT_REPORT_FAILED'}
     if([IO.File]::ReadAllText((Join-Path $fixture 'missing/index.html')) -notmatch 'data-restricted-status="not-inspected"'){throw 'ABSENT_REPORT_CALLED_PASS'}
-    foreach($test in @('unsafe-original','inconsistent-status','oversized','outside-artifacts')) {
+    foreach($test in @('unsafe-original','inconsistent-status','invalid-phase','image-budget','contradictory-image','oversized','outside-artifacts')) {
         $report = Get-Content -LiteralPath $actual -Raw | ConvertFrom-Json
         if($test -eq 'unsafe-original'){$report.originalLoaded=$true}
         if($test -eq 'inconsistent-status'){$report.managedProbeExitCode=0}
+        if($test -eq 'invalid-phase'){$report.lastOwnPhase='original-ready'}
+        if($test -eq 'image-budget'){$report.loadedImageCount=129}
+        if($test -eq 'contradictory-image'){$report.loadedImageCount=0;$report.observedCoreClrImage=$true}
         $content = $report | ConvertTo-Json -Depth 8
         if($test -eq 'oversized'){$content += (' ' * 20000)}
         $reportPath = Join-Path $fixture ($test+'.json')
@@ -39,5 +43,5 @@ try {
         finally { $ErrorActionPreference=$savedPreference }
         if($exitCode -ne 2){throw ('RESTRICTED_REPORT_NOT_REJECTED_'+$test)}
     }
-    Write-Output 'RESTRICTED_PROGRESS_CHECKS passed=6 failed=0 guiOpened=false'
+    Write-Output 'RESTRICTED_PROGRESS_CHECKS passed=9 failed=0 guiOpened=false'
 } finally {Pop-Location}

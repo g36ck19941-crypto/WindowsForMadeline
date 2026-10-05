@@ -319,6 +319,7 @@ static int Run(string[] args)
             "可用“检查受限环境可行性.cmd”重新生成只读摘要；本页只展示已有结果，不代替执行检查。";
     }
     var restrictedStatus = "not-inspected";
+    var startupDiagnosticsStatus = "not-recorded";
     var restrictedExplanation = "尚无自有受限进程原型摘要；不能认为启动限制或退出清理已经通过。生成本页不会启动测试进程。";
     if (!restrictedSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase))
         throw new ArgumentException("Restricted summary must be under repository artifacts.");
@@ -357,6 +358,21 @@ static int Run(string[] args)
             restrictedExplanation = "已有自有小探针及.NET 8受限控制检查通过摘要。它仅验证启动前策略、Job配置和退出清理；没有文件/网络/设备隔离或原版兼容证据。";
         }
         else throw new InvalidDataException("Restricted managed result inconsistent.");
+        if (report.TryGetProperty("startupDiagnosticsVersion", out var diagnosticVersion))
+        {
+            var count = report.GetProperty("loadedImageCount").GetInt32();
+            var ownPhase = report.GetProperty("lastOwnPhase").GetString();
+            if (diagnosticVersion.GetInt32() != 1 || report.GetProperty("phaseProtocolPassed").GetInt32() != 8 || count is < 0 or > 128 ||
+                (ownPhase is not null && ownPhase is not ("own-entry-file-written" or "own-assembly-check-completed" or "gui-policy-query-returned" or "job-query-verified")))
+                throw new InvalidDataException("Restricted startup diagnostics inconsistent.");
+            var coreClrObserved = report.GetProperty("observedCoreClrImage").GetBoolean();
+            if (coreClrObserved && count == 0) throw new InvalidDataException("Restricted image count inconsistent.");
+            startupDiagnosticsStatus = "recorded";
+            restrictedExplanation += "最新启动诊断：记录到" + count + "个映像名称；" +
+                (coreClrObserved ? ".NET核心运行库已加载。" : "未观察到.NET核心运行库加载事件。") +
+                (ownPhase is null ? "没有读到第一条自有阶段记录；这还不能证明入口完全没执行，因为第一条记录的文件操作也可能失败。" : "最后自有阶段为" + ownPhase + "。") +
+                "阶段记录的8项校验通过。加载系统绘图库不等于创建了窗口；这里只记录名称，不读取内存内容。异常根因仍未定位，没有放宽限制。";
+        }
     }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
@@ -367,7 +383,7 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2,a{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
-<section data-restricted-status="{{restrictedStatus}}"><h2>最新：受限进程原型完成了哪些，卡在哪里？</h2><p>{{restrictedExplanation}}</p>
+<section data-restricted-status="{{restrictedStatus}}" data-startup-diagnostics="{{startupDiagnosticsStatus}}"><h2>最新：受限进程原型完成了哪些，卡在哪里？</h2><p>{{restrictedExplanation}}</p>
 <p>没有尝试创建GUI，没有调用真实输入、音频、网络或设备，没有改系统配置或ACL，也没有读取游戏目录。
 仍未建立AppContainer身份、文件或设备的完整访问限制；原版角色未生成。
 验收入口为“验证受限进程原型.cmd”，详细说明见<a href="../../docs/zh-CN/CDR-082-RESTRICTED-PROCESS.md">中文报告</a>。

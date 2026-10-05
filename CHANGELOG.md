@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-04 — Own startup diagnostics, still partial
+
+Added bounded early phase records and loaded-image names, eight protocol checks, nine progress-summary checks. Reconfirmed native6 and own managed startup failure; no weaker policy, commercial code or GUI. Cumulative progress updated; no original runtime feature or upload.
+
 ## 2026-10-04 — Own pre-start policy and Job prototype (partial)
 
 Suspended creation/Win32k mitigation, pre-resume Job+policy queries,512MiB/CPU20%/singleprocess/owned cleanup, bounded private handshake and own-only native exception metadata. CRT-free own Kernel32 probe6cases verified; ownnet8 startup fails C0000409/A before ready. Native pass does not replace managed failure; dedicated cmd exit2 and progress page truthful partial. No original/runtime/device/GUI/ACL/install expansion; pending acceptance/upload.

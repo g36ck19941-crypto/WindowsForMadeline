@@ -8,10 +8,11 @@ using System.Text.RegularExpressions;
 
 try
 {
-    RequireOwnOnly();
     if (!OperatingSystem.IsWindows() || !Environment.Is64BitProcess) throw new PlatformNotSupportedException("WINDOWS_X64_PROTOTYPE_ONLY");
     if (args is ["--child", var scenario, var id] && Enum.TryParse<Mode>(scenario, out var mode) && Enum.IsDefined(mode) && Guid.TryParseExact(id, "N", out _))
         return Child(mode, id);
+    RequireOwnOnly();
+    if (args is ["--verify-phase-protocol"]) return VerifyPhaseProtocol();
     var nativeControls = args is ["--verify-native-controls"];
     if (args is not ["--verify"] && !nativeControls) throw new ArgumentException("FIXED_SELF_PROBE_ONLY");
     if (Marshal.SizeOf<Native.StartupInfoEx>() != 112 || Marshal.SizeOf<Native.ExtendedLimits>() != 144 || Marshal.SizeOf<Native.Accounting>() != 48)
@@ -50,11 +51,15 @@ catch (Exception ex)
 
 static int Child(Mode mode, string id)
 {
+    var directory = RunDirectory(id);
+    WritePhase(directory, id, mode, 0);
     RequireOwnOnly();
+    WritePhase(directory, id, mode, 1);
     Native.Check(Native.GetProcessMitigationPolicy(Native.GetCurrentProcess(), 4, out var flags, 4), "CHILD_QUERY_GUI_POLICY");
+    WritePhase(directory, id, mode, 2);
     Native.Check(Native.IsProcessInJob(Native.GetCurrentProcess(), 0, out var inJob), "CHILD_QUERY_JOB");
     if ((flags & 1) == 0 || (flags & 2) != 0 || !inJob) throw new InvalidOperationException("CHILD_RESTRICTIONS_MISSING");
-    var directory = RunDirectory(id);
+    WritePhase(directory, id, mode, 3);
     WriteReport(Path.Combine(directory, "ready.json"), new ChildReport(id, mode.ToString(), "ready", true, true));
     if (mode == Mode.EarlyExit) return 23;
     if (mode != Mode.Complete) Thread.Sleep(30000); // Own generated idle child, no device or target calls.
@@ -151,7 +156,8 @@ static Result Observe(Mode mode, bool nativeControls)
         if (ready) phase = "child-ready";
         if (completed) phase = "completed";
         return new Result(id, mode.ToString(), child.pid, phase, exitCode, clock.ElapsedMilliseconds, policyChecked, assigned, true, resumed,
-            ready, true, active, cleanup == "none" ? "normal-exit" : cleanup, debugTrace.exceptionCode, debugTrace.parameter0, debugTrace.exceptionImage, debugTrace.guardTargetImage);
+            ready, true, active, cleanup == "none" ? "normal-exit" : cleanup, debugTrace.exceptionCode, debugTrace.parameter0, debugTrace.exceptionImage, debugTrace.guardTargetImage,
+            nativeControls ? null : ReadPhase(directory, id, mode), LoadedImages(debugTrace));
     }
     catch (SyntheticParentFailure)
     {
@@ -159,7 +165,8 @@ static Result Observe(Mode mode, bool nativeControls)
         Native.Check(Native.TerminateJobObject(job, 99), "PARENT_FAILURE_CLEANUP"); WaitExited(process, ownedPid, debugTrace);
         Native.Check(Native.GetExitCodeProcess(process, out var exitCode), "FAILURE_EXIT_QUERY");
         return new Result(id, mode.ToString(), ownedPid, phase, exitCode, clock.ElapsedMilliseconds, policyChecked, assigned, true, resumed,
-            ReadReport(directory, "ready.json", id, mode, "ready"), true, WaitJobEmpty(job), "synthetic-parent-failure", debugTrace.exceptionCode, debugTrace.parameter0, debugTrace.exceptionImage, debugTrace.guardTargetImage);
+            ReadReport(directory, "ready.json", id, mode, "ready"), true, WaitJobEmpty(job), "synthetic-parent-failure", debugTrace.exceptionCode, debugTrace.parameter0, debugTrace.exceptionImage, debugTrace.guardTargetImage,
+            nativeControls ? null : ReadPhase(directory, id, mode), LoadedImages(debugTrace));
     }
     finally
     {
@@ -202,6 +209,8 @@ static void PumpDebug(OwnedHandle process, uint ownedPid, DebugTrace trace, uint
     }
     if (debugEvent.pid != ownedPid) throw new InvalidOperationException("UNOWNED_DEBUG_EVENT");
     var status = 0x10002U;
+    try
+    {
     if (debugEvent.code == 1)
     {
         if (debugEvent.exceptionCode != 0x80000003)
@@ -223,12 +232,20 @@ static void PumpDebug(OwnedHandle process, uint ownedPid, DebugTrace trace, uint
             {
                 var filename = Path.GetFileName(name.ToString());
                 if (Regex.IsMatch(filename, "^[A-Za-z0-9_.-]{1,128}$"))
+                {
+                    if (trace.images.Count >= 128) throw new InvalidDataException("OWN_IMAGE_BUDGET");
                     trace.images[debugEvent.code == 3 ? debugEvent.processImageBase : debugEvent.dllImageBase] = filename;
+                }
             }
         }
         finally { Native.Check(Native.CloseHandle(debugEvent.fileHandle), "DEBUG_FILE_HANDLE_CLOSE"); }
     }
-    Native.Check(Native.ContinueDebugEvent(debugEvent.pid, debugEvent.tid, status), "OWN_DEBUG_CONTINUE");
+    }
+    finally
+    {
+        // Even an evidence-budget error must release this debug stop so owned cleanup can finish.
+        Native.Check(Native.ContinueDebugEvent(debugEvent.pid, debugEvent.tid, status), "OWN_DEBUG_CONTINUE");
+    }
 }
 static void WaitExited(OwnedHandle process, uint ownedPid, DebugTrace trace)
 {
@@ -254,6 +271,53 @@ static bool ReadReport(string directory, string name, string id, Mode mode, stri
     if (report is null || report.runId != id || report.scenario != mode.ToString() || report.stage != stage || !report.guiDenied || !report.inJob)
         throw new InvalidDataException("CHILD_REPORT_PROTOCOL");
     return true;
+}
+static string[] LoadedImages(DebugTrace trace) => trace.images.Values.Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.OrdinalIgnoreCase).ToArray();
+static string PhaseName(int index) => index switch { 0 => "own-entry-file-written", 1 => "own-assembly-check-completed", 2 => "gui-policy-query-returned", 3 => "job-query-verified", _ => throw new InvalidDataException("OWN_PHASE_INDEX") };
+static void WritePhase(string directory, string id, Mode mode, int index)
+{
+    // Fixed private stage records only. No JSON/reflection/native calls needed for the first marker.
+    var file = Path.Combine(directory, "phase-" + index + ".txt"); RejectLinks(file);
+    File.WriteAllText(file, id + "\n" + mode + "\n" + PhaseName(index));
+}
+static string? ReadPhase(string directory, string id, Mode mode)
+{
+    string? last = null; var missing = false;
+    for (var index = 0; index < 4; index++)
+    {
+        var file = Path.Combine(directory, "phase-" + index + ".txt"); RejectLinks(file);
+        if (!File.Exists(file)) { missing = true; continue; }
+        if (missing || new FileInfo(file).Length > 512 || File.ReadAllText(file) != id + "\n" + mode + "\n" + PhaseName(index))
+            throw new InvalidDataException("OWN_PHASE_PROTOCOL");
+        last = PhaseName(index);
+    }
+    return last;
+}
+static int VerifyPhaseProtocol()
+{
+    string Fixture() { var path = RunDirectory(Guid.NewGuid().ToString("N")); Directory.CreateDirectory(path); return path; }
+    var id = Guid.NewGuid().ToString("N"); var passed = 0;
+    var absent = Fixture();
+    if (ReadPhase(absent, id, Mode.Complete) is not null) throw new InvalidDataException("ABSENT_PHASE_CALLED_ENTRY"); passed++;
+    var complete = Fixture(); for (var i = 0; i < 4; i++) WritePhase(complete, id, Mode.Complete, i);
+    if (ReadPhase(complete, id, Mode.Complete) != PhaseName(3)) throw new InvalidDataException("PHASE_CHAIN_FAILED"); passed++;
+    var entry = Fixture(); WritePhase(entry, id, Mode.Complete, 0);
+    if (ReadPhase(entry, id, Mode.Complete) != PhaseName(0)) throw new InvalidDataException("ENTRY_PHASE_FAILED"); passed++;
+    foreach (var invalid in new[] { "gap", "id", "mode", "stage", "budget" })
+    {
+        var path = Fixture();
+        var content = id + "\nComplete\n" + PhaseName(0);
+        if (invalid == "id") content = Guid.NewGuid().ToString("N") + "\nComplete\n" + PhaseName(0);
+        if (invalid == "mode") content = id + "\nHang\n" + PhaseName(0);
+        if (invalid == "stage") content = id + "\nComplete\ncompleted";
+        if (invalid == "budget") content = new string('x', 513);
+        File.WriteAllText(Path.Combine(path, invalid == "gap" ? "phase-1.txt" : "phase-0.txt"), content);
+        var rejected = false;
+        try { _ = ReadPhase(path, id, Mode.Complete); } catch (InvalidDataException) { rejected = true; }
+        if (!rejected) throw new InvalidDataException("PHASE_NEGATIVE_NOT_REJECTED"); passed++;
+    }
+    Console.WriteLine(JsonSerializer.Serialize(new { eventId = "RESTRICTED_PHASE_PROTOCOL_VERIFIED", passed, childStarted = false }));
+    return 0;
 }
 static void WriteReport<T>(string path, T report)
 {
@@ -297,4 +361,5 @@ sealed class ProbeEvidenceFailure(Result evidence) : Exception("SELF_PROBE_DID_N
 sealed record ChildReport(string runId, string scenario, string stage, bool guiDenied, bool inJob);
 sealed record Result(string runId, string scenario, uint ownedPid, string lastStage, uint exitCode, long durationMs,
     bool preResumeGuiDenied, bool jobAssignedBeforeResume, bool resourceSettingsVerified, bool resumed,
-    bool childReportObserved, bool exited, uint? activeProcessesAfterCleanup, string cleanupReason, string? nativeExceptionCode, string? nativeExceptionParameter0, string? exceptionImage, string? guardTargetImage);
+    bool childReportObserved, bool exited, uint? activeProcessesAfterCleanup, string cleanupReason, string? nativeExceptionCode, string? nativeExceptionParameter0, string? exceptionImage, string? guardTargetImage,
+    string? lastOwnPhase, string[] loadedImageNames);

@@ -46,6 +46,10 @@ try {
     & dotnet build tools/CelesteDesktop.RestrictedProcessProbe -c Release --no-restore
     if($LASTEXITCODE -ne 0){throw 'OWN_PARENT_BUILD_FAILED'}
     $dll = 'tools/CelesteDesktop.RestrictedProcessProbe/bin/Release/net8.0/CelesteDesktop.RestrictedProcessProbe.dll'
+    $phaseLines = @(& dotnet $dll --verify-phase-protocol)
+    if($LASTEXITCODE -ne 0){throw 'OWN_PHASE_PROTOCOL_FAILED'}
+    $phaseCheck = $phaseLines | ConvertFrom-Json
+    if($phaseCheck.eventId -ne 'RESTRICTED_PHASE_PROTOCOL_VERIFIED' -or $phaseCheck.passed -ne 8 -or $phaseCheck.childStarted){throw 'OWN_PHASE_SUMMARY_INVALID'}
     $nativeLines = @(& dotnet $dll --verify-native-controls)
     if($LASTEXITCODE -ne 0){throw 'NATIVE_CONTROL_CASES_FAILED'}
     $nativeEvents = @($nativeLines | ForEach-Object { $_ | ConvertFrom-Json })
@@ -68,11 +72,18 @@ try {
         $managedFailure[0].result.exited -and -not $managedFailure[0].result.childReportObserved) {
         $startup = 'own-net8-startup-blocked'; $failedCode = $managedFailure[0].result.nativeExceptionCode; $failedSubcode = $managedFailure[0].result.nativeExceptionParameter0
     } else { throw 'MANAGED_PROBE_UNEXPECTED_OUTCOME' }
+    $startupResult = if($managedFailure.Count -eq 1){$managedFailure[0].result}else{
+        @($managedEvents | Where-Object {$_.eventId -eq 'RESTRICTED_PROCESS_CASE' -and $_.result.scenario -eq 'Complete'})[0].result
+    }
     $summary = [ordered]@{schemaVersion=1;taskId='CDR-082';stage='own-restricted-process-prototype';inspectedUtc=[DateTime]::UtcNow.ToString('o')
         status=if($startup -eq 'own-net8-verified'){'own-controls-verified'}else{'partial-managed-startup-blocked'}
         nativeControlPassed=6;managedStartup=$startup;managedProbeExitCode=$managedExit;nativeExceptionCode=$failedCode;nativeExceptionParameter0=$failedSubcode
         nativeExceptionImage=if($managedFailure.Count -eq 1){$managedFailure[0].result.exceptionImage}else{$null}
         nativeGuardTargetImage=if($managedFailure.Count -eq 1){$managedFailure[0].result.guardTargetImage}else{$null}
+        startupDiagnosticsVersion=1;phaseProtocolPassed=8
+        lastOwnPhase=$startupResult.lastOwnPhase
+        observedCoreClrImage=('coreclr.dll' -in $startupResult.loadedImageNames)
+        loadedImageCount=@($startupResult.loadedImageNames).Count
         nativeProbeHash=$nativeHash;nativeImportModules=1;nativeImportMethods=$importNames.Count;allObservedOwnedChildrenExited=$true
         guiPolicyQueriedBeforeResume=$true;commitMemoryLimitBytes=536870912;cpuHardCapPercent=20;activeProcessLimit=1;observationTimeoutMs=3000
         memoryCpuStressTested=$false;guiCreationProbeAttempted=$false;fullSandboxEstablished=$false;appContainerEstablished=$false
@@ -83,6 +94,7 @@ try {
     [IO.File]::WriteAllText((Join-Path $artifact 'managed-startup.json'),($managedEvents | ConvertTo-Json -Depth 8))
     foreach($case in $cases) { Write-Output ('RESTRICTED_PROCESS_CASE scenario='+$case.result.scenario+' lastStage='+$case.result.lastStage+' exitCode='+$case.result.exitCode+' cleanup='+$case.result.cleanupReason+' exited='+$case.result.exited) }
     Write-Output ('RESTRICTED_PROCESS_SUMMARY nativeControlsPassed=6 managedStartup='+$startup+' nativeException='+$failedCode+' parameter0='+$failedSubcode+' fullSandboxEstablished=false')
+    Write-Output ('RESTRICTED_STARTUP_DIAGNOSTICS phaseProtocolPassed=8 lastOwnPhase='+$summary.lastOwnPhase+' coreClrImageObserved='+$summary.observedCoreClrImage+' loadedImageCount='+$summary.loadedImageCount)
 } finally { Pop-Location }
 if($startup -ne 'own-net8-verified'){exit 2}
 exit 0
