@@ -35,4 +35,6 @@ Suggested next reply: `验收M1迁移清单〈提交〉；授权M2仅在现有�
 
 ## Accepted version upload status
 
+Follow-up2026-10-06: the already-authorized exact360b47c push succeeded and was read back as360b47c195d4473751a2318bee1685ec3374c877 on codex/cdr-082-local-compile-probe. Main remained d237277e10af090cf60ec015c22174565e6cdc0a. The network-blocked status described below is historical/resolved for this design commit. M1implementation5b0e371 was not pushed/accepted; no runtime or M2permission follows from publication. This follow-up only updates records, no new analysis/test execution.
+
 360b47c outbound tree audit passed (no cache/artifacts/binaries/assets/install paths/secrets). Default Git network failed name-resolution worker; elevated remote query and one later accepted-only push each failed connecting github.com:443. No successful push/readback of360b47c. GitHub connector independently read the repository/known prior commit successfully: connector reachability does not prove Git upload. No alternate commit history or API snapshot was substituted for the requested commit. Main and remote ref were not mutated by these failed commands. Accepted360b47c remains pending upload; M1new version pending acceptance. No automatic accepted flag/GOAL completion.
