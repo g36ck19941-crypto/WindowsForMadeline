@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — M2 method boundaries and adaptation design
+
+Own readonly method/property/field initializer locations and deferred-call marking; input/time/bootstrap design, private source-derived details, safe public counts and latest progress explanation. No target compilation/execution or migrated feature. Full M2 type closure partial; original Player absent. Accepted M1/records5d73cab published/readback, main unchanged. New M2 awaits acceptance/upload.
+
 ## 2026-10-06 — M1 readonly migration inventory
 
 Own syntax analyzer/private dependency-platform list, source-free summary, dedicatedcmd and cumulative latest explanation.918hashstable/core+input795/XNAusing562;10syntax/2scope/10reportchecks. No targetcompile/execute/newdependency/probe/GUI; candidategraph not minimal/runtime proof. Accepted360 auditpass/upload blocked Git443; newM1 pendingreview, mainunchanged.

@@ -20,11 +20,12 @@ static int Run(string[] args)
     var restrictedSummaryPath = Path.GetFullPath("artifacts/cdr-082-restricted-process/summary.json");
     var frameworkProbePath = Path.GetFullPath("artifacts/cdr-082-restricted-process/framework-summary.json");
     var migrationSummaryPath = Path.GetFullPath("artifacts/cdr-082-migration-inventory/summary.json");
+    var methodSummaryPath = Path.GetFullPath("artifacts/cdr-082-method-design/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report" && key != "--migration-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report" && key != "--migration-report" && key != "--method-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
@@ -33,6 +34,7 @@ static int Run(string[] args)
         else if (key == "--restricted-report") restrictedSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--framework-probe-report") frameworkProbePath = Path.GetFullPath(args[i]);
         else if (key == "--migration-report") migrationSummaryPath = Path.GetFullPath(args[i]);
+        else if (key == "--method-report") methodSummaryPath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -459,6 +461,31 @@ static int Run(string[] args)
             "<p>推进到哪一步：检查" + files + "个源码文件，读取前后哈希一致，语法读取无错误；其中" + xna + "个文件声明XNA命名空间。角色核心保守候选" + core + "个文件，输入环境候选" + input + "个文件。范围仍然宽，下一步需要缩到具体方法。</p>" +
             "<p>是否符合预期：静态清单已生成，但不是精确调用图，也不证明这些调用一定发生、现代迁移可运行或角色已生成。旧框架仍只用于独立测试，不进入产品。</p>" +
             "<p>验收：双击“检查迁移依赖清单.cmd”，查看MIGRATION_INVENTORY_COMPLETED。<a href=\"../../docs/zh-CN/CDR-082-M1-INVENTORY.md\">本轮中文报告</a>。本页仅展示摘要，不重跑扫描。</p></section>";
+    }
+    latestUpdate = "<section data-latest-update=\"method-design-v1\" data-method-status=\"not-inspected\"><h2>本次更新：输入、时间与初始化接入设计</h2><p>模块：原版逻辑迁移准备。没有本机方法分析摘要，不能认为已经检查；页面不会读取源码或运行分析。</p></section>";
+    if (!methodSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Method report must be under repository artifacts.");
+    if (File.Exists(methodSummaryPath))
+    {
+        RejectLinks(root, methodSummaryPath);
+        if (new FileInfo(methodSummaryPath).Length > 16384) throw new InvalidDataException("Method summary budget exceeded.");
+        using var document = JsonDocument.Parse(File.ReadAllText(methodSummaryPath));
+        var report = document.RootElement;
+        foreach (var flag in new[] { "sourceEdited", "originalCompiled", "originalExecuted", "targetAssemblyLoaded", "newDependencyRead", "assetsRead", "probeRun", "guiOpened", "installationAccessed", "semanticBindingEstablished", "transitiveCallGraphEstablished", "modernCompatibilityEstablished" })
+            if (report.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Method summary safety/meaning contract failed.");
+        if (report.GetProperty("schemaVersion").GetInt32()!=1 || report.GetProperty("taskId").GetString()!="CDR-082-M2" || report.GetProperty("stage").GetString()!="method-boundary-design" ||
+            report.GetProperty("selectedFiles").GetInt32()!=11 || !report.GetProperty("sourceHashesStable").GetBoolean() || report.GetProperty("ownSyntaxChecks").GetInt32()!=8 ||
+            report.GetProperty("publicSourceBytes").GetInt32()!=0 || !DateTimeOffset.TryParse(report.GetProperty("inspectedUtc").GetString(),out _))
+            throw new InvalidDataException("Method summary outcome inconsistent.");
+        foreach (var count in new[]{"methods","properties","initializers","callSites","deferredCallSites"})
+            if (report.GetProperty(count).GetInt32() is <0 or >100000) throw new InvalidDataException("Method summary count invalid.");
+        if (!System.Text.RegularExpressions.Regex.IsMatch(report.GetProperty("sourceDigest").GetString()??"", "^[A-F0-9]{64}$")) throw new InvalidDataException("Method summary digest invalid.");
+        if(report.GetProperty("deferredCallSites").GetInt32()>report.GetProperty("callSites").GetInt32()) throw new InvalidDataException("Method summary deferred count invalid.");
+        latestUpdate = "<section data-latest-update=\"method-design-v1\" data-method-status=\"design-recorded\"><h2>本次更新：输入、时间与初始化接入设计</h2>" +
+            "<p>改了哪个模块：原版逻辑迁移准备。新增什么：把输入、时间和初始化检查细化到具体方法、属性和字段初始化位置，并提出接入预设输入和时间的设计；详细内容只留本机。</p>" +
+            "<p>什么时候有用：以后接入原版时，可以保留按键缓冲等规则，同时避免顺带读取真实设备、打开窗口或加载整套游戏。检查发现，名字像‘清空输入’的方法也不一定没有设备访问。</p>" +
+            "<p>推进到哪一步：只读分析11个文件，记录"+report.GetProperty("methods").GetInt32()+"个方法或构造函数、"+report.GetProperty("properties").GetInt32()+"个属性和"+report.GetProperty("initializers").GetInt32()+"个字段初始化位置；源码读取前后一致。已提出输入快照、两类时间和启动前检查的接入边界，尚未实现适配。</p>" +
+            "<p>是否符合预期：本轮分析和设计已交付；没有精确解析所有调用目标，没有编译或运行原版，没有证明现代环境兼容或生成角色。旧框架不进入功能模块。</p>" +
+            "<p>验收：双击“检查迁移方法边界.cmd”，查看METHOD_DESIGN_COMPLETED；阅读<a href=\"../../docs/zh-CN/CDR-082-M2-DESIGN.md\">本轮中文报告</a>。页面只显示已有摘要，不运行检查。</p></section>";
     }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),

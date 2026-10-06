@@ -1,5 +1,9 @@
 # Diagnostics Contract
 
+## M2 readonly method design
+
+METHOD_DESIGN_COMPLETED: selectedFiles/methods/properties/initializers/callSites/deferredCallSites/hashstable; semanticBinding/originalExecuted false. METHOD_DESIGN_FAILED: own exception type/HResult only; wrapper emits stable M2 code, no raw source/error paths. M2_PRIVATE_REPORT: repository-relative ignored run directory only. Exact signatures/expressions/locations/assignment references private; counts are syntax declarations/sites, not executed methods. Eight own parser assertions, selected11 sources <=16MiB/perfile4MiB, details<=32MiB, links rejected/fresh private output/baseline manifest verified/pre-post source hashes. Public summary<=16KiB with false safety/meaning flags/date/hash/count validation;11 own display checks. M1 summary ingestion checks10 retained; latest visible card now M2, no probes or source reads from page. Missing modern/type evidence remains unknown.
+
 ## M1 syntax-only inventory
 
 MIGRATION_INVENTORY_COMPLETED: source/core/input candidatecounts, syntaxErrors/hashstable, originalCompiled/Executedfalse, semanticBindingfalse. MIGRATION_INVENTORY_FAILED contains own exceptiontype/HResult only, no compiler diagnostic/source/privatepath. M1_PRIVATE_REPORT prints repository-relative ignored run directory, never detailedsource. Public summary categorycounts/ambiguity/unclassified/initializercandidates not actualinvocations. SHA pre/post+priorselecteddigest linkage not authenticity/runtimeproof. Detailreport <=32MiB privateonly; parser source <=64MiB/10kfiles withperfile4MiB/link rejection; baseline918 enforced. Summary display <=16KiB, safety/meaning/limits failclosed;10ownreportchecks/no probe.

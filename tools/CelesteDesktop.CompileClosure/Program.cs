@@ -8,6 +8,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 try
 {
+    if (args is ["--method-design", var methodSource, "--output", var methodOutput])
+        return MethodDesign.Run(methodSource, methodOutput);
     if (args is ["--migration-inventory", var inventorySource, "--output", var inventoryOutput])
         return MigrationInventory.Run(inventorySource, inventoryOutput);
     if (args.SequenceEqual(new[] { "--self-test" })) return SyntheticChecks();
@@ -122,7 +124,7 @@ try
 catch (Exception ex)
 {
     // No commercial source excerpts, diagnostic text or private paths.
-    var eventId = args.FirstOrDefault() == "--migration-inventory" ? "MIGRATION_INVENTORY_FAILED" : "CLOSURE_PROBE_FAILED";
+    var eventId = args.FirstOrDefault() switch { "--method-design" => "METHOD_DESIGN_FAILED", "--migration-inventory" => "MIGRATION_INVENTORY_FAILED", _ => "CLOSURE_PROBE_FAILED" };
     Console.Error.WriteLine($"{eventId} exceptionType={ex.GetType().Name} hresult={ex.HResult}");
     return 3;
 }
