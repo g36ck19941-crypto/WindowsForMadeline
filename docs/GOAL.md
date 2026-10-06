@@ -10,6 +10,8 @@ In C:/supermadeline/CelesteDesktopRuntime, reconstruct a local original-code-led
 
 ## Ordered near-term work
 
+2026-10-06 design-only modern migration plan: [CDR-082 migration gates](CDR-082-MODERN-MIGRATION-PLAN.md). Before product integration, M1 inventories the minimal behavior/platform slice, M2 designs explicit bindings/types, M3 privately compiles an authorized modern derived copy, M4 validates own restricted host, M5 audits/runs bounded migrated input/time, M6/M7 cover original character/resources and desktop/entities. Only M0 design authorized now; original-source reads/transforms/execution/new dependencies require stated gates. No verified target/replacement selected; old compilation results below remain history, not current product route. Full outcome preserved.
+
 CDR-082 isolation follow-up authorized: own managed context/service adapters implemented, original static-service/scene/resource bridge still unbound. Synthetic context replay is not original behavior execution; no new assets or original behavior source edits permitted. Keep the full original-runtime outcome unchanged.
 
 Own adapter now also compiles against existing net472 refs with static target/reference/native-import/resource audit; this removes an own-code compile preparation gap only. Original binding/runtime compatibility remain unproven, no original-code execution implied.

@@ -1,0 +1,3 @@
+# CDR-082 modern migration M0
+
+Design only using existing contracts and aggregate reports. Preferred candidate: preserve original behavior in a minimal modern rebuilt slice, independently adapt platform interfaces, exclude legacy runtime/helper dependency chain. Feasibility unproved; modern host failure remains. M1-M7 separate source/dependency/compile/runtime/resource/desktop gates; no original/cache/newdependency reads, tests, probes, GUI, installation access or upload. Read [English plan](../CDR-082-MODERN-MIGRATION-PLAN.md) and [Chinese review](../zh-CN/CDR-082-MODERN-MIGRATION-PLAN.md). Primary, pending acceptance.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — Nonlegacy migration design, no execution
+
+Added bilingual original-behavior/platform-boundary migration plan with M1-M7 evidence/authorization gates, private source-transformation proposal and product legacy-free closure requirement. Existing modern startup failure retained; no runtime/library substitute selected. Contract/goal/text status/handoff updated; no source/dependency reads, test runs, code changes, GUI or upload.
+
 ## 2026-10-05 — Legacy framework excluded from product
 
 Developer constraint recorded in contract/objective/handoff/memory: legacy .NET Framework permitted only in separately authorized diagnostics, never product modules or direct/indirect runtime dependencies. Existing experimental evidence retained; nonlegacy migration feasibility is a future design gate, not authorized implementation. Documentation only, no execution/tests/upload.
