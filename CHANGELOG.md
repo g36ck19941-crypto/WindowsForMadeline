@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — M1 readonly migration inventory
+
+Own syntax analyzer/private dependency-platform list, source-free summary, dedicatedcmd and cumulative latest explanation.918hashstable/core+input795/XNAusing562;10syntax/2scope/10reportchecks. No targetcompile/execute/newdependency/probe/GUI; candidategraph not minimal/runtime proof. Accepted360 auditpass/upload blocked Git443; newM1 pendingreview, mainunchanged.
+
 ## 2026-10-06 — Nonlegacy migration design, no execution
 
 Added bilingual original-behavior/platform-boundary migration plan with M1-M7 evidence/authorization gates, private source-transformation proposal and product legacy-free closure requirement. Existing modern startup failure retained; no runtime/library substitute selected. Contract/goal/text status/handoff updated; no source/dependency reads, test runs, code changes, GUI or upload.

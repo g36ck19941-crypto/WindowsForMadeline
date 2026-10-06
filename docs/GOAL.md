@@ -10,6 +10,8 @@ In C:/supermadeline/CelesteDesktopRuntime, reconstruct a local original-code-led
 
 ## Ordered near-term work
 
+2026-10-06 M1 existing-cache readonly inventory authorized and delivered: [candidate inventory](CDR-082-M1-INVENTORY.md). Syntax-only918files/hashstable, core/input conservative795 candidates, no semantic call closure/minimality/modern-runtime proof. Private details ignored, no original transformations/compilation/execution/new deps/probes/GUI/install. NextM2 exact-method binding/type/platform design pending scope; original-code-led outcome and legacy-free product constraints unchanged. Full runtime goal NOT complete.
+
 2026-10-06 design-only modern migration plan: [CDR-082 migration gates](CDR-082-MODERN-MIGRATION-PLAN.md). Before product integration, M1 inventories the minimal behavior/platform slice, M2 designs explicit bindings/types, M3 privately compiles an authorized modern derived copy, M4 validates own restricted host, M5 audits/runs bounded migrated input/time, M6/M7 cover original character/resources and desktop/entities. Only M0 design authorized now; original-source reads/transforms/execution/new dependencies require stated gates. No verified target/replacement selected; old compilation results below remain history, not current product route. Full outcome preserved.
 
 CDR-082 isolation follow-up authorized: own managed context/service adapters implemented, original static-service/scene/resource bridge still unbound. Synthetic context replay is not original behavior execution; no new assets or original behavior source edits permitted. Keep the full original-runtime outcome unchanged.

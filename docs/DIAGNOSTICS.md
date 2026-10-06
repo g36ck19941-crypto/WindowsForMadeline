@@ -1,5 +1,9 @@
 # Diagnostics Contract
 
+## M1 syntax-only inventory
+
+MIGRATION_INVENTORY_COMPLETED: source/core/input candidatecounts, syntaxErrors/hashstable, originalCompiled/Executedfalse, semanticBindingfalse. MIGRATION_INVENTORY_FAILED contains own exceptiontype/HResult only, no compiler diagnostic/source/privatepath. M1_PRIVATE_REPORT prints repository-relative ignored run directory, never detailedsource. Public summary categorycounts/ambiguity/unclassified/initializercandidates not actualinvocations. SHA pre/post+priorselecteddigest linkage not authenticity/runtimeproof. Detailreport <=32MiB privateonly; parser source <=64MiB/10kfiles withperfile4MiB/link rejection; baseline918 enforced. Summary display <=16KiB, safety/meaning/limits failclosed;10ownreportchecks/no probe.
+
 ## Own framework startup diagnostic
 
 OWN_FRAMEWORK_METADATA_VERIFIED: static x86/net472, references1/imports3/resources0, executed=false; imports counts declared CLR P/Invokes, not implicit loader dependency closure. OWN_FRAMEWORK_CASE uses existing owned case protocol. OWN_FRAMEWORK_SUMMARY partial-own-net472-blocked/exit2 versus own-net472-controls-verified/exit0, case count separate from native/net8. Ignored framework-summary/cases only, prior failure preserved. Child OS exit and last observed debug exception are distinct fields, neither root-cause proof. No own phase does not prove no entry execution; no source/pixels/memory dumps emitted.

@@ -19,11 +19,12 @@ static int Run(string[] args)
     var frameworkSummaryPath = Path.GetFullPath("artifacts/cdr-082-isolation-framework/summary.json");
     var restrictedSummaryPath = Path.GetFullPath("artifacts/cdr-082-restricted-process/summary.json");
     var frameworkProbePath = Path.GetFullPath("artifacts/cdr-082-restricted-process/framework-summary.json");
+    var migrationSummaryPath = Path.GetFullPath("artifacts/cdr-082-migration-inventory/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report" && key != "--migration-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
@@ -31,6 +32,7 @@ static int Run(string[] args)
         else if (key == "--framework-report") frameworkSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--restricted-report") restrictedSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--framework-probe-report") frameworkProbePath = Path.GetFullPath(args[i]);
+        else if (key == "--migration-report") migrationSummaryPath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -431,6 +433,32 @@ static int Run(string[] args)
             "<p>推进到哪一步：自有程序编译和静态身份检查已通过；六项控制情景通过" + passed + "项。" +
             (exit == 2 ? "实际仍未通过：启动在发出就绪通知前停止，后续情景未完成；观察到的自有进程均已退出。编译成功不是启动成功，异常根因尚未定位。" : "自有启动控制检查通过；仍不能证明原版或XNA能运行。") +
             "窗口限制未放宽，原版角色尚未生成。</p><p>验收：双击“验证旧框架受限启动.cmd”，查看OWN_FRAMEWORK_SUMMARY。详细结果见<a href=\"../../docs/zh-CN/CDR-082-RESTRICTED-FRAMEWORK.md\">本轮中文报告</a>。本页仅展示已有摘要，不重跑检查。</p></section>";
+    }
+    latestUpdate = "<section data-latest-update=\"migration-inventory-v1\" data-migration-status=\"not-inspected\"><h2>本次更新：迁移依赖清单</h2><p>模块：迁移准备。尚无本机静态清单摘要，不能认为已经检查；页面不会自动读取源码或运行检查入口。</p></section>";
+    if (!migrationSummaryPath.StartsWith(allowed, StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Migration report must be under repository artifacts.");
+    if (File.Exists(migrationSummaryPath))
+    {
+        RejectLinks(root, migrationSummaryPath);
+        if (new FileInfo(migrationSummaryPath).Length > 16384) throw new InvalidDataException("Migration summary budget exceeded.");
+        using var document = JsonDocument.Parse(File.ReadAllText(migrationSummaryPath));
+        var report = document.RootElement;
+        foreach (var flag in new[] { "sourceEdited", "originalCompiled", "originalExecuted", "targetAssemblyLoaded", "newDependencyRead", "assetsRead", "probeRun", "guiOpened", "installationAccessed", "transitiveCallGraphEstablished", "minimalityEstablished", "semanticBindingEstablished", "modernCompatibilityEstablished" })
+            if (report.GetProperty(flag).GetBoolean()) throw new InvalidDataException("Migration summary safety/meaning contract failed.");
+        var files = report.GetProperty("sourceFiles").GetInt32();
+        var core = report.GetProperty("coreCandidateFiles").GetInt32();
+        var input = report.GetProperty("inputCandidateFiles").GetInt32();
+        var xna = report.GetProperty("xnaUsingFiles").GetInt32();
+        if (report.GetProperty("schemaVersion").GetInt32() != 1 || report.GetProperty("taskId").GetString() != "CDR-082-M1" ||
+            report.GetProperty("stage").GetString() != "syntax-only-migration-inventory" || files != 918 || core is < 3 or > 918 || input is < 1 or > 918 || xna is < 0 or > 918 ||
+            !report.GetProperty("sourceHashesStable").GetBoolean() || report.GetProperty("ownSyntaxChecks").GetInt32() != 10 || report.GetProperty("syntaxErrorCount").GetInt32() != 0 ||
+            report.GetProperty("publicSourceBytes").GetInt32() != 0 || !DateTimeOffset.TryParse(report.GetProperty("inspectedUtc").GetString(), out _))
+            throw new InvalidDataException("Migration summary outcome inconsistent.");
+        latestUpdate = "<section data-latest-update=\"migration-inventory-v1\" data-migration-status=\"syntax-inventory-completed\"><h2>本次更新：迁移依赖清单</h2>" +
+            "<p>改了哪个模块：迁移准备。新增什么：只读分析已有原版恢复源码，列出类型引用、初始化和输入、绘图、音频、Steam、文件访问等平台调用候选；详细名称与位置只留本地，不上传。</p>" +
+            "<p>什么时候有用：动手迁移前，先看清角色可能牵连哪些环境接口，避免直接搬进整套旧框架。它不运行游戏代码，也不重新猜玩法。</p>" +
+            "<p>推进到哪一步：检查" + files + "个源码文件，读取前后哈希一致，语法读取无错误；其中" + xna + "个文件声明XNA命名空间。角色核心保守候选" + core + "个文件，输入环境候选" + input + "个文件。范围仍然宽，下一步需要缩到具体方法。</p>" +
+            "<p>是否符合预期：静态清单已生成，但不是精确调用图，也不证明这些调用一定发生、现代迁移可运行或角色已生成。旧框架仍只用于独立测试，不进入产品。</p>" +
+            "<p>验收：双击“检查迁移依赖清单.cmd”，查看MIGRATION_INVENTORY_COMPLETED。<a href=\"../../docs/zh-CN/CDR-082-M1-INVENTORY.md\">本轮中文报告</a>。本页仅展示摘要，不重跑扫描。</p></section>";
     }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),

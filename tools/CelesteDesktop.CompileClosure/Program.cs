@@ -8,6 +8,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 try
 {
+    if (args is ["--migration-inventory", var inventorySource, "--output", var inventoryOutput])
+        return MigrationInventory.Run(inventorySource, inventoryOutput);
     if (args.SequenceEqual(new[] { "--self-test" })) return SyntheticChecks();
     if (args.Length != 6 || args[0] != "--source" || args[2] != "--references" || args[4] != "--output")
         throw new InvalidDataException("EXPLICIT_INPUTS_REQUIRED");
@@ -120,7 +122,8 @@ try
 catch (Exception ex)
 {
     // No commercial source excerpts, diagnostic text or private paths.
-    Console.Error.WriteLine($"CLOSURE_PROBE_FAILED exceptionType={ex.GetType().Name} hresult={ex.HResult}");
+    var eventId = args.FirstOrDefault() == "--migration-inventory" ? "MIGRATION_INVENTORY_FAILED" : "CLOSURE_PROBE_FAILED";
+    Console.Error.WriteLine($"{eventId} exceptionType={ex.GetType().Name} hresult={ex.HResult}");
     return 3;
 }
 

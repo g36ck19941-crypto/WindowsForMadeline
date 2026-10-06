@@ -1,0 +1,3 @@
+# CDR-082 M1 migration inventory
+
+Own syntax-only readonly cache analyzer, private detailed list/public aggregate and developer cmd/latest progress card.918files/core+input795/XNAusing562/hashstable, no exact callgraph/runtimeproof.10ownsyntax/2boundary/10reportchecks; no probes/fullgate/originalcompile/execute/newdeps/install/GUI. Accepted360 upload audited but Git443blocked, connectorreadonlyreachability not upload; M1pendingreview. [English](../CDR-082-M1-INVENTORY.md), [Chinese review](../zh-CN/CDR-082-M1-INVENTORY.md). Primary, nextM2 method-level readonly adaptationdesign separately scoped.
