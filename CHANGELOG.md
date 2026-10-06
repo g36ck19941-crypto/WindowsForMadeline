@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — M2-T cached type interfaces
+
+Own bounded metadata/signature/constants reader and safe summary, private original type contract comparison, double-click entry, plain progress overview and collapsed history. No original methods/behavior executed or adapter implemented. Selected22types found; current own contracts insufficient for direct original binding, modern compatibility unresolved. Accepted83449d3 published/readback; new M2-T unaccepted/unuploaded.
+
 ## 2026-10-06 — M2 method boundaries and adaptation design
 
 Own readonly method/property/field initializer locations and deferred-call marking; input/time/bootstrap design, private source-derived details, safe public counts and latest progress explanation. No target compilation/execution or migrated feature. Full M2 type closure partial; original Player absent. Accepted M1/records5d73cab published/readback, main unchanged. New M2 awaits acceptance/upload.

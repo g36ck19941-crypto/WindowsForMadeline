@@ -23,7 +23,7 @@ try {
     $html = [IO.File]::ReadAllText((Join-Path $fixture 'actual/index.html'))
     if($html -notmatch 'data-restricted-status="partial-managed-startup-blocked"'){throw 'MANAGED_FAILURE_HIDDEN'}
     if($html -notmatch 'data-startup-diagnostics="recorded"'){throw 'STARTUP_DIAGNOSTICS_HIDDEN'}
-    if($html -notmatch 'data-latest-update="method-design-v1"'){throw 'LATEST_UPDATE_HIDDEN'}
+    if($html -notmatch 'data-latest-update="type-contracts-v1"'){throw 'LATEST_UPDATE_HIDDEN'}
     & dotnet $dll --output (Join-Path $fixture 'missing') --restricted-report (Join-Path $fixture 'absent.json')
     if($LASTEXITCODE -ne 0){throw 'ABSENT_REPORT_FAILED'}
     if([IO.File]::ReadAllText((Join-Path $fixture 'missing/index.html')) -notmatch 'data-restricted-status="not-inspected"'){throw 'ABSENT_REPORT_CALLED_PASS'}

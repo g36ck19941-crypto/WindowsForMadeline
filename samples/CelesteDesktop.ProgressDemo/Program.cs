@@ -21,11 +21,12 @@ static int Run(string[] args)
     var frameworkProbePath = Path.GetFullPath("artifacts/cdr-082-restricted-process/framework-summary.json");
     var migrationSummaryPath = Path.GetFullPath("artifacts/cdr-082-migration-inventory/summary.json");
     var methodSummaryPath = Path.GetFullPath("artifacts/cdr-082-method-design/summary.json");
+    var typeSummaryPath = Path.GetFullPath("artifacts/cdr-082-type-contracts/summary.json");
     var specified = new HashSet<string>(StringComparer.Ordinal);
     for (var i = 0; i < args.Length; i++)
     {
         var key = args[i];
-        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report" && key != "--migration-report" && key != "--method-report") || ++i >= args.Length)
+        if (!specified.Add(key) || (key != "--output" && key != "--identity-report" && key != "--compile-report" && key != "--isolation-report" && key != "--framework-report" && key != "--restricted-report" && key != "--framework-probe-report" && key != "--migration-report" && key != "--method-report" && key != "--type-report") || ++i >= args.Length)
             throw new ArgumentException("Usage: --output <directory> [--identity-report <local report>] [--compile-report <local summary>]");
         if (key == "--output") output = Path.GetFullPath(args[i]);
         else if (key == "--identity-report") identityReportPath = Path.GetFullPath(args[i]);
@@ -35,6 +36,7 @@ static int Run(string[] args)
         else if (key == "--framework-probe-report") frameworkProbePath = Path.GetFullPath(args[i]);
         else if (key == "--migration-report") migrationSummaryPath = Path.GetFullPath(args[i]);
         else if (key == "--method-report") methodSummaryPath = Path.GetFullPath(args[i]);
+        else if (key == "--type-report") typeSummaryPath = Path.GetFullPath(args[i]);
         else compileReportPath = Path.GetFullPath(args[i]);
     }
     var root = Directory.GetCurrentDirectory();
@@ -487,6 +489,33 @@ static int Run(string[] args)
             "<p>是否符合预期：本轮分析和设计已交付；没有精确解析所有调用目标，没有编译或运行原版，没有证明现代环境兼容或生成角色。旧框架不进入功能模块。</p>" +
             "<p>验收：双击“检查迁移方法边界.cmd”，查看METHOD_DESIGN_COMPLETED；阅读<a href=\"../../docs/zh-CN/CDR-082-M2-DESIGN.md\">本轮中文报告</a>。页面只显示已有摘要，不运行检查。</p></section>";
     }
+    var methodHistory = latestUpdate.Replace("data-latest-update=", "data-history-update=", StringComparison.Ordinal);
+    latestUpdate = "<section data-latest-update=\"type-contracts-v1\" data-type-status=\"not-inspected\"><h2>最近一次更新：核对原版需要的数据接口</h2><p>没有本机类型检查摘要，不能认为检查通过。页面不会运行任何库。</p></section>";
+    if(!typeSummaryPath.StartsWith(allowed,StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Type report must be under repository artifacts.");
+    if(File.Exists(typeSummaryPath))
+    {
+        RejectLinks(root,typeSummaryPath);
+        if(new FileInfo(typeSummaryPath).Length>16384)throw new InvalidDataException("Type summary budget exceeded.");
+        using var document=JsonDocument.Parse(File.ReadAllText(typeSummaryPath));var report=document.RootElement;
+        foreach(var flag in new[]{"sourceEdited","originalCompiled","originalExecuted","targetAssemblyLoaded","newDependencyRead","assetsRead","probeRun","guiOpened","installationAccessed","behaviorSemanticsEstablished","modernCompatibilityEstablished"})
+            if(report.GetProperty(flag).GetBoolean())throw new InvalidDataException("Type summary safety/meaning contract failed.");
+        var found=report.GetProperty("foundTypes").GetInt32();var missing=report.GetProperty("missingTypes").GetInt32();
+        if(report.GetProperty("schemaVersion").GetInt32()!=1 || report.GetProperty("taskId").GetString()!="CDR-082-M2-T" || report.GetProperty("stage").GetString()!="cached-type-metadata-review" ||
+            report.GetProperty("inspectedAssemblies").GetInt32()!=3 || report.GetProperty("requestedTypes").GetInt32()!=22 || found is <0 or >22 || missing!=22-found ||
+            report.GetProperty("metadataSurfaceEstablished").GetBoolean()!=(missing==0) || !report.GetProperty("hashesStable").GetBoolean() ||
+            report.GetProperty("ownMetadataChecks").GetInt32()!=8 || report.GetProperty("ownContractFiles").GetInt32()!=5 || report.GetProperty("publicSourceBytes").GetInt32()!=0 ||
+            !DateTimeOffset.TryParse(report.GetProperty("inspectedUtc").GetString(),out _))throw new InvalidDataException("Type summary outcome inconsistent.");
+        foreach(var name in new[]{"memberDeclarations","constantDeclarations","selectedTypeStaticConstructors","moduleInitializerDeclarations"})
+            if(report.GetProperty(name).GetInt32() is <0 or >100000)throw new InvalidDataException("Type summary count invalid.");
+        if(report.GetProperty("mixedModeAssemblies").GetInt32() is <0 or >3)throw new InvalidDataException("Type summary mixed count invalid.");
+        latestUpdate="<section data-latest-update=\"type-contracts-v1\" data-type-status=\"metadata-recorded\"><h2>最近一次更新：核对原版需要的数据接口</h2>"+
+            "<p>更新模块：原版逻辑接入准备。我们查看了缓存库的类型说明，并对照现有输入、时间和图像接口；没有运行这些库。</p>"+
+            "<p>这次解决什么：看清原版需要哪些按键状态、手柄状态、坐标和时间数据，避免拿现有的简单动作按钮接口直接接上后丢失信息。</p>"+
+            "<p>完成到哪一步：找到所选22个类型中的"+found+"个，缺少"+missing+"个。现有接口还不能直接接入；库的自动初始化及数值计算规则仍需检查。它是接口清点完成，不是兼容验证通过。</p>"+
+            "<p>下一步用途：确定哪些数据必须保留、哪些旧库调用需要隔离，再设计适配。现在没有新增角色动作，也没有生成或显示角色。</p>"+
+            "<p>验收：双击“检查迁移类型接口.cmd”，查看TYPE_CONTRACTS_COMPLETED；阅读<a href=\"../../docs/zh-CN/CDR-082-M2-T-TYPES.md\">本轮中文报告</a>。商业明细只留本地，不上传。</p>"+
+            "<details><summary>本轮技术统计</summary><p>成员声明"+report.GetProperty("memberDeclarations").GetInt32()+"，混合原生库"+report.GetProperty("mixedModeAssemblies").GetInt32()+"；这些数字不是执行次数，不证明初始化安全。缓存哈希一致，原版未编译或执行。</p></details></section>";
+    }
     Directory.CreateDirectory(output);
     File.WriteAllText(Path.Combine(output, "manifest.json"),
         JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
@@ -496,7 +525,14 @@ static int Run(string[] args)
 section{background:#1f2937;padding:20px;margin:20px 0;border-radius:12px}h1,h2,a{color:#67e8f9}
 table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:10px;border-bottom:1px solid #475569}</style>
 <h1>当前方向：本地反编译与原版逻辑重组</h1>
+<section data-progress-overview="plain"><h2>先看项目现在能做什么</h2>
+<p>目标：让原版角色在自己的桌面程序里工作，不启动完整游戏。</p>
+<p>现在能做：整理本机已有代码和库，找出角色运行所需的接口。下方结果来自已有报告，不是打开页面时重新检查。</p>
+<p>现在不能做：还没有已验证可运行的原版角色，不能在这里演示角色移动或显示。</p>
+<p>我们处在“接入准备”阶段。后面依次是：完成适配设计 → 获准后编译迁移版本 → 受控运行检查 → 角色与离屏图像 → 桌面显示。没有用百分比或测试数量代表角色完成度。</p></section>
 {{latestUpdate}}
+<details data-history="collapsed"><summary>展开历史记录和技术详情（不是本轮新增功能）</summary>
+{{methodHistory}}
 <section data-restricted-status="{{restrictedStatus}}" data-startup-diagnostics="{{startupDiagnosticsStatus}}"><h2>最新：受限进程原型完成了哪些，卡在哪里？</h2><p>{{restrictedExplanation}}</p>
 <p>没有尝试创建GUI，没有调用真实输入、音频、网络或设备，没有改系统配置或ACL，也没有读取游戏目录。
 仍未建立AppContainer身份、文件或设备的完整访问限制；原版角色未生成。
@@ -575,7 +611,7 @@ table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;p
 <li>CDR-083：在前面通过后，连接原版角色依赖、动画与本地资源读取，验证逐步运行和离屏图像。范围及资源访问另行确认。</li>
 <li>CDR-084及后续：连接桌面环境，再逐个整合原版交互物品；可见桌面和实时输入验收需要单独授权。</li></ol>
 <p>这些是工作顺序，不是已经完成的功能，也不是本页面提供的执行授权。不会为了“能运行”重新编造替代玩法。</p></section>
-<p>游戏未启动；未访问或写入安装目录；未接收实时输入；此页面不是角色演示。</p></html>
+<p>游戏未启动；未访问或写入安装目录；未接收实时输入；此页面不是角色演示。</p></details></html>
 """;
     File.WriteAllText(Path.Combine(output, "index.html"), html);
     Console.WriteLine($"CDR081_REPORT cacheCount={cacheCount} sourceFiles={sourceCount} modNamedFiles={modNames} identityReportAvailable={identityAvailable} runtimeIntegrated=false");

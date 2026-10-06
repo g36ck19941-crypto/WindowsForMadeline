@@ -9,6 +9,8 @@ var runId = Guid.NewGuid().ToString();
 
 try
 {
+    if (args is ["--type-contracts", var typeRoot, "--output", var typeOutput])
+        return TypeContractAudit.Run(typeRoot,typeOutput);
     if (args is ["--self-test"])
     {
         var own = Inspect(typeof(Program).Assembly.Location);
